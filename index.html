@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Minimalist Portfolio</title>
+    <title>Hisham Abuella - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -260,6 +261,14 @@
             font-size: 3rem;
             color: white;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .hero-avatar::after {
@@ -313,6 +322,73 @@
             box-shadow: var(--shadow-hover);
         }
 
+        /* Compact Contact Info in Hero */
+        .hero-contact {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--input-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .hero-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .hero-contact-item:hover {
+            color: var(--primary-orange);
+            transform: translateY(-1px);
+        }
+
+        .hero-contact-icon {
+            font-size: 1rem;
+        }
+
+        .hero-contact a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .hero-contact a:hover {
+            color: var(--primary-orange);
+        }
+
+        .hero-social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .hero-social-link {
+            width: 32px;
+            height: 32px;
+            background: var(--input-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        .hero-social-link:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-2px);
+        }
+
         /* Card Grid Layout */
         .section {
             padding: 5rem 2rem;
@@ -339,6 +415,91 @@
             max-width: 600px;
             margin: 0 auto;
             transition: color 0.3s ease;
+        }
+
+        /* Enhanced About Description */
+        .about-description {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .about-description::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--primary-teal));
+        }
+
+        .about-description:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .about-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--input-border);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .about-stat:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .about-stat:hover .stat-number {
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .about-stat:hover .stat-label {
+            color: white;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .highlight {
+            color: var(--primary-orange);
+            font-weight: 600;
         }
 
         /* About Cards */
@@ -639,9 +800,9 @@
         /* Contact Section */
         .contact-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 4rem;
-            max-width: 1000px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
@@ -761,7 +922,7 @@
 
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -775,7 +936,7 @@
             justify-content: center;
             text-decoration: none;
             color: var(--text-primary);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
             box-shadow: var(--shadow);
         }
@@ -890,6 +1051,21 @@
                 font-size: 2.5rem;
             }
 
+            .hero-contact {
+                font-size: 0.8rem;
+                gap: 0.6rem;
+            }
+
+            .hero-social-links {
+                gap: 0.8rem;
+            }
+
+            .hero-social-link {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+
             .section {
                 padding: 3rem 1rem;
             }
@@ -908,6 +1084,19 @@
                 grid-template-columns: 1fr;
             }
 
+            .about-description {
+                padding: 2rem 1.5rem;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .about-text {
+                font-size: 1rem;
+            }
+
             .skills-grid {
                 grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
             }
@@ -923,7 +1112,12 @@
             }
 
             .social-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero-social-links {
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
 
@@ -983,7 +1177,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">Y</div>
+            <div class="logo">H</div>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -1006,12 +1200,32 @@
     <section id="home" class="hero">
         <div class="hero-card">
             <div class="hero-content">
-                <div class="hero-avatar">👋</div>
-                <h1>Your Name</h1>
-                <p class="hero-subtitle">Creative Developer & Problem Solver</p>
+                <div class="hero-avatar">
+                    <img src="Pictures/Bio_Color.JPG" alt="Hisham Abuella" class="hero-avatar-img">
+                </div>
+                <h1>Hisham Abuella</h1>
+                <p class="hero-subtitle">Muslim | Cellular Systems Engineer</p>
                 <a href="#about" class="hero-cta">
                     Discover My Work →
                 </a>
+                
+                <div class="hero-contact">
+                    <div class="hero-contact-item">
+                        <span class="hero-contact-icon"><i class="fab fa-google"></i></span>
+                        <a href="mailto:hisham.abuella1@gmail.com">hisham.abuella1@gmail.com</a>
+                    </div>
+                    <div class="hero-contact-item">
+                        <span class="hero-contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>California, USA</span>
+                    </div>
+                    <div class="hero-social-links">
+                        <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="hero-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/hisham-abuella" target="_blank" class="hero-social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" class="hero-social-link" title="Google Scholar"><i class="fab fa-google"></i></a>
+                        <a href="https://www.instagram.com/hisham.abuella" target="_blank" class="hero-social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/hisham.abuella" target="_blank" class="hero-social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1020,57 +1234,74 @@
     <section id="about" class="section">
         <div class="section-header">
             <h2 class="section-title">What I Do</h2>
-            <p class="section-subtitle">
-                I create digital experiences that combine beautiful design with powerful functionality
-            </p>
-        </div>
-        <div class="about-cards">
-            <div class="about-card">
-                <div class="card-icon">💻</div>
-                <h3 class="card-title">Web Development</h3>
-                <p class="card-description">
-                    Building modern, responsive websites and web applications using the latest technologies and best practices.
-                </p>
-            </div>
-            <div class="about-card">
-                <div class="card-icon">🎨</div>
-                <h3 class="card-title">UI/UX Design</h3>
-                <p class="card-description">
-                    Creating intuitive user interfaces and experiences that delight users and achieve business goals.
-                </p>
-            </div>
-            <div class="about-card">
-                <div class="card-icon">⚡</div>
-                <h3 class="card-title">Performance</h3>
-                <p class="card-description">
-                    Optimizing applications for speed, accessibility, and search engine performance.
+            <div class="about-description">
+                <div class="about-stats">
+                    <div class="about-stat">
+                        <div class="stat-number">9+</div>
+                        <div class="stat-label">Years Research</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Years Industry</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Publications</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">U.S. Patent</div>
+                    </div>
+                </div>
+                <p class="about-text">
+                    Experienced <span class="highlight">Cellular Systems Engineer</span> specializing in simulation, <span class="highlight">RF digital systems</span>, and <span class="highlight">5G baseband technologies</span>. Combining deep expertise in signal processing, machine learning, and wireless communications to drive innovation in next-generation wireless systems.
                 </p>
             </div>
         </div>
         <div class="skills-grid">
             <div class="skill-item">
-                <div class="skill-icon">⚛️</div>
-                <div class="skill-name">React</div>
+                <div class="skill-icon"><i class="fas fa-square-root-alt"></i></div>
+                <div class="skill-name">MATLAB</div>
             </div>
             <div class="skill-item">
-                <div class="skill-icon">📱</div>
-                <div class="skill-name">JavaScript</div>
+                <div class="skill-icon"><i class="fab fa-cuttlefish"></i></div>
+                <div class="skill-name">C/C++</div>
             </div>
             <div class="skill-item">
-                <div class="skill-icon">🎨</div>
-                <div class="skill-name">CSS</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon">🚀</div>
-                <div class="skill-name">Node.js</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon">🎯</div>
-                <div class="skill-name">TypeScript</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon">🔧</div>
+                <div class="skill-icon"><i class="fab fa-python"></i></div>
                 <div class="skill-name">Python</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+                <div class="skill-name">LabVIEW</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-wave-square"></i></div>
+                <div class="skill-name">DSP</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-broadcast-tower"></i></div>
+                <div class="skill-name">5G/Wireless</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                <div class="skill-name">Machine Learning</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-wifi"></i></div>
+                <div class="skill-name">RF Systems</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <div class="skill-name">Vibe Coding</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fab fa-microsoft"></i></div>
+                <div class="skill-name">VSCode</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                <div class="skill-name">AI Integration</div>
             </div>
         </div>
     </section>
@@ -1086,85 +1317,43 @@
         <div class="portfolio-grid">
             <div class="portfolio-card">
                 <div class="portfolio-image">
-                    🌟
+                    💡
                     <div class="portfolio-overlay">
-                        <a href="#" class="portfolio-btn">👁️</a>
-                        <a href="#" class="portfolio-btn">🔗</a>
+                        <a href="https://ieeexplore.ieee.org/abstract/document/8935383/" target="_blank" class="portfolio-btn">👁️</a>
+                        <a href="https://ieeexplore.ieee.org/abstract/document/8935383/" target="_blank" class="portfolio-btn">🔗</a>
                     </div>
                 </div>
                 <div class="portfolio-content">
-                    <h3 class="portfolio-title">E-Commerce Platform</h3>
-                    <div class="portfolio-category">Web Application</div>
+                    <h3 class="portfolio-title">Visible Light Vitals Measurement</h3>
+                    <div class="portfolio-category">PhD Research Project</div>
                     <p class="portfolio-description">
-                        A full-featured e-commerce platform with payment integration, inventory management, and admin dashboard.
+                        Used a RaspberryPi to control a Photodetector to detect heartbeats and breathing from a human being using visible light sensing technology.
                     </p>
                     <div class="portfolio-tags">
-                        <span class="portfolio-tag">React</span>
-                        <span class="portfolio-tag">Node.js</span>
-                        <span class="portfolio-tag">MongoDB</span>
+                        <span class="portfolio-tag">RaspberryPi</span>
+                        <span class="portfolio-tag">Photodetector</span>
+                        <span class="portfolio-tag">Signal Processing</span>
                     </div>
                 </div>
             </div>
             <div class="portfolio-card">
                 <div class="portfolio-image">
-                    📊
+                    🔄
                     <div class="portfolio-overlay">
                         <a href="#" class="portfolio-btn">👁️</a>
                         <a href="#" class="portfolio-btn">🔗</a>
                     </div>
                 </div>
                 <div class="portfolio-content">
-                    <h3 class="portfolio-title">Analytics Dashboard</h3>
-                    <div class="portfolio-category">Data Visualization</div>
+                    <h3 class="portfolio-title">More Projects Coming Soon</h3>
+                    <div class="portfolio-category">Research & Engineering</div>
                     <p class="portfolio-description">
-                        Real-time analytics dashboard with interactive charts and customizable widgets for business intelligence.
+                        Additional wireless systems projects, 5G research, and RF engineering work will be showcased here soon.
                     </p>
                     <div class="portfolio-tags">
-                        <span class="portfolio-tag">Vue.js</span>
-                        <span class="portfolio-tag">D3.js</span>
-                        <span class="portfolio-tag">Python</span>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-card">
-                <div class="portfolio-image">
-                    🎵
-                    <div class="portfolio-overlay">
-                        <a href="#" class="portfolio-btn">👁️</a>
-                        <a href="#" class="portfolio-btn">🔗</a>
-                    </div>
-                </div>
-                <div class="portfolio-content">
-                    <h3 class="portfolio-title">Music App</h3>
-                    <div class="portfolio-category">Mobile Application</div>
-                    <p class="portfolio-description">
-                        Cross-platform music streaming app with offline playback, playlists, and social sharing features.
-                    </p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">React Native</span>
-                        <span class="portfolio-tag">Firebase</span>
-                        <span class="portfolio-tag">Redux</span>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-card">
-                <div class="portfolio-image">
-                    🤖
-                    <div class="portfolio-overlay">
-                        <a href="#" class="portfolio-btn">👁️</a>
-                        <a href="#" class="portfolio-btn">🔗</a>
-                    </div>
-                </div>
-                <div class="portfolio-content">
-                    <h3 class="portfolio-title">AI Chat Platform</h3>
-                    <div class="portfolio-category">Machine Learning</div>
-                    <p class="portfolio-description">
-                        Intelligent chatbot platform with natural language processing and multi-channel support for businesses.
-                    </p>
-                    <div class="portfolio-tags">
-                        <span class="portfolio-tag">Python</span>
-                        <span class="portfolio-tag">TensorFlow</span>
-                        <span class="portfolio-tag">FastAPI</span>
+                        <span class="portfolio-tag">5G Systems</span>
+                        <span class="portfolio-tag">RF Engineering</span>
+                        <span class="portfolio-tag">Signal Processing</span>
                     </div>
                 </div>
             </div>
@@ -1181,53 +1370,40 @@
         </div>
         <div class="blog-grid">
             <div class="blog-card">
-                <div class="blog-image">✍️</div>
+                <div class="blog-image" style="background-image: url('Pictures/sunset.jpg'); background-size: cover; background-position: center; position: relative;">
+                    <div style="position: absolute; inset: 0; background: linear-gradient(45deg, rgba(255, 107, 53, 0.4), rgba(0, 168, 204, 0.4)); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-route" style="font-size: 3rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);"></i>
+                    </div>
+                </div>
                 <div class="blog-content">
                     <div class="blog-meta">
-                        <span class="blog-date">Mar 20, 2024</span>
+                        <span class="blog-date">Aug 23, 2025</span>
                         <span>•</span>
-                        <span>5 min read</span>
+                        <span>10 min read</span>
                     </div>
-                    <h3 class="blog-title">The Future of Web Development</h3>
+                    <h3 class="blog-title">My Journey</h3>
                     <p class="blog-excerpt">
-                        Exploring emerging trends and technologies that are reshaping how we build for the web...
+                        From Cairo to California: My path through wireless engineering, PhD research, and industry experience in cellular systems...
                     </p>
-                    <a href="#" class="blog-link">
+                    <a href="Articles/journey.html" class="blog-link">
                         Read More →
                     </a>
                 </div>
             </div>
             <div class="blog-card">
-                <div class="blog-image">⚡</div>
+                <div class="blog-image"><i class="fas fa-clock"></i></div>
                 <div class="blog-content">
                     <div class="blog-meta">
-                        <span class="blog-date">Mar 15, 2024</span>
+                        <span class="blog-date">Coming Soon</span>
                         <span>•</span>
-                        <span>8 min read</span>
+                        <span>TBD</span>
                     </div>
-                    <h3 class="blog-title">React Performance Tips</h3>
+                    <h3 class="blog-title">Rest Coming Soon...</h3>
                     <p class="blog-excerpt">
-                        Advanced techniques for optimizing React applications and improving user experience...
+                        More articles on wireless systems, 5G technology, signal processing, and engineering insights will be published soon...
                     </p>
                     <a href="#" class="blog-link">
-                        Read More →
-                    </a>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-image">🎨</div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <span class="blog-date">Mar 10, 2024</span>
-                        <span>•</span>
-                        <span>6 min read</span>
-                    </div>
-                    <h3 class="blog-title">Design Systems 101</h3>
-                    <p class="blog-excerpt">
-                        Building scalable design systems that maintain consistency across products and teams...
-                    </p>
-                    <a href="#" class="blog-link">
-                        Read More →
+                        Stay Tuned →
                     </a>
                 </div>
             </div>
@@ -1244,57 +1420,29 @@
         </div>
         <div class="contact-container">
             <div class="contact-card">
-                <h3 class="contact-title">Send a Message</h3>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
-            <div class="contact-card">
                 <h3 class="contact-title">Get In Touch</h3>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <div class="contact-icon">📧</div>
+                        <div class="contact-icon"><i class="fab fa-google"></i></div>
                         <div class="contact-details">
                             <h4>Email</h4>
-                            <p>your.email@example.com</p>
+                            <p><a href="mailto:hisham.abuella1@gmail.com" style="color: var(--primary-orange); text-decoration: none; font-weight: 600;">hisham.abuella1@gmail.com</a></p>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div class="contact-details">
-                            <h4>Phone</h4>
-                            <p>+1 (555) 123-4567</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                         <div class="contact-details">
                             <h4>Location</h4>
-                            <p>Your City, Your Country</p>
+                            <p>California, USA</p>
                         </div>
                     </div>
                 </div>
                 <div class="social-grid">
-                    <a href="#" class="social-item">📘</a>
-                    <a href="#" class="social-item">🐦</a>
-                    <a href="#" class="social-item">💼</a>
-                    <a href="#" class="social-item">📱</a>
+                    <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="social-item" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/hisham-abuella" target="_blank" class="social-item" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" class="social-item" title="Google Scholar"><i class="fab fa-google"></i></a>
+                    <a href="https://www.instagram.com/hisham.abuella" target="_blank" class="social-item" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/hisham.abuella" target="_blank" class="social-item" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
         </div>
@@ -1302,7 +1450,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 Your Name. Crafted with care and attention to detail.</p>
+        <p>&copy; 2025 Hisham Abuella. Crafted with care and attention to detail.</p>
     </footer>
 
     <script>
@@ -1481,27 +1629,19 @@
             }
 
             handleSubmit(e) {
-                e.preventDefault();
-                
+                // Allow default form submission to mailto:
                 const submitBtn = this.contactForm.querySelector('.submit-btn');
                 const originalText = submitBtn.textContent;
                 
-                // Show loading state
-                submitBtn.textContent = 'Sending...';
+                // Show loading state briefly
+                submitBtn.textContent = 'Opening Email Client...';
                 submitBtn.disabled = true;
                 
-                // Simulate form submission
+                // Reset button after a short delay
                 setTimeout(() => {
-                    submitBtn.textContent = 'Message Sent! ✨';
-                    submitBtn.style.background = 'var(--primary-teal)';
-                    
-                    setTimeout(() => {
-                        this.contactForm.reset();
-                        submitBtn.textContent = originalText;
-                        submitBtn.style.background = 'var(--primary-orange)';
-                        submitBtn.disabled = false;
-                    }, 2000);
-                }, 1500);
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
             }
         }
 
