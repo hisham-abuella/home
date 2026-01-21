@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisham Abuella - CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Calibri, 'Segoe UI', sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #000;
+            background: #f0f0f0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Print button */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            background: #0055aa;
+        }
+
+        .print-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24pt;
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            font-size: 10pt;
+            line-height: 1.6;
+        }
+
+        .contact-info a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Section title */
+        .section-title {
+            font-size: 11pt;
+            font-weight: normal;
+            text-align: center;
+            letter-spacing: 4px;
+            margin: 25px 0 15px 0;
+            padding: 5px 0;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        /* Bullet lists */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 3px 0 3px 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "◇";
+            position: absolute;
+            left: 0;
+            font-size: 8pt;
+        }
+
+        /* Job entries */
+        .job {
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .job-company {
+            text-align: center;
+            color: #0066cc;
+        }
+
+        .job-date {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        /* Publications */
+        .publication {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .degree {
+            font-weight: bold;
+        }
+
+        .school {
+            color: #0066cc;
+        }
+
+        .edu-details {
+            font-size: 10pt;
+            margin-top: 3px;
+        }
+
+        /* Awards */
+        .award-item {
+            padding: 3px 0 3px 20px;
+            position: relative;
+        }
+
+        .award-item::before {
+            content: "◇";
+            position: absolute;
+            left: 0;
+            font-size: 8pt;
+        }
+
+        .award-date {
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            letter-spacing: 2px;
+            font-size: 10pt;
+        }
+
+        /* Print styles */
+        @media print {
+            .print-btn {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            @page {
+                margin: 0.5in;
+                size: letter;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .print-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        Save as PDF
+    </button>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Hisham Abuella</h1>
+            <div class="contact-info">
+                11385 Affinity Ct, Unit 216, San Diego, CA, USA, 92131<br>
+                +1 (619)929-5730 | <a href="mailto:hisham.f.abuella@gmail.com">hisham.f.abuella@gmail.com</a><br>
+                DOB: 17 March 1992 | LinkedIn: <a href="https://linkedin.com/in/hisham-abuella" target="_blank">@hisham-abuella</a><br>
+                Permanent Resident (Green Card holder valid till Feb. 2035)
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <section>
+            <div class="section-title">- S U M M A R Y &nbsp; O F &nbsp; Q U A L I F I C A T I O N S -</div>
+            <ul>
+                <li>9+ years of research and engineering experience in wireless systems (includes PhD/MSc/Qualcomm/Apple)</li>
+                <li>5+ years of industry experience in simulation, fixed-point implementation of wireless systems, RF digital front-end, Digital Pre-Distortion, channel parameter estimation, lab bringup issues and debugging scripts.</li>
+                <li>10+ technical publications (including 1 U.S. patent).</li>
+                <li>Knowledge of visible light sensing and communications, OFDM, wireless prototyping using software defined radio and raspberry-Pi, digital signal processing, RF frontend impairments, 5G baseband channel estimation, and machine learning algorithms for wireless communication.</li>
+                <li>Skills on MATLAB, C, C++, LabVIEW, Python, GitHub, Visio and LaTeX.</li>
+            </ul>
+        </section>
+
+        <!-- Work Experience -->
+        <section>
+            <div class="section-title">- W O R K &nbsp; E X P E R I E N C E -</div>
+
+            <div class="job">
+                <div class="job-title">Cellular System Engineer</div>
+                <div class="job-company">Apple Inc., San Diego, USA | <strong>June 2025 – now</strong></div>
+                <ul>
+                    <li>Working in the AGC (Automatic Gain Control) team on cellular modem systems.</li>
+                    <li>Helping in Lab bringup issues and debugging.</li>
+                    <li>Developing and improving tools used by the team in bringup using GenAI tools like Claude Code for issue report analysis and log analysis.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Senior Modem System Engineer</div>
+                <div class="job-company">Qualcomm Inc., San Diego, USA | <strong>June 2021 – June 2025</strong></div>
+                <ul>
+                    <li>Worked with the mmWave and Sub6 Rx Digital Frontend (RxFE) teams, and contributed to channel parameter estimation for NR (New Radio) team.</li>
+                    <li>Developed scripts and tools for debugging RxFE lab issues and maintained parsers for legacy targets.</li>
+                    <li>Contributed to system documentation for the Rx Digital Frontend (RxFE) and channel parameter estimation.</li>
+                    <li>Supported FW, RF Sys, and SW teams during chip bring-up and assisted in debugging RxFE lab/field issues.</li>
+                    <li>Studied Rel18 DMRS (etype1/etype2) feature, integrated it into the system simulator (Csim) in channel estimation block to analyze gains and limitations, and enabled other teams to test it in their features.</li>
+                    <li>Developed an algorithm to optimize memory usage in channel estimation by implementing online downsampling on key parameter used in MMSE tap calculation</li>
+                    <li>Verified hardware changes and firmware instructions used in various channel estimation subblocks.</li>
+                    <li>Optimized noise estimation algorithm by minimizing signal leakage, enhancing overall signal to noise estimation improving channel estimation in some channel scenarios.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Graduate Research and Teaching Assistant</div>
+                <div class="job-company">Oklahoma State University (OSU), USA | <strong>Jan 2017 – May 2021</strong></div>
+                <ul>
+                    <li>Investigated visible light in wireless comm., detection and sensing systems ideas as: (Vehicle speed estimation, Human vitals estimation, Gesture recognition, Occupancy estimation, Bridge vibration analysis)</li>
+                    <li>Developed hardware prototypes for visible light comm. and sensing projects.</li>
+                    <li>Implemented a prototype for vitals monitoring based on visible light sensing.</li>
+                    <li>Participated in preparing proposals and patents applications for visible light sensing applications.</li>
+                    <li>Helped in preparing SDR lab session for Digital and Wireless communication courses.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Modem System Engineer (Summer Intern)</div>
+                <div class="job-company">Qualcomm Inc., San Diego, USA (Virtual) | <strong>May – Aug. 2020</strong></div>
+                <ul>
+                    <li>Optimized Volterra series parameters used in DPD without affecting the performance of the DPD.</li>
+                    <li>Utilized the Laguerre Expansion technique (LET) for DPD and PA modeling parameter space reduction.</li>
+                    <li>Compared LET with legacy algorithms in terms of complexity and performance.</li>
+                    <li>Tested different ANN designs for PA modeling.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Modem System Engineer (Summer Intern)</div>
+                <div class="job-company">Qualcomm Inc., San Diego, USA | <strong>May – Aug. 2019</strong></div>
+                <ul>
+                    <li>Worked on online Digital Pre-Distortion (DPD) block to remove the power amplifier non-linearity.</li>
+                    <li>Developed and simulated different approaches to improve the legacy algorithms used in the system.</li>
+                    <li>Worked on new algorithm to minimize the complexity of the Digital Pre-Distortion (DPD) block using novel signal processing and machine learning techniques.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">Research and Teaching Assistant</div>
+                <div class="job-company">Istanbul Sehir University, Turkey | <strong>Sept. 2014 – Dec. 2016</strong></div>
+                <ul>
+                    <li>Built a fading channel emulator for OFDM systems on MATLAB and LabVIEW.</li>
+                    <li>Verified the software USRP-based channel emulator with the theoretical limits.</li>
+                    <li>Participated in various other projects related to courses like implementing FFT algorithm in C++ and Automatic Modulation Classification based on KDE.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-title">System Design (DSP) Engineer</div>
+                <div class="job-company">Wasiela (Varkon Semiconductors), Egypt | <strong>Oct. 2013 – July 2014</strong></div>
+                <ul>
+                    <li>Learned designing and development of OFDM systems using MATLAB and C++.</li>
+                    <li>Participated in LTE system Sub-blocks modelling.</li>
+                    <li>Developed fixed-point code and architecture of the LTE system physical layer sub-blocks.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Publications -->
+        <section>
+            <div class="section-title">- S E L E C T E D &nbsp; P U B L I C A T I O N S &nbsp; A N D &nbsp; P A T E N T S -</div>
+
+            <div class="publication">
+                1. H. Abuella and M. K. Ozdemir, "Automatic Modulation Classification Based on Kernel Density Estimation," IEEE Canadian Journal of Electrical and Computer Engineering, vol. 39, no. 3, pp. 203-209, Summer2016.
+            </div>
+
+            <div class="publication">
+                2. H. Abuella, F. Miramirkhani, S. Ekin, M. Uysal, and S. Ahmed "ViLDAR – Visible Light Sensing Based Speed Estimation using Vehicle's Headlamps," in IEEE Transactions on Vehicular Technology, vol. 68, no.11, pp. 10406-10417, Nov. 2019.
+            </div>
+
+            <div class="publication">
+                3. H. Abuella and S. Ekin, "Non-Contact Vital Signs Monitoring Through Visible Light Sensing," in IEEE Sensors Journal, vol. 20, no. 7, pp. 3859-3870, April, 2020.
+            </div>
+
+            <div class="publication">
+                4. H. Abuella, S. Ekin, M. Uysal "System and Method for Speed Estimation, Detection and Ranging using Visible Light in Vehicles", U.S. Provisional Patent Application No. 62/541,913.
+            </div>
+
+            <div class="publication">
+                5. H. Abuella et al., "Hybrid RF/VLC Systems: A Comprehensive Survey on Network Topologies, Performance Analyses, Applications, and Future Directions," in IEEE Access, vol. 9, pp. 160402-160436, 2021.
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section>
+            <div class="section-title">- E D U C A T I O N -</div>
+
+            <div class="education-item">
+                <div class="degree">Ph.D. at Oklahoma State University (OSU), USA</div>
+                <div class="school">School of Electrical and Computer Engineering (Current GPA: 4.0/4.0) | <strong>Jan. 2017 – May 2021</strong></div>
+                <div class="edu-details">
+                    <strong>Tentative Thesis:</strong> "Wireless Visible Light Sensing Systems: Applications, Opportunities, and Limitations"<br>
+                    <strong>Advisor:</strong> Assistant Prof. Sabit Ekin<br>
+                    <strong>Courses:</strong> Stochastic Processes, Wireless Communication, Linear Systems, Intelligent Systems.
+                </div>
+            </div>
+
+            <div class="education-item">
+                <div class="degree">M.Sc. at Istanbul Sehir University, Turkey</div>
+                <div class="school">Electronics and Computer Engineering Department (GPA: 3.95/4.0) | <strong>Sept. 2014 – Dec. 2016</strong></div>
+                <div class="edu-details">
+                    <strong>Thesis:</strong> "Study on selected common wireless communication issues: Software channel emulators and Automatic Modulation Classification."<br>
+                    <strong>Advisor:</strong> Assistant Prof. Kemal Özdemir<br>
+                    <strong>Courses:</strong> DSP, Digital Communications, Estimation Theory, Machine Learning.
+                </div>
+            </div>
+
+            <div class="education-item">
+                <div class="degree">Pre-Master at Ain-Shams University, Egypt</div>
+                <div class="school">Communication and Electronics Eng. Department (GPA: 4.0/4.0) | <strong>Sept. 2013 – June 2014</strong></div>
+                <div class="edu-details">
+                    <strong>Courses:</strong> DSP Intro., Advanced Math.
+                </div>
+            </div>
+
+            <div class="education-item">
+                <div class="degree">B.Sc. at Ain-Shams University, Egypt</div>
+                <div class="school">Communication Systems Engineering Program (GPA: 3.4/4.0) | <strong>Sept. 2008 – June 2013</strong></div>
+                <div class="edu-details">
+                    <strong>Thesis:</strong> "Simulating ADHOC Cognitive Radio Network & MAC layer protocols."<br>
+                    <strong>Courses:</strong> Image Processing, Intro. to Machine Learning, Network Communication, Information Theory.
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards -->
+        <section>
+            <div class="section-title">- S C H O L A R S H I P S , &nbsp; A W A R D S , &nbsp; A N D &nbsp; G R A N T S -</div>
+            <div class="award-item">
+                <span class="award-date">May 2018:</span> Awarded Dr. Rao Yarlagadda Graduate Fellowship ($1000) in Electrical & Computer Engineering for 2018/2019.
+            </div>
+            <div class="award-item">
+                <span class="award-date">Nov. 2017:</span> Earned a Travel grant ($500) from GPSGA at OSU in USA.
+            </div>
+            <div class="award-item">
+                <span class="award-date">Aug. 2017:</span> Acquired Research grant ($2,100) from Green Student Initiative (GSI) grant for a project: "A Focus on Enhancing Energy Conservation through Occupancy Estimation" from OSU Student Government Association (SGA).
+            </div>
+            <div class="award-item">
+                <span class="award-date">Aug. 2020:</span> Awarded best hack in Qualcomm Interns Hackathon.
+            </div>
+        </section>
+
+        <!-- Activities -->
+        <section>
+            <div class="section-title">- A C T I V I T I E S -</div>
+            <div class="award-item">
+                <span class="award-date">Fall 2017:</span> Presented a Poster: (H. Abuella, S. Ekin, M. Uysal, and S. Ahmed, ''Vehicle Sensing and Communications Using LED Headlamps for ITS," Oklahoma Transportation Research Day, Oct. 2017, Oklahoma City, OK.
+            </div>
+            <div class="award-item">
+                <span class="award-date">Fall 2017, 2018:</span> Participated in National Lab Day as a student volunteer (LiFi demo).
+            </div>
+            <div class="award-item">
+                <span class="award-date">Summer 2018:</span> Participated in preparing wireless and data communication new lab at OSU (CEAT Endeavor Labs).
+            </div>
+            <div class="award-item">
+                <span class="award-date">Fall 2018:</span> Presented a poster: (H. Abuella, S. Ekin, ''Visible Light Communication and Sensing --Applications for Aerospace Industry--," Boeing Innovation Week, Nov. 2018, Oklahoma City, OK)
+            </div>
+            <div class="award-item">
+                <span class="award-date">Summer 2020:</span> Participated in Qualcomm PhD series to discuss my PhD research.
+            </div>
+        </section>
+
+        <!-- Computer Skills -->
+        <section>
+            <div class="section-title">- C O M P U T E R &nbsp; S K I L L S -</div>
+            <ul>
+                <li><strong>Basic Knowledge:</strong> Linux bash, Assembly, Embedded C</li>
+                <li><strong>Good Knowledge:</strong> LabVIEW, NS2, Visio, LaTeX, GitHub</li>
+                <li><strong>Excellent Knowledge:</strong> C/C++, Python, MATLAB</li>
+            </ul>
+        </section>
+
+        <!-- Languages -->
+        <section>
+            <div class="section-title">- L A N G U A G E S -</div>
+            <ul>
+                <li><strong>Native or bilingual proficiency:</strong> Arabic</li>
+                <li><strong>Professional working proficiency:</strong> English</li>
+                <li><strong>Basic Knowledge:</strong> French, Turkish</li>
+            </ul>
+        </section>
+
+        <!-- Personal Skills -->
+        <section>
+            <div class="section-title">- P E R S O N A L &nbsp; S K I L L S -</div>
+            <ul>
+                <li>Efficient problem solver especially in hardware implementation issues.</li>
+                <li>Quick learner and determined to improve myself.</li>
+                <li>Experienced researcher been doing research for more than six years.</li>
+                <li>Living in foreign countries and traveling experience (3 years in Turkey and 8 years in USA).</li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            - R E F E R E N C E S &nbsp; C A N &nbsp; B E &nbsp; P R O V I D E D &nbsp; U P O N &nbsp; R E Q U E S T -
+        </div>
+    </div>
+
+    <script>
+        // Press 'P' to print/save as PDF
+        document.addEventListener('keydown', function(e) {
+            if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {
+                window.print();
+            }
+        });
+    </script>
+</body>
+</html>
