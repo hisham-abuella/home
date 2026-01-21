@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CLAUDE 101 - Introduction to Claude AI</title>
+    <style>
+        /* ========================================
+           SELF-CONTAINED INTERACTIVE TEMPLATE
+           Full-featured presentation engine
+           No external dependencies required
+           ======================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --title-font: Georgia, 'Times New Roman', serif;
+            --body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --accent-color: #D97757;
+            --accent-light: #e89a7f;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-light: #f5f5f7;
+            --border-color: #d2d2d7;
+            --bg-color: #ffffff;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background: var(--bg-light);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        body.dark-mode {
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --bg-light: #2d2d2d;
+            --border-color: #424245;
+            --accent-color: #e89a7f;
+            --accent-light: #D97757;
+            --bg-color: #1d1d1f;
+        }
+
+        body.dark-mode {
+            background: #0d0d0d;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .slide-frame {
+            width: 100%;
+            height: 100%;
+            max-width: calc((100vh - 40px) * 1.7778);
+            max-height: calc((100vw - 40px) * 0.5625);
+            aspect-ratio: 16 / 9;
+            background: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        body.dark-mode .slide-frame {
+            background: #1d1d1f;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        /* Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 60px 80px;
+            overflow: auto;
+            background: var(--bg-color);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        /* Slide animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide.active h1,
+        .slide.active h2 {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .slide.active h3,
+        .slide.active p {
+            animation: fadeInUp 0.5s ease-out 0.1s forwards;
+            opacity: 0;
+        }
+
+        .slide.active li {
+            animation: fadeInUp 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .slide.active li:nth-child(1) { animation-delay: 0.15s; }
+        .slide.active li:nth-child(2) { animation-delay: 0.25s; }
+        .slide.active li:nth-child(3) { animation-delay: 0.35s; }
+        .slide.active li:nth-child(4) { animation-delay: 0.45s; }
+        .slide.active li:nth-child(5) { animation-delay: 0.55s; }
+        .slide.active li:nth-child(6) { animation-delay: 0.65s; }
+
+        .slide.active .code-block,
+        .slide.active pre {
+            animation: fadeIn 0.5s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* No animation for workflow diagram */
+        .slide.active .workflow-diagram,
+        .slide.active .workflow-diagram * {
+            animation: none;
+            opacity: 1;
+        }
+
+        /* Default Title & Body Layout */
+        .slide h2 {
+            margin-bottom: 0.8em;
+            text-align: left;
+            width: 100%;
+        }
+
+        .slide ul, .slide ol, .slide p, .slide pre {
+            text-align: left;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        body.dark-mode .slide {
+            background: #1d1d1f;
+        }
+
+        /* Typography - Responsive scaling (larger fonts) */
+        h1 {
+            font-family: var(--title-font);
+            font-size: clamp(2.5em, 6vw, 4.5em);
+            font-weight: 700;
+            margin-bottom: 0.4em;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .slide.center-content h1 {
+            font-size: clamp(3em, 7vw, 5em);
+            text-align: center;
+        }
+
+        .slide.center-content h3 {
+            font-size: clamp(1.2em, 2.5vw, 1.8em);
+            color: var(--text-secondary);
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            font-family: var(--title-font);
+            font-size: clamp(2em, 4.5vw, 3.2em);
+            font-weight: 700;
+            margin-bottom: 0.6em;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-size: clamp(1.2em, 2.5vw, 1.8em);
+            font-weight: 600;
+            margin-bottom: 0.5em;
+            color: var(--text-primary);
+        }
+
+        p {
+            font-size: clamp(1.1em, 2.2vw, 1.5em);
+            line-height: 1.6;
+            margin-bottom: 1em;
+        }
+
+        .slide-subtitle {
+            font-size: clamp(0.8em, 1.3vw, 1em);
+            color: var(--text-secondary);
+            margin-bottom: 0.8em;
+            font-weight: 400;
+        }
+
+        /* Ensure subtitle in center-content is smaller */
+        .slide.center-content .slide-subtitle {
+            margin-bottom: 0.6em;
+        }
+
+        ul, ol {
+            font-size: clamp(1.2em, 2.5vw, 1.7em);
+            line-height: 1.8;
+            margin-left: 0;
+            list-style: none;
+        }
+
+        li {
+            padding: 0.5em 0;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.9em;
+            width: clamp(8px, 1.2vw, 10px);
+            height: clamp(8px, 1.2vw, 10px);
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        blockquote {
+            font-family: var(--title-font);
+            font-size: clamp(1.2em, 2.5vw, 1.6em);
+            font-style: italic;
+            line-height: 1.5;
+            max-width: 85%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 2em;
+        }
+
+        code {
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            background: var(--bg-light);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 1em;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1em 0;
+            position: relative;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Copy button for code blocks */
+        .code-block {
+            position: relative;
+            margin: 0.8em 0;
+            display: block;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding-right: 4.5em;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ccc;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--body-font);
+            z-index: 10;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        /* Installation commands */
+        .install-commands {
+            width: 100%;
+        }
+
+        .install-commands .code-block {
+            margin: 0.3em 0 0.8em 0;
+        }
+
+        .install-commands pre {
+            font-size: clamp(0.65em, 1.1vw, 0.85em);
+            padding: 0.8em 5em 0.8em 1em;
+        }
+
+        .cmd-label {
+            font-size: clamp(0.75em, 1.2vw, 0.95em);
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: 0.5em 0 0.2em 0;
+        }
+
+        .cmd-label:first-child {
+            margin-top: 0;
+        }
+
+        /* Template grid */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(12px, 2vw, 20px);
+            width: 100%;
+            margin-top: 0.5em;
+        }
+
+        .template-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(15px, 2.5vw, 25px) clamp(20px, 3vw, 35px);
+            background: linear-gradient(135deg, #D97757 0%, #c4604a 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: clamp(1em, 2vw, 1.5em);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,122,255,0.3);
+        }
+
+        .template-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,122,255,0.4);
+            background: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
+        }
+
+        /* No animation for template grid */
+        .slide.active .template-grid,
+        .slide.active .template-grid * {
+            animation: none;
+            opacity: 1;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            font-size: clamp(0.65em, 1.2vw, 0.9em);
+            display: table;
+            border-collapse: collapse;
+        }
+
+        .compare-row {
+            display: table-row;
+        }
+
+        .compare-row.header {
+            background: var(--text-primary);
+            color: white;
+            font-weight: 700;
+        }
+
+        .compare-row.header .compare-cell:nth-child(2) {
+            background: #c53030;
+            color: white;
+        }
+
+        .compare-row.header .compare-cell.highlight {
+            background: #276749;
+            color: white;
+        }
+
+        .compare-cell {
+            display: table-cell;
+            padding: clamp(8px, 1.2vw, 14px) clamp(12px, 2vw, 20px);
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .compare-row:last-child .compare-cell {
+            border-bottom: none;
+        }
+
+        .compare-row:not(.header) .compare-cell:first-child {
+            font-weight: 600;
+            background: var(--bg-light);
+            width: 25%;
+        }
+
+        .compare-row:not(.header) .compare-cell:nth-child(2) {
+            background: #fff5f5;
+            color: #c53030;
+            width: 37.5%;
+        }
+
+        .compare-cell.highlight {
+            background: #f0fff4;
+            color: #276749;
+            font-weight: 600;
+            width: 37.5%;
+        }
+
+        body.dark-mode .compare-row:not(.header) .compare-cell:first-child {
+            background: var(--bg-light);
+        }
+
+        body.dark-mode .compare-row:not(.header) .compare-cell:nth-child(2) {
+            background: rgba(197, 48, 48, 0.25);
+            color: #fc8181;
+        }
+
+        body.dark-mode .compare-cell.highlight {
+            background: rgba(39, 103, 73, 0.3);
+            color: #68d391;
+        }
+
+        body.dark-mode .compare-row.header .compare-cell:nth-child(2) {
+            background: #9b2c2c;
+        }
+
+        body.dark-mode .compare-row.header .compare-cell.highlight {
+            background: #22543d;
+        }
+
+        /* No animation for comparison table */
+        .slide.active .comparison-table,
+        .slide.active .comparison-table * {
+            animation: none;
+            opacity: 1;
+        }
+
+        /* Larger model table */
+        .comparison-table.model-table {
+            font-size: clamp(0.8em, 1.5vw, 1.1em);
+            margin-top: 1em;
+        }
+
+        .comparison-table.model-table .compare-cell {
+            padding: clamp(12px, 2vw, 20px) clamp(15px, 2.5vw, 25px);
+        }
+
+        .comparison-table.model-table .compare-row.header {
+            background: #D97757;
+        }
+
+        .comparison-table.model-table .compare-row.header .compare-cell:nth-child(2),
+        .comparison-table.model-table .compare-row.header .compare-cell:nth-child(3) {
+            background: #D97757;
+        }
+
+        /* Access Options Grid */
+        .access-options {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: clamp(15px, 2vw, 25px);
+            width: 100%;
+            margin-top: 1.5em;
+        }
+
+        .access-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: clamp(20px, 3vw, 35px);
+            background: var(--bg-light);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .access-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .access-icon {
+            font-size: clamp(2em, 4vw, 3em);
+            margin-bottom: 0.5em;
+        }
+
+        .access-title {
+            font-size: clamp(1em, 1.8vw, 1.3em);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3em;
+        }
+
+        .access-desc {
+            font-size: clamp(0.7em, 1.2vw, 0.9em);
+            color: var(--text-secondary);
+        }
+
+        body.dark-mode .access-option {
+            background: #2d2d2d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Feature Grid for Skills/MCPs */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 700px;
+            margin: 1em auto;
+        }
+
+        .feature-grid.three-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .feature-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 1.4em;
+            flex-shrink: 0;
+        }
+
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .feature-content strong {
+            font-size: 0.95em;
+            color: var(--text-primary);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .feature-content span {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            margin-top: 0.15em;
+        }
+
+        body.dark-mode .feature-card {
+            background: #2d2d2d;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .mcp-info {
+            background: linear-gradient(135deg, #D97757 0%, #e89a7f 100%);
+            color: white;
+            padding: clamp(12px, 2vw, 18px) clamp(15px, 2.5vw, 25px);
+            border-radius: 12px;
+            margin-bottom: 1em;
+            font-size: clamp(0.85em, 1.3vw, 1em);
+        }
+
+        .mcp-info p {
+            margin: 0;
+        }
+
+        /* Skills List */
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(8px, 1.5vw, 12px);
+            width: 100%;
+            margin: 1em 0;
+        }
+
+        .skill-item {
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .skill-item summary {
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 1.2vw, 12px);
+            padding: clamp(10px, 1.8vw, 16px) clamp(12px, 2vw, 20px);
+            cursor: pointer;
+            font-size: clamp(0.85em, 1.4vw, 1.05em);
+            list-style: none;
+        }
+
+        .skill-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .skill-item summary::after {
+            content: '▶';
+            margin-left: auto;
+            font-size: 0.7em;
+            color: var(--text-secondary);
+            transition: transform 0.2s;
+        }
+
+        .skill-item[open] summary::after {
+            transform: rotate(90deg);
+        }
+
+        .skill-icon {
+            font-size: 1.2em;
+        }
+
+        .skill-item strong {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: #D97757;
+        }
+
+        .skill-content {
+            padding: 0 clamp(12px, 2vw, 20px) clamp(10px, 1.8vw, 16px);
+            padding-left: clamp(40px, 5vw, 55px);
+            font-size: clamp(0.75em, 1.2vw, 0.9em);
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.02);
+        }
+
+        body.dark-mode .skill-item {
+            background: #2d2d2d;
+        }
+
+        body.dark-mode .skill-content {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .skill-create {
+            margin-top: 1em;
+            padding: clamp(10px, 1.5vw, 14px) clamp(12px, 2vw, 18px);
+            background: linear-gradient(135deg, #D97757 0%, #e89a7f 100%);
+            color: white;
+            border-radius: 8px;
+            font-size: clamp(0.8em, 1.3vw, 0.95em);
+        }
+
+        .skill-create code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        /* Info List */
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 1.5vw, 15px);
+            width: 100%;
+            margin: 1em 0;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: clamp(12px, 1.8vw, 18px);
+            padding: clamp(12px, 2vw, 18px) clamp(15px, 2.5vw, 22px);
+            background: var(--bg-light);
+            border-radius: 10px;
+            font-size: clamp(0.9em, 1.5vw, 1.1em);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .info-icon {
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        body.dark-mode .info-item {
+            background: #2d2d2d;
+        }
+
+        /* Mistake cards styling */
+        .feature-card.mistake {
+            border-left: 3px solid #e53e3e;
+        }
+
+        kbd {
+            display: inline-block;
+            padding: 0.15em 0.5em;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.85em;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Keyboard Shortcuts Grid */
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(12px, 2vw, 20px);
+            width: 100%;
+            margin-top: 1em;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: clamp(12px, 1.5vw, 18px);
+            padding: clamp(12px, 2vw, 20px);
+            background: var(--bg-light);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .shortcut-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .shortcut-key {
+            min-width: clamp(40px, 5vw, 55px);
+            height: clamp(40px, 5vw, 55px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #fafafa 0%, #e8e8e8 100%);
+            border: 1px solid #ccc;
+            border-bottom: 3px solid #aaa;
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: clamp(0.9em, 1.5vw, 1.2em);
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .shortcut-key {
+            background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+            border-color: #555;
+            border-bottom-color: #222;
+            color: #eee;
+        }
+
+        .shortcut-label {
+            font-size: clamp(0.8em, 1.3vw, 1em);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        body.dark-mode .shortcut-item {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* No animation for shortcuts grid */
+        .slide.active .shortcuts-grid,
+        .slide.active .shortcuts-grid * {
+            animation: none;
+            opacity: 1;
+        }
+
+        /* Contact Links */
+        .contact-links {
+            display: flex;
+            gap: clamp(15px, 3vw, 30px);
+            margin-top: 1.5em;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: clamp(10px, 1.5vw, 15px) clamp(18px, 2.5vw, 28px);
+            background: var(--bg-light);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: clamp(0.85em, 1.4vw, 1.1em);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-link:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,122,255,0.3);
+        }
+
+        body.dark-mode .contact-link {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        body.dark-mode .contact-link:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        /* No animation for contact links */
+        .slide.active .contact-links,
+        .slide.active .contact-links * {
+            animation: none;
+            opacity: 1;
+        }
+
+        .slide.active .feature-grid,
+        .slide.active .feature-grid * {
+            animation: none;
+            opacity: 1;
+        }
+
+        /* Slide Types */
+        .slide.center-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide.center-content h1,
+        .slide.center-content h2,
+        .slide.center-content h3,
+        .slide.center-content p {
+            text-align: center;
+            width: 100%;
+        }
+
+        .slide.center-content h2 {
+            font-size: clamp(2em, 4vw, 3em);
+            margin-bottom: 1em;
+        }
+
+        .slide.center-content ul {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .slide.center-content ul li {
+            padding: 0.6em 0;
+            padding-left: 0.5em;
+            font-size: clamp(1em, 2vw, 1.4em);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .slide.center-content ul li::before {
+            display: none;
+        }
+
+        .slide.center-content .access-options,
+        .slide.center-content .info-list,
+        .slide.center-content .skills-list,
+        .slide.center-content .template-grid,
+        .slide.center-content .install-commands,
+        .slide.center-content .skill-create,
+        .slide.center-content .mcp-info {
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .slide.center-content .comparison-table {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 900px;
+        }
+
+        .slide.section-slide {
+            background: var(--text-primary);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        body.dark-mode .slide.section-slide {
+            background: #000;
+        }
+
+        .slide.section-slide h2 {
+            color: white;
+            font-size: 2.8em;
+        }
+
+        /* Big Number */
+        .big-number {
+            font-family: var(--title-font);
+            font-size: 6em;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.2em;
+        }
+
+        .fact-label {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+        }
+
+        /* Two Column */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+            flex: 1;
+        }
+
+        /* Agenda */
+        .agenda-list {
+            counter-reset: agenda;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .agenda-list li {
+            padding: 0.8em 0;
+            padding-left: 4em;
+            border-bottom: none;
+            counter-increment: agenda;
+            font-size: 1.6em;
+            font-weight: 500;
+        }
+
+        .agenda-list li:last-child {
+            border-bottom: none;
+        }
+
+        .agenda-list li::before {
+            content: counter(agenda);
+            width: 44px;
+            height: 44px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 0.6em;
+            top: 0.6em;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: 600;
+            top: 0.5em;
+        }
+
+        /* Image Placeholder */
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1em;
+            min-height: 200px;
+            border-radius: 12px;
+        }
+
+        /* Author Footer */
+        .author-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            right: 60px;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            text-align: center;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10001;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.95);
+            padding: 8px 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        body.dark-mode .toolbar {
+            background: rgba(45, 45, 45, 0.95);
+        }
+
+        .toolbar button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .toolbar button:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .toolbar button.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .toolbar-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border-color);
+            margin: 8px 4px;
+        }
+
+        /* Logos */
+        .presentation-logos {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .presentation-logo {
+            width: clamp(50px, 7vw, 70px);
+            height: clamp(50px, 7vw, 70px);
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .presentation-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .presentation-logo.large {
+            width: clamp(80px, 12vw, 120px);
+            height: clamp(80px, 12vw, 120px);
+        }
+
+        .presentation-logo.claude-logo {
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .presentation-logo.claude-logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Workflow Diagram - Professional Design */
+        .workflow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(8px, 1.5vw, 20px);
+            margin-top: 1.5em;
+            width: 100%;
+            flex-wrap: nowrap;
+            padding: clamp(15px, 2vw, 30px);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+        }
+
+        body.dark-mode .workflow-diagram {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            border: none;
+            border-radius: 16px;
+            padding: clamp(15px, 2vw, 25px) clamp(12px, 1.5vw, 20px);
+            flex: 1;
+            max-width: clamp(100px, 14vw, 150px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        body.dark-mode .workflow-step {
+            background: #1e293b;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0,122,255,0.2), 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            width: clamp(45px, 6vw, 65px);
+            height: clamp(45px, 6vw, 65px);
+            background: linear-gradient(135deg, #D97757 0%, #c4604a 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: clamp(18px, 2.5vw, 28px);
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(0,122,255,0.35);
+        }
+
+        .step-content {
+            text-align: center;
+        }
+
+        .step-content strong {
+            display: block;
+            font-size: clamp(0.65em, 1vw, 0.9em);
+            margin-bottom: 6px;
+            color: var(--text-primary);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .step-content span {
+            font-size: clamp(0.5em, 0.8vw, 0.7em);
+            color: var(--text-secondary);
+            line-height: 1.3;
+            display: block;
+            opacity: 0.85;
+        }
+
+        .workflow-arrow {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: var(--accent-color);
+            opacity: 0.6;
+        }
+
+        .workflow-arrow svg {
+            width: clamp(20px, 3vw, 35px);
+            height: clamp(20px, 3vw, 35px);
+        }
+
+        @media (max-width: 768px) {
+            .workflow-diagram {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 15px;
+            }
+            .workflow-arrow {
+                display: none;
+            }
+            .workflow-step {
+                flex: 1 1 calc(33% - 10px);
+                max-width: none;
+                min-width: 90px;
+            }
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+            z-index: 999;
+        }
+
+        /* Slide Number */
+        .slide-number {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            z-index: 999;
+        }
+
+        /* Drawing Canvas */
+        .drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 500;
+            pointer-events: none;
+        }
+
+        .drawing-canvas.active {
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+
+        /* Red Marker */
+        .red-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff3b30;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 600;
+            transform: translate(-50%, -50%);
+            display: none;
+            box-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
+        }
+
+        .slide-frame.marker-mode .red-marker {
+            display: block;
+        }
+
+        .slide-frame.marker-mode {
+            cursor: none;
+        }
+
+        /* Outline Panel */
+        .outline-panel {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            transition: width 0.3s ease;
+            z-index: 2000;
+            padding: 20px 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .outline-panel {
+            background: rgba(29, 29, 31, 0.98);
+        }
+
+        .outline-panel.open {
+            width: 280px;
+            padding: 20px;
+        }
+
+        .outline-panel.open ~ .presentation-container {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+        }
+
+        .outline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .outline-header h3 {
+            font-size: 1em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .outline-close {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--bg-light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .outline-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .outline-item:hover {
+            background: var(--bg-light);
+        }
+
+        .outline-item.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .outline-number {
+            width: 24px;
+            height: 24px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .outline-item.active .outline-number {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .outline-title {
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* PDF Modal */
+        .pdf-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+        }
+
+        .pdf-modal.visible {
+            display: flex;
+        }
+
+        .pdf-modal-content {
+            background: var(--bg-color);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .pdf-modal-content h3 {
+            margin-bottom: 15px;
+        }
+
+        .pdf-modal-content p {
+            margin-bottom: 20px;
+            font-size: 1em;
+            color: var(--text-secondary);
+        }
+
+        .pdf-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .pdf-modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pdf-modal-btn.primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .pdf-modal-btn.secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 25px;
+            }
+
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.6em; }
+            h3 { font-size: 1.2em; }
+            p, ul, ol { font-size: 1em; }
+
+            .toolbar {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 6px 10px;
+            }
+
+            .toolbar button {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .toolbar-divider {
+                display: none;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .big-number {
+                font-size: 4em;
+            }
+
+            .outline-panel {
+                width: 260px;
+            }
+
+            .presentation-container {
+                padding: 60px 10px 10px;
+            }
+        }
+
+        /* Fullscreen Mode */
+        body.fullscreen-mode .presentation-container {
+            background: black;
+            padding: 0;
+        }
+
+        body.fullscreen-mode .slide-frame {
+            width: 100vw;
+            height: 100vh;
+            max-width: 100vw;
+            max-height: 100vh;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        body.fullscreen-mode .toolbar {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        body.fullscreen-mode .toolbar:hover {
+            opacity: 1;
+        }
+
+        /* Print Styles */
+        @media print {
+            .slide {
+                page-break-after: always;
+                position: relative;
+                display: block !important;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .toolbar, .progress-bar, .slide-number, .drawing-canvas, 
+            .outline-panel, .red-marker, .pdf-modal {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slides Content in Markdown -->
+    <script id="slides-markdown" type="text/markdown">
+class: center-content
+
+# CLAUDE 101
+### Your Complete Introduction to Claude AI
+
+Hisham Abuella
+
+<div class="contact-links"><a href="mailto:hisham.abuella1@gmail.com" class="contact-link">📧 Email</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="contact-link">💼 LinkedIn</a><a href="https://hisham-abuella.github.io/home/" target="_blank" class="contact-link">🌐 Website</a></div>
+
+---
+class: center-content
+
+## What is Claude?
+
+<div class="info-list">
+<div class="info-item"><span class="info-icon">🤖</span>AI assistant created by Anthropic</div>
+<div class="info-item"><span class="info-icon">💡</span>Designed to be helpful, harmless, and honest</div>
+<div class="info-item"><span class="info-icon">🛡️</span>Trained using Constitutional AI (CAI)</div>
+<div class="info-item"><span class="info-icon">✨</span>Excels at writing, analysis, coding, and reasoning</div>
+<div class="info-item"><span class="info-icon">🌐</span>Available via API, web, and mobile apps</div>
+</div>
+
+---
+class: center-content
+
+## Claude Model Family
+
+<table class="comparison-table model-table"><tr class="compare-row header"><td class="compare-cell">Model</td><td class="compare-cell">Best For</td><td class="compare-cell">Context</td><td class="compare-cell highlight">Strengths</td></tr><tr class="compare-row"><td class="compare-cell">🧠 <strong>Opus 4.5</strong></td><td class="compare-cell">Research, complex analysis, creative writing</td><td class="compare-cell">200K</td><td class="compare-cell highlight">✅ Most intelligent, best reasoning</td></tr><tr class="compare-row"><td class="compare-cell">⚡ <strong>Sonnet 4</strong></td><td class="compare-cell">Coding, daily tasks, balanced workloads</td><td class="compare-cell">200K</td><td class="compare-cell highlight">✅ Best speed-to-quality ratio</td></tr><tr class="compare-row"><td class="compare-cell">🚀 <strong>Haiku 3.5</strong></td><td class="compare-cell">Quick queries, real-time chat, high volume</td><td class="compare-cell">200K</td><td class="compare-cell highlight">✅ Fastest, most affordable</td></tr></table>
+
+---
+class: center-content
+
+## How to Access Claude
+
+<div class="access-options">
+<div class="access-option">
+<div class="access-icon">🌐</div>
+<div class="access-title">claude.ai</div>
+<div class="access-desc">Web interface - free & Pro plans</div>
+</div>
+<div class="access-option">
+<div class="access-icon">📱</div>
+<div class="access-title">Mobile App</div>
+<div class="access-desc">iOS & Android apps</div>
+</div>
+<div class="access-option">
+<div class="access-icon">🔌</div>
+<div class="access-title">API</div>
+<div class="access-desc">Build your own applications</div>
+</div>
+<div class="access-option">
+<div class="access-icon">💻</div>
+<div class="access-title">Claude Code</div>
+<div class="access-desc">Terminal CLI for developers</div>
+</div>
+</div>
+
+---
+class: center-content
+
+## Best Practices for Prompting
+
+<div class="info-list">
+<div class="info-item"><span class="info-icon">🎯</span>Be specific about what you want</div>
+<div class="info-item"><span class="info-icon">📝</span>Provide context and examples</div>
+<div class="info-item"><span class="info-icon">📊</span>Break complex tasks into steps</div>
+<div class="info-item"><span class="info-icon">🔢</span>Ask Claude to think step-by-step</div>
+<div class="info-item"><span class="info-icon">🔄</span>Iterate and refine your prompts</div>
+</div>
+
+---
+class: center-content
+
+## Popular Use Cases
+
+<div class="template-grid">
+<a href="#" class="template-link">✍️ Writing & Editing</a>
+<a href="#" class="template-link">💻 Code Assistant</a>
+<a href="#" class="template-link">📊 Data Analysis</a>
+<a href="#" class="template-link">🔬 Research Helper</a>
+<a href="#" class="template-link">🎓 Learning Tutor</a>
+<a href="#" class="template-link">💡 Brainstorming</a>
+</div>
+
+---
+class: center-content
+
+## Setup Options
+
+<div class="access-options">
+<div class="access-option">
+<div class="access-icon">🆓</div>
+<div class="access-title">Free Tier</div>
+<div class="access-desc">claude.ai signup - limited usage</div>
+</div>
+<div class="access-option">
+<div class="access-icon">⭐</div>
+<div class="access-title">Pro Plan</div>
+<div class="access-desc">$20/month - 5x more usage</div>
+</div>
+<div class="access-option">
+<div class="access-icon">🔌</div>
+<div class="access-title">API Access</div>
+<div class="access-desc">Pay per token - build apps</div>
+</div>
+<div class="access-option">
+<div class="access-icon">🏢</div>
+<div class="access-title">Enterprise</div>
+<div class="access-desc">Custom plans & support</div>
+</div>
+</div>
+
+---
+class: center-content
+
+## Claude Code - Install Node.js First
+
+<div class="install-commands">
+<p class="cmd-label">macOS (Homebrew):</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>brew install node</code></pre></div>
+
+<p class="cmd-label">Linux (Ubuntu/Debian):</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>sudo apt update && sudo apt install nodejs npm</code></pre></div>
+
+<p class="cmd-label">Windows:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>Download from https://nodejs.org (includes npm)</code></pre></div>
+</div>
+
+---
+class: center-content
+
+## Install Claude Code CLI
+
+<div class="install-commands">
+<p class="cmd-label">Install Claude Code (all platforms):</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>npm install -g @anthropic-ai/claude-code</code></pre></div>
+
+<p class="cmd-label">Authenticate with your account:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude login</code></pre></div>
+
+<p class="cmd-label">Start using Claude:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude</code></pre></div>
+</div>
+
+---
+class: center-content
+
+## Verify Installation
+
+<div class="install-commands">
+<p class="cmd-label">Check Claude Code version:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude --version</code></pre></div>
+
+<p class="cmd-label">List available models:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude config list</code></pre></div>
+
+<p class="cmd-label">Set preferred model:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude config set model sonnet</code></pre></div>
+</div>
+
+---
+class: center-content
+
+## Your First Conversation
+
+<div class="install-commands">
+<p class="cmd-label">Start interactive mode:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude</code></pre></div>
+
+<p class="cmd-label">Ask a question directly:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude "explain this code" main.py</code></pre></div>
+
+<p class="cmd-label">Get help on any topic:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude "how do I create a React component?"</code></pre></div>
+</div>
+
+---
+class: center-content
+
+## Session Management
+
+<div class="install-commands">
+<p class="cmd-label">Continue last session:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude --continue</code></pre></div>
+
+<p class="cmd-label">Resume specific session:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude --resume</code></pre></div>
+
+<p class="cmd-label">Start fresh session:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude</code></pre></div>
+</div>
+
+---
+class: center-content
+
+## Print Mode (Non-Interactive)
+
+<div class="install-commands">
+<p class="cmd-label">Single question, get answer, exit:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude -p "what is the capital of France?"</code></pre></div>
+
+<p class="cmd-label">Pipe input to Claude:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>cat error.log | claude -p "explain this error"</code></pre></div>
+
+<p class="cmd-label">Use in scripts:</p>
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">Copy</button><pre><code>claude -p "generate a UUID" >> ids.txt</code></pre></div>
+</div>
+
+---
+class: center-content
+
+## Claude Code Skills
+
+<div class="skills-list">
+<details class="skill-item">
+<summary><span class="skill-icon">⚡</span><strong>/commit</strong> - Auto-generate commit messages</summary>
+<div class="skill-content">Analyzes staged changes and creates meaningful commit messages following conventional commit format.</div>
+</details>
+<details class="skill-item">
+<summary><span class="skill-icon">🔀</span><strong>/commit-push-pr</strong> - Full git workflow</summary>
+<div class="skill-content">Commits changes, pushes to remote, and opens a pull request with auto-generated description.</div>
+</details>
+<details class="skill-item">
+<summary><span class="skill-icon">🎨</span><strong>/frontend-design</strong> - Generate UI components</summary>
+<div class="skill-content">Creates production-ready, visually polished frontend components with modern design patterns.</div>
+</details>
+<details class="skill-item">
+<summary><span class="skill-icon">🧹</span><strong>/clean_gone</strong> - Clean stale branches</summary>
+<div class="skill-content">Removes local git branches that have been deleted on remote.</div>
+</details>
+</div>
+
+<div class="skill-create">
+<strong>Create your own:</strong> Add <code>.md</code> files to <code>~/.claude/skills/</code>
+</div>
+
+---
+class: center-content
+
+## MCP (Model Context Protocol)
+
+<p class="slide-subtitle">Extend Claude's capabilities by connecting to external tools and services</p>
+
+<div class="feature-grid"><div class="feature-card"><div class="feature-icon">🔍</div><div class="feature-content"><strong>Context7</strong><span>Query up-to-date library docs</span></div></div><div class="feature-card"><div class="feature-icon">🌐</div><div class="feature-content"><strong>Playwright</strong><span>Browser automation & testing</span></div></div><div class="feature-card"><div class="feature-icon">📁</div><div class="feature-content"><strong>Filesystem</strong><span>Read/write files safely</span></div></div><div class="feature-card"><div class="feature-icon">🐙</div><div class="feature-content"><strong>GitHub</strong><span>Manage repos, PRs, issues</span></div></div><div class="feature-card"><div class="feature-icon">🗄️</div><div class="feature-content"><strong>Database</strong><span>Query SQL databases</span></div></div><div class="feature-card"><div class="feature-icon">🔧</div><div class="feature-content"><strong>Custom MCPs</strong><span>Build your own integrations</span></div></div></div>
+
+---
+class: center-content
+
+## Other Powerful Features
+
+<div class="feature-grid"><div class="feature-card"><div class="feature-icon">🪝</div><div class="feature-content"><strong>Hooks</strong><span>Run custom scripts on Claude actions</span></div></div><div class="feature-card"><div class="feature-icon">🧠</div><div class="feature-content"><strong>Memory</strong><span>Remembers context across sessions</span></div></div><div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-content"><strong>Agents</strong><span>Spawn sub-agents for complex tasks</span></div></div><div class="feature-card"><div class="feature-icon">📋</div><div class="feature-content"><strong>Plan Mode</strong><span>Review plans before execution</span></div></div><div class="feature-card"><div class="feature-icon">⏳</div><div class="feature-content"><strong>Background Tasks</strong><span>Run long operations async</span></div></div><div class="feature-card"><div class="feature-icon">✅</div><div class="feature-content"><strong>Todo Tracking</strong><span>Built-in task management</span></div></div></div>
+
+---
+class: center-content
+
+## Smart Prompting Techniques
+
+<table class="comparison-table"><tr class="compare-row header"><td class="compare-cell">Technique</td><td class="compare-cell">Example</td><td class="compare-cell highlight">Why It Works</td></tr><tr class="compare-row"><td class="compare-cell">🎯 Be Specific</td><td class="compare-cell">"Write a 500-word blog post"</td><td class="compare-cell highlight">✅ Clear expectations</td></tr><tr class="compare-row"><td class="compare-cell">📝 Give Context</td><td class="compare-cell">"As a senior developer..."</td><td class="compare-cell highlight">✅ Tailored response</td></tr><tr class="compare-row"><td class="compare-cell">🔢 Step-by-Step</td><td class="compare-cell">"Think through this step by step"</td><td class="compare-cell highlight">✅ Better reasoning</td></tr><tr class="compare-row"><td class="compare-cell">📋 Use Examples</td><td class="compare-cell">"Like this format: ..."</td><td class="compare-cell highlight">✅ Consistent output</td></tr><tr class="compare-row"><td class="compare-cell">🔄 Iterate</td><td class="compare-cell">"Make it more concise"</td><td class="compare-cell highlight">✅ Refine results</td></tr></table>
+
+---
+class: center-content
+
+## Power User Tips
+
+<div class="feature-grid"><div class="feature-card"><div class="feature-icon">📁</div><div class="feature-content"><strong>Projects</strong><span>Organize conversations</span></div></div><div class="feature-card"><div class="feature-icon">📎</div><div class="feature-content"><strong>Upload Files</strong><span>PDFs, code, images</span></div></div><div class="feature-card"><div class="feature-icon">⚙️</div><div class="feature-content"><strong>Custom Instructions</strong><span>Your personal style</span></div></div><div class="feature-card"><div class="feature-icon">📦</div><div class="feature-content"><strong>Artifacts</strong><span>Code & documents</span></div></div><div class="feature-card"><div class="feature-icon">🔗</div><div class="feature-content"><strong>Chain Prompts</strong><span>Complex workflows</span></div></div><div class="feature-card"><div class="feature-icon">🔍</div><div class="feature-content"><strong>Self-Critique</strong><span>Ask Claude to review</span></div></div></div>
+
+---
+class: center-content
+
+## Common Mistakes to Avoid
+
+<div class="feature-grid mistakes-grid"><div class="feature-card mistake"><div class="feature-icon">❌</div><div class="feature-content"><strong>Too Vague</strong><span>Be specific in requests</span></div></div><div class="feature-card mistake"><div class="feature-icon">❌</div><div class="feature-content"><strong>No Context</strong><span>Always provide background</span></div></div><div class="feature-card mistake"><div class="feature-icon">❌</div><div class="feature-content"><strong>Expecting Perfection</strong><span>First try isn't final</span></div></div><div class="feature-card mistake"><div class="feature-icon">❌</div><div class="feature-content"><strong>Ignoring Limits</strong><span>Know Claude's boundaries</span></div></div><div class="feature-card mistake"><div class="feature-icon">❌</div><div class="feature-content"><strong>Not Verifying</strong><span>Check important facts</span></div></div><div class="feature-card mistake"><div class="feature-icon">❌</div><div class="feature-content"><strong>Skipping Iteration</strong><span>Refine your prompts</span></div></div></div>
+
+---
+class: center-content
+
+# Start Your Claude Journey!
+### The AI that thinks with you
+
+<div class="contact-links"><a href="https://claude.ai" target="_blank" class="contact-link">🤖 Try Claude</a><a href="https://docs.anthropic.com" target="_blank" class="contact-link">📚 Documentation</a><a href="https://console.anthropic.com" target="_blank" class="contact-link">🔑 Get API Key</a></div>
+    </script>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <button id="btn-outline" title="Outline (O)">&#9776;</button>
+        <button id="btn-marker" title="Marker (M)">&#9673;</button>
+        <button id="btn-draw" title="Draw (D)">&#9998;</button>
+        <button id="btn-clear" title="Clear (C)">&#10006;</button>
+        <div class="toolbar-divider"></div>
+        <button id="btn-theme" title="Theme (T)">&#9728;</button>
+        <button id="btn-pdf" title="PDF (P)">&#128196;</button>
+        <button id="btn-fullscreen" title="Fullscreen (F)">&#9974;</button>
+    </div>
+
+    <!-- Outline Panel -->
+    <div class="outline-panel">
+        <div class="outline-header">
+            <h3>Slide Outline</h3>
+            <button class="outline-close">&times;</button>
+        </div>
+        <div class="outline-list"></div>
+    </div>
+
+    <!-- PDF Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-modal-content">
+            <h3>Export to PDF</h3>
+            <p>This will open the print dialog. Select "Save as PDF" as the destination.</p>
+            <div class="pdf-modal-buttons">
+                <button class="pdf-modal-btn secondary" id="btn-pdf-cancel">Cancel</button>
+                <button class="pdf-modal-btn primary" id="btn-pdf-export">Export PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+        <div class="slide-frame" id="slideFrame">
+            <div class="red-marker"></div>
+            <canvas class="drawing-canvas"></canvas>
+            <div class="slides-container"></div>
+            <div class="presentation-logos">
+                <div class="presentation-logo claude-logo">
+                    <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.5640454,73.1229824 L43.18374,60.9914679 L43.5454595,59.934134 L43.18374,59.3498179 L42.1264062,59.3498179 L38.5092115,59.1272213 L26.1551003,58.7933264 L15.442639,58.3481333 L5.0640726,57.7916418 L2.44856258,57.2351503 L0,54.0074996 L0.250421173,52.3936743 L2.44856258,50.9189718 L5.59273953,51.1972175 L12.5488832,51.6702353 L22.9830987,52.3936743 L30.5513831,52.8388675 L41.7646867,54.0074996 L43.5454595,54.0074996 L43.7958807,53.2840606 L43.18374,52.8388675 L42.7107222,52.3936743 L31.9147872,45.0758111 L20.2284658,37.3405793 L14.1070594,32.8886474 L10.795935,30.6348568 L9.12646052,28.5201891 L8.40302157,23.9013097 L11.4080756,20.5901853 L15.442639,20.8684311 L16.4721483,21.1466768 L20.5623607,24.2908538 L29.2992772,31.0522254 L40.7073529,39.455247 L42.3768273,40.8464757 L43.0446171,40.373458 L43.1280909,40.0395631 L42.3768273,38.7874572 L36.1719472,27.5741536 L29.5496984,16.1660779 L26.6002935,11.4359002 L25.8212054,8.5977936 C25.5429596,7.42916146 25.3481876,6.45530134 25.3481876,5.25884463 L28.7706103,0.612140645 L30.6626814,0 L35.2259116,0.612140645 L37.1458073,2.28161513 L39.9839139,8.76474105 L44.5749688,18.97636 L51.6980599,32.8608228 L53.784903,36.9788598 L54.897886,40.7908266 L55.3152546,41.9594587 L56.0386935,41.9594587 L56.0386935,41.2916689 L56.6230096,33.4729634 L57.708168,23.8734851 L58.7655019,11.5193739 L59.1272213,8.0413021 L60.852345,3.86761589 L64.2747677,1.61382534 L66.9459269,2.89375577 L69.1440683,6.03793272 L68.8379979,8.06912668 L67.5302429,16.555622 L64.970382,29.8557687 L63.3009076,38.7596326 L64.2747677,38.7596326 L65.3877507,37.6466496 L69.8953318,31.6643661 L77.4636161,22.2040107 L80.8025651,18.4476931 L84.6980055,14.3018314 L87.2022173,12.3262866 L91.932395,12.3262866 L95.4104668,17.5016575 L93.8522906,22.8439759 L88.9829901,29.0210315 L84.9484267,34.2520515 L79.1609152,42.0429324 L75.5437204,48.2756372 L75.8776153,48.7764795 L76.7401772,48.6930058 L89.8177273,45.9105483 L96.8851693,44.6306179 L105.316015,43.18374 L109.127982,44.9645128 L109.545351,46.7731102 L108.042824,50.4737786 L99.0276615,52.6997446 L88.4543231,54.8144123 L72.7056138,58.5429053 L72.5108418,58.6820282 L72.7334384,58.9602739 L79.828705,59.6280637 L82.8615836,59.7950111 L90.2907451,59.7950111 L104.119559,60.8245204 L107.736753,63.2174338 L109.90707,66.1390142 L109.545351,68.3649802 L103.980436,71.2030868 L96.4678007,69.422314 L78.9383186,65.2486278 L72.9282104,63.7461008 L72.0934732,63.7461008 L72.0934732,64.2469431 L77.1018966,69.1440683 L86.2840063,77.4357915 L97.7755557,88.1204282 L98.3598717,90.7637628 L96.8851693,92.8506059 L95.3269931,92.6280093 L85.2266725,85.0319004 L81.331232,81.6094777 L72.5108418,74.1803163 L71.9265257,74.1803163 L71.9265257,74.9594044 L73.9577197,77.9366339 L84.6980055,94.0748872 L85.254497,99.0276615 L84.4754089,100.641487 L81.6929515,101.615347 L78.6322482,101.058855 L72.3438944,92.2384653 L65.8607684,82.3050921 L60.6297484,73.4012282 L59.9897832,73.7629477 L56.9012554,107.013314 L55.4543775,108.710614 L52.1154285,109.990544 L49.332971,107.875876 L47.8582686,104.453454 L49.332971,97.692082 L51.1137438,88.8716918 L52.5606217,81.8598989 L53.8683767,73.150807 L54.6474648,70.2570512 L54.5918157,70.0622792 L53.9518504,70.1457529 L47.3852508,79.1609152 L37.3962285,92.6558339 L29.4940492,101.114505 L27.6019782,101.865768 L24.3186783,100.168469 L24.6247487,97.1355905 L26.4611706,94.4366067 L37.3962285,80.5243193 L43.9906527,71.8987012 L48.2478126,66.9181023 L48.219988,66.1946633 L47.9695669,66.1946633 L18.9207108,85.059725 L13.7453399,85.7275148 L11.5193739,83.6406717 L11.7976197,80.218249 L12.8549535,79.105266 L21.59187,73.0951579 L21.5640454,73.1229824 Z" fill="#D97757"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar"></div>
+    <div class="slide-number"></div>
+
+    <script>
+        // ========================================
+        // SELF-CONTAINED PRESENTATION ENGINE
+        // Interactive Edition
+        // ========================================
+
+        (function() {
+            'use strict';
+
+            // State
+            let currentSlide = 0;
+            let slides = [];
+            let isDrawing = false;
+            let drawMode = false;
+            let markerMode = false;
+            let isDarkMode = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            // DOM Elements
+            const slideFrame = document.getElementById('slideFrame');
+            const container = document.querySelector('.slides-container');
+            const canvas = document.querySelector('.drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            const progressBar = document.querySelector('.progress-bar');
+            const slideNumber = document.querySelector('.slide-number');
+            const outlinePanel = document.querySelector('.outline-panel');
+            const outlineList = document.querySelector('.outline-list');
+            const redMarker = document.querySelector('.red-marker');
+            const pdfModal = document.getElementById('pdfModal');
+
+            // Copy code function
+            window.copyCode = function(btn) {
+                var codeBlock = btn.parentElement.querySelector('code');
+                var text = codeBlock.textContent;
+                navigator.clipboard.writeText(text).then(function() {
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(function() {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            };
+
+            // Simple Markdown Parser
+            function parseMarkdown(text) {
+                return text
+                    .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                    .replace(/`([^`]+)`/g, '<kbd>$1</kbd>')
+                    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+                    .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
+                    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+                    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+                    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong class="big-number">$1</strong>')
+                    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                    .replace(/^\d+\. (.+)$/gm, '<li class="agenda-item">$1</li>')
+                    .replace(/^- (.+)$/gm, '<li>$1</li>')
+                    .replace(/(<li class="agenda-item">[\s\S]*?<\/li>)+/g, '<ol class="agenda-list">$&</ol>')
+                    .replace(/(<li>[\s\S]*?<\/li>)+/g, function(match) {
+                        if (match.indexOf('agenda-item') === -1) {
+                            return '<ul>' + match + '</ul>';
+                        }
+                        return match;
+                    })
+                    .replace(/^(?!<[h|l|u|o|p|b|c|s|e|k])((?!^$).+)$/gm, '<p>$1</p>');
+            }
+
+            // Parse slides from markdown
+            function parseSlides() {
+                const markdown = document.getElementById('slides-markdown').textContent;
+                const slideTexts = markdown.split(/\n---\n/);
+
+                slides = slideTexts.map(function(text, index) {
+                    let classes = ['slide'];
+                    let footer = '';
+                    let content = text;
+
+                    const lines = text.trim().split('\n');
+                    for (let i = 0; i < Math.min(5, lines.length); i++) {
+                        const line = lines[i].trim();
+                        if (line.indexOf('class:') === 0) {
+                            classes = classes.concat(line.replace('class:', '').trim().split(' '));
+                            content = content.replace(line, '');
+                        } else if (line.indexOf('footer:') === 0) {
+                            footer = line.replace('footer:', '').trim();
+                            content = content.replace(line, '');
+                        }
+                    }
+
+                    const titleMatch = content.match(/^#+ (.+)$/m);
+                    const title = titleMatch ? titleMatch[1] : 'Slide ' + (index + 1);
+
+                    let html = parseMarkdown(content.trim());
+                    if (footer) {
+                        html += '<div class="author-footer">' + footer + '</div>';
+                    }
+
+                    return {
+                        content: html,
+                        classes: classes,
+                        title: title
+                    };
+                });
+            }
+
+            // Render slides
+            function renderSlides() {
+                let slidesHTML = '';
+                slides.forEach(function(slide, index) {
+                    slidesHTML += '<div class="' + slide.classes.join(' ') + '" data-index="' + index + '">' + slide.content + '</div>';
+                });
+                container.innerHTML = slidesHTML;
+
+                // Build outline
+                let outlineHTML = '';
+                slides.forEach(function(slide, index) {
+                    outlineHTML += '<div class="outline-item" data-index="' + index + '"><span class="outline-number">' + (index + 1) + '</span><span class="outline-title">' + slide.title + '</span></div>';
+                });
+                outlineList.innerHTML = outlineHTML;
+            }
+
+            // Navigate to slide
+            function goToSlide(index) {
+                if (index < 0 || index >= slides.length) return;
+
+                document.querySelectorAll('.slide').forEach(function(slide, i) {
+                    slide.classList.toggle('active', i === index);
+                });
+
+                document.querySelectorAll('.outline-item').forEach(function(item, i) {
+                    item.classList.toggle('active', i === index);
+                });
+
+                // Make logo larger on title slide
+                var logo = document.querySelector('.presentation-logo');
+                if (logo) {
+                    logo.classList.toggle('large', index === 0);
+                }
+
+                currentSlide = index;
+                updateProgress();
+            }
+
+            function nextSlide() { goToSlide(currentSlide + 1); }
+            function prevSlide() { goToSlide(currentSlide - 1); }
+
+            function updateProgress() {
+                const progress = ((currentSlide + 1) / slides.length) * 100;
+                progressBar.style.width = progress + '%';
+                slideNumber.textContent = (currentSlide + 1) + ' / ' + slides.length;
+            }
+
+            // Canvas setup
+            function initCanvas() {
+                const rect = slideFrame.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                ctx.strokeStyle = '#ff3b30';
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+            }
+
+            function startDrawing(e) {
+                if (!drawMode) return;
+                isDrawing = true;
+                const point = getPoint(e);
+                lastX = point.x;
+                lastY = point.y;
+            }
+
+            function draw(e) {
+                if (!isDrawing || !drawMode) return;
+                e.preventDefault();
+                const point = getPoint(e);
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(point.x, point.y);
+                ctx.stroke();
+                lastX = point.x;
+                lastY = point.y;
+            }
+
+            function stopDrawing() { isDrawing = false; }
+
+            function getPoint(e) {
+                const rect = canvas.getBoundingClientRect();
+                if (e.touches && e.touches.length > 0) {
+                    return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+                }
+                return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function toggleDrawMode() {
+                drawMode = !drawMode;
+                canvas.classList.toggle('active', drawMode);
+                document.getElementById('btn-draw').classList.toggle('active', drawMode);
+                if (drawMode && markerMode) toggleMarkerMode();
+            }
+
+            function toggleMarkerMode() {
+                markerMode = !markerMode;
+                slideFrame.classList.toggle('marker-mode', markerMode);
+                document.getElementById('btn-marker').classList.toggle('active', markerMode);
+                if (markerMode && drawMode) toggleDrawMode();
+            }
+
+            // Marker movement
+            slideFrame.addEventListener('mousemove', function(e) {
+                if (markerMode) {
+                    const rect = slideFrame.getBoundingClientRect();
+                    redMarker.style.left = (e.clientX - rect.left) + 'px';
+                    redMarker.style.top = (e.clientY - rect.top) + 'px';
+                }
+            });
+
+            function toggleOutline() {
+                outlinePanel.classList.toggle('open');
+                document.getElementById('btn-outline').classList.toggle('active');
+            }
+
+            function toggleTheme() {
+                isDarkMode = !isDarkMode;
+                document.body.classList.toggle('dark-mode', isDarkMode);
+                document.getElementById('btn-theme').textContent = isDarkMode ? '\u263D' : '\u2600';
+                localStorage.setItem('presentationTheme', isDarkMode ? 'dark' : 'light');
+            }
+
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                    document.body.classList.add('fullscreen-mode');
+                } else {
+                    document.exitFullscreen();
+                    document.body.classList.remove('fullscreen-mode');
+                }
+            }
+
+            function showPdfModal() {
+                pdfModal.classList.add('visible');
+            }
+
+            function hidePdfModal() {
+                pdfModal.classList.remove('visible');
+            }
+
+            function exportToPdf() {
+                hidePdfModal();
+                window.print();
+            }
+
+            // Touch-friendly click handler
+            function addTouchClick(element, callback) {
+                if (!element) return;
+                let touchMoved = false;
+                element.addEventListener('touchstart', function() { touchMoved = false; }, { passive: true });
+                element.addEventListener('touchmove', function() { touchMoved = true; }, { passive: true });
+                element.addEventListener('touchend', function(e) {
+                    if (!touchMoved) { e.preventDefault(); callback(e); }
+                });
+                element.addEventListener('click', callback);
+            }
+
+            // Swipe navigation
+            function initSwipeNavigation() {
+                let touchStartX = 0;
+                document.addEventListener('touchstart', function(e) {
+                    if (drawMode) return;
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+
+                document.addEventListener('touchend', function(e) {
+                    if (drawMode) return;
+                    const deltaX = e.changedTouches[0].clientX - touchStartX;
+                    if (Math.abs(deltaX) > 50) {
+                        if (deltaX > 0) prevSlide();
+                        else nextSlide();
+                    }
+                });
+            }
+
+            // Keyboard navigation
+            function initKeyboard() {
+                document.addEventListener('keydown', function(e) {
+                    if (pdfModal.classList.contains('visible')) {
+                        if (e.key === 'Escape') hidePdfModal();
+                        return;
+                    }
+
+                    switch(e.key) {
+                        case 'ArrowRight': case 'ArrowDown': case ' ': nextSlide(); break;
+                        case 'ArrowLeft': case 'ArrowUp': prevSlide(); break;
+                        case 'Home': goToSlide(0); break;
+                        case 'End': goToSlide(slides.length - 1); break;
+                        case 'f': case 'F': toggleFullscreen(); break;
+                        case 'd': case 'D': toggleDrawMode(); break;
+                        case 'm': case 'M': toggleMarkerMode(); break;
+                        case 'c': case 'C': clearCanvas(); break;
+                        case 'o': case 'O': toggleOutline(); break;
+                        case 't': case 'T': toggleTheme(); break;
+                        case 'p': case 'P': showPdfModal(); break;
+                        case 'Escape':
+                            if (outlinePanel.classList.contains('open')) toggleOutline();
+                            if (drawMode) toggleDrawMode();
+                            if (markerMode) toggleMarkerMode();
+                            break;
+                    }
+                });
+            }
+
+            // Initialize
+            function init() {
+                parseSlides();
+                renderSlides();
+                initCanvas();
+                initKeyboard();
+                initSwipeNavigation();
+
+                // Load theme preference
+                if (localStorage.getItem('presentationTheme') === 'dark') {
+                    isDarkMode = true;
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('btn-theme').textContent = '\u263D';
+                }
+
+                // Toolbar buttons
+                addTouchClick(document.getElementById('btn-outline'), toggleOutline);
+                addTouchClick(document.getElementById('btn-marker'), toggleMarkerMode);
+                addTouchClick(document.getElementById('btn-draw'), toggleDrawMode);
+                addTouchClick(document.getElementById('btn-clear'), clearCanvas);
+                addTouchClick(document.getElementById('btn-theme'), toggleTheme);
+                addTouchClick(document.getElementById('btn-pdf'), showPdfModal);
+                addTouchClick(document.getElementById('btn-fullscreen'), toggleFullscreen);
+                addTouchClick(document.querySelector('.outline-close'), toggleOutline);
+                addTouchClick(document.getElementById('btn-pdf-cancel'), hidePdfModal);
+                addTouchClick(document.getElementById('btn-pdf-export'), exportToPdf);
+
+                // Outline navigation
+                outlineList.addEventListener('click', function(e) {
+                    const item = e.target.closest('.outline-item');
+                    if (item) {
+                        goToSlide(parseInt(item.dataset.index));
+                        if (window.innerWidth < 1200) toggleOutline();
+                    }
+                });
+
+                // Close PDF modal on outside click
+                pdfModal.addEventListener('click', function(e) {
+                    if (e.target === pdfModal) hidePdfModal();
+                });
+
+                // Drawing events
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mouseout', stopDrawing);
+                canvas.addEventListener('touchstart', startDrawing, { passive: false });
+                canvas.addEventListener('touchmove', draw, { passive: false });
+                canvas.addEventListener('touchend', stopDrawing);
+
+                // Resize handler
+                window.addEventListener('resize', initCanvas);
+
+                // Fullscreen change
+                document.addEventListener('fullscreenchange', function() {
+                    if (!document.fullscreenElement) {
+                        document.body.classList.remove('fullscreen-mode');
+                    }
+                    setTimeout(initCanvas, 100);
+                });
+
+                // Start
+                goToSlide(0);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>
