@@ -50,6 +50,32 @@
             background: #0055aa;
         }
 
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: #555;
+        }
+
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
         .print-btn svg {
             width: 18px;
             height: 18px;
@@ -183,7 +209,8 @@
 
         /* Print styles */
         @media print {
-            .print-btn {
+            .print-btn,
+            .back-btn {
                 display: none !important;
             }
 
@@ -217,6 +244,13 @@
     </style>
 </head>
 <body>
+    <a href="index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Website
+    </a>
+
     <button class="print-btn" onclick="window.print()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
