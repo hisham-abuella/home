@@ -1538,15 +1538,19 @@
                 // Smooth scrolling and active states
                 this.navLinksItems.forEach(link => {
                     link.addEventListener('click', (e) => {
-                        e.preventDefault();
                         const targetId = link.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
+
+                        // Only prevent default for anchor links (starting with #)
+                        if (targetId.startsWith('#')) {
+                            e.preventDefault();
+                            const targetElement = document.querySelector(targetId);
+
+                            if (targetElement) {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
                         }
 
                         // Close mobile menu if open
