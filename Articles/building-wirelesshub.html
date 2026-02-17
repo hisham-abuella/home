@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building WirelessHub with Claude - Hisham Abuella</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-teal: #00a8cc;
+            --primary-yellow: #f4d03f;
+            --dark-gray: #2c3e50;
+            --light-gray: #ecf0f1;
+            --medium-gray: #95a5a6;
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+
+            --bg-primary: #ecf0f1;
+            --bg-secondary: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #95a5a6;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --input-border: #ecf0f1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #2c2c2c;
+            --nav-bg: rgba(44, 44, 44, 0.95);
+            --input-border: #404040;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--nav-bg);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--input-border);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-teal);
+            transform: translateY(-2px);
+        }
+
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        .article-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .article-content h2 {
+            color: var(--primary-orange);
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .quote {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-teal));
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .tech-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-item {
+            background: var(--input-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .tech-item i {
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .tech-item strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .tech-item span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        a.site-link {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a.site-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                margin: 0;
+                border-radius: 0 0 20px 20px;
+                padding: 1rem;
+            }
+
+            .article-container {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .article-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title">Building WirelessHub with Claude</h1>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> February 16, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle">How I helped build a wireless engineering blog from scratch using Claude Code as my AI pair programmer</p>
+        </div>
+
+        <div class="article-content">
+            <p>A few months ago, my friend <span class="highlight">Ahmed Elshafie</span> &mdash; a Wireless Systems Engineer at Apple and IEEE Senior Member &mdash; wanted a place to share his deep knowledge of wireless communications, signal processing, and mathematics. He had the expertise and the articles. What he needed was a home for them on the web. That's where I came in, and that's where <span class="highlight">Claude Code</span> became my co-builder.</p>
+
+            <h2>The Vision</h2>
+            <p>The goal was straightforward: build a clean, fast, content-focused blog called <a href="https://ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog/" target="_blank" class="site-link">WirelessHub</a> that would make Ahmed's technical writing shine. No heavy frameworks. No build tools. No npm. Just pure HTML, CSS, and vanilla JavaScript &mdash; a static site that loads instantly and works everywhere.</p>
+
+            <p>Ahmed already had 25+ articles covering everything from <strong>FFT in everyday life</strong> to <strong>MIMO beamforming</strong> to <strong>quantum wireless communication</strong>. The site needed to organize all of that with search, filtering, categorization, dark mode, and even embedded podcast episodes.</p>
+
+            <h2>Working with Claude Code</h2>
+            <p>Claude Code was not just an autocomplete tool on this project. It was a genuine pair programmer. Here's how the workflow looked in practice:</p>
+
+            <div class="tech-list">
+                <div class="tech-item">
+                    <i class="fas fa-layer-group"></i>
+                    <div>
+                        <strong>Architecture</strong>
+                        <span>Claude helped design the tab-based layout, the JSONL search database, and the sidebar widget system</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-code"></i>
+                    <div>
+                        <strong>Implementation</strong>
+                        <span>From the dark mode toggle to the podcast player with scrubbing and progress bars &mdash; Claude wrote production-ready code</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <strong>Search System</strong>
+                        <span>A live keyword search powered by a JSONL database fetched at runtime, matching across titles, tags, and categories</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-paint-brush"></i>
+                    <div>
+                        <strong>Design Polish</strong>
+                        <span>Hover animations, card shadows, responsive layouts, and a cohesive color system across light and dark themes</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>I would describe what I wanted &mdash; sometimes precisely, sometimes loosely &mdash; and Claude would explore the codebase, understand the existing patterns, and make changes that fit naturally. When I said "add GoatCounter analytics to all pages," Claude updated 27 HTML files, added the tracking script, created an article template, and updated the project documentation, all in one pass.</p>
+
+            <div class="quote">
+                The best part of working with Claude Code is that it reads before it writes. It understands the codebase first, then makes changes that respect existing conventions.
+            </div>
+
+            <h2>What We Built</h2>
+            <p>The final site is entirely static &mdash; hosted for free on GitHub Pages &mdash; yet it feels like a full-featured content platform:</p>
+
+            <p><strong>Tab navigation</strong> with Home, Articles, Podcasts, and About sections. <strong>Category filtering</strong> with chips and sort buttons. A <strong>featured article hero</strong> on the home page. <strong>Podcast players</strong> in both the sidebar and a dedicated tab, with play/pause, progress bars, and scrubbing. <strong>Dark mode</strong> that persists across sessions. A <strong>live search</strong> that filters articles and podcasts by keyword. And <strong>privacy-friendly analytics</strong> via GoatCounter.</p>
+
+            <p>All of it in vanilla HTML, CSS, and JS. No build step. No dependencies. Just clean, readable code.</p>
+
+            <h2>Lessons Learned</h2>
+
+            <h3>AI pair programming is real</h3>
+            <p>Claude Code didn't just generate code snippets &mdash; it understood context. It read existing files, matched coding styles, and made multi-file changes that were consistent. It caught things I missed and suggested approaches I hadn't considered.</p>
+
+            <h3>Static sites still win</h3>
+            <p>No framework fatigue. No dependency updates. No build failures. The site loads fast, works offline after first load, and will keep working for years without maintenance. For a content-focused blog, this is exactly right.</p>
+
+            <h3>Documentation is a force multiplier</h3>
+            <p>We maintained a detailed <code>CLAUDE.md</code> file that documented every convention &mdash; the tab system, the JSONL format, the card HTML structure, the category CSS classes. This meant that every time I started a new session with Claude, it could immediately understand the project and make correct changes without re-explaining anything.</p>
+
+            <div class="quote">
+                Good documentation doesn't just help humans. It makes AI collaboration dramatically more effective.
+            </div>
+
+            <h2>Check It Out</h2>
+            <p>WirelessHub is live at <a href="https://ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog/" target="_blank" class="site-link">ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog</a>. If you're interested in wireless communications, signal processing, or the math behind modern connectivity, Ahmed's articles are worth your time.</p>
+
+            <p>And if you're a developer curious about AI-assisted development, I can say from experience: Claude Code is the real deal. It's not perfect, but it's a remarkably capable partner that makes ambitious projects feel achievable.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--input-border); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--primary-orange); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+    </div>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
