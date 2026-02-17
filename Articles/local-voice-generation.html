@@ -376,14 +376,23 @@
 
             <p>This article covers my experience using <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">VibeVoice</a>, an open-source text-to-speech model, to generate podcast-style narration on local hardware &mdash; and how it compares to cloud services like ElevenLabs.</p>
 
-            <h2>Listen First</h2>
-            <p>Before we get into the details, here's the result. This podcast episode was generated locally on my M4 Max using the VibeVoice 1.5B model. The script was written about my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a> project:</p>
+            <h2>Listen First &mdash; Compare for Yourself</h2>
+            <p>Before we get into the details, listen to both versions. Same script about my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a> project &mdash; one generated locally with VibeVoice, the other with ElevenLabs using a clone of my voice. Judge for yourself:</p>
 
             <div class="audio-player-wrap">
-                <h3>The Build Log: Personal AI Engine</h3>
-                <p>Generated locally with VibeVoice 1.5B on Mac Studio M4 Max</p>
+                <h3>Version 1: VibeVoice (Local)</h3>
+                <p>Generated on Mac Studio M4 Max &mdash; VibeVoice 1.5B &mdash; completely offline, zero cost</p>
                 <audio controls preload="metadata">
                     <source src="../audio/building-ai-server-podcast.wav" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap" style="background: linear-gradient(135deg, #7c3aed, #4f46e5);">
+                <h3>Version 2: ElevenLabs (Cloud)</h3>
+                <p>Generated via ElevenLabs API &mdash; cloned voice &mdash; cloud-based, paid service</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/building-ai-server-podcast-elevenlabs.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
             </div>
