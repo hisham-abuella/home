@@ -310,16 +310,16 @@
         }
 
         .article-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
             margin: 2rem 0;
         }
 
         .article-images img {
             width: 100%;
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-hover);
         }
 
         code {
@@ -455,7 +455,7 @@
             <div class="article-images" id="project-images">
                 <img src="../Pictures/ai-server-chat.png" alt="H_AI dark theme chat interface with web fetch and file listing">
                 <img src="../Pictures/ai-server-skills.jpg" alt="H_AI Skills and Programming capabilities interface">
-                <img src="../Pictures/ai-server-dashboard.jpg" alt="H_AI Dashboard showing models, usage stats, and projects">
+                <img src="../Pictures/ai-server-dashboard.jpg" alt="H_AI Dashboard showing models, usage stats, and projects" style="max-width:500px;margin:0 auto;display:block;">
             </div>
 
             <div class="feature-grid">
