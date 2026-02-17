@@ -449,14 +449,12 @@
 
             <p>I can switch between models on the fly from the web interface. Need deep reasoning? Switch to DeepSeek. Quick code fix? Llama is faster. The model selector is right in the header &mdash; one click and I'm on a different model mid-conversation.</p>
 
+            <img src="../Pictures/ai-server-dashboard.jpg" alt="H_AI Dashboard showing models, usage stats, and projects" style="max-width:500px;width:100%;border-radius:12px;box-shadow:var(--shadow-hover);margin:1.5rem auto;display:block;">
+
             <h2>The Web Interface</h2>
             <p>The heart of the project is the webapp. It's a custom-built chat interface that runs on <span class="highlight">FastAPI</span> with a vanilla HTML/CSS/JS frontend. I access it from my laptop, phone, or tablet &mdash; any device on my home network.</p>
 
-            <div class="article-images" id="project-images">
-                <img src="../Pictures/ai-server-chat.png" alt="H_AI dark theme chat interface with web fetch and file listing">
-                <img src="../Pictures/ai-server-skills.jpg" alt="H_AI Skills and Programming capabilities interface">
-                <img src="../Pictures/ai-server-dashboard.jpg" alt="H_AI Dashboard showing models, usage stats, and projects" style="max-width:500px;margin:0 auto;display:block;">
-            </div>
+            <img src="../Pictures/ai-server-chat.png" alt="H_AI dark theme chat interface with web fetch and file listing" style="width:100%;border-radius:12px;box-shadow:var(--shadow-hover);margin:1.5rem 0;">
 
             <div class="feature-grid">
                 <div class="feature-card">
@@ -521,6 +519,8 @@
             <p>This is where it gets interesting. The AI isn't just a chatbot &mdash; it can <span class="highlight">take actions</span>. I built a skills system with 22 tools that the AI can invoke: reading and writing files, running shell commands, searching codebases with grep, managing git, fetching web pages, and more.</p>
 
             <p>The AI analyzes each request and recommends the right tool when confidence is above 90%. Dangerous operations like file deletion or git commits require explicit confirmation. It's like having a junior developer who can actually touch the filesystem &mdash; but asks before doing anything risky.</p>
+
+            <img src="../Pictures/ai-server-skills.jpg" alt="H_AI Skills and Programming capabilities interface" style="width:100%;border-radius:12px;box-shadow:var(--shadow-hover);margin:1.5rem 0;">
 
             <h2>Security</h2>
             <p>Since this runs on my home network and is accessible from any device, security matters. The server uses <strong>API key authentication</strong> with SHA-256 hashing and constant-time comparison to prevent timing attacks. There's <strong>rate limiting</strong> at 60 requests per minute. And <strong>SSL/HTTPS</strong> support for encrypted connections. The skills system has three confirmation levels &mdash; none, normal, and dangerous &mdash; so the AI can't accidentally <code>rm -rf</code> anything.</p>
