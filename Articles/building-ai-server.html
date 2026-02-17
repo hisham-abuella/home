@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Personal AI Engine - Hisham Abuella</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-teal: #00a8cc;
+            --primary-yellow: #f4d03f;
+            --dark-gray: #2c3e50;
+            --light-gray: #ecf0f1;
+            --medium-gray: #95a5a6;
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+
+            --bg-primary: #ecf0f1;
+            --bg-secondary: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #95a5a6;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --input-border: #ecf0f1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #2c2c2c;
+            --nav-bg: rgba(44, 44, 44, 0.95);
+            --input-border: #404040;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--nav-bg);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--input-border);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-teal);
+            transform: translateY(-2px);
+        }
+
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .wip-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        .article-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .article-content h2 {
+            color: var(--primary-orange);
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .quote {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .spec-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .spec-card h3 {
+            color: var(--primary-yellow);
+            margin-bottom: 1rem;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .spec-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .spec-item .spec-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-item .spec-label {
+            font-size: 0.85rem;
+            color: #8899aa;
+            display: block;
+        }
+
+        .spec-item .spec-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: var(--input-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .feature-card .feature-icon {
+            font-size: 1.5rem;
+            margin-top: 0.1rem;
+        }
+
+        .feature-card strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-card span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .model-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .model-table th {
+            background: var(--input-border);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .model-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .model-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .article-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .article-images img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        code {
+            background: var(--input-border);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                margin: 0;
+                border-radius: 0 0 20px 20px;
+                padding: 1rem;
+            }
+
+            .article-container {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .article-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .spec-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <div class="wip-badge">WORK IN PROGRESS</div>
+            <h1 class="article-title">Building a Personal AI Engine</h1>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> February 16, 2026</span>
+                <span><i class="fas fa-clock"></i> 8 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle">Running local LLMs on a Mac Studio M4 Max with 64 GB, powered by Ollama, accessible from any device at home through a custom webapp</p>
+        </div>
+
+        <div class="article-content">
+            <p>I got tired of depending on cloud APIs for everything. The latency, the cost, the privacy concerns &mdash; I wanted my own AI that runs locally, responds instantly, and stays completely private. So I built one. A <span class="highlight">personal AI engine</span> running on my Mac Studio M4 Max, accessible from any device in my house through a custom web interface I call <strong>H_AI</strong>.</p>
+
+            <p>This project is still a work in progress, but it's already my daily driver for coding, writing, and research.</p>
+
+            <h2>The Hardware</h2>
+
+            <div class="spec-card">
+                <h3>Mac Studio M4 Max</h3>
+                <div class="spec-grid">
+                    <div class="spec-item">
+                        <div class="spec-icon">🧠</div>
+                        <span class="spec-value">M4 Max</span>
+                        <span class="spec-label">Apple Silicon</span>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-icon">💾</div>
+                        <span class="spec-value">64 GB</span>
+                        <span class="spec-label">Unified Memory</span>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-icon">⚡</div>
+                        <span class="spec-value">Ollama</span>
+                        <span class="spec-label">LLM Runtime</span>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-icon">🌐</div>
+                        <span class="spec-value">FastAPI</span>
+                        <span class="spec-label">Web Server</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>The M4 Max with 64 GB of unified memory is a sweet spot for running local LLMs. The unified memory architecture means the GPU and CPU share the same memory pool &mdash; no copying data between RAM and VRAM. Models that would need a dedicated GPU with 24+ GB of VRAM on a PC just run natively here. Ollama handles model loading and inference, and it's remarkably fast on Apple Silicon.</p>
+
+            <h2>The Models</h2>
+            <p>With 64 GB of memory, I can run a wide range of models locally. Here's what I currently have available:</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>Model</th>
+                    <th>Context Window</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>DeepSeek-R1</strong></td>
+                    <td>~50,000 words</td>
+                    <td>Reasoning, complex analysis</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen3-Coder</strong></td>
+                    <td>~25,000 words</td>
+                    <td>Code generation, debugging</td>
+                </tr>
+                <tr>
+                    <td><strong>Llama 3.1 8B</strong></td>
+                    <td>~10,000 words</td>
+                    <td>General tasks, fast responses</td>
+                </tr>
+                <tr>
+                    <td><strong>Mistral</strong></td>
+                    <td>~6,000 words</td>
+                    <td>Quick queries, lightweight tasks</td>
+                </tr>
+            </table>
+
+            <p>I can switch between models on the fly from the web interface. Need deep reasoning? Switch to DeepSeek. Quick code fix? Llama is faster. The model selector is right in the header &mdash; one click and I'm on a different model mid-conversation.</p>
+
+            <h2>The Web Interface</h2>
+            <p>The heart of the project is the webapp. It's a custom-built chat interface that runs on <span class="highlight">FastAPI</span> with a vanilla HTML/CSS/JS frontend. I access it from my laptop, phone, or tablet &mdash; any device on my home network.</p>
+
+            <!-- Images will be added here -->
+            <div class="article-images" id="project-images">
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <div>
+                        <strong>Streaming Chat</strong>
+                        <span>Real-time token streaming via Server-Sent Events &mdash; responses appear word by word</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div>
+                        <strong>Session Persistence</strong>
+                        <span>Chat history saves to disk and survives page reloads, browser closes, and server restarts</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div>
+                        <strong>Smart Compaction</strong>
+                        <span>When context fills up, the AI summarizes the conversation to stay within limits without losing context</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <div>
+                        <strong>Dark &amp; Light Themes</strong>
+                        <span>Full theme toggle with a polished UI built for long coding sessions</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <div>
+                        <strong>Code Actions</strong>
+                        <span>Copy code blocks, save snippets to files, and collapse/expand &mdash; all with one click</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖼️</div>
+                    <div>
+                        <strong>Image Support</strong>
+                        <span>Paste images directly into the chat for vision-capable models to analyze</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <div>
+                        <strong>22 Built-in Skills</strong>
+                        <span>File read/write, git operations, web fetch, grep search, calculator &mdash; the AI can take action</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <div>
+                        <strong>Project Switching</strong>
+                        <span>Navigate between projects with git branch and status shown in real-time</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>The Skills System</h2>
+            <p>This is where it gets interesting. The AI isn't just a chatbot &mdash; it can <span class="highlight">take actions</span>. I built a skills system with 22 tools that the AI can invoke: reading and writing files, running shell commands, searching codebases with grep, managing git, fetching web pages, and more.</p>
+
+            <p>The AI analyzes each request and recommends the right tool when confidence is above 90%. Dangerous operations like file deletion or git commits require explicit confirmation. It's like having a junior developer who can actually touch the filesystem &mdash; but asks before doing anything risky.</p>
+
+            <h2>Security</h2>
+            <p>Since this runs on my home network and is accessible from any device, security matters. The server uses <strong>API key authentication</strong> with SHA-256 hashing and constant-time comparison to prevent timing attacks. There's <strong>rate limiting</strong> at 60 requests per minute. And <strong>SSL/HTTPS</strong> support for encrypted connections. The skills system has three confirmation levels &mdash; none, normal, and dangerous &mdash; so the AI can't accidentally <code>rm -rf</code> anything.</p>
+
+            <h2>The Architecture</h2>
+            <p>The stack is intentionally simple:</p>
+
+            <p><strong>Backend:</strong> FastAPI with async streaming, Pydantic for validation, file-based JSON storage for sessions and logs. No database needed &mdash; everything persists as JSON files on disk.</p>
+
+            <p><strong>Frontend:</strong> Vanilla HTML, CSS, and JavaScript. Marked.js for markdown rendering, Highlight.js for syntax highlighting. No React, no build tools. It's a PWA so it can be installed on any device's home screen.</p>
+
+            <p><strong>AI Runtime:</strong> Ollama handles model loading and inference locally. I also have Claude API integration for when I need a cloud model's capabilities. The interface switches seamlessly between local and cloud models.</p>
+
+            <div class="quote">
+                The best AI setup is the one you actually use every day. By making it accessible from every device at home, it became a natural part of my workflow.
+            </div>
+
+            <h2>What's Next</h2>
+            <p>This is still a work in progress. Here's what I'm planning:</p>
+
+            <p><strong>Voice input and output</strong> &mdash; talk to the AI from across the room and hear responses spoken back. <strong>Remote access</strong> via Tailscale so I can use it outside my home network. <strong>Multi-model conversations</strong> where different models collaborate on the same problem. <strong>Better analytics</strong> to track usage patterns and model performance. And <strong>templates</strong> for common prompts I use repeatedly.</p>
+
+            <p>The foundation is solid. Every week I add something new, and every week it becomes more useful. The dream is a fully autonomous AI assistant that knows my codebase, manages my projects, and runs entirely on hardware I own.</p>
+
+            <p>No cloud dependency. No subscription fees. No data leaving my network. Just raw compute, good software, and complete ownership.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--input-border); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--primary-orange); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+    </div>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
