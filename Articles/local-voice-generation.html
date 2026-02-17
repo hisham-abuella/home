@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generating Voice from Text with Local Models - Hisham Abuella</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-teal: #00a8cc;
+            --primary-yellow: #f4d03f;
+            --dark-gray: #2c3e50;
+            --light-gray: #ecf0f1;
+            --medium-gray: #95a5a6;
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+
+            --bg-primary: #ecf0f1;
+            --bg-secondary: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #95a5a6;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --input-border: #ecf0f1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #2c2c2c;
+            --nav-bg: rgba(44, 44, 44, 0.95);
+            --input-border: #404040;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--nav-bg);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--input-border);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-teal);
+            transform: translateY(-2px);
+        }
+
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        .article-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .article-content h2 {
+            color: var(--primary-orange);
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .quote {
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .audio-player-wrap {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .audio-player-wrap h3 {
+            color: var(--primary-yellow);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .audio-player-wrap p {
+            color: #8899aa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .audio-player-wrap audio {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--input-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .comparison-card h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card ul li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .comparison-card ul li::before {
+            margin-right: 0.5rem;
+        }
+
+        .pro-list li::before { content: '✅'; }
+        .con-list li::before { content: '⚠️'; }
+
+        .model-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .model-table th {
+            background: var(--input-border);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .model-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .model-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .script-preview {
+            background: var(--input-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .script-preview p {
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        code {
+            background: var(--input-border);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        a.site-link {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a.site-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                margin: 0;
+                border-radius: 0 0 20px 20px;
+                padding: 1rem;
+            }
+
+            .article-container {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .article-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title">Generating Voice from Text Using Local Models</h1>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> February 17, 2026</span>
+                <span><i class="fas fa-clock"></i> 7 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle">Running open-source text-to-speech models locally on a Mac Studio M4 Max, and comparing them to cloud services like ElevenLabs</p>
+        </div>
+
+        <div class="article-content">
+            <p>I've been building a <a href="building-ai-server.html" class="site-link">personal AI engine</a> that runs entirely on my Mac Studio M4 Max. Text generation was the first step. The natural next question was: can I generate <span class="highlight">voice</span> locally too? Turns out, yes &mdash; and the results are surprisingly good.</p>
+
+            <p>This article covers my experience using <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">VibeVoice</a>, an open-source text-to-speech model, to generate podcast-style narration on local hardware &mdash; and how it compares to cloud services like ElevenLabs.</p>
+
+            <h2>Listen First</h2>
+            <p>Before we get into the details, here's the result. This podcast episode was generated locally on my M4 Max using the VibeVoice 1.5B model. The script was written about my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a> project:</p>
+
+            <div class="audio-player-wrap">
+                <h3>The Build Log: Personal AI Engine</h3>
+                <p>Generated locally with VibeVoice 1.5B on Mac Studio M4 Max</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/building-ai-server-podcast.wav" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <h2>What is VibeVoice?</h2>
+            <p>VibeVoice is a <span class="highlight">frontier long-form conversational TTS model</span> originally developed by Microsoft and now maintained by the open-source community. It generates expressive, multi-speaker audio from plain text &mdash; think podcast conversations, narrations, even content with background music that it generates spontaneously based on context.</p>
+
+            <p>The key innovation is its architecture: continuous speech tokenizers running at 7.5 Hz combined with a next-token diffusion framework. An LLM handles textual context while a diffusion head generates the acoustic details. The result is speech that sounds natural, with proper pacing, intonation, and speaker consistency.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>Model</th>
+                    <th>Max Duration</th>
+                    <th>Speakers</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 0.5B</strong></td>
+                    <td>Real-time</td>
+                    <td>1</td>
+                    <td>Low-latency live TTS</td>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 1.5B</strong></td>
+                    <td>~90 min</td>
+                    <td>Up to 4</td>
+                    <td>Long-form podcasts</td>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 7B</strong></td>
+                    <td>~45 min</td>
+                    <td>Up to 4</td>
+                    <td>Most realistic output</td>
+                </tr>
+            </table>
+
+            <h2>Running It Locally</h2>
+            <p>With 64 GB of unified memory on the M4 Max, I can comfortably run the 1.5B model. The setup is straightforward:</p>
+
+            <p>Clone the <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">VibeVoice repo</a>, install dependencies with <code>uv pip install -e .</code>, download the model weights, and run inference from a text file. The input format is simple &mdash; just plain text with speaker labels like <code>Speaker 1: Hello, welcome to the show.</code></p>
+
+            <p>Generation takes a few minutes for a full podcast episode. Not real-time, but completely acceptable for producing content. And every bit of it happens on my machine &mdash; no data leaves my network, no API calls, no per-minute charges.</p>
+
+            <h2>The Script</h2>
+            <p>Here's the script I wrote about my Personal AI Engine project. I formatted it as a solo podcast episode:</p>
+
+            <div class="script-preview">
+                <p><strong>Speaker 1:</strong> Welcome to The Build Log, where we break down real engineering projects from the ground up. Today, we're looking at something really cool. A developer named Hisham got fed up with cloud AI services, the latency, the costs, the privacy headaches, and decided to build his own personal AI engine that runs entirely on local hardware. Let's dive in.</p>
+                <p><strong>Speaker 1:</strong> So the foundation of this whole setup is a Mac Studio with the M4 Max chip and 64 gigabytes of unified memory. Now, if you're not familiar with Apple Silicon, here's why this matters. Unified memory means the CPU and GPU share the same memory pool...</p>
+                <p><strong>Speaker 1:</strong> For the actual model serving, he's using Ollama, which is an open-source runtime that handles loading and running large language models locally. And with 64 gigs of memory, he can run some serious models...</p>
+                <p style="text-align:center;color:var(--text-secondary);font-style:italic;">[ Full script continues for ~19 paragraphs covering hardware, webapp, skills system, security, and roadmap ]</p>
+            </div>
+
+            <h2>Local vs. Cloud: ElevenLabs Comparison</h2>
+            <p>I've also used <span class="highlight">ElevenLabs</span> extensively &mdash; it powers the bilingual narration in my <a href="building-islamic-kids.html" class="site-link">Islamic Kids Website</a>. Both approaches have their place. Here's an honest comparison:</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3>VibeVoice (Local)</h3>
+                    <ul class="pro-list">
+                        <li>Completely free, no API costs</li>
+                        <li>Total privacy &mdash; no data leaves your machine</li>
+                        <li>No rate limits or quotas</li>
+                        <li>Multi-speaker conversations built in</li>
+                        <li>Up to 90 minutes of audio in one generation</li>
+                        <li>Spontaneous background music/sounds</li>
+                    </ul>
+                    <ul class="con-list">
+                        <li>Requires powerful hardware (64 GB+ recommended)</li>
+                        <li>Not real-time for large models</li>
+                        <li>Voice cloning quality still improving</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>ElevenLabs (Cloud)</h3>
+                    <ul class="pro-list">
+                        <li>Industry-leading voice quality</li>
+                        <li>Excellent voice cloning</li>
+                        <li>Multiple language support</li>
+                        <li>Near real-time generation</li>
+                        <li>Easy API integration</li>
+                    </ul>
+                    <ul class="con-list">
+                        <li>Costs money (per character)</li>
+                        <li>Data sent to cloud servers</li>
+                        <li>Rate limits on free tier</li>
+                        <li>Dependent on internet connection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>For the Islamic Kids Website, ElevenLabs was the right choice &mdash; I needed high-quality bilingual voices in both English and Arabic, and the API made it easy to batch-generate audio for each story slide. But for personal projects, experiments, and content where I want full control, VibeVoice running locally is hard to beat.</p>
+
+            <div class="quote">
+                The gap between local and cloud TTS is closing fast. A year ago, local models sounded robotic. Today, VibeVoice on a Mac Studio produces podcast-quality audio that most listeners wouldn't distinguish from a human recording.
+            </div>
+
+            <h2>Building a Skill for H_AI</h2>
+            <p>The natural next step was integrating this into my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a>. I created a skill in H_AI that can generate voice from text using local models. The workflow is simple: write a script in the chat, invoke the voice generation skill, and get a WAV file back. It ties the whole system together &mdash; text generation, voice synthesis, and file management, all running locally on the same machine.</p>
+
+            <h2>What's Next</h2>
+            <p>I'm working on integrating voice input as well &mdash; using VibeVoice's ASR (speech-to-text) model that can handle 60-minute audio in a single pass with speaker diarization. The vision is a fully voice-enabled AI assistant: speak to it, it understands, it responds in natural speech. All local. All private.</p>
+
+            <p>The tools are here. The hardware is capable. The open-source community keeps pushing the models forward. We're entering an era where running your own AI voice pipeline is no longer a research project &mdash; it's a weekend project.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--input-border); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--primary-orange); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+    </div>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
