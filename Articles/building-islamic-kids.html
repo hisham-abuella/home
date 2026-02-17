@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building an Islamic Kids Website with Claude - Hisham Abuella</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-teal: #00a8cc;
+            --primary-yellow: #f4d03f;
+            --dark-gray: #2c3e50;
+            --light-gray: #ecf0f1;
+            --medium-gray: #95a5a6;
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+
+            --bg-primary: #ecf0f1;
+            --bg-secondary: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #95a5a6;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --input-border: #ecf0f1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2c2c2c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #2c2c2c;
+            --nav-bg: rgba(44, 44, 44, 0.95);
+            --input-border: #404040;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--nav-bg);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--input-border);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-teal);
+            transform: translateY(-2px);
+        }
+
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        .article-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .article-content h2 {
+            color: var(--primary-orange);
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .quote {
+            background: linear-gradient(135deg, #2d8a6e, #1a5c4a);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: var(--input-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .feature-card .feature-icon {
+            font-size: 1.5rem;
+            margin-top: 0.1rem;
+        }
+
+        .feature-card strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .feature-card span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .story-list {
+            margin: 1.5rem 0;
+        }
+
+        .story-item {
+            background: var(--input-border);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-item .story-emoji {
+            font-size: 1.8rem;
+        }
+
+        .story-item strong {
+            display: block;
+        }
+
+        .story-item span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        a.site-link {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a.site-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                margin: 0;
+                border-radius: 0 0 20px 20px;
+                padding: 1rem;
+            }
+
+            .article-container {
+                padding: 6rem 1rem 2rem;
+            }
+
+            .article-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title">Building an Interactive Islamic Kids Website</h1>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> February 16, 2026</span>
+                <span><i class="fas fa-clock"></i> 7 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle">How I built an interactive Islamic learning platform for children using Claude Code, complete with prophet stories, quizzes, and bilingual audio narration</p>
+        </div>
+
+        <div class="article-content">
+            <p>As a father and engineer, I wanted to create something meaningful for Muslim kids &mdash; a place where they could learn about the prophets, the Quran, and Islamic values through <span class="highlight">interactive storytelling</span> rather than static text. That idea became <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">Islamic Kids Stories</a>, and Claude Code helped me bring it to life.</p>
+
+            <h2>The Idea</h2>
+            <p>Most Islamic educational content for kids is either dry PDFs or YouTube videos with no interactivity. I wanted something different: a website where children could swipe through beautifully illustrated story slides, answer quiz questions, earn stars, and hear narration in both <span class="highlight">English and Arabic</span>. No app store. No downloads. Just open a link and start learning.</p>
+
+            <div class="quote">
+                The goal was simple: make Islamic learning as engaging as the best children's apps, but entirely free and accessible on any device.
+            </div>
+
+            <h2>What We Built</h2>
+            <p>The site is a fully interactive, bilingual Islamic learning platform. Here's what's inside:</p>
+
+            <div class="story-list">
+                <div class="story-item">
+                    <div class="story-emoji">🌍</div>
+                    <div>
+                        <strong>Prophet Adam &mdash; The First Human</strong>
+                        <span>18 interactive slides with drag-and-drop activities and a quiz</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🔥</div>
+                    <div>
+                        <strong>Prophet Ibrahim's Trust</strong>
+                        <span>16 slides exploring faith and sacrifice with embedded questions</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🚢</div>
+                    <div>
+                        <strong>Prophet Nuh and the Great Ark</strong>
+                        <span>The story of patience and perseverance, with quiz and star rewards</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🌙</div>
+                    <div>
+                        <strong>Prophet Yusuf's Beautiful Dream</strong>
+                        <span>A journey of trust in Allah through hardship, with interactive elements</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">📖</div>
+                    <div>
+                        <strong>Surah Al-Fatiha</strong>
+                        <span>Learn the opening chapter of the Quran verse by verse</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Key Features</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎙️</div>
+                    <div>
+                        <strong>Bilingual Audio</strong>
+                        <span>Every story has narration in English and Arabic, generated using ElevenLabs TTS</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <div>
+                        <strong>Star Rewards</strong>
+                        <span>Kids earn stars for completing stories and quizzes, saved in their browser</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <div>
+                        <strong>Interactive Activities</strong>
+                        <span>Drag-and-drop, quizzes with instant feedback, and click-to-explore elements</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <div>
+                        <strong>Mobile-First</strong>
+                        <span>Swipe navigation, fullscreen mode, and responsive design for phones and tablets</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <div>
+                        <strong>English &amp; Arabic</strong>
+                        <span>Full language toggle with RTL support for Arabic text</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div>
+                        <strong>No Accounts Needed</strong>
+                        <span>Progress saved locally. No sign-ups, no data collection, completely private</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Building with Claude Code</h2>
+            <p>This was a bigger project than a typical blog. Each story page is an interactive slide-based experience with animations, quizzes, drag-and-drop activities, audio playback, and bilingual content. Claude Code handled it all as a pair programmer.</p>
+
+            <p>The workflow was conversational. I'd describe what I wanted &mdash; "make a story about Prophet Nuh with slides, a quiz at the end, and audio narration" &mdash; and Claude would generate the complete HTML page with inline styles, the slide system, quiz logic, and audio integration. When I wanted changes &mdash; "add a drag-and-drop activity to slide 5" &mdash; Claude would read the existing file, understand the structure, and insert the feature in the right place.</p>
+
+            <p>What impressed me most was how Claude handled the <span class="highlight">bilingual complexity</span>. Arabic text needs right-to-left layout, different fonts, and careful handling of mixed-direction content. Claude got this right consistently, switching between Poppins for English and Amiri/Noto Sans Arabic for Arabic text, with proper RTL styling.</p>
+
+            <div class="quote">
+                Claude Code didn't just write code &mdash; it understood the educational intent. It structured stories with age-appropriate language, added interactive elements at the right moments, and made quizzes that reinforced the key lessons.
+            </div>
+
+            <h2>The Tech Stack</h2>
+            <p>Like my other projects, I kept the stack deliberately simple:</p>
+
+            <p><strong>Pure HTML, CSS, and JavaScript</strong> &mdash; no React, no build tools, no npm. Each story page is self-contained. The site loads instantly, works offline after first load, and will run for years without maintenance.</p>
+
+            <p><strong>ElevenLabs TTS</strong> for generating high-quality audio narration. I wrote a Node.js script that reads the story content from a JSON file and generates English and Arabic audio files for each slide. The result sounds natural and warm &mdash; exactly what you want for children's content.</p>
+
+            <p><strong>LocalStorage</strong> for progress tracking. No backend, no database. A child's name, star count, and completed stories persist in their browser. Simple, private, and reliable.</p>
+
+            <h2>Lessons Learned</h2>
+
+            <h3>Kids' content demands higher quality</h3>
+            <p>When building for children, everything matters more. The language has to be simple but not condescending. The interactions have to be intuitive without instructions. The feedback has to be immediate and encouraging. Claude helped maintain this standard across every page.</p>
+
+            <h3>Bilingual is hard but worth it</h3>
+            <p>Supporting English and Arabic wasn't just about translating text. It meant RTL layouts, different typography, separate audio tracks, and a seamless toggle between languages. The effort pays off &mdash; it opens the site to families worldwide.</p>
+
+            <h3>Static sites scale to any complexity</h3>
+            <p>This project has interactive slides, audio playback, drag-and-drop, quizzes, progress tracking, and bilingual support &mdash; all without a framework or build step. The constraint of staying simple actually led to cleaner, more maintainable code.</p>
+
+            <h2>Check It Out</h2>
+            <p>The site is live at <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">hisham-abuella.github.io/Interactive-Islamic-kids-website</a>. If you have young kids or know a Muslim family, share it. It's completely free, no ads, no tracking, and built with love.</p>
+
+            <p>More stories and Quran surahs are on the way. The vision is to build the most engaging, free Islamic learning platform for children on the web &mdash; one story at a time.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--input-border); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--primary-orange); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+    </div>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
