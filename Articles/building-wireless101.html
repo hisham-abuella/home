@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Wireless 101 - Hisham Abuella</title>
+    <meta name="description" content="How I'm building Wireless 101, a free bilingual platform teaching wireless communications, DSP, and more in English and Arabic.">
+    <meta property="og:title" content="Building Wireless 101 - Hisham Abuella">
+    <meta property="og:description" content="A free bilingual educational platform for wireless communications and signal processing.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <style>
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .course-card {
+            background: var(--input-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .course-card i {
+            color: var(--primary-orange);
+            font-size: 1.3rem;
+            margin-top: 0.2rem;
+        }
+
+        .course-card strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .course-card span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .principle-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .principle-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--input-border);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .principle-list li:last-child {
+            border-bottom: none;
+        }
+
+        .principle-list li i {
+            color: var(--primary-teal);
+            margin-top: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title">Building Wireless 101</h1>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar-alt"></i> March 28, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle">A free, bilingual educational platform for wireless communications, signal processing, and the math that powers them</p>
+        </div>
+
+        <div class="article-content">
+            <p>After years of working in wireless engineering &mdash; from my PhD in visible light communications to roles at companies building cellular systems &mdash; one thing has always bothered me: <span class="highlight">the knowledge gap</span>. Too many excellent resources in this field are locked behind paywalls, buried in dense textbooks, or only available in English. I wanted to change that.</p>
+
+            <p><a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">Wireless 101</a> is an open educational platform that teaches wireless communications, digital signal processing, statistics, machine learning, and linear algebra &mdash; all for free, in both <strong>English and Arabic</strong>.</p>
+
+            <h2>Why I'm Building This</h2>
+
+            <p>The motivation came from two places:</p>
+
+            <h3>Knowledge should be free</h3>
+            <p>When I was studying wireless communications, I spent hours hunting for clear explanations of concepts like OFDM, MIMO beamforming, or Fourier transforms. The best resources were often scattered across expensive textbooks, gated academic papers, or university courses that cost thousands of dollars. Meanwhile, the fundamentals of wireless engineering haven't changed &mdash; they're built on well-established physics and mathematics. There's no reason this knowledge should be locked away.</p>
+
+            <p>I believe that anyone with curiosity and an internet connection should be able to learn how their phone connects to a cell tower, how Wi-Fi works, or how 5G achieves its speeds. These are the systems that connect billions of people &mdash; understanding them shouldn't be a privilege.</p>
+
+            <h3>Arabic speakers deserve quality technical content</h3>
+            <p>There are over 400 million Arabic speakers worldwide, and a huge number of engineering students across the Middle East and North Africa learn in Arabic. Yet the vast majority of quality technical content in wireless communications exists only in English. This isn't just an inconvenience &mdash; it's a real barrier to learning.</p>
+
+            <p>With Wireless 101, every course is available in full Arabic with proper <strong>right-to-left (RTL)</strong> formatting. This isn't a machine translation afterthought &mdash; the Arabic content is crafted to read naturally, with technical terms presented in both Arabic and their commonly-used English equivalents so students can work in both languages.</p>
+
+            <div class="quote">
+                If you can explain something clearly in two languages, you probably understand it deeply enough to teach it in any language.
+            </div>
+
+            <h2>What's Inside</h2>
+
+            <p>The platform covers six interconnected courses, each designed to build on the others:</p>
+
+            <div class="course-grid">
+                <div class="course-card">
+                    <i class="fas fa-wifi"></i>
+                    <div>
+                        <strong>Wireless Communications 101</strong>
+                        <span>Signal transmission, modulation, antennas, channel models, and modern protocols from Wi-Fi to 5G</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-wave-square"></i>
+                    <div>
+                        <strong>Digital Signal Processing 101</strong>
+                        <span>Sampling, Fourier transforms, filter design, spectral analysis &mdash; the math that makes wireless work</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <div>
+                        <strong>Statistics 101</strong>
+                        <span>Probability, distributions, hypothesis testing, and real-world data analysis for engineers</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <strong>Machine Learning 101</strong>
+                        <span>Classification, neural networks, clustering, and model evaluation &mdash; ML through the lens of engineering</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-vector-square"></i>
+                    <div>
+                        <strong>Linear Algebra 101</strong>
+                        <span>Vectors, matrices, eigenvalues, and their applications in signal processing and ML</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <div>
+                        <strong>GenAI 101</strong>
+                        <span>Generative AI fundamentals &mdash; transformers, LLMs, prompt engineering, and building with AI models</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>Each course is structured around 12 modules spanning 16&ndash;22 hours of content, with 22&ndash;30 interactive labs. The learning approach follows four steps: <strong>theory</strong>, <strong>interaction</strong>, <strong>practice</strong>, and <strong>application</strong> &mdash; so you don't just read about concepts, you build intuition through hands-on exploration.</p>
+
+            <h2>The Approach: Story-Style Learning</h2>
+
+            <p>Traditional textbooks present information in dense blocks of text with equations. That works for some people, but for many learners &mdash; especially those encountering these concepts for the first time &mdash; it can feel overwhelming.</p>
+
+            <p>Wireless 101 uses a <strong>story-style format</strong> with bite-sized, swipeable content. Each lesson unfolds like a narrative: here's the problem, here's why it matters, here's the intuition, and here's the math that formalizes it. Interactive visualizations and animations are woven throughout so you can see what happens when you change a parameter, not just read about it.</p>
+
+            <p>There's also <strong>audio narration</strong> that can be toggled on for each lesson. Some people learn better by listening, and having narration means you can absorb material even when you're not sitting at a screen.</p>
+
+            <h2>Design Principles</h2>
+
+            <ul class="principle-list">
+                <li>
+                    <i class="fas fa-lock-open"></i>
+                    <div><strong>No paywalls, ever.</strong> The entire curriculum is free. Knowledge that connects the world should be accessible to everyone in it.</div>
+                </li>
+                <li>
+                    <i class="fas fa-language"></i>
+                    <div><strong>Bilingual by design.</strong> Not translated as an afterthought &mdash; Arabic and English are first-class citizens with native formatting and natural phrasing.</div>
+                </li>
+                <li>
+                    <i class="fas fa-eye"></i>
+                    <div><strong>Visual-first.</strong> Every concept that can be visualized, is. Animations build intuition faster than equations alone.</div>
+                </li>
+                <li>
+                    <i class="fas fa-hands"></i>
+                    <div><strong>Learn by doing.</strong> Interactive labs let you experiment with real parameters and see results immediately.</div>
+                </li>
+                <li>
+                    <i class="fas fa-road"></i>
+                    <div><strong>Bridge theory and practice.</strong> Every module connects math to real-world systems &mdash; the kind of thing you'd encounter on the job.</div>
+                </li>
+            </ul>
+
+            <h2>Building with AI, Verified by Engineers</h2>
+
+            <p>The content is being developed using <span class="highlight">Claude</span> for content generation, but every module goes through engineering review for technical accuracy. AI is excellent at producing clear explanations and structuring curricula, but wireless engineering demands precision &mdash; a wrong sign in a beamforming equation or a mischaracterized channel model can mislead students. The human review step ensures the content is not just well-written, but correct.</p>
+
+            <h2>What's Next</h2>
+
+            <p>Wireless 101 is a living project. The six courses are structured and growing, and the goal is to keep expanding the content, adding more interactive labs, and deepening the Arabic coverage. If you're a wireless engineer, a student, or just someone curious about how the invisible signals around you actually work &mdash; <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">come learn with us</a>.</p>
+
+            <p>And if you speak Arabic, share it with someone who could benefit. That's the whole point &mdash; knowledge that reaches the people who need it, in the language they think in.</p>
+        </div>
+
+        <div class="article-nav">
+            <a href="local-voice-generation.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">Generating Voice from Text Using Local Models</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            });
+        })();
+    </script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

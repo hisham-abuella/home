@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hisham Abuella - Portfolio</title>
+    <meta name="description" content="Hisham Abuella — Cellular Systems Engineer specializing in 5G, RF digital systems, signal processing, and machine learning.">
+    <meta property="og:title" content="Hisham Abuella - Portfolio">
+    <meta property="og:description" content="Cellular Systems Engineer specializing in 5G, RF digital systems, signal processing, and machine learning.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>H</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -52,7 +60,7 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
@@ -91,7 +99,8 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: 700;
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-weight: 400;
             font-size: 1.2rem;
             transition: all 0.3s ease;
         }
@@ -210,8 +219,33 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            background: linear-gradient(45deg, var(--bg-primary) 50%, var(--bg-secondary) 50%);
+            background: var(--bg-primary);
             padding: 2rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 70%;
+            height: 120%;
+            background: var(--bg-secondary);
+            border-radius: 0 0 0 60%;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -5%;
+            left: -10%;
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, transparent 70%);
+            z-index: 0;
         }
 
         .hero-card {
@@ -224,6 +258,7 @@
             overflow: hidden;
             width: 100%;
             transition: all 0.3s ease;
+            z-index: 1;
         }
 
         .hero-card::before {
@@ -288,11 +323,13 @@
         }
 
         .hero h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
             font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 300;
+            font-weight: 400;
             margin-bottom: 1rem;
             color: var(--text-primary);
             transition: color 0.3s ease;
+            letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
@@ -402,11 +439,13 @@
         }
 
         .section-title {
+            font-family: 'DM Serif Display', Georgia, serif;
             font-size: clamp(2rem, 4vw, 2.5rem);
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-primary);
             margin-bottom: 1rem;
             transition: color 0.3s ease;
+            letter-spacing: -0.02em;
         }
 
         .section-subtitle {
@@ -568,37 +607,66 @@
             transition: color 0.3s ease;
         }
 
-        /* Skills Grid */
-        .skills-grid {
+        /* Skills Section */
+        .skills-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
             margin-top: 3rem;
         }
 
-        .skill-item {
+        .skills-group {
             background: var(--card-bg);
-            padding: 2rem 1rem;
-            border-radius: 15px;
-            text-align: center;
+            border-radius: 20px;
+            padding: 2rem;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
         }
 
+        .skills-group:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .skills-group-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary-orange);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--input-border);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: var(--input-border);
+            padding: 1.2rem 0.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
         .skill-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             background: var(--primary-orange);
             color: white;
         }
 
         .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .skill-name {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-primary);
             transition: color 0.3s ease;
         }
@@ -613,6 +681,9 @@
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .portfolio-card {
@@ -815,8 +886,9 @@
         }
 
         .contact-title {
+            font-family: 'DM Serif Display', Georgia, serif;
             font-size: 1.8rem;
-            font-weight: 600;
+            font-weight: 400;
             margin-bottom: 2rem;
             color: var(--text-primary);
             transition: color 0.3s ease;
@@ -954,12 +1026,14 @@
             background: var(--card-bg);
             margin-top: 5rem;
             transition: background 0.3s ease;
+            border-top: 1px solid var(--input-border);
         }
 
         .footer p {
             color: var(--text-secondary);
             font-size: 0.9rem;
             transition: color 0.3s ease;
+            letter-spacing: 0.02em;
         }
 
         /* Dark mode transition indicator */
@@ -1097,12 +1171,12 @@
                 font-size: 1rem;
             }
 
-            .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            .skills-container {
+                grid-template-columns: 1fr;
             }
 
-            .skill-item {
-                padding: 1.5rem 0.5rem;
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
             }
 
             .contact-item {
@@ -1220,11 +1294,11 @@
                         <span>California, USA</span>
                     </div>
                     <div class="hero-social-links">
-                        <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="hero-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://github.com/hisham-abuella" target="_blank" class="hero-social-link" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" class="hero-social-link" title="Google Scholar"><i class="fab fa-google"></i></a>
-                        <a href="https://www.instagram.com/hisham.abuella" target="_blank" class="hero-social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/hisham.abuella" target="_blank" class="hero-social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" rel="noopener" class="hero-social-link" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/hisham-abuella" target="_blank" rel="noopener" class="hero-social-link" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" rel="noopener" class="hero-social-link" title="Google Scholar" aria-label="Google Scholar"><i class="fab fa-google"></i></a>
+                        <a href="https://www.instagram.com/hisham.abuella" target="_blank" rel="noopener" class="hero-social-link" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/hisham.abuella" target="_blank" rel="noopener" class="hero-social-link" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
             </div>
@@ -1238,11 +1312,11 @@
             <div class="about-description">
                 <div class="about-stats">
                     <div class="about-stat">
-                        <div class="stat-number">9+</div>
+                        <div class="stat-number">10+</div>
                         <div class="stat-label">Years Research</div>
                     </div>
                     <div class="about-stat">
-                        <div class="stat-number">4+</div>
+                        <div class="stat-number">5+</div>
                         <div class="stat-label">Years Industry</div>
                     </div>
                     <div class="about-stat">
@@ -1259,50 +1333,61 @@
                 </p>
             </div>
         </div>
-        <div class="skills-grid">
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-square-root-alt"></i></div>
-                <div class="skill-name">MATLAB</div>
+        <div class="skills-container">
+            <div class="skills-group">
+                <div class="skills-group-label">Programming</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-square-root-alt"></i></div>
+                        <div class="skill-name">MATLAB</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fab fa-cuttlefish"></i></div>
+                        <div class="skill-name">C/C++</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fab fa-python"></i></div>
+                        <div class="skill-name">Python</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+                        <div class="skill-name">LabVIEW</div>
+                    </div>
+                </div>
             </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fab fa-cuttlefish"></i></div>
-                <div class="skill-name">C/C++</div>
+            <div class="skills-group">
+                <div class="skills-group-label">Wireless & Signal Processing</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-wave-square"></i></div>
+                        <div class="skill-name">DSP</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-broadcast-tower"></i></div>
+                        <div class="skill-name">5G/Wireless</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-wifi"></i></div>
+                        <div class="skill-name">RF Systems</div>
+                    </div>
+                </div>
             </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fab fa-python"></i></div>
-                <div class="skill-name">Python</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
-                <div class="skill-name">LabVIEW</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-wave-square"></i></div>
-                <div class="skill-name">DSP</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-broadcast-tower"></i></div>
-                <div class="skill-name">5G/Wireless</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-brain"></i></div>
-                <div class="skill-name">Machine Learning</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-wifi"></i></div>
-                <div class="skill-name">RF Systems</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-code"></i></div>
-                <div class="skill-name">Vibe Coding</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fab fa-microsoft"></i></div>
-                <div class="skill-name">VSCode</div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-icon"><i class="fas fa-robot"></i></div>
-                <div class="skill-name">AI Integration</div>
+            <div class="skills-group">
+                <div class="skills-group-label">AI & Tools</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                        <div class="skill-name">Machine Learning</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                        <div class="skill-name">AI Integration</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-code"></i></div>
+                        <div class="skill-name">Vibe Coding</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1312,7 +1397,7 @@
         <div class="section-header">
             <h2 class="section-title">Featured Projects</h2>
             <p class="section-subtitle">
-                A collection of projects that showcase my skills and passion for creating exceptional digital experiences
+                Research and engineering projects spanning wireless systems, AI, and developer tools
             </p>
         </div>
         <div class="portfolio-grid">
@@ -1320,8 +1405,8 @@
                 <div class="portfolio-image">
                     💡
                     <div class="portfolio-overlay">
-                        <a href="https://ieeexplore.ieee.org/abstract/document/8935383/" target="_blank" class="portfolio-btn">👁️</a>
-                        <a href="https://ieeexplore.ieee.org/abstract/document/8935383/" target="_blank" class="portfolio-btn">🔗</a>
+                        <a href="https://ieeexplore.ieee.org/abstract/document/8935383/" target="_blank" rel="noopener" class="portfolio-btn">👁️</a>
+                        <a href="https://ieeexplore.ieee.org/abstract/document/8935383/" target="_blank" rel="noopener" class="portfolio-btn">🔗</a>
                     </div>
                 </div>
                 <div class="portfolio-content">
@@ -1341,8 +1426,8 @@
                 <div class="portfolio-image">
                     🎨
                     <div class="portfolio-overlay">
-                        <a href="projects/presentation-skill/claude101.html" target="_blank" class="portfolio-btn" title="View Demo">👁️</a>
-                        <a href="https://github.com/hisham-abuella/Presentation_html_claude_skill" target="_blank" class="portfolio-btn" title="GitHub Repo">🔗</a>
+                        <a href="projects/presentation-skill/claude101.html" target="_blank" rel="noopener" class="portfolio-btn" title="View Demo">👁️</a>
+                        <a href="https://github.com/hisham-abuella/Presentation_html_claude_skill" target="_blank" rel="noopener" class="portfolio-btn" title="GitHub Repo">🔗</a>
                     </div>
                 </div>
                 <div class="portfolio-content">
@@ -1357,8 +1442,29 @@
                         <span class="portfolio-tag">GenAI</span>
                     </div>
                     <div style="margin-top: 10px; font-size: 0.85em;">
-                        <a href="projects/presentation-skill/template.html" target="_blank" style="color: var(--primary-teal); margin-right: 15px;">📄 Template</a>
-                        <a href="projects/presentation-skill/claude101.html" target="_blank" style="color: var(--primary-teal);">🎬 Claude101 Demo</a>
+                        <a href="projects/presentation-skill/template.html" target="_blank" rel="noopener" style="color: var(--primary-teal); margin-right: 15px;">📄 Template</a>
+                        <a href="projects/presentation-skill/claude101.html" target="_blank" rel="noopener" style="color: var(--primary-teal);">🎬 Claude101 Demo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    📡
+                    <div class="portfolio-overlay">
+                        <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" rel="noopener" class="portfolio-btn" title="View Site">👁️</a>
+                        <a href="https://github.com/hisham-abuella/Wireless-101" target="_blank" rel="noopener" class="portfolio-btn" title="GitHub Repo">🔗</a>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">Wireless 101</h3>
+                    <div class="portfolio-category">Educational Platform</div>
+                    <p class="portfolio-description">
+                        A free, bilingual (English/Arabic) platform teaching wireless communications, DSP, statistics, ML, and linear algebra through interactive, story-style lessons.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="portfolio-tag">Education</span>
+                        <span class="portfolio-tag">Bilingual</span>
+                        <span class="portfolio-tag">Wireless</span>
                     </div>
                 </div>
             </div>
@@ -1370,7 +1476,7 @@
         <div class="section-header">
             <h2 class="section-title">Latest Articles</h2>
             <p class="section-subtitle">
-                Thoughts, tutorials, and insights from my journey in tech and design
+                Thoughts, tutorials, and insights from my journey in wireless engineering and AI
             </p>
         </div>
         <div class="blog-grid">
@@ -1474,19 +1580,21 @@
                 </div>
             </div>
             <div class="blog-card">
-                <div class="blog-image"><i class="fas fa-clock"></i></div>
+                <div class="blog-image" style="background: linear-gradient(135deg, #00a8cc, #2d8a6e); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-broadcast-tower" style="font-size: 3rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"></i>
+                </div>
                 <div class="blog-content">
                     <div class="blog-meta">
-                        <span class="blog-date">Coming Soon</span>
+                        <span class="blog-date">Mar 28, 2026</span>
                         <span>•</span>
-                        <span>TBD</span>
+                        <span>6 min read</span>
                     </div>
-                    <h3 class="blog-title">More Coming Soon...</h3>
+                    <h3 class="blog-title">Building Wireless 101</h3>
                     <p class="blog-excerpt">
-                        More articles on wireless systems, 5G technology, signal processing, and engineering insights will be published soon...
+                        A free, bilingual educational platform teaching wireless communications, DSP, and more in English and Arabic...
                     </p>
-                    <a href="#" class="blog-link">
-                        Stay Tuned →
+                    <a href="Articles/building-wireless101.html" class="blog-link">
+                        Read More →
                     </a>
                 </div>
             </div>
@@ -1498,7 +1606,7 @@
         <div class="section-header">
             <h2 class="section-title">Let's Connect</h2>
             <p class="section-subtitle">
-                Ready to bring your ideas to life? Let's discuss your next project
+                Open to collaborations, discussions, and new opportunities in wireless systems and AI
             </p>
         </div>
         <div class="contact-container">
@@ -1521,11 +1629,11 @@
                     </div>
                 </div>
                 <div class="social-grid">
-                    <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="social-item" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://github.com/hisham-abuella" target="_blank" class="social-item" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" class="social-item" title="Google Scholar"><i class="fab fa-google"></i></a>
-                    <a href="https://www.instagram.com/hisham.abuella" target="_blank" class="social-item" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/hisham.abuella" target="_blank" class="social-item" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" rel="noopener" class="social-item" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/hisham-abuella" target="_blank" rel="noopener" class="social-item" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" rel="noopener" class="social-item" title="Google Scholar" aria-label="Google Scholar"><i class="fab fa-google"></i></a>
+                    <a href="https://www.instagram.com/hisham.abuella" target="_blank" rel="noopener" class="social-item" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/hisham.abuella" target="_blank" rel="noopener" class="social-item" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
         </div>
@@ -1533,7 +1641,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 Hisham Abuella. Crafted with care and attention to detail.</p>
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
     </footer>
 
     <script>
@@ -1700,38 +1808,6 @@
             }
         }
 
-        // Form management
-        class FormManager {
-            constructor() {
-                this.contactForm = document.getElementById('contactForm');
-                this.init();
-            }
-
-            init() {
-                if (this.contactForm) {
-                    this.contactForm.addEventListener('submit', (e) => {
-                        this.handleSubmit(e);
-                    });
-                }
-            }
-
-            handleSubmit(e) {
-                // Allow default form submission to mailto:
-                const submitBtn = this.contactForm.querySelector('.submit-btn');
-                const originalText = submitBtn.textContent;
-                
-                // Show loading state briefly
-                submitBtn.textContent = 'Opening Email Client...';
-                submitBtn.disabled = true;
-                
-                // Reset button after a short delay
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
-            }
-        }
-
         // Intersection Observer for animations
         class AnimationManager {
             constructor() {
@@ -1749,9 +1825,9 @@
             init() {
                 // Observe elements for animations
                 const animatedElements = document.querySelectorAll(
-                    '.about-card, .portfolio-card, .blog-card, .skill-item'
+                    '.about-card, .portfolio-card, .blog-card, .skills-group, .about-description, .about-stat'
                 );
-                
+
                 animatedElements.forEach(el => {
                     el.style.opacity = '0';
                     el.style.transform = 'translateY(30px)';
@@ -1763,8 +1839,18 @@
             handleIntersection(entries) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        // Add staggered delay based on sibling index
+                        const parent = entry.target.parentElement;
+                        const siblings = Array.from(parent.children).filter(
+                            el => el.style.opacity === '0'
+                        );
+                        const index = siblings.indexOf(entry.target);
+                        const delay = Math.max(0, index) * 80;
+
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, delay);
                         this.observer.unobserve(entry.target);
                     }
                 });
@@ -1775,7 +1861,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             new ThemeManager();
             new NavigationManager();
-            new FormManager();
             new AnimationManager();
         });
 
@@ -1785,9 +1870,9 @@
             const skillItems = document.querySelectorAll('.skill-item');
             skillItems.forEach(item => {
                 item.addEventListener('mouseenter', () => {
-                    item.style.transform = 'translateY(-5px) scale(1.05)';
+                    item.style.transform = 'translateY(-3px) scale(1.05)';
                 });
-                
+
                 item.addEventListener('mouseleave', () => {
                     item.style.transform = '';
                 });
