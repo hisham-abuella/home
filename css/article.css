@@ -1,0 +1,356 @@
+/* ==========================================================================
+   Article — long-form pages.
+
+   Layered on css/base.css and one of css/themes/*.css: every colour here is
+   a token from those files, so articles follow the same appearance switch as
+   the rest of the site. Selectors match the existing article markup, so no
+   article HTML has to change for a theme to apply.
+   ========================================================================== */
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.nav-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 800;
+  font-size: 0.9375rem;
+}
+
+.back-btn {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.back-btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* The old single-button toggle is replaced by the shared appearance control,
+   which base.css styles. Anything left over stays hidden. */
+.theme-toggle { display: none; }
+
+.nav-container .appearance { margin-left: auto; }
+
+/* ==========================================================================
+   Article shell
+   ========================================================================== */
+
+.article-container {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 28px 40px;
+}
+
+.article-header { padding: clamp(48px, 9vh, 84px) 0 8px; }
+
+.article-title {
+  font-size: clamp(2.1rem, 5.2vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.article-meta {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+}
+
+.article-meta span { display: inline-flex; align-items: center; gap: 8px; }
+
+.article-subtitle {
+  margin-top: 22px;
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Body copy
+   ========================================================================== */
+
+.article-content {
+  margin-top: 40px;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.article-content h2 {
+  margin: 52px 0 16px;
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.article-content h2::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  margin-bottom: 16px;
+}
+
+.article-content h3 {
+  margin: 34px 0 12px;
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+
+.article-content p { margin-bottom: 20px; }
+
+.article-content strong { color: var(--text-primary); font-weight: 600; }
+
+.article-content a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.article-content a:hover { border-bottom-color: var(--accent); }
+
+.article-content ul,
+.article-content ol { margin: 0 0 20px 22px; }
+
+.article-content li { margin-bottom: 8px; }
+
+.article-content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--card-border);
+  margin: 28px 0;
+}
+
+/* ==========================================================================
+   Call-outs
+   ========================================================================== */
+
+.highlight {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.quote {
+  position: relative;
+  margin: 32px 0;
+  padding: 24px 28px 24px 30px;
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.quote::before { content: none; }
+
+code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.875em;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+}
+
+pre {
+  margin: 26px 0;
+  padding: 20px 22px;
+  overflow-x: auto;
+  border-radius: var(--card-radius);
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+}
+
+pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
+
+/* ==========================================================================
+   Feature grid
+   ========================================================================== */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  margin: 30px 0;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding: 22px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.feature-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+.feature-card .feature-icon {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+
+.feature-card strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.feature-card span { font-size: 0.9375rem; color: var(--text-secondary); }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+.model-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 0.9375rem;
+}
+
+.model-table th {
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.model-table td {
+  padding: 12px 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.model-table tr:last-child td { border-bottom: none; }
+
+/* ==========================================================================
+   Article navigation and footer
+   ========================================================================== */
+
+.article-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--hairline);
+}
+
+.article-nav-link {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: 20px 22px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.article-nav-link:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+.article-nav-link .nav-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.article-nav-link .nav-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.article-nav-link.next { text-align: right; }
+
+.article-footer {
+  margin-top: 48px;
+  padding: 28px 0 44px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.article-footer p { font-size: 0.875rem; color: var(--text-tertiary); }
+
+.wip-badge {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 660px) {
+  /* The appearance control cannot sit beside the logo and back link at this
+     width, so let the bar wrap and give it its own row. */
+  .nav-container { padding: 12px 18px; gap: 10px 14px; flex-wrap: wrap; }
+  .nav-container .appearance { margin-left: auto; }
+  .article-container { padding: 0 18px 32px; }
+  .article-content { font-size: 1rem; }
+  .article-nav-link.next { text-align: left; }
+}

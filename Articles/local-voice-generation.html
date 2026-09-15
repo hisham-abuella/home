@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-appearance="midnight">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Generating Voice from Text with Local Models - Hisham Abuella</title>
     <meta name="description" content="Running open-source text-to-speech models locally on a Mac Studio M4 Max, comparing VibeVoice to ElevenLabs cloud services.">
     <meta property="og:title" content="Generating Voice from Text Using Local Models - Hisham Abuella">
@@ -10,12 +11,17 @@
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
     <link rel="stylesheet" href="../css/article.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .audio-player-wrap {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
@@ -23,13 +29,13 @@
         }
 
         .audio-player-wrap h3 {
-            color: var(--primary-yellow);
+            color: var(--accent);
             margin-bottom: 0.5rem;
             font-size: 1.2rem;
         }
 
         .audio-player-wrap p {
-            color: #8899aa;
+            color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
@@ -49,7 +55,8 @@
         }
 
         .comparison-card {
-            background: var(--input-border);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             border-radius: 15px;
             padding: 1.5rem;
         }
@@ -78,7 +85,8 @@
         .con-list li::before { content: '\26A0\FE0F'; }
 
         .script-preview {
-            background: var(--input-border);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             border-radius: 12px;
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -93,23 +101,38 @@
             margin-bottom: 1rem;
         }
 
-        .quote {
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-        }
-
         @media (max-width: 768px) {
             .comparison-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
+                    document.documentElement.setAttribute('data-appearance', saved);
+                }
+            } catch (error) { /* storage unavailable */ }
+        })();
+    </script>
 </head>
 <body>
+    <div class="grain" aria-hidden="true"></div>
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">H</div>
             <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
+                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -141,7 +164,7 @@
                 </audio>
             </div>
 
-            <div class="audio-player-wrap" style="background: linear-gradient(135deg, #7c3aed, #4f46e5);">
+            <div class="audio-player-wrap">
                 <h3>Version 2: ElevenLabs (Cloud)</h3>
                 <p>Generated via ElevenLabs API &mdash; cloned voice &mdash; cloud-based, paid service</p>
                 <audio controls preload="metadata">
@@ -251,8 +274,8 @@
 
             <p>The tools are here. The hardware is capable. The open-source community keeps pushing the models forward. We're entering an era where running your own AI voice pipeline is no longer a research project &mdash; it's a weekend project.</p>
 
-            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--input-border); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
-                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--primary-orange); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
             </div>
         </div>
 
@@ -272,18 +295,8 @@
         <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
     </footer>
 
-    <script>
-        (function() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            document.getElementById('theme-toggle').addEventListener('click', function() {
-                const current = document.documentElement.getAttribute('data-theme');
-                const next = current === 'light' ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('theme', next);
-            });
-        })();
-    </script>
+    <script src="../js/appearance.js" defer></script>
+    <script src="../js/signal-field.js" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 </body>

@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Create Presentations with Claude Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ========================================
            SELF-CONTAINED INTERACTIVE TEMPLATE
@@ -18,14 +22,17 @@
         }
 
         :root {
-            --title-font: Georgia, 'Times New Roman', serif;
-            --body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --accent-color: #007AFF;
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --bg-light: #f5f5f7;
-            --border-color: #d2d2d7;
-            --bg-color: #ffffff;
+            --title-font: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            --body-font: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            --accent-color: #A8641A;
+            --accent-light: #C9873A;
+            --accent-deep: #8A5214;
+            --text-primary: #16181D;
+            --text-secondary: #5A6472;
+            --bg-light: #EDEDEA;
+            --border-color: #DBDBD5;
+            --bg-color: #FFFFFF;
+            --card-glow: rgba(168, 100, 26, 0.06);
         }
 
         body {
@@ -38,16 +45,16 @@
         }
 
         body.dark-mode {
-            --text-primary: #f5f5f7;
-            --text-secondary: #86868b;
-            --bg-light: #2d2d2d;
-            --border-color: #424245;
-            --accent-color: #0a84ff;
-            --bg-color: #1d1d1f;
-        }
-
-        body.dark-mode {
-            background: #0d0d0d;
+            --text-primary: #ECEFF4;
+            --text-secondary: #98A2B3;
+            --bg-light: #16202F;
+            --border-color: #26303F;
+            --accent-color: #F2A33C;
+            --accent-light: #FFC06B;
+            --accent-deep: #C97F22;
+            --bg-color: #111725;
+            --card-glow: rgba(242, 163, 60, 0.10);
+            background: #0A0E17;
         }
 
         /* Presentation Container */
@@ -68,15 +75,17 @@
             max-height: calc((100vw - 40px) * 0.5625);
             aspect-ratio: 16 / 9;
             background: var(--bg-color);
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08), 0 30px 80px rgba(0,0,0,0.12);
             overflow: hidden;
             position: relative;
+            border: 1px solid rgba(0,0,0,0.06);
         }
 
         body.dark-mode .slide-frame {
-            background: #1d1d1f;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            background: var(--bg-color);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 30px 80px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.04);
         }
 
         /* Slides */
@@ -99,11 +108,27 @@
             align-items: flex-start;
         }
 
+        /* Subtle warm grain overlay on slides */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 85% 15%, var(--card-glow) 0%, transparent 55%),
+                        radial-gradient(ellipse at 10% 90%, rgba(242, 163, 60, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .slide > * {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Slide animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(16px);
             }
             to {
                 opacity: 1;
@@ -118,30 +143,30 @@
 
         .slide.active h1,
         .slide.active h2 {
-            animation: fadeInUp 0.5s ease-out forwards;
+            animation: fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         .slide.active h3,
         .slide.active p {
-            animation: fadeInUp 0.5s ease-out 0.1s forwards;
+            animation: fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
             opacity: 0;
         }
 
         .slide.active li {
-            animation: fadeInUp 0.4s ease-out forwards;
+            animation: fadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             opacity: 0;
         }
 
-        .slide.active li:nth-child(1) { animation-delay: 0.15s; }
-        .slide.active li:nth-child(2) { animation-delay: 0.25s; }
-        .slide.active li:nth-child(3) { animation-delay: 0.35s; }
-        .slide.active li:nth-child(4) { animation-delay: 0.45s; }
-        .slide.active li:nth-child(5) { animation-delay: 0.55s; }
-        .slide.active li:nth-child(6) { animation-delay: 0.65s; }
+        .slide.active li:nth-child(1) { animation-delay: 0.12s; }
+        .slide.active li:nth-child(2) { animation-delay: 0.2s; }
+        .slide.active li:nth-child(3) { animation-delay: 0.28s; }
+        .slide.active li:nth-child(4) { animation-delay: 0.36s; }
+        .slide.active li:nth-child(5) { animation-delay: 0.44s; }
+        .slide.active li:nth-child(6) { animation-delay: 0.52s; }
 
         .slide.active .code-block,
         .slide.active pre {
-            animation: fadeIn 0.5s ease-out 0.2s forwards;
+            animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
             opacity: 0;
         }
 
@@ -166,17 +191,19 @@
         }
 
         body.dark-mode .slide {
-            background: #1d1d1f;
+            background: var(--bg-color);
         }
 
-        /* Typography - Responsive scaling (larger fonts) */
+        /* Typography - Responsive scaling */
         h1 {
             font-family: var(--title-font);
             font-size: clamp(2.5em, 6vw, 4.5em);
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 0.4em;
             color: var(--text-primary);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            font-variation-settings: 'opsz' 144;
         }
 
         .slide.center-content h1 {
@@ -188,6 +215,7 @@
             font-size: clamp(1.2em, 2.5vw, 1.8em);
             color: var(--text-secondary);
             margin-bottom: 1.5em;
+            font-weight: 400;
         }
 
         h2 {
@@ -196,7 +224,9 @@
             font-weight: 700;
             margin-bottom: 0.6em;
             color: var(--text-primary);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            font-variation-settings: 'opsz' 72;
         }
 
         h3 {
@@ -208,8 +238,9 @@
 
         p {
             font-size: clamp(1.1em, 2.2vw, 1.5em);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 1em;
+            font-weight: 400;
         }
 
         ul, ol {
@@ -229,11 +260,12 @@
             content: '';
             position: absolute;
             left: 0;
-            top: 0.9em;
-            width: clamp(8px, 1.2vw, 10px);
-            height: clamp(8px, 1.2vw, 10px);
+            top: 0.95em;
+            width: clamp(7px, 1vw, 9px);
+            height: clamp(7px, 1vw, 9px);
             background: var(--accent-color);
-            border-radius: 50%;
+            border-radius: 3px;
+            transform: rotate(45deg);
         }
 
         blockquote {
@@ -244,25 +276,31 @@
             max-width: 85%;
             margin: 0 auto;
             text-align: center;
-            padding: 0 2em;
+            padding: 1.5em 2em;
+            border-left: 3px solid var(--accent-color);
+            background: var(--card-glow);
+            border-radius: 0 12px 12px 0;
+            font-variation-settings: 'opsz' 36;
         }
 
         code {
-            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-family: 'SF Mono', 'JetBrains Mono', Monaco, Consolas, monospace;
             background: var(--bg-light);
             padding: 0.2em 0.5em;
-            border-radius: 4px;
-            font-size: 0.9em;
+            border-radius: 5px;
+            font-size: 0.88em;
+            border: 1px solid var(--border-color);
         }
 
         pre {
-            background: #1a1a1a;
-            color: #f8f8f2;
-            padding: 1em;
-            border-radius: 8px;
+            background: #131118;
+            color: #e8e4df;
+            padding: 1.2em;
+            border-radius: 10px;
             overflow-x: auto;
             margin: 1em 0;
             position: relative;
+            border: 1px solid rgba(255,255,255,0.06);
         }
 
         pre code {
@@ -288,20 +326,21 @@
             top: 50%;
             right: 10px;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #ccc;
-            padding: 6px 12px;
-            border-radius: 5px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.5);
+            padding: 5px 12px;
+            border-radius: 6px;
             font-size: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             font-family: var(--body-font);
             z-index: 10;
+            font-weight: 500;
         }
 
         .copy-btn:hover {
-            background: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.15);
             color: white;
         }
 
@@ -350,24 +389,28 @@
             align-items: center;
             justify-content: center;
             padding: clamp(15px, 2.5vw, 25px) clamp(20px, 3vw, 35px);
-            background: linear-gradient(135deg, #007AFF 0%, #0056b3 100%);
-            color: white;
+            background: var(--bg-light);
+            color: var(--text-primary);
             text-decoration: none;
             border-radius: 12px;
             font-size: clamp(1em, 2vw, 1.5em);
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,122,255,0.3);
+            border: 1px solid var(--border-color);
         }
 
         .template-link:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,122,255,0.4);
-            background: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
+            box-shadow: 0 8px 25px rgba(242, 163, 60, 0.2);
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
         }
 
         .template-link.example-link {
-            background: linear-gradient(135deg, #D97757 0%, #c4604a 100%);
+            background: linear-gradient(135deg, var(--accent-color) 0%, #c4604a 100%);
+            color: white;
+            border-color: transparent;
             grid-column: 1 / -1;
             font-size: clamp(1em, 1.8vw, 1.3em);
             padding: clamp(20px, 3vw, 35px);
@@ -375,7 +418,7 @@
 
         .template-link.example-link:hover {
             background: linear-gradient(135deg, #c4604a 0%, #a84d3a 100%);
-            box-shadow: 0 8px 25px rgba(217,119,87,0.4);
+            box-shadow: 0 8px 25px rgba(242, 163, 60,0.4);
         }
 
         /* No animation for template grid */
@@ -540,7 +583,7 @@
         }
 
         body.dark-mode .shortcut-item {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
         }
 
         /* No animation for shortcuts grid */
@@ -579,7 +622,7 @@
             color: white;
             border-color: var(--accent-color);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,122,255,0.3);
+            box-shadow: 0 6px 20px rgba(242, 163, 60, 0.3);
         }
 
         body.dark-mode .contact-link {
@@ -647,7 +690,7 @@
         }
 
         body.dark-mode .slide.section-slide {
-            background: #000;
+            background: #0A0E17;
         }
 
         .slide.section-slide h2 {
@@ -719,7 +762,7 @@
 
         /* Image Placeholder */
         .image-placeholder {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-deep) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -750,14 +793,19 @@
             z-index: 10001;
             display: flex;
             gap: 8px;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             padding: 8px 12px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
         }
 
         body.dark-mode .toolbar {
-            background: rgba(45, 45, 45, 0.95);
+            background: rgba(30, 28, 26, 0.7);
+            border-color: rgba(255,255,255,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .toolbar button {
@@ -780,6 +828,7 @@
         .toolbar button:hover {
             background: var(--accent-color);
             color: white;
+            transform: scale(1.05);
         }
 
         .toolbar button.active {
@@ -835,12 +884,12 @@
             width: 100%;
             flex-wrap: nowrap;
             padding: clamp(15px, 2vw, 30px);
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #f5f0eb 0%, #ebe4dc 100%);
             border-radius: 20px;
         }
 
         body.dark-mode .workflow-diagram {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(135deg, #16202F 0%, #111725 100%);
         }
 
         .workflow-step {
@@ -859,19 +908,19 @@
         }
 
         body.dark-mode .workflow-step {
-            background: #1e293b;
+            background: #16202F;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .workflow-step:hover {
             transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(0,122,255,0.2), 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 35px rgba(242, 163, 60, 0.15), 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .step-number {
             width: clamp(45px, 6vw, 65px);
             height: clamp(45px, 6vw, 65px);
-            background: linear-gradient(135deg, #007AFF 0%, #0056b3 100%);
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-deep) 100%);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -880,7 +929,7 @@
             font-weight: 700;
             font-size: clamp(18px, 2.5vw, 28px);
             margin-bottom: 14px;
-            box-shadow: 0 4px 15px rgba(0,122,255,0.35);
+            box-shadow: 0 4px 15px rgba(242, 163, 60, 0.35);
         }
 
         .step-content {
@@ -938,10 +987,11 @@
             position: fixed;
             bottom: 0;
             left: 0;
-            height: 4px;
-            background: var(--accent-color);
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
             transition: width 0.3s ease;
             z-index: 999;
+            box-shadow: 0 0 12px rgba(242, 163, 60, 0.4);
         }
 
         /* Slide Number */
@@ -1009,7 +1059,7 @@
         }
 
         body.dark-mode .outline-panel {
-            background: rgba(29, 29, 31, 0.98);
+            background: rgba(20, 18, 16, 0.98);
         }
 
         .outline-panel.open {
@@ -1237,7 +1287,30 @@
                 display: none !important;
             }
         }
-    </style>
+    
+        /* Comparison marks: typographic, coloured by meaning */
+        .mark {
+            display: inline-block;
+            width: 1.15em;
+            font-weight: 700;
+        }
+        .mark.yes { color: #3FA46A; }
+        .mark.no  { color: #B4534A; }
+        body.dark-mode .mark.yes { color: #5FBF8B; }
+        body.dark-mode .mark.no  { color: #E2716A; }
+
+        /* The header row paints itself with --text-primary, which inverts to
+           near-white in dark mode and loses its white label. Give dark mode a
+           surface of its own. */
+        body.dark-mode .compare-row.header {
+            background: #26303F;
+            color: var(--text-primary);
+        }
+
+        /* The table slide ran ~5px past the frame after the font change, which
+           surfaced a scrollbar. Shave the scale rather than clip the content. */
+        .comparison-table { font-size: clamp(0.62em, 1.12vw, 0.85em); }
+</style>
 </head>
 <body>
     <!-- Slides Content in Markdown -->
@@ -1249,7 +1322,7 @@ class: center-content
 
 Hisham Abuella
 
-<div class="contact-links"><a href="mailto:hisham.abuella1@gmail.com" class="contact-link">📧 Email</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="contact-link">💼 LinkedIn</a><a href="https://hisham-abuella.github.io/home/" target="_blank" class="contact-link">🌐 Website</a></div>
+<div class="contact-links"><a href="mailto:hisham.abuella1@gmail.com" class="contact-link">Email</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="contact-link">LinkedIn</a><a href="https://www.hishamabuella.com" target="_blank" class="contact-link">Website</a></div>
 
 ---
 
@@ -1265,7 +1338,7 @@ Hisham Abuella
 
 ## HTML vs Traditional Tools
 
-<table class="comparison-table"><tr class="compare-row header"><td class="compare-cell">Feature</td><td class="compare-cell">PowerPoint/Keynote</td><td class="compare-cell highlight">HTML + Claude</td></tr><tr class="compare-row"><td class="compare-cell">📦 File Size</td><td class="compare-cell">❌ 10-100+ MB</td><td class="compare-cell highlight">✅ 50-200 KB</td></tr><tr class="compare-row"><td class="compare-cell">🔧 Dependencies</td><td class="compare-cell">❌ Needs software</td><td class="compare-cell highlight">✅ Just a browser</td></tr><tr class="compare-row"><td class="compare-cell">🔤 Fonts</td><td class="compare-cell">❌ Often break</td><td class="compare-cell highlight">✅ Always consistent</td></tr><tr class="compare-row"><td class="compare-cell">📂 Version Control</td><td class="compare-cell">❌ Manual copies</td><td class="compare-cell highlight">✅ Git-friendly</td></tr><tr class="compare-row"><td class="compare-cell">📱 Mobile</td><td class="compare-cell">❌ Limited, needs app</td><td class="compare-cell highlight">✅ Built-in responsive</td></tr><tr class="compare-row"><td class="compare-cell">🌐 Sharing</td><td class="compare-cell">❌ Email attachments</td><td class="compare-cell highlight">✅ Host & share URL</td></tr><tr class="compare-row"><td class="compare-cell">⏱️ Creation Time</td><td class="compare-cell">❌ Hours of work</td><td class="compare-cell highlight">✅ Minutes with AI</td></tr></table>
+<table class="comparison-table"><tr class="compare-row header"><td class="compare-cell">Feature</td><td class="compare-cell">PowerPoint/Keynote</td><td class="compare-cell highlight">HTML + Claude</td></tr><tr class="compare-row"><td class="compare-cell">File Size</td><td class="compare-cell"><span class="mark no">✕</span> 10-100+ MB</td><td class="compare-cell highlight"><span class="mark yes">✓</span> 50-200 KB</td></tr><tr class="compare-row"><td class="compare-cell">Dependencies</td><td class="compare-cell"><span class="mark no">✕</span> Needs software</td><td class="compare-cell highlight"><span class="mark yes">✓</span> Just a browser</td></tr><tr class="compare-row"><td class="compare-cell">Fonts</td><td class="compare-cell"><span class="mark no">✕</span> Often break</td><td class="compare-cell highlight"><span class="mark yes">✓</span> Always consistent</td></tr><tr class="compare-row"><td class="compare-cell">Version Control</td><td class="compare-cell"><span class="mark no">✕</span> Manual copies</td><td class="compare-cell highlight"><span class="mark yes">✓</span> Git-friendly</td></tr><tr class="compare-row"><td class="compare-cell">Mobile</td><td class="compare-cell"><span class="mark no">✕</span> Limited, needs app</td><td class="compare-cell highlight"><span class="mark yes">✓</span> Built-in responsive</td></tr><tr class="compare-row"><td class="compare-cell">Sharing</td><td class="compare-cell"><span class="mark no">✕</span> Email attachments</td><td class="compare-cell highlight"><span class="mark yes">✓</span> Host & share URL</td></tr><tr class="compare-row"><td class="compare-cell">Creation Time</td><td class="compare-cell"><span class="mark no">✕</span> Hours of work</td><td class="compare-cell highlight"><span class="mark yes">✓</span> Minutes with AI</td></tr></table>
 
 ---
 class: center-content
@@ -1340,12 +1413,12 @@ Edit with natural language commands
 ## Pick a Template, Start Creating
 
 <div class="template-grid">
-<a href="keynote_html_claude_skill/templates/keynote-interactive-template.html" target="_blank" class="template-link">keynote-interactive</a>
-<a href="keynote_html_claude_skill/templates/keynote-style-template.html" target="_blank" class="template-link">keynote-style</a>
-<a href="keynote_html_claude_skill/templates/tech-talk-template.html" target="_blank" class="template-link">tech-talk</a>
-<a href="keynote_html_claude_skill/templates/business-pitch-template.html" target="_blank" class="template-link">business-pitch</a>
-<a href="keynote_html_claude_skill/templates/base-template.html" target="_blank" class="template-link">base</a>
-<a href="keynote_html_claude_skill/templates/minimal-template.html" target="_blank" class="template-link">minimal</a>
+<span class="template-link">keynote-interactive</span>
+<span class="template-link">keynote-style</span>
+<span class="template-link">tech-talk</span>
+<span class="template-link">business-pitch</span>
+<span class="template-link">base</span>
+<span class="template-link">minimal</span>
 </div>
 
 ---
@@ -1356,7 +1429,7 @@ class: center-content
 <p>Check out this example presentation created using this skill:</p>
 
 <div class="template-grid">
-<a href="claude101.html" target="_blank" class="template-link example-link">🤖 CLAUDE 101 - Introduction to Claude AI</a>
+<a href="claude101.html" target="_blank" class="template-link example-link">CLAUDE 101 - Introduction to Claude AI</a>
 </div>
 
 ---
@@ -1389,7 +1462,7 @@ class: center-content
 # Your Next Presentation Starts Now
 ### Try it. You won't go back.
 
-<div class="contact-links"><a href="mailto:hisham.abuella1@gmail.com" class="contact-link">📧 hisham.abuella1@gmail.com</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="contact-link">💼 LinkedIn</a><a href="https://hisham-abuella.github.io/home/" target="_blank" class="contact-link">🌐 Website</a></div>
+<div class="contact-links"><a href="mailto:hisham.abuella1@gmail.com" class="contact-link">hisham.abuella1@gmail.com</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" class="contact-link">LinkedIn</a><a href="https://www.hishamabuella.com" target="_blank" class="contact-link">Website</a></div>
     </script>
 
     <!-- Toolbar -->
@@ -1433,7 +1506,7 @@ class: center-content
             <div class="slides-container"></div>
             <div class="presentation-logos">
                 <div class="presentation-logo">
-                    <img src="logo.jpg" alt="Logo">
+                    <img src="../../Pictures/Bio_Color.JPG" alt="Hisham Abuella">
                 </div>
             </div>
         </div>
@@ -1767,7 +1840,7 @@ class: center-content
                 initSwipeNavigation();
 
                 // Load theme preference
-                if (localStorage.getItem('presentationTheme') === 'dark') {
+                if (localStorage.getItem('presentationTheme') !== 'light') {
                     isDarkMode = true;
                     document.body.classList.add('dark-mode');
                     document.getElementById('btn-theme').textContent = '\u263D';

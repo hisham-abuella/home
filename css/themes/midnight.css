@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Midnight — deep indigo glass, warm amber signal. The default.
+
+   Tokens only. Never layout: structure belongs in css/base.css.
+   ========================================================================== */
+
+html[data-appearance="midnight"] {
+  --bg-primary:     #0A0E17;
+  --bg-secondary:   #111725;
+  --bg-elevated:    #18202F;
+  --text-primary:   #ECEFF4;
+  --text-secondary: #98A2B3;
+  --text-tertiary:  #7C8899;
+  --accent:         #F2A33C;
+  --accent-hover:   #FFB75C;
+  --accent-subtle:  rgba(242, 163, 60, 0.12);
+  --accent-ink:     #0A0E17;
+  --card-bg:        rgba(255, 255, 255, 0.035);
+  --card-border:    rgba(255, 255, 255, 0.09);
+  --card-shadow:    0 18px 50px rgba(0, 0, 0, 0.45);
+  --card-radius:    14px;
+  --glass-blur:     saturate(160%) blur(18px);
+  --nav-bg:         rgba(10, 14, 23, 0.66);
+  --nav-border:     rgba(255, 255, 255, 0.08);
+  --hairline:       rgba(255, 255, 255, 0.09);
+  --glow:           radial-gradient(60% 60% at 50% 0%, rgba(242, 163, 60, 0.10), transparent 70%);
+  --field-opacity:  0.20;
+  --grain-opacity:  0.038;
+}

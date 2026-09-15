@@ -1,0 +1,293 @@
+/* ==========================================================================
+   CV — a document page.
+
+   Layered on css/base.css and one of css/themes/*.css. Selectors match the
+   existing cv.html markup, so the page follows the same appearance switch as
+   the rest of the site. Printing is a first-class case here: see the print
+   block at the end, which forces ink on paper regardless of appearance.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A CV is a document, not a themed page. These tokens override whichever
+   appearance is stored so the page is always a clean white sheet: no glass,
+   no glow, no signal field, no grain. cv.css loads after the theme files, and
+   matches at the same specificity, so it wins.
+   -------------------------------------------------------------------------- */
+
+html[data-appearance] {
+  --bg-primary:     #FFFFFF;
+  --bg-secondary:   #FFFFFF;
+  --bg-elevated:    #FFFFFF;
+  --text-primary:   #16181D;
+  --text-secondary: #3F4753;
+  --text-tertiary:  #6B7480;
+  --accent:         #A8641A;
+  --accent-hover:   #8A5214;
+  --accent-subtle:  rgba(168, 100, 26, 0.08);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        #FFFFFF;
+  --card-border:    rgba(22, 24, 29, 0.14);
+  --card-shadow:    none;
+  --card-radius:    6px;
+  --glass-blur:     none;
+  --nav-bg:         #FFFFFF;
+  --nav-border:     rgba(22, 24, 29, 0.12);
+  --hairline:       rgba(22, 24, 29, 0.12);
+  --glow:           none;
+  --field-opacity:  0;
+  --grain-opacity:  0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 28px 56px;
+}
+
+/* ==========================================================================
+   Floating page actions
+   ========================================================================== */
+
+.back-btn,
+.print-btn {
+  position: fixed;
+  top: 22px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.back-btn { left: 22px; }
+.print-btn { right: 22px; }
+
+.back-btn:hover,
+.print-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.back-btn svg,
+.print-btn svg { width: 16px; height: 16px; }
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.header {
+  padding: clamp(64px, 11vh, 104px) 0 28px;
+  border-bottom: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.header h1 {
+  font-size: clamp(2.1rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.contact-info {
+  margin-top: 16px;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.contact-info a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.contact-info a:hover { border-bottom-color: var(--accent); }
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+
+.section-title {
+  margin: 44px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 9px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ==========================================================================
+   Experience
+   ========================================================================== */
+
+.job { margin-bottom: 28px; }
+
+.job-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.job-company {
+  margin: 4px 0 12px;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.job-company strong { color: var(--accent); font-weight: 600; }
+
+.job ul { margin-top: 8px; }
+
+/* ==========================================================================
+   Education, publications, awards
+   ========================================================================== */
+
+.education-item { margin-bottom: 22px; }
+
+.degree {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.school { margin-top: 4px; font-size: 0.9375rem; color: var(--text-secondary); }
+
+.edu-details { margin-top: 6px; font-size: 0.9375rem; color: var(--text-tertiary); }
+
+.publication {
+  margin-bottom: 14px;
+  padding-left: 20px;
+  position: relative;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.publication a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.publication a:hover { border-bottom-color: var(--accent); }
+
+.award-item {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 11px;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.award-item::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.award-date { color: var(--text-tertiary); }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  margin-top: 44px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.footer .appearance { margin-left: auto; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 660px) {
+  .container { padding: 0 18px 40px; }
+  .back-btn, .print-btn { top: 14px; padding: 8px 14px; font-size: 0.8125rem; }
+  .back-btn { left: 14px; }
+  .print-btn { right: 14px; }
+  .header { padding-top: 84px; }
+  .footer { flex-direction: column; align-items: flex-start; }
+  .footer .appearance { margin-left: 0; }
+}
+
+/* ==========================================================================
+   Print — a CV has to survive being printed, whatever appearance is on screen
+   ========================================================================== */
+
+@media print {
+  .back-btn, .print-btn, .appearance, .signal-field, .grain { display: none !important; }
+
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  body::before { display: none !important; }
+
+  .container { max-width: none; padding: 0; }
+
+  .header { padding-top: 0; border-bottom: 1px solid #000; }
+  .header h1, .job-title, .degree, .section-title { color: #000 !important; }
+  .contact-info, .job-company, .school, .edu-details,
+  li, .publication, .award-item, .award-date { color: #1A1A1A !important; }
+
+  .section-title { border-bottom-color: #000 !important; }
+  .job-company strong { color: #000 !important; }
+  li::before, .award-item::before { background: #000 !important; }
+  .contact-info a, .publication a { color: #000 !important; }
+
+  .job, .education-item { page-break-inside: avoid; }
+  .section-title { page-break-after: avoid; }
+}

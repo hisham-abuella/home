@@ -1,243 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-appearance="midnight">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Building an Islamic Kids Website with Claude - Hisham Abuella</title>
+    <meta name="description" content="How Hisham Abuella built an interactive Islamic learning platform for children using Claude Code, with prophet stories, quizzes, and bilingual audio.">
+    <meta property="og:title" content="Building an Interactive Islamic Kids Website - Hisham Abuella">
+    <meta property="og:description" content="Building an interactive Islamic learning platform for children with Claude Code.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/article.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-orange: #ff6b35;
-            --primary-teal: #00a8cc;
-            --primary-yellow: #f4d03f;
-            --dark-gray: #2c3e50;
-            --light-gray: #ecf0f1;
-            --medium-gray: #95a5a6;
-            --white: #ffffff;
-            --black: #1a1a1a;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
-            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
-
-            --bg-primary: #ecf0f1;
-            --bg-secondary: #ffffff;
-            --text-primary: #2c3e50;
-            --text-secondary: #95a5a6;
-            --card-bg: #ffffff;
-            --nav-bg: rgba(255, 255, 255, 0.95);
-            --input-border: #ecf0f1;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2c2c2c;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --card-bg: #2c2c2c;
-            --nav-bg: rgba(44, 44, 44, 0.95);
-            --input-border: #404040;
-            --shadow: 0 10px 30px rgba(0,0,0,0.3);
-            --shadow-hover: 0 20px 60px rgba(0,0,0,0.4);
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: var(--nav-bg);
-            border-radius: 50px;
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--input-border);
-        }
-
-        .nav-container {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-orange);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .back-btn {
-            padding: 0.5rem 1.5rem;
-            background: var(--primary-orange);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: var(--primary-teal);
-            transform: translateY(-2px);
-        }
-
-        .article-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 8rem 2rem 4rem;
-        }
-
-        .article-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .article-title {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 300;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-        }
-
-        .article-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .article-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            font-style: italic;
-        }
-
-        .article-content {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 3rem;
-        }
-
-        .article-content h2 {
-            color: var(--primary-orange);
-            font-size: 1.8rem;
-            margin: 2rem 0 1rem;
-            font-weight: 600;
-        }
-
-        .article-content h3 {
-            color: var(--text-primary);
-            font-size: 1.4rem;
-            margin: 1.5rem 0 0.5rem;
-            font-weight: 600;
-        }
-
-        .article-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 600;
-        }
-
-        .quote {
-            background: linear-gradient(135deg, #2d8a6e, #1a5c4a);
-            padding: 2rem;
-            border-radius: 15px;
-            color: white;
-            font-size: 1.2rem;
-            font-style: italic;
-            text-align: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .quote::before {
-            content: '"';
-            font-size: 4rem;
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            opacity: 0.3;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .feature-card {
-            background: var(--input-border);
-            padding: 1.2rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.8rem;
-        }
-
-        .feature-card .feature-icon {
-            font-size: 1.5rem;
-            margin-top: 0.1rem;
-        }
-
-        .feature-card strong {
-            display: block;
-            margin-bottom: 0.3rem;
-        }
-
-        .feature-card span {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
         .story-list {
             margin: 1.5rem 0;
         }
 
         .story-item {
-            background: var(--input-border);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             padding: 1rem 1.5rem;
             border-radius: 12px;
             margin-bottom: 0.8rem;
@@ -258,49 +46,33 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
-
-        a.site-link {
-            color: var(--primary-orange);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        a.site-link:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                transform: none;
-                margin: 0;
-                border-radius: 0 0 20px 20px;
-                padding: 1rem;
-            }
-
-            .article-container {
-                padding: 6rem 1rem 2rem;
-            }
-
-            .article-content {
-                padding: 2rem 1.5rem;
-            }
-
-            .article-meta {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
     </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
+                    document.documentElement.setAttribute('data-appearance', saved);
+                }
+            } catch (error) { /* storage unavailable */ }
+        })();
+    </script>
 </head>
 <body>
+    <div class="grain" aria-hidden="true"></div>
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">H</div>
             <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
+                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -448,12 +220,26 @@
             <p>The site is live at <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">hisham-abuella.github.io/Interactive-Islamic-kids-website</a>. If you have young kids or know a Muslim family, share it. It's completely free, no ads, no tracking, and built with love.</p>
 
             <p>More stories and Quran surahs are on the way. The vision is to build the most engaging, free Islamic learning platform for children on the web &mdash; one story at a time.</p>
+        </div>
 
-            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--input-border); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
-                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--primary-orange); text-decoration: none;">Claude Code</a></strong>.</em></p>
-            </div>
+        <div class="article-nav">
+            <a href="building-wirelesshub.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">Building WirelessHub with Claude</span>
+            </a>
+            <a href="building-ai-server.html" class="article-nav-link next">
+                <span class="nav-label">Next Article &rarr;</span>
+                <span class="nav-title">Building a Personal AI Engine</span>
+            </a>
         </div>
     </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/appearance.js" defer></script>
+    <script src="../js/signal-field.js" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 </body>

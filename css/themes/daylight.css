@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Daylight — warm paper, the same amber darkened for contrast on white.
+
+   Tokens only. Never layout: structure belongs in css/base.css.
+   ========================================================================== */
+
+html[data-appearance="daylight"] {
+  --bg-primary:     #FBFAF8;
+  --bg-secondary:   #FFFFFF;
+  --bg-elevated:    #FFFFFF;
+  --text-primary:   #14181F;
+  --text-secondary: #5A6472;
+  --text-tertiary:  #6B7480;
+  --accent:         #9C5C16;
+  --accent-hover:   #8A5214;
+  --accent-subtle:  rgba(168, 100, 26, 0.09);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        #FFFFFF;
+  --card-border:    rgba(20, 24, 31, 0.10);
+  --card-shadow:    0 12px 34px rgba(20, 24, 31, 0.07);
+  --card-radius:    14px;
+  --glass-blur:     saturate(140%) blur(14px);
+  --nav-bg:         rgba(251, 250, 248, 0.76);
+  --nav-border:     rgba(20, 24, 31, 0.08);
+  --hairline:       rgba(20, 24, 31, 0.10);
+  --glow:           radial-gradient(60% 60% at 50% 0%, rgba(168, 100, 26, 0.07), transparent 70%);
+  --field-opacity:  0.13;
+  --grain-opacity:  0.020;
+}

@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Contrast — maximum legibility: pure black on white, no glass, no glow.
+
+   Tokens only. Never layout: structure belongs in css/base.css.
+   ========================================================================== */
+
+html[data-appearance="contrast"] {
+  --bg-primary:     #FFFFFF;
+  --bg-secondary:   #FFFFFF;
+  --bg-elevated:    #FFFFFF;
+  --text-primary:   #000000;
+  --text-secondary: #2E2E2E;
+  --text-tertiary:  #4A4A4A;
+  --accent:         #000000;
+  --accent-hover:   #000000;
+  --accent-subtle:  rgba(0, 0, 0, 0.06);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        #FFFFFF;
+  --card-border:    #000000;
+  --card-shadow:    none;
+  --card-radius:    4px;
+  --glass-blur:     none;
+  --nav-bg:         #FFFFFF;
+  --nav-border:     #000000;
+  --hairline:       #000000;
+  --glow:           none;
+  --field-opacity:  0;
+  --grain-opacity:  0;
+}
