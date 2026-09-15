@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-appearance="midnight">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Building Wireless 101 - Hisham Abuella</title>
     <meta name="description" content="How I'm building Wireless 101, a free bilingual platform teaching wireless communications, DSP, and more in English and Arabic.">
     <meta property="og:title" content="Building Wireless 101 - Hisham Abuella">
@@ -10,8 +11,12 @@
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
     <link rel="stylesheet" href="../css/article.css">
     <style>
         .course-grid {
@@ -22,7 +27,8 @@
         }
 
         .course-card {
-            background: var(--input-border);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             padding: 1.2rem;
             border-radius: 12px;
             display: flex;
@@ -31,7 +37,7 @@
         }
 
         .course-card i {
-            color: var(--primary-orange);
+            color: var(--accent);
             font-size: 1.3rem;
             margin-top: 0.2rem;
         }
@@ -54,7 +60,7 @@
 
         .principle-list li {
             padding: 0.8rem 0;
-            border-bottom: 1px solid var(--input-border);
+            border-bottom: 1px solid var(--hairline);
             display: flex;
             align-items: flex-start;
             gap: 0.8rem;
@@ -65,17 +71,59 @@
         }
 
         .principle-list li i {
-            color: var(--primary-teal);
+            color: var(--accent);
             margin-top: 0.3rem;
         }
+
+        .course-cta {
+            margin: 1.8rem 0 0;
+            text-align: center;
+        }
+
+        .course-cta a {
+            display: inline-block;
+            padding: 13px 28px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: var(--accent-ink);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-bottom: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .course-cta a:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+            border-bottom: none;
+        }
     </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
+                    document.documentElement.setAttribute('data-appearance', saved);
+                }
+            } catch (error) { /* storage unavailable */ }
+        })();
+    </script>
 </head>
 <body>
+    <div class="grain" aria-hidden="true"></div>
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">H</div>
             <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
+                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -93,7 +141,7 @@
         <div class="article-content">
             <p>After years of working in wireless engineering &mdash; from my PhD in visible light communications to roles at companies building cellular systems &mdash; one thing has always bothered me: <span class="highlight">the knowledge gap</span>. Too many excellent resources in this field are locked behind paywalls, buried in dense textbooks, or only available in English. I wanted to change that.</p>
 
-            <p><a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">Wireless 101</a> is an open educational platform that teaches wireless communications, digital signal processing, statistics, machine learning, and linear algebra &mdash; all for free, in both <strong>English and Arabic</strong>.</p>
+            <p><a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">Wireless 101</a> is an open educational platform that teaches wireless communications, digital signal processing, statistics, machine learning, linear algebra, and generative AI &mdash; all for free, in both <strong>English and Arabic</strong>.</p>
 
             <h2>Why I'm Building This</h2>
 
@@ -111,7 +159,7 @@
 
             <h2>What's Inside</h2>
 
-            <p>The platform covers six interconnected courses, each designed to build on the others:</p>
+            <p>The platform now covers seven interconnected courses, each designed to build on the others:</p>
 
             <div class="course-grid">
                 <div class="course-card">
@@ -156,7 +204,18 @@
                         <span>Generative AI fundamentals &mdash; transformers, LLMs, prompt engineering, and building with AI models</span>
                     </div>
                 </div>
+                <div class="course-card">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                    <div>
+                        <strong>GenAI Engineering 102</strong>
+                        <span>Going beyond the basics &mdash; building and shipping real tools with agents, Claude Code, and production workflows</span>
+                    </div>
+                </div>
             </div>
+
+            <p class="course-cta">
+                <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" rel="noopener">Browse all seven courses</a>
+            </p>
 
             <h2>The Approach: Story-Style Learning</h2>
 
@@ -197,7 +256,7 @@
 
             <h2>What's Next</h2>
 
-            <p>Wireless 101 is a living project. The six courses are structured and growing, and the goal is to keep expanding the content, adding more interactive labs, and deepening the Arabic coverage. If you're a wireless engineer, a student, or just someone curious about how the invisible signals around you actually work &mdash; <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">come learn with us</a>.</p>
+            <p>Wireless 101 is a living project. The seven courses are structured and growing, and the goal is to keep expanding the content, adding more interactive labs, and deepening the Arabic coverage. If you're a wireless engineer, a student, or just someone curious about how the invisible signals around you actually work &mdash; <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">come learn with us</a>.</p>
 
             <p>And if you speak Arabic, share it with someone who could benefit. That's the whole point &mdash; knowledge that reaches the people who need it, in the language they think in.</p>
         </div>
@@ -215,18 +274,8 @@
         <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
     </footer>
 
-    <script>
-        (function() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            document.getElementById('theme-toggle').addEventListener('click', function() {
-                const current = document.documentElement.getAttribute('data-theme');
-                const next = current === 'light' ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('theme', next);
-            });
-        })();
-    </script>
+    <script src="../js/appearance.js" defer></script>
+    <script src="../js/signal-field.js" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 </body>

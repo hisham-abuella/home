@@ -1,1 +1,13 @@
+# macOS
 .DS_Store
+
+# Tooling / agent artifacts
+.playwright-mcp/
+
+# Screenshots captured while reviewing pages (regenerable, not site content)
+audit-*.png
+template-*.png
+review-*.png
+*-site-full.png
+full-page-*.png
+dark-mode-hero.png

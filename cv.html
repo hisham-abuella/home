@@ -1,293 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-appearance="midnight">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Hisham Abuella - CV</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Calibri, 'Segoe UI', sans-serif;
-            font-size: 11pt;
-            line-height: 1.4;
-            color: #000;
-            background: #f0f0f0;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px 50px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-
-        /* Print button */
-        .print-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #0066cc;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-
-        .print-btn:hover {
-            background: #0055aa;
-        }
-
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            font-size: 14px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-
-        .back-btn:hover {
-            background: #555;
-        }
-
-        .back-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .print-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            font-size: 24pt;
-            font-weight: normal;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .contact-info {
-            font-size: 10pt;
-            line-height: 1.6;
-        }
-
-        .contact-info a {
-            color: #000;
-            text-decoration: none;
-        }
-
-        /* Section title */
-        .section-title {
-            font-size: 11pt;
-            font-weight: normal;
-            text-align: center;
-            letter-spacing: 4px;
-            margin: 25px 0 15px 0;
-            padding: 5px 0;
-            border-top: 1px solid #000;
-            border-bottom: 1px solid #000;
-        }
-
-        /* Bullet lists */
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        li {
-            padding: 3px 0 3px 20px;
-            position: relative;
-        }
-
-        li::before {
-            content: "◇";
-            position: absolute;
-            left: 0;
-            font-size: 8pt;
-        }
-
-        /* Job entries */
-        .job {
-            margin-bottom: 15px;
-        }
-
-        .job-title {
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .job-company {
-            text-align: center;
-            color: #0066cc;
-        }
-
-        .job-date {
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .job li {
-            font-size: 9.5pt;
-        }
-
-        /* Publications */
-        .publication {
-            margin-bottom: 8px;
-            text-align: justify;
-        }
-
-        .publication a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .publication a:hover {
-            text-decoration: underline;
-        }
-
-        /* Education */
-        .education-item {
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .degree {
-            font-weight: bold;
-        }
-
-        .school {
-            color: #0066cc;
-        }
-
-        .edu-details {
-            font-size: 10pt;
-            margin-top: 3px;
-        }
-
-        /* Awards */
-        .award-item {
-            padding: 3px 0 3px 20px;
-            position: relative;
-        }
-
-        .award-item::before {
-            content: "◇";
-            position: absolute;
-            left: 0;
-            font-size: 8pt;
-        }
-
-        .award-date {
-            font-weight: bold;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 10px;
-            border-top: 1px solid #000;
-            border-bottom: 1px solid #000;
-            letter-spacing: 2px;
-            font-size: 10pt;
-        }
-
-        /* Print styles */
-        @media print {
-            .print-btn,
-            .back-btn {
-                display: none !important;
-            }
-
-            body {
-                background: white;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                box-shadow: none;
-                padding: 0;
-                margin: 0;
-                max-width: 100%;
-            }
-
-            .header {
-                margin-top: 0;
-                padding-top: 0;
-            }
-
-            @page {
-                margin: 0.4in;
-                margin-bottom: 0.3in;
-                size: letter;
-            }
-
-            html {
-                -webkit-print-color-adjust: exact;
-            }
-
-            /* Hide URL in print footer - browser setting override needed */
-            @page :footer {
-                display: none;
-            }
-
-            @page :header {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                padding-top: 70px;
-            }
-
-            .print-btn,
-            .back-btn {
-                position: fixed;
-                top: 10px;
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-
-            .print-btn {
-                right: 10px;
-            }
-
-            .back-btn {
-                left: 10px;
-            }
-        }
-    </style>
+    <meta name="description" content="Curriculum vitae of Hisham Abuella, cellular systems engineer.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/themes/midnight.css">
+    <link rel="stylesheet" href="css/themes/daylight.css">
+    <link rel="stylesheet" href="css/themes/contrast.css">
+    <link rel="stylesheet" href="css/cv.css">
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
+                    document.documentElement.setAttribute('data-appearance', saved);
+                }
+            } catch (error) { /* storage unavailable */ }
+        })();
+    </script>
 </head>
 <body>
     <a href="index.html" class="back-btn">
@@ -324,6 +61,7 @@
                 <li>5+ years of industry experience in simulation, fixed-point implementation of wireless systems, RF digital front-end, Digital Pre-Distortion, channel parameter estimation, lab bringup issues and debugging scripts.</li>
                 <li>10+ technical publications (including 1 U.S. patent).</li>
                 <li>Knowledge of visible light sensing and communications, OFDM, wireless prototyping using software defined radio and raspberry-Pi, digital signal processing, RF frontend impairments, 5G baseband channel estimation, and machine learning algorithms for wireless communication.</li>
+                <li>GenAI champion at Apple: built GenAI-based engineering tools, published a presentation skill with <strong>2,200+ downloads</strong> on the internal Claude marketplace, and authored a GenAI crash course visited by <strong>6,000+</strong> internal users.</li>
                 <li>Skills on MATLAB, C, C++, LabVIEW, Python, GitHub, Visio, LaTeX, GenAI, Claude Code, WebApps and Vibe Coding.</li>
             </ul>
         </section>
@@ -338,7 +76,11 @@
                 <ul>
                     <li>Working in the AGC (Automatic Gain Control) team on cellular modem systems.</li>
                     <li>Helping in Lab bringup issues and debugging.</li>
-                    <li>Developing and improving tools used by the team in bringup using GenAI tools like Claude Code for issue report analysis and log analysis.</li>
+                    <li>Serving as a GenAI champion and subject-matter expert for the wireless systems organization, advising engineers on where generative AI genuinely helps their work.</li>
+                    <li>Built multiple GenAI-based tools that analyze bringup and lab issues, simulator output, and system design documents.</li>
+                    <li>Used GenAI and Claude Code to improve debugging tools for bringup and lab issues, and to mine historical logs for data supporting diff studies and design decisions.</li>
+                    <li>Created a presentation-building skill published on Apple's internal Claude marketplace, passing <strong>2,200+ downloads</strong>.</li>
+                    <li>Wrote and delivered a GenAI and Claude 101 crash course for Apple internal users across the company, visited by <strong>6,000+ people</strong>.</li>
                 </ul>
             </div>
 
@@ -445,7 +187,7 @@
                 <div class="degree">Ph.D. at Oklahoma State University (OSU), USA</div>
                 <div class="school">School of Electrical and Computer Engineering (Current GPA: 4.0/4.0) | <strong>Jan. 2017 – May 2021</strong></div>
                 <div class="edu-details">
-                    <strong>Tentative Thesis:</strong> "Wireless Visible Light Sensing Systems: Applications, Opportunities, and Limitations"<br>
+                    <strong>Thesis:</strong> "Wireless Visible Light Sensing Systems: Applications, Opportunities, and Limitations"<br>
                     <strong>Advisor:</strong> Assistant Prof. Sabit Ekin<br>
                     <strong>Courses:</strong> Stochastic Processes, Wireless Communication, Linear Systems, Intelligent Systems.
                 </div>
@@ -543,13 +285,13 @@
                 <li>Efficient problem solver especially in hardware implementation issues.</li>
                 <li>Quick learner and determined to improve myself.</li>
                 <li>Experienced researcher been doing research for more than six years.</li>
-                <li>Living in foreign countries and traveling experience (3 years in Turkey and 8 years in USA).</li>
+                <li>Living in foreign countries and traveling experience (3 years in Turkey and 9+ years in USA).</li>
             </ul>
         </section>
 
         <!-- Footer -->
         <div class="footer">
-            - R E F E R E N C E S &nbsp; C A N &nbsp; B E &nbsp; P R O V I D E D &nbsp; U P O N &nbsp; R E Q U E S T -
+            <span>References can be provided upon request</span>
         </div>
     </div>
 
@@ -557,11 +299,15 @@
         // Press 'P' to print/save as PDF
         document.addEventListener('keydown', function(e) {
             if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {
-                window.print();
+                const tag = document.activeElement.tagName;
+                if (tag !== 'INPUT' && tag !== 'TEXTAREA' && !document.activeElement.isContentEditable) {
+                    window.print();
+                }
             }
         });
     </script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
+    <script src="js/appearance.js" defer></script>
 </body>
 </html>
