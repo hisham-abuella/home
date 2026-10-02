@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
+    <title>Bedtime Stories for a Three-Month-Old - Hisham Abuella</title>
+    <meta name="description" content="My wife wanted to start reading stories to our three-month-old, so I built a high-contrast bilingual board book with narration in my own voice. The first of a series that will grow as he does.">
+    <meta property="og:title" content="Bedtime Stories for a Three-Month-Old - Hisham Abuella">
+    <meta property="og:description" content="A high-contrast bilingual board book for a newborn, narrated in English and Arabic.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .story-list {
+            margin: 1.5rem 0;
+        }
+
+        .story-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-item .story-emoji {
+            font-size: 1.8rem;
+        }
+
+        .story-item strong {
+            display: block;
+        }
+
+        .story-item span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
+                    document.documentElement.setAttribute('data-appearance', saved);
+                }
+            } catch (error) { /* storage unavailable */ }
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
+                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">Bedtime Stories for a Three-Month-Old</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> October 1, 2026</span>
+                <span><i class="fas fa-clock"></i> 5 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle enter delay-3">My wife wanted to start reading stories to our son. He is three months old, so I built him a book that matches what his eyes can actually do &mdash; bilingual, narrated in my own voice, and the first of a series that will grow as he does</p>
+        </div>
+
+        <div class="article-content">
+            <p>My wife wanted to start reading to Yusuf. He is three months old. The books we had on the shelf were lovely, and completely wrong for him &mdash; soft pastel illustrations, long sentences, pages of detail he cannot resolve yet. So I built him one that fits: <a href="../projects/bedtime-stories/black-white-zoo.html" class="site-link">The Black and White Zoo</a>.</p>
+
+            <img src="../projects/bedtime-stories/images/book-hero.png" alt="An open board book showing a zebra on one page and a panda on the other, with a small red bird perched on the corner">
+
+            <h2>What a Three-Month-Old Can Actually See</h2>
+            <p>This is the part that changed every design decision. A newborn's visual system is still wiring itself, and the thing it resolves best is <span class="highlight">high-contrast edges</span> &mdash; pure black against pure white. Colour arrives slowly over the first year, and it arrives in order: red first, then yellow and green, with blue the last to turn up. Focal distance sits around 30&nbsp;cm, roughly the gap between a parent's arms and their face.</p>
+
+            <p>So the book is not a book with pictures in it. It is a sequence of the boldest shapes I could draw, one per page, at the size his eyes can hold.</p>
+
+            <div class="quote">
+                Every design choice came from the same question: what can he actually see today, and what is he about to be able to see next month?
+            </div>
+
+            <h2>Two Chapters</h2>
+            <p>The first chapter is pure black and white &mdash; animals whose real markings are already maximum contrast, so nothing had to be stylised into it. The second chapter introduces one colour per page, in the order his vision will pick them up, with heavy black outlines so the contrast still carries while the colour is new to him.</p>
+
+            <div class="story-list stagger">
+                <div class="story-item">
+                    <div class="story-emoji">🦓</div>
+                    <div>
+                        <strong>Chapter One &mdash; Black &amp; White</strong>
+                        <span>Zebra, panda, cow, penguin, owl, orca, sheep, puppy, cat, and a goodnight moon</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🐞</div>
+                    <div>
+                        <strong>Chapter Two &mdash; Colours</strong>
+                        <span>Red ladybug, yellow duckling, blue whale, green frog, orange tiger, purple butterfly, pink pig, brown bear, grey cat, rainbow</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🐦</div>
+                    <div>
+                        <strong>A red bird on every page</strong>
+                        <span>Hiding in a different corner each time &mdash; red is the one colour he can already find</span>
+                    </div>
+                </div>
+            </div>
+
+            <img src="../projects/bedtime-stories/images/colours.png" alt="An open board book showing a red ladybug and a yellow duckling, with a green frog and a blue whale beside it">
+
+            <h2>Narrated in My Own Voice</h2>
+            <p>Every page has audio. The English is read in <span class="highlight">my own cloned voice</span>, the same ElevenLabs voice I use for the Wireless 101 podcast episodes, and the Arabic uses the voice that narrates the Arabic lessons there. Yusuf will not understand a word of either for a long time, but he already knows the sound of his parents, and that is the part that matters at three months.</p>
+
+            <p>The narration names him directly &mdash; on the cover, and again at goodnight, in both languages. There is a field on the cover to change the name, for anyone else who wants to read it to their own baby.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🎙️</div>
+                    <div>
+                        <strong>Bilingual Narration</strong>
+                        <span>Eighty audio clips &mdash; every page and every animal sound, in English and Arabic</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <div>
+                        <strong>English &amp; Arabic</strong>
+                        <span>Full RTL layout, Arabic typography, and page-turn arrows that flip direction</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔊</div>
+                    <div>
+                        <strong>Animal Sounds</strong>
+                        <span>A separate clip per animal, so the moo or the meow can be repeated as many times as he wants</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <div>
+                        <strong>Full Screen</strong>
+                        <span>The artwork fills the display, which is how it should be held in front of him</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <div>
+                        <strong>Hand-Drawn in SVG</strong>
+                        <span>Every animal is plain SVG &mdash; no images, no illustration library, sharp at any size</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👪</div>
+                    <div>
+                        <strong>Notes for Grown-Ups</strong>
+                        <span>One line per page on what his eyes are doing and how to read it aloud</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>How It Was Built</h2>
+            <p>The whole thing is a single HTML file plus a folder of audio. No framework, no build step, no dependencies beyond two fonts &mdash; the same constraint I keep on everything else here, and the reason it will still open in ten years when he is old enough to find it embarrassing.</p>
+
+            <p>The artwork is hand-written SVG. Each animal is a handful of circles, ellipses and paths, which turned out to be the right medium for the job: the shapes a newborn can resolve are exactly the shapes that are simple to write by hand. A zebra is a white head, five black wedges and two eyes. Anything more detailed would have been wasted on him anyway.</p>
+
+            <p>The audio was generated with ElevenLabs. The one genuinely non-obvious lesson: <span class="highlight">text-to-speech falls apart on bare onomatopoeia</span>. My first pass at the animal sounds pushed the expressiveness high and fed the model strings like <em>Grrrrrr</em> and <em>Mooooooo</em>, and the output came back warbling and garbled. Nonsense tokens give the model no linguistic context to work with. Wrapping each one in a short carrier sentence &mdash; "the cow says moo" &mdash; and pulling the style setting back down fixed it completely.</p>
+
+            <p>The illustrations on this page were generated locally, on the Mac Studio running my <a href="building-ai-server.html" class="site-link">personal AI engine</a> &mdash; Qwen-Image through <code>draw-things-cli</code>, no cloud service involved. The same models drew a second set of artwork for the book itself, one illustration per page, and there is a switch in the top bar to flip between them: <span class="highlight">drawn</span> and <span class="highlight">illustrated</span>. It opens on the drawn set on purpose &mdash; for a three-month-old the flat, hard-edged vector shapes are genuinely the better book. The illustrated set is for later, when he can see detail.</p>
+
+            <h2>A Series, Not a Book</h2>
+            <p>This is the first one. The plan is to keep adding stories as he grows, each matched to whatever he is working on at that point: shapes and faces next, then first words, then counting, then actual narrative with a beginning and an end. The stories stay here, alongside everything else I build, and I will add to this page as they arrive.</p>
+
+            <p>If you have a baby around the same age, <a href="../projects/bedtime-stories/black-white-zoo.html" class="site-link">open it</a> and put your own child's name on the cover. It is free, it works offline once loaded, and there is nothing in it to sign up for.</p>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="building-wireless101.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">Building Wireless 101</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/appearance.js" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
