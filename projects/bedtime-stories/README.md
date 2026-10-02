@@ -6,6 +6,7 @@ Each story is one self-contained HTML file plus a folder of narration audio.
 | Story | File | Age it was made for |
 | --- | --- | --- |
 | The Black and White Zoo | `black-white-zoo.html` | 3 months |
+| Susu the Cat | `susu.html` | 3 months |
 
 Article: `../../Articles/bedtime-stories.html`
 
@@ -76,3 +77,28 @@ sentence ("the cow says moo") for the same reason.
 2. Put the new transcripts in `source/`, generate into a new `audio/` subfolder.
 3. Add a row to the table at the top of this file, a card in `../../index.html`,
    and a section in `../../Articles/bedtime-stories.html`.
+
+
+## Susu the Cat
+
+The true story of Susu — adopted in Oklahoma during the PhD, moved to California,
+then Mama, then Yusuf. Ten pages, English and Arabic, deliberately undated: the shape
+is *then, and then, and then*.
+
+One page carries the hadith of the woman punished over a cat she imprisoned without
+food or water (Bukhari 3318, Muslim 2242). The child-facing wording is gentle; the full
+narration and its sources sit in the grown-up note on that page, together with the
+hadith narrated beside it about the thirsty dog.
+
+Susu is drawn from her own photograph: brown-grey mackerel tabby, white chest and
+paws, pink nose, green eyes. `SUSU_SIT` and `SUSU_CURL` in the page are the two poses
+every scene is built from — each page is Susu plus one object (books, a lamp, a carrier,
+a window, a teapot, a crib, bowls, a bed).
+
+| Folder | Contents | Voice |
+| --- | --- | --- |
+| `audio-susu/en`, `audio-susu/ar` | Page narration | Hisham (cloned) / Sarah |
+| `audio-susu/ens`, `audio-susu/ars` | Mew, purr, meow | Hisham (cloned) / Sarah |
+| `images-susu/` | Generated artwork, `source/gen-susu.sh` | Z-Image Turbo |
+
+Her real photograph is in `images/susu-photo.jpg`, used in the article.
