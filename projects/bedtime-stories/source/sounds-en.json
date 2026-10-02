@@ -1,10 +1,51 @@
-{ "title":"Sounds EN","language":"en","slides":[
- {"id":"s1","title":"Zebra","transcript":"The zebra goes clip clop, clip clop!"},
- {"id":"s2","title":"Panda","transcript":"The panda goes munch, munch, munch."},
- {"id":"s3","title":"Cow","transcript":"The cow says moo! Mooo!"},
- {"id":"s4","title":"Penguin","transcript":"The penguin goes waddle, waddle, splash!"},
- {"id":"s5","title":"Owl","transcript":"The owl says hoo! Hoo, hoo!"},
- {"id":"s6","title":"Orca","transcript":"The orca goes whoosh! Splash!"},
- {"id":"s7","title":"Sheep","transcript":"The sheep says baa! Baa!"},
- {"id":"s8","title":"Puppy","transcript":"The puppy says woof! Woof, woof!"},
- {"id":"s9","title":"Cat","transcript":"The cat says meow! Meow, meow!"}]}
+{
+ "title": "Sounds EN",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s1",
+   "title": "Zebra",
+   "transcript": "The zebra goes clip clop, clip clop!"
+  },
+  {
+   "id": "s2",
+   "title": "Panda",
+   "transcript": "The panda goes munch, munch, munch."
+  },
+  {
+   "id": "s3",
+   "title": "Cow",
+   "transcript": "The cow says moo! Mooo!"
+  },
+  {
+   "id": "s4",
+   "title": "Penguin",
+   "transcript": "The penguin goes waddle, waddle, splash!"
+  },
+  {
+   "id": "s5",
+   "title": "Owl",
+   "transcript": "The owl says hoo! Hoo, hoo!"
+  },
+  {
+   "id": "s6",
+   "title": "Orca",
+   "transcript": "The orca goes whoosh! Splash!"
+  },
+  {
+   "id": "s7",
+   "title": "Sheep",
+   "transcript": "The sheep says baa! Baa!"
+  },
+  {
+   "id": "s8",
+   "title": "Puppy",
+   "transcript": "The puppy says woof! Woof, woof!"
+  },
+  {
+   "id": "s9",
+   "title": "Cat",
+   "transcript": "The cat says meow! Meow, meow!"
+  }
+ ]
+}

@@ -1,10 +1,51 @@
-{ "title":"أصوات","language":"ar","slides":[
- {"id":"s1","title":"Zebra","transcript":"الحِمارُ الوحشيُّ يقول: طَقْ طَقْ، طَقْ طَقْ!"},
- {"id":"s2","title":"Panda","transcript":"الباندا تأكُل: مَضْغ، مَضْغ، مَضْغ."},
- {"id":"s3","title":"Cow","transcript":"البقرةُ تقول: مُوو! مُووو!"},
- {"id":"s4","title":"Penguin","transcript":"البِطريقُ يتمايَل، ثمّ يقفِز: طُشاش!"},
- {"id":"s5","title":"Owl","transcript":"البومةُ تقول: هُوو! هُوو، هُوو!"},
- {"id":"s6","title":"Orca","transcript":"الأوركا تقفِز: ووش! طُشاش!"},
- {"id":"s7","title":"Sheep","transcript":"الخَروفُ يقول: ماااع! ماااع!"},
- {"id":"s8","title":"Puppy","transcript":"الجَرْوُ يقول: هَوْ! هَوْ، هَوْ!"},
- {"id":"s9","title":"Cat","transcript":"القِطّةُ تقول: مياو! مياو!"}]}
+{
+ "title": "أصوات",
+ "language": "ar",
+ "slides": [
+  {
+   "id": "s1",
+   "title": "Zebra",
+   "transcript": "الحِمارُ الوحشيُّ يقول: طَقْ طَقْ، طَقْ طَقْ!"
+  },
+  {
+   "id": "s2",
+   "title": "Panda",
+   "transcript": "الباندا تأكُل: مَضْغ، مَضْغ، مَضْغ."
+  },
+  {
+   "id": "s3",
+   "title": "Cow",
+   "transcript": "البقرةُ تقول: مُوو! مُووو!"
+  },
+  {
+   "id": "s4",
+   "title": "Penguin",
+   "transcript": "البِطريقُ يتمايَل، ثمّ يقفِز: طُشاش!"
+  },
+  {
+   "id": "s5",
+   "title": "Owl",
+   "transcript": "البومةُ تقول: هُوو! هُوو، هُوو!"
+  },
+  {
+   "id": "s6",
+   "title": "Orca",
+   "transcript": "الأوركا تقفِز: ووش! طُشاش!"
+  },
+  {
+   "id": "s7",
+   "title": "Sheep",
+   "transcript": "الخَروفُ يقول: ماااع! ماااع!"
+  },
+  {
+   "id": "s8",
+   "title": "Puppy",
+   "transcript": "الجَرْوُ يقول: هَوْ! هَوْ، هَوْ!"
+  },
+  {
+   "id": "s9",
+   "title": "Cat",
+   "transcript": "القِطّةُ تقول: مياو! مياو!"
+  }
+ ]
+}

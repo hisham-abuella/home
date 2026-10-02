@@ -1,10 +1,51 @@
-{ "title":"أصوات الألوان","language":"ar","slides":[
- {"id":"s1","title":"Ladybug","transcript":"الدُّعْسوقةُ عليها نُقَط: نُقطة، نُقطة، نُقطة!"},
- {"id":"s2","title":"Duckling","transcript":"البَطّةُ تقول: بيب! بيب، بيب!"},
- {"id":"s3","title":"Whale","transcript":"الحوتُ يقفِز: طُشاش! ووش!"},
- {"id":"s4","title":"Frog","transcript":"الضِّفدعُ يقول: نَقْ! نَقْ، نَقْ!"},
- {"id":"s5","title":"Tiger","transcript":"النَّمِرُ يُزَمجِر: رررر! رررر!"},
- {"id":"s6","title":"Butterfly","transcript":"الفَراشةُ تُرَفرِف: رَفرَفة، رَفرَفة."},
- {"id":"s7","title":"Pig","transcript":"الخِنزيرُ يقول: أويك! أويك، أويك!"},
- {"id":"s8","title":"Bear","transcript":"الدُّبُّ يقول: غرررر! غرررر."},
- {"id":"s9","title":"Grey cat","transcript":"القِطّةُ النَّعسانةُ تُخَرخِر: خُرخَرة، خُرخَرة."}]}
+{
+ "title": "أصوات الألوان",
+ "language": "ar",
+ "slides": [
+  {
+   "id": "s1",
+   "title": "Ladybug",
+   "transcript": "الدُّعْسوقةُ عليها نُقَط: نُقطة، نُقطة، نُقطة!"
+  },
+  {
+   "id": "s2",
+   "title": "Duckling",
+   "transcript": "البَطّةُ تقول: بيب! بيب، بيب!"
+  },
+  {
+   "id": "s3",
+   "title": "Whale",
+   "transcript": "الحوتُ يقفِز: طُشاش! ووش!"
+  },
+  {
+   "id": "s4",
+   "title": "Frog",
+   "transcript": "الضِّفدعُ يقول: نَقْ! نَقْ، نَقْ!"
+  },
+  {
+   "id": "s5",
+   "title": "Tiger",
+   "transcript": "النَّمِرُ يُزَمجِر: رررر! رررر!"
+  },
+  {
+   "id": "s6",
+   "title": "Butterfly",
+   "transcript": "الفَراشةُ تُرَفرِف: رَفرَفة، رَفرَفة."
+  },
+  {
+   "id": "s7",
+   "title": "Pig",
+   "transcript": "الخِنزيرُ يقول: أويك! أويك، أويك!"
+  },
+  {
+   "id": "s8",
+   "title": "Bear",
+   "transcript": "الدُّبُّ يقول: غرررر! غرررر."
+  },
+  {
+   "id": "s9",
+   "title": "Grey cat",
+   "transcript": "القِطّةُ النَّعسانةُ تُخَرخِر: خُرخَرة، خُرخَرة."
+  }
+ ]
+}
