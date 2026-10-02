@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%90%88%3C/text%3E%3C/svg%3E">
+<meta name="description" content="The true story of Susu, the cat Papa Hisham adopted in Oklahoma, told for Yusuf in English and Arabic.">
+<meta property="og:title" content="Susu the Cat">
+<meta property="og:description" content="A family story for a baby, narrated in English and Arabic.">
+<meta property="og:type" content="website">
+<title>Susu the Cat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Fredoka:wght@400..700&family=Noto+Kufi+Arabic:wght@400..900&display=swap">
+<style>
+  :root{
+    --page:#FCFBF6;
+    --ink:#111010;
+    --red:#D7263D;
+    --surround:#1C1B17;
+    --surround-2:#262519;
+    --quiet:#8E8A7D;
+    --rule:rgba(17,16,16,.14);
+    --accent:var(--red);
+    --tint:transparent;
+    --display:"Fraunces","Iowan Old Style",Georgia,serif;
+    --story:"Fredoka","Avenir Next Rounded","Trebuchet MS",system-ui,sans-serif;
+  }
+  [lang="ar"]{
+    --display:"Noto Kufi Arabic","Fraunces",Georgia,serif;
+    --story:"Baloo Bhaijaan 2","Noto Kufi Arabic",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(120% 80% at 50% 0%, var(--surround-2) 0%, var(--surround) 62%);
+    color:var(--page);
+    font-family:var(--story);
+    padding:20px 16px 36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+
+  /* ---------- top bar ---------- */
+  .bar{
+    width:min(820px,100%);
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(252,251,246,.08);border:1px solid rgba(252,251,246,.14)}
+  .seg button{
+    background:transparent;border:none;color:#C9C5B4;
+    font-family:var(--display);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 13px;border-radius:999px;transition:background .18s ease,color .18s ease;
+  }
+  .seg button[aria-pressed="true"]{background:var(--page);color:var(--ink);font-weight:700}
+  .seg button:hover:not([aria-pressed="true"]){color:var(--page)}
+  .seg.lang button{font-family:var(--story);letter-spacing:.04em;text-transform:none;font-size:.86rem}
+
+  /* ---------- the book ---------- */
+  .book{
+    width:min(820px,100%);
+    background:var(--page);
+    color:var(--ink);
+    border-radius:14px;
+    box-shadow:0 26px 60px -24px rgba(0,0,0,.85);
+    overflow:hidden;
+  }
+  .spread{
+    padding:28px 26px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    animation:settle .42s ease both;
+  }
+  @keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    max-height:min(56vh,480px);
+    margin-inline:auto;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:var(--tint);
+    overflow:hidden;
+  }
+  .stage svg.art{width:100%;height:100%;max-width:100%;display:block}
+  .stage img.art{width:100%;height:100%;max-width:100%;max-height:100%;min-width:0;min-height:0;display:block;object-fit:contain;border-radius:12px}
+  .breathe{animation:breathe 5.2s ease-in-out infinite;transform-origin:50% 62%}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.022)}}
+  .bird{position:absolute;width:14%;animation:flit 7s ease-in-out infinite}
+  @keyframes flit{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+
+  /* ---------- words ---------- */
+  .words{display:flex;flex-direction:column;gap:9px;text-align:center;max-width:32ch;margin-inline:auto}
+  .animal{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(2.2rem,9.5vw,3.3rem);
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    line-height:1;
+    text-wrap:balance;
+    margin:0;
+    color:var(--accent);
+  }
+  [lang="ar"] .animal{text-transform:none;letter-spacing:0;line-height:1.3}
+  .animal.plain{color:var(--ink)}
+  .line{font-size:clamp(1.1rem,4.2vw,1.45rem);font-weight:500;line-height:1.4;text-wrap:balance;margin:0}
+  .sound{
+    font-family:var(--display);font-style:italic;font-weight:600;
+    font-size:clamp(1.25rem,5vw,1.7rem);color:var(--accent);margin:0;
+  }
+  [lang="ar"] .sound{font-style:normal;font-weight:700}
+
+  /* ---------- cover ---------- */
+  .cover h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.4rem,10vw,3.7rem);line-height:.95;margin:0;text-wrap:balance;
+  }
+  [lang="ar"] .cover h1{line-height:1.25}
+  .cover h1 em{font-style:normal;color:var(--accent)}
+  .eyebrow{
+    font-family:var(--display);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--quiet);margin:0;
+  }
+  [lang="ar"] .eyebrow{letter-spacing:0;font-size:.85rem}
+.dedication{
+    font-family:var(--display);font-style:italic;font-weight:600;
+    font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--accent);margin:0;
+  }
+  [lang="ar"] .dedication{font-style:normal}
+  .cover-rule{height:6px;background:var(--ink);width:72px;margin:2px auto;border-radius:4px}
+  .namer{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;
+    border-top:1px solid var(--rule);padding-top:14px;
+  }
+  .namer label{font-size:.95rem;color:#3b3a35}
+  .namer input{
+    font:inherit;font-size:1rem;padding:8px 12px;width:11ch;
+    border:2px solid var(--ink);border-radius:9px;background:var(--page);color:var(--ink);text-align:center;
+  }
+  .namer input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+  /* ---------- listen ---------- */
+  .listen{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .play{
+    display:inline-flex;align-items:center;gap:10px;
+    border:2px solid var(--ink);background:var(--ink);color:var(--page);
+    border-radius:999px;padding:11px 22px;font-family:var(--story);font-size:1.02rem;font-weight:600;
+    transition:transform .14s ease;
+  }
+  .play:hover{transform:translateY(-2px)}
+  .play[data-state="playing"]{background:var(--accent);border-color:var(--accent)}
+  .play.ghost{background:transparent;color:var(--ink)}
+  .play.ghost:active{background:var(--ink);color:var(--page)}
+  .play .ico{width:15px;height:17px;flex:none}
+
+  .note{
+    border-top:1px solid var(--rule);padding-top:11px;
+    display:flex;gap:10px;align-items:flex-start;
+    font-family:var(--display);font-style:italic;font-size:.9rem;line-height:1.45;color:#4a4842;
+  }
+  [lang="ar"] .note{font-family:var(--story);font-style:normal;font-size:.92rem}
+  .note b{
+    font-style:normal;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    font-size:.62rem;color:var(--quiet);padding-top:.3em;white-space:nowrap;flex:none;
+  }
+  [lang="ar"] .note b{letter-spacing:0;font-size:.72rem}
+  body.notes-off .note{display:none}
+
+  /* ---------- controls ---------- */
+  .controls{width:min(820px,100%);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  button{font:inherit;cursor:pointer}
+  .turn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--page);color:var(--ink);border:none;border-radius:999px;
+    padding:12px 20px;font-weight:600;font-size:1rem;
+    box-shadow:0 8px 20px -10px rgba(0,0,0,.9);transition:transform .14s ease;
+  }
+  .turn:hover{transform:translateY(-2px)}
+  .turn .arrow{font-size:1.05em;line-height:1}
+  .turn[disabled]{opacity:.3;cursor:default;transform:none}
+  :focus-visible{outline:3px solid var(--red);outline-offset:3px}
+  .dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+  .dots span{width:9px;height:9px;border-radius:50%;background:rgba(252,251,246,.3);transition:background .2s,transform .2s}
+  .dots span.on{background:var(--page);transform:scale(1.35)}
+
+  .footer{width:min(820px,100%);display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .pill{
+    background:transparent;border:1px solid rgba(252,251,246,.26);color:#C9C5B4;border-radius:999px;
+    padding:7px 14px;font-family:var(--display);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  }
+  [lang="ar"] .pill{font-family:var(--story);letter-spacing:0;font-size:.82rem;text-transform:none}
+  .pill:hover{border-color:rgba(252,251,246,.6);color:var(--page)}
+  .pill[aria-pressed="true"]{border-color:var(--page);color:var(--page)}
+
+  /* ---------- full screen ---------- */
+  body.big{padding:8px 0 0;gap:8px;justify-content:flex-start;min-height:100vh}
+  body.big .bar{width:min(1000px,96%)}
+  body.big .book{width:100%;max-width:none;border-radius:0;box-shadow:none;flex:1;display:flex;align-items:center}
+  body.big .spread{width:min(1000px,100%);margin-inline:auto;padding:12px 24px 104px;gap:20px}
+  body.big .stage{max-height:min(66vh,820px)}
+  body.big .animal{font-size:clamp(3rem,7vw,5rem)}
+  body.big .line{font-size:clamp(1.3rem,2.6vw,2rem)}
+  body.big .sound{font-size:clamp(1.5rem,3vw,2.4rem)}
+  body.big .cover h1{font-size:clamp(3rem,7.5vw,5.4rem)}
+  body.big .words{max-width:40ch}
+  body.big .note{display:none}
+  body.big .footer{display:none}
+  body.big .controls{
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    width:min(1000px,96%);z-index:5;
+  }
+
+  @media (max-width:430px){
+    .turn{padding:11px 15px;font-size:.94rem}
+    .spread{padding:18px 15px 16px}
+    .controls{gap:8px}
+  }
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<style>
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  .home-link{text-decoration:none;display:inline-flex;align-items:center}
+  body.big .home-link{display:none}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="pill home-link" href="../../index.html">&larr; hisham abuella</a>
+  <a class="pill home-link" href="black-white-zoo.html" id="zooLink">the zoo book</a>
+  <button class="pill" id="artBtn" type="button"></button>
+  <button class="pill" id="fsBtn" type="button"></button>
+  <div class="seg lang" id="langs" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">English</button>
+    <button type="button" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+  </div>
+</div>
+
+<div class="book"><section class="spread" id="spread"></section></div>
+
+<div class="controls">
+  <button class="turn" id="prev" type="button"><span class="arrow" id="prevArrow">&larr;</span><span data-t="back">Back</span></button>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <button class="turn" id="next" type="button"><span data-t="next">Turn the page</span><span class="arrow" id="nextArrow">&rarr;</span></button>
+</div>
+
+<div class="footer">
+  <button class="pill" id="autoBtn" type="button" aria-pressed="true"></button>
+  <button class="pill" id="notesBtn" type="button"></button>
+  <button class="pill" id="startBtn" type="button"></button>
+</div>
+
+<audio id="player" preload="none"></audio>
+<audio id="sfx" preload="none"></audio>
+
+<script>
+/* ============================================================
+   Art — every animal drawn as bold shapes on a 400x400 field
+   ============================================================ */
+var INK = '#111010', PAPER = '#FCFBF6', RED = '#D7263D';
+
+var ART = {};
+
+/* ============================================================
+   Susu — drawn from her photograph: brown-grey mackerel tabby,
+   white chest and paws, pink nose, green eyes.
+   ============================================================ */
+var FUR = '#A89079', STRIPE = '#4F4136', WHITE = '#FCFBF6',
+    NOSE = '#E0919E', EYE = '#89A96A', WARM = '#E8C27A', SKY = '#BFD4DE';
+
+// sitting, facing forward
+var SUSU_SIT = `
+  <path d="M286 318 q66 10 58 -54 q-4 -26 -26 -22 q-18 4 -14 24" fill="none" stroke="${INK}" stroke-width="26" stroke-linecap="round"/>
+  <path d="M286 318 q66 10 58 -54 q-4 -26 -26 -22 q-18 4 -14 24" fill="none" stroke="${FUR}" stroke-width="14" stroke-linecap="round"/>
+  <ellipse cx="200" cy="286" rx="88" ry="94" fill="${FUR}" stroke="${INK}" stroke-width="8"/>
+  <path d="M200 206 q42 36 42 104 q0 44 -42 46 q-42 -2 -42 -46 q0 -68 42 -104 z" fill="${WHITE}"/>
+  <g fill="${STRIPE}">
+    <path d="M128 252 q26 -10 30 6 q-24 10 -30 -6 z"/>
+    <path d="M124 290 q26 -10 30 6 q-24 10 -30 -6 z"/>
+    <path d="M272 252 q-26 -10 -30 6 q24 10 30 -6 z"/>
+    <path d="M276 290 q-26 -10 -30 6 q24 10 30 -6 z"/>
+  </g>
+  <ellipse cx="166" cy="356" rx="30" ry="20" fill="${WHITE}" stroke="${INK}" stroke-width="7"/>
+  <ellipse cx="234" cy="356" rx="30" ry="20" fill="${WHITE}" stroke="${INK}" stroke-width="7"/>
+  <path d="M124 110 l10 -72 l62 46 z" fill="${FUR}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M276 110 l-10 -72 l-62 46 z" fill="${FUR}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M136 92 l6 -34 l30 24 z" fill="${NOSE}"/>
+  <path d="M264 92 l-6 -34 l-30 24 z" fill="${NOSE}"/>
+  <circle cx="200" cy="160" r="82" fill="${FUR}" stroke="${INK}" stroke-width="8"/>
+  <g fill="${STRIPE}">
+    <path d="M192 84 h16 l6 36 h-28 z"/>
+    <path d="M158 96 l16 -8 14 34 -16 8 z"/>
+    <path d="M242 96 l-16 -8 -14 34 16 8 z"/>
+    <path d="M122 148 l-4 18 46 2 1 -16 z"/>
+    <path d="M278 148 l4 18 -46 2 -1 -16 z"/>
+  </g>
+  <path d="M200 148 q46 0 46 36 q0 34 -46 44 q-46 -10 -46 -44 q0 -36 46 -36 z" fill="${WHITE}"/>
+  <ellipse cx="172" cy="156" rx="21" ry="24" fill="${EYE}" stroke="${INK}" stroke-width="6"/>
+  <ellipse cx="228" cy="156" rx="21" ry="24" fill="${EYE}" stroke="${INK}" stroke-width="6"/>
+  <ellipse cx="172" cy="156" rx="8" ry="18" fill="${INK}"/>
+  <ellipse cx="228" cy="156" rx="8" ry="18" fill="${INK}"/>
+  <circle cx="177" cy="147" r="5" fill="${WHITE}"/>
+  <circle cx="233" cy="147" r="5" fill="${WHITE}"/>
+  <path d="M200 182 l14 11 -14 11 -14 -11 z" fill="${NOSE}" stroke="${INK}" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M200 206 v8 M200 214 q-14 16 -26 2 M200 214 q14 16 26 2" fill="none" stroke="${INK}" stroke-width="6" stroke-linecap="round"/>
+  <g stroke="${INK}" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8">
+    <path d="M156 190 l-52 -14 M156 202 l-54 8 M244 190 l52 -14 M244 202 l54 8"/>
+  </g>`;
+
+// curled up asleep
+var SUSU_CURL = `
+  <ellipse cx="200" cy="330" rx="170" ry="34" fill="${INK}" opacity=".12"/>
+  <path d="M206 160 q150 0 154 106 q4 82 -112 82 q-64 0 -64 -38 q0 -32 54 -32 q48 0 48 -32 q0 -38 -80 -38 z"
+        fill="${FUR}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <g fill="${STRIPE}">
+    <path d="M250 206 q30 -6 30 14 q-28 8 -30 -14 z"/>
+    <path d="M296 240 q28 -4 26 16 q-28 6 -26 -16 z"/>
+    <path d="M318 290 q26 -2 22 18 q-26 4 -22 -18 z"/>
+  </g>
+  <path d="M86 190 l-14 -70 l70 40 z" fill="${FUR}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M200 156 l24 -68 l-76 36 z" fill="${FUR}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M98 176 l-8 -38 l38 22 z" fill="${NOSE}"/>
+  <path d="M190 152 l14 -36 l-40 18 z" fill="${NOSE}"/>
+  <circle cx="142" cy="214" r="92" fill="${FUR}" stroke="${INK}" stroke-width="8"/>
+  <g fill="${STRIPE}">
+    <path d="M134 136 h16 l6 32 h-28 z"/>
+    <path d="M100 148 l16 -8 12 30 -16 8 z"/>
+    <path d="M176 142 l-16 -6 -12 30 16 6 z"/>
+  </g>
+  <path d="M142 206 q50 0 50 38 q0 36 -50 46 q-50 -10 -50 -46 q0 -38 50 -38 z" fill="${WHITE}"/>
+  <path d="M96 208 q22 20 44 0 M142 208 q22 20 44 0" fill="none" stroke="${INK}" stroke-width="8" stroke-linecap="round"/>
+  <path d="M142 240 l14 11 -14 11 -14 -11 z" fill="${NOSE}" stroke="${INK}" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M142 264 q-14 16 -26 2 M142 264 q14 16 26 2" fill="none" stroke="${INK}" stroke-width="6" stroke-linecap="round"/>
+  <ellipse cx="226" cy="320" rx="34" ry="22" fill="${WHITE}" stroke="${INK}" stroke-width="7"/>
+  <g stroke="${INK}" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8">
+    <path d="M96 248 l-54 -12 M96 260 l-52 12 M188 248 l50 -12 M188 260 l48 12"/>
+  </g>`;
+
+ART.susuCover = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu, a tabby cat with white paws, sitting">
+  <circle cx="200" cy="210" r="168" fill="${WARM}" opacity=".18"/>
+  ${SUSU_SIT}</svg>`;
+
+ART.oklahoma = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu as a kitten beside a stack of books, snow outside">
+  <rect x="18" y="20" width="150" height="150" rx="8" fill="${SKY}" stroke="${INK}" stroke-width="8"/>
+  <path d="M93 20 v150 M18 95 h150" stroke="${INK}" stroke-width="7"/>
+  <g fill="${WHITE}"><circle cx="48" cy="52" r="8"/><circle cx="130" cy="64" r="7"/><circle cx="62" cy="128" r="7"/><circle cx="136" cy="134" r="8"/></g>
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <rect x="258" y="300" width="124" height="30" rx="6" fill="${NOSE}"/>
+    <rect x="266" y="270" width="112" height="30" rx="6" fill="${WARM}"/>
+    <rect x="252" y="240" width="122" height="30" rx="6" fill="${SKY}"/>
+  </g>
+  <g transform="translate(-24,78) scale(.74)">${SUSU_SIT}</g></svg>`;
+
+ART.desk = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu curled up on a desk beside a lamp and papers">
+  <path d="M330 56 q40 0 40 40 h-80 q0 -40 40 -40 z" fill="${WARM}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M330 96 v128" stroke="${INK}" stroke-width="10" stroke-linecap="round"/>
+  <path d="M296 224 h68" stroke="${INK}" stroke-width="12" stroke-linecap="round"/>
+  <g opacity=".3" fill="${WARM}"><path d="M330 100 l70 120 h-140 z"/></g>
+  <g fill="${WHITE}" stroke="${INK}" stroke-width="7">
+    <rect x="46" y="238" width="150" height="104" rx="6" transform="rotate(-7 121 290)"/>
+    <rect x="66" y="252" width="150" height="104" rx="6" transform="rotate(5 141 304)"/>
+  </g>
+  <g transform="translate(26,-10) scale(.86)">${SUSU_CURL}</g></svg>`;
+
+ART.drive = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu looking out of a travel carrier, with a road and mountains">
+  <path d="M0 196 l96 -96 l62 62 l54 -54 l96 96 z" fill="${SKY}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="330" cy="86" r="42" fill="${WARM}" stroke="${INK}" stroke-width="8"/>
+  <path d="M40 390 l80 -180 h160 l80 180 z" fill="${WHITE}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <g stroke="${INK}" stroke-width="12" stroke-linecap="round"><path d="M200 232 v26 M200 288 v26 M200 344 v26"/></g>
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <rect x="96" y="150" width="208" height="150" rx="18" fill="${NOSE}" opacity=".35"/>
+    <rect x="96" y="150" width="208" height="150" rx="18" fill="none"/>
+    <path d="M136 150 v150 M176 150 v150 M224 150 v150 M264 150 v150"/>
+    <rect x="150" y="128" width="100" height="26" rx="13" fill="${WHITE}"/>
+  </g>
+  <g transform="translate(60,112) scale(.42)">${SUSU_SIT}</g></svg>`;
+
+ART.california = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu curled on a sunny window sill">
+  <rect x="40" y="20" width="320" height="236" rx="10" fill="${SKY}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="300" cy="86" r="46" fill="${WARM}" stroke="${INK}" stroke-width="8"/>
+  <g stroke="${INK}" stroke-width="8"><path d="M200 20 v236 M40 138 h320"/></g>
+  <path d="M26 256 h348 v26 h-348 z" fill="${WHITE}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <g transform="translate(6,46) scale(.92)">${SUSU_CURL}</g></svg>`;
+
+ART.mama = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu beside a teapot and two cups">
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <path d="M250 150 q60 0 60 50 q0 50 -60 50 q-60 0 -60 -50 q0 -50 60 -50 z" fill="${NOSE}"/>
+    <path d="M310 180 q34 8 30 34 q-4 22 -28 18" fill="none"/>
+    <path d="M196 184 l-44 -12 l40 34 z" fill="${NOSE}"/>
+    <path d="M250 150 l0 -22 M236 128 h28" fill="none" stroke-linecap="round"/>
+    <rect x="268" y="272" width="60" height="52" rx="10" fill="${WHITE}"/>
+    <rect x="336" y="286" width="44" height="38" rx="9" fill="${WHITE}"/>
+  </g>
+  <g fill="none" stroke="${INK}" stroke-width="6" stroke-linecap="round" opacity=".55">
+    <path d="M286 254 q12 -16 0 -30 M312 254 q12 -16 0 -30"/>
+  </g>
+  <g transform="translate(-54,48) scale(.78)">${SUSU_SIT}</g></svg>`;
+
+ART.baby = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu sitting beside a baby's crib">
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <rect x="196" y="150" width="190" height="150" rx="14" fill="${WHITE}"/>
+    <path d="M226 150 v150 M258 150 v150 M290 150 v150 M322 150 v150 M354 150 v150" fill="none"/>
+    <path d="M196 250 h190 v50 a14 14 0 0 1 -14 14 h-162 a14 14 0 0 1 -14 -14 z" fill="${SKY}"/>
+    <rect x="186" y="132" width="210" height="24" rx="12" fill="${FUR}"/>
+    <path d="M206 314 v26 M376 314 v26" fill="none" stroke-linecap="round"/>
+  </g>
+  <g fill="${WARM}" stroke="${INK}" stroke-width="6">
+    <circle cx="150" cy="86" r="26"/><path d="M150 112 v34" fill="none" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(-74,56) scale(.74)">${SUSU_SIT}</g></svg>`;
+
+ART.days = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A very happy Susu in the sunshine">
+  <circle cx="330" cy="74" r="44" fill="${WARM}" stroke="${INK}" stroke-width="8"/>
+  <g stroke="${INK}" stroke-width="8" stroke-linecap="round">
+    <path d="M330 10 v-8 M386 42 l8 -6 M386 110 l8 6 M274 42 l-8 -6 M274 110 l-8 6"/>
+  </g>
+  <g fill="${NOSE}" stroke="${INK}" stroke-width="6">
+    <path d="M62 94 q0 -26 24 -26 q16 0 20 16 q4 -16 20 -16 q24 0 24 26 q0 30 -44 54 q-44 -24 -44 -54 z"/>
+  </g>
+  <g transform="translate(0,22) scale(.94)">${SUSU_SIT}</g></svg>`;
+
+ART.kindness = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu with a full food bowl and a full water bowl">
+  <g fill="${NOSE}" stroke="${INK}" stroke-width="6" opacity=".9">
+    <path d="M296 54 q0 -24 22 -24 q15 0 18 15 q3 -15 18 -15 q22 0 22 24 q0 28 -40 50 q-40 -22 -40 -50 z"/>
+  </g>
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <path d="M44 312 h120 q-8 46 -60 46 q-52 0 -60 -46 z" fill="${WHITE}"/>
+    <ellipse cx="104" cy="312" rx="60" ry="16" fill="${WARM}"/>
+    <path d="M236 312 h120 q-8 46 -60 46 q-52 0 -60 -46 z" fill="${WHITE}"/>
+    <ellipse cx="296" cy="312" rx="60" ry="16" fill="${SKY}"/>
+  </g>
+  <g transform="translate(0,-28) scale(.78)">${SUSU_SIT}</g></svg>`;
+
+ART.goodnightSusu = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Susu asleep at the end of the bed under a moon">
+  <circle cx="318" cy="76" r="60" fill="${INK}"/>
+  <circle cx="344" cy="58" r="50" fill="${WARM}"/>
+  <g fill="${INK}">
+    <path d="M58 54 l8 22 22 8 -22 8 -8 22 -8 -22 -22 -8 22 -8 z"/>
+    <path d="M146 112 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6 z"/>
+    <path d="M60 150 l5 13 13 5 -13 5 -5 13 -5 -13 -13 -5 13 -5 z"/>
+  </g>
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <path d="M30 262 h340 v70 a16 16 0 0 1 -16 16 h-308 a16 16 0 0 1 -16 -16 z" fill="${SKY}"/>
+    <path d="M30 262 q0 -40 44 -40 h86 q44 0 44 40 z" fill="${WHITE}"/>
+  </g>
+  <g transform="translate(70,36) scale(.6)">${SUSU_CURL}</g></svg>`;
+
+/* ============================================================
+   The book
+   ============================================================ */
+function P(o){ return o; }
+
+var BOOK = {
+  susu: {
+    accent: '#C7643F',
+    pages: [
+      P({ art:ART.susuCover, cover:true, audio:'p0', tint:'#E8C27A',
+          en:{ eyebrow:'A true story', title:'Susu<br>the <em>Cat</em>',
+               line:'The story of our cat, and the family that grew around her.',
+               note:'Susu is real, and so is every part of this. Read it slowly — the point of a family story at this age is not the plot, it is your voice saying the names he will grow up knowing.' },
+          ar:{ eyebrow:'قصّةٌ حقيقيّة', title:'سوسو<br><em>القِطّة</em>',
+               line:'قصّةُ قِطّتِنا، والعائلةِ التي كبِرَت حولَها.',
+               note:'سوسو حقيقيّة، وكلُّ ما في هذه القصّةِ حَدَثَ فعلاً. اقرأها ببطء — فالمقصودُ في هذا العمرِ ليس الحكاية، بل صوتُك وهو يذكُرُ الأسماءَ التي سيكبَرُ عليها.' } }),
+
+      P({ art:ART.oklahoma, audio:'p1', snd:'s1',
+          en:{ name:'Oklahoma', line:'Papa Hisham was studying far from home, where the winters are long and white. One cold day he came back carrying a small striped kitten with four white paws.', sound:'Her name was Susu.',
+               note:'This is where it starts: a graduate student, a long way from everyone, and a kitten who needed somewhere to be.' },
+          ar:{ name:'أوكلاهوما', line:'كان بابا هشام يدرُسُ بعيداً عن بيتِه، حيثُ الشتاءُ طويلٌ وأبيض. وفي يومٍ باردٍ عادَ يحمِلُ قِطّةً صغيرةً مُخطّطةً لها أربعُ أقدامٍ بيضاء.', sound:'اسمُها سوسو.',
+               note:'من هنا تبدأ الحكاية: طالبُ دراساتٍ عُليا بعيدٌ عن الجميع، وقِطّةٌ صغيرةٌ تحتاجُ مكاناً تكونُ فيه.' } }),
+
+      P({ art:ART.desk, audio:'p2', snd:'s2',
+          en:{ name:'The Two of Them', line:'Susu sat on his papers while he worked, and slept by his feet when the nights ran long.', sound:'Just the two of them.',
+               note:'Cats and thesis chapters have a long history together. She was not helping, exactly, but she was there.' },
+          ar:{ name:'هُما الاثنان', line:'كانت سوسو تجلِسُ فوقَ أوراقِه بينما يعمل، وتنامُ عندَ قدمَيه حينَ يطولُ الليل.', sound:'هُما الاثنانِ فقط.',
+               note:'للقِطَطِ ورسائلِ الدكتوراه تاريخٌ طويلٌ معاً. لم تكُن تُساعِد تماماً، لكنّها كانت هناك.' } }),
+
+      P({ art:ART.drive, audio:'p3', snd:'s3',
+          en:{ name:'The Long Road', line:'Then the books went into boxes, and Susu went into her soft carrier, and the road went on and on and on.', sound:'Where are we going, Papa?',
+               note:'A good page to sway gently on. The rhythm of the sentence is doing the work here, not the words.' },
+          ar:{ name:'الطريقُ الطويل', line:'ثمّ وُضِعَت الكُتبُ في صناديق، ووُضِعَت سوسو في قفصِها الوثير، وطالَ الطريقُ وطالَ وطال.', sound:'إلى أينَ نحنُ ذاهبون يا بابا؟',
+               note:'صفحةٌ مناسبةٌ للتمايُلِ الخفيف. الإيقاعُ هنا هو الذي يعمل، لا الكلمات.' } }),
+
+      P({ art:ART.california, audio:'p4', snd:'s2',
+          en:{ name:'California', line:'A new home, with a wide sunny window. Susu found the warmest spot in it before the boxes were even open.', sound:'This will do nicely.',
+               note:'Ask him where the sun is. He cannot answer yet, but the question is how the answering starts.' },
+          ar:{ name:'كاليفورنيا', line:'بيتٌ جديد، فيه نافذةٌ واسعةٌ مُشمِسة. وجدَت سوسو أدفأَ بُقعةٍ فيها قبلَ أن تُفتَحَ الصناديق.', sound:'هذا المكانُ يُعجِبُني.',
+               note:'اسألْه أين الشمس. لا يستطيعُ الإجابةَ بعد، لكنّ السؤالَ هو أوّلُ الطريقِ إلى الجواب.' } }),
+
+      P({ art:ART.mama, audio:'p5', snd:'s3',
+          en:{ name:'Mama Came', line:'Then Mama came, and the house grew warmer and fuller. Susu sniffed her hand once, thought about it, and decided she was family.', sound:'Now we are three.',
+               note:'Cats decide these things quickly and then never revisit them.' },
+          ar:{ name:'وجاءت ماما', line:'ثمّ جاءت ماما، فصارَ البيتُ أدفأَ وأكمل. شمَّت سوسو يدَها مرّةً واحدة، وفكّرَت قليلاً، ثمّ قرّرَت أنّها من العائلة.', sound:'صِرنا ثلاثة.',
+               note:'القِطَطُ تحسِمُ مثلَ هذه الأمورِ بسرعة، ثمّ لا تُراجِعُها أبداً.' } }),
+
+      P({ art:ART.baby, audio:'p6', snd:'s2',
+          en:{ name:'And Then Yusuf', line:'Then a very small baby came home. Susu crept close, sniffed his toes, and lay down near him to keep watch.', sound:'Now we are four.',
+               note:'His page. Say his name twice here, once at the start and once at the end — he is already learning the shape of it.' },
+          ar:{ name:'ثمّ جاءَ يوسف', line:'ثمّ جاءَ إلى البيتِ طفلٌ صغيرٌ جدّاً. اقترَبَت سوسو بهدوء، وشمَّت أصابعَ قدمَيه، ثمّ استلقَت قُربَه تحرُسُه.', sound:'صِرنا أربعة.',
+               note:'هذه صفحتُه. اذكُر اسمَه مرّتين هنا، في أوّلِها وفي آخِرِها — فهو يتعلّمُ شكلَ اسمِه من الآن.' } }),
+
+      P({ art:ART.days, audio:'p7', snd:'s2',
+          en:{ name:'Susu’s Days', line:'The sunny window in the morning. Papa’s lap in the evening. Mama’s kitchen whenever something smells good. And a baby to watch over all day long.', sound:'A very happy cat.',
+               note:'A list page. Lists are easy to chant, and chanting is what he is listening for.' },
+          ar:{ name:'أيّامُ سوسو', line:'النافذةُ المُشمِسةُ في الصباح. وحِضنُ بابا في المساء. ومطبخُ ماما كلّما فاحَت رائحةٌ طيّبة. وطفلٌ صغيرٌ تحرُسُه طَوالَ النهار.', sound:'قِطّةٌ سعيدةٌ جدّاً.',
+               note:'صفحةُ تعداد. التعدادُ سهلُ الإنشاد، والإنشادُ هو ما يُنصِتُ إليه.' } }),
+
+      P({ art:ART.kindness, audio:'p8',
+          en:{ name:'Be Kind to Cats', line:'Our Prophet, peace be upon him, taught us to be gentle with every animal. He told of a woman who shut a cat away and gave her no food and no water, and would not let her go and find her own — and it counted against her.', sound:'So Susu’s bowls are never empty.',
+               note:'The hadith: &ldquo;A woman was punished because of a cat she had imprisoned until it died. She entered the Fire because of it: she neither fed it nor gave it water when she confined it, nor did she let it go so it could eat the vermin of the earth.&rdquo; &mdash; Sahih al-Bukhari 3318, Sahih Muslim 2242. It is narrated beside its opposite: the man forgiven for drawing water from a well for a thirsty dog. Mercy to animals is not a small matter in Islam, and a cat in the house is the easiest place to teach it.' },
+          ar:{ name:'ارفُقْ بالقِطَط', line:'علّمَنا نبيُّنا، صلّى اللهُ عليه وسلّم، أن نرفُقَ بكلِّ حيوان. وأخبرَنا عن امرأةٍ حبَسَت هِرّةً فلم تُطعِمها ولم تسقِها، ولم تترُكها تبحَثُ عن طعامِها — فكانَ ذلكَ عليها.', sound:'ولذلك لا يَفرُغُ إناءُ سوسو أبداً.',
+               note:'الحديث: «دَخَلَتِ امرأةٌ النارَ في هِرّةٍ رَبَطَتْها، فلم تُطعِمْها، ولم تَدَعْها تأكُلُ مِن خَشاشِ الأرض» &mdash; متّفقٌ عليه: البخاري ٣٣١٨، ومسلم ٢٢٤٢. ويُروى إلى جانبِه ما يُقابِلُه: الرجلُ الذي سقى كلباً عطشانَ فغُفِرَ له. والرحمةُ بالحيوانِ ليست أمراً هيّناً في الإسلام، والقِطّةُ في البيتِ أيسرُ مكانٍ يُعلَّمُ فيه ذلك.' } }),
+
+      P({ art:ART.goodnightSusu, audio:'p9',
+          en:{ name:'Goodnight, Susu', line:'Goodnight Papa. Goodnight Mama. Goodnight Susu, curled up at the end of the bed.', sound:'Goodnight, <span class="babyname">Yusuf</span>.',
+               note:'The same closing shape as the zoo book, on purpose — a familiar ending is the part a baby learns first.' },
+          ar:{ name:'تُصبِحينَ على خير يا سوسو', line:'تُصبِحُ على خيرٍ يا بابا. وتُصبِحينَ على خيرٍ يا ماما. وتُصبِحينَ على خيرٍ يا سوسو، وأنتِ مُتكوّرةٌ عندَ طَرَفِ السرير.', sound:'تُصبِحُ على خير، يا <span class="babyname">يوسف</span>.',
+               note:'الخاتمةُ نفسُها التي في كتابِ حديقةِ الحيوان، عن قصد — فالنهايةُ المألوفةُ هي أوّلُ ما يحفَظُه الطفل.' } })
+    ]
+  }
+};
+
+var AUDIO_DIR = { susu:{ en:'audio-susu/en/', ar:'audio-susu/ar/' } };
+var SFX_DIR   = { susu:{ en:'audio-susu/ens/', ar:'audio-susu/ars/' } };
+
+var IMG_V1 = {
+  susu: ['cover','oklahoma','desk','drive','california','mama','baby','days','kindness','goodnight']
+};
+['susu'].forEach(function (k) {
+  BOOK[k].pages.forEach(function (pg, i) {
+    pg.img = 'images-susu/' + IMG_V1[k][i] + '.png';
+  });
+});
+
+var UI = {
+  en: { back:'Back', next:'Turn the page', start:'Start reading', listen:'Read to me',
+        pause:'Pause', readTo:'Read it to:', placeholder:'Yusuf', grownups:'Grown-ups',
+        notesOn:'Hide grown-up notes', notesOff:'Show grown-up notes',
+        autoOn:'Auto-play: on', autoOff:'Auto-play: off', cover:'Back to the cover', dir:'ltr',
+        chBw:'Black & White', chColor:'Colours', arrowNext:'\u2192', arrowPrev:'\u2190',
+        sound:'Hear Susu', zoo:'The zoo book', big:'Full screen', small:'Exit full screen',
+        artDrawn:'Artwork: drawn', artPhoto:'Artwork: illustrated' },
+  ar: { back:'رجوع', next:'اقلِب الصفحة', start:'ابدأ القراءة', listen:'اقرأ لي',
+        pause:'إيقاف', readTo:'نقرؤها لـ:', placeholder:'يوسف', grownups:'للكبار',
+        notesOn:'إخفاء ملاحظات الكبار', notesOff:'إظهار ملاحظات الكبار',
+        autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا', cover:'العودة للغلاف', dir:'rtl',
+        chBw:'أبيض وأسود', chColor:'ألوان', arrowNext:'\u2190', arrowPrev:'\u2192',
+        sound:'اسمَع سوسو', zoo:'كتابُ حديقةِ الحيوان', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
+        artDrawn:'الرسم اليدوي', artPhoto:'الصور المولَّدة' }
+};
+
+var BIRD = '<svg class="bird" viewBox="0 0 100 80" aria-hidden="true">' +
+  '<ellipse cx="46" cy="44" rx="30" ry="22" fill="' + RED + '"/>' +
+  '<circle cx="70" cy="28" r="16" fill="' + RED + '"/>' +
+  '<path d="M84 26 l17 6 -17 7 z" fill="' + INK + '"/>' +
+  '<circle cx="74" cy="24" r="4" fill="' + PAPER + '"/>' +
+  '<path d="M16 38 q-14 14 2 22 q12 -2 18 -14 z" fill="' + INK + '"/>' +
+  '<path d="M22 60 v12 M62 62 v10" stroke="' + INK + '" stroke-width="5" stroke-linecap="round" fill="none"/></svg>';
+
+/* ============================================================
+   Wiring
+   ============================================================ */
+var spread  = document.getElementById('spread');
+var dots    = document.getElementById('dots');
+var prevBtn = document.getElementById('prev');
+var nextBtn = document.getElementById('next');
+var notesBtn= document.getElementById('notesBtn');
+var autoBtn = document.getElementById('autoBtn');
+var startBtn= document.getElementById('startBtn');
+var player  = document.getElementById('player');
+var sfx     = document.getElementById('sfx');
+var fsBtn   = document.getElementById('fsBtn');
+var artBtn  = document.getElementById('artBtn');
+
+var ch = 'susu', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = false;
+
+function t(k){ return UI[lang][k]; }
+function pages(){ return BOOK[ch].pages; }
+
+function nameOr(fallback){ return babyName || fallback; }
+
+function render(){
+  var page = pages()[at];
+  var copy = page[lang];
+  var ui = UI[lang];
+
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', ui.dir);
+  document.body.setAttribute('lang', lang);
+  document.body.setAttribute('dir', ui.dir);
+
+  document.documentElement.style.setProperty('--accent', BOOK[ch].accent);
+  spread.className = 'spread' + (page.cover ? ' cover' : '');
+  spread.parentNode.style.setProperty('--tint', page.tint ? page.tint + '26' : 'transparent');
+
+  var artwork = (useImages && page.img)
+    ? '<img class="art photo breathe" id="pageArt" src="' + page.img + '" alt="">'
+    : page.art;
+  var html = '<div class="stage" style="--tint:' + (page.tint ? page.tint + '26' : 'transparent') + '">' + artwork + '</div>';
+
+  if (page.cover) {
+    html += '<div class="words">' +
+      '<p class="eyebrow">' + copy.eyebrow + '</p>' +
+      '<h1>' + copy.title + '</h1>' +
+      '<div class="cover-rule"></div>' +
+      '<p class="dedication">' + (lang === 'ar' ? 'إلى ' : 'For ') + '<span class="babyname">Yusuf</span></p>' +
+      '<p class="line">' + copy.line + '</p>' +
+    '</div>';
+  } else {
+    html += '<div class="words">' +
+      '<h2 class="animal' + (ch === 'bw' ? ' plain' : '') + '"' +
+        (ch === 'color' && page.tint ? ' style="color:' + page.tint + '"' : '') + '>' + copy.name + '</h2>' +
+      '<p class="line">' + copy.line + '</p>' +
+      '<p class="sound">' + copy.sound + '</p>' +
+    '</div>';
+  }
+
+  html += '<div class="listen"><button class="play" id="playBtn" type="button">' +
+    '<svg class="ico" viewBox="0 0 15 17" aria-hidden="true"><path d="M1 1 L14 8.5 L1 16 Z" fill="currentColor"/></svg>' +
+    '<span id="playLabel">' + ui.listen + '</span></button>';
+  if (page.snd) {
+    html += '<button class="play ghost" id="sfxBtn" type="button">' +
+      '<svg class="ico" viewBox="0 0 18 17" aria-hidden="true">' +
+        '<path d="M1 6 h4 L10 1.5 v14 L5 11 H1 Z" fill="currentColor"/>' +
+        '<path d="M13 5.5 q2.6 3 0 6 M15.6 3.4 q4.4 5.1 0 10.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+      '</svg><span>' + ui.sound + '</span></button>';
+  }
+  html += '</div>';
+
+  if (page.cover) {
+    html += '<div class="namer"><label for="babyname">' + ui.readTo + '</label>' +
+      '<input id="babyname" type="text" autocomplete="off" maxlength="18" placeholder="' + ui.placeholder + '" value="' +
+      babyName.replace(/"/g, '&quot;') + '"></div>';
+  }
+
+  html += '<p class="note"><b>' + ui.grownups + '</b><span>' + copy.note + '</span></p>';
+
+  spread.innerHTML = html;
+
+  // an illustration that has not been generated yet falls back to the drawing
+  var photo = document.getElementById('pageArt');
+  if (photo) {
+    var toDrawing = function () {
+      var stage = photo.parentNode;
+      if (!stage) return;
+      stage.innerHTML = page.art;
+      if (page.perch) addBird(stage, page);
+    };
+    photo.addEventListener('error', toDrawing);
+    // the error may already have fired before this handler was attached
+    if (photo.complete && photo.naturalWidth === 0) toDrawing();
+  }
+
+  // the red bird, hiding in a different corner on every animal page
+  if (page.perch) addBird(spread.querySelector('.stage'), page);
+
+  applyName();
+
+  var input = document.getElementById('babyname');
+  if (input) {
+    input.addEventListener('input', function () {
+      babyName = input.value;
+      applyName();
+      try { localStorage.setItem('susu-name', babyName.trim()); } catch (e) {}
+    });
+  }
+  document.getElementById('playBtn').addEventListener('click', togglePlay);
+  var sfxBtn = document.getElementById('sfxBtn');
+  if (sfxBtn) sfxBtn.addEventListener('click', playSound);
+
+  // chrome
+  prevBtn.querySelector('[data-t]').textContent = ui.back;
+  nextBtn.querySelector('[data-t]').textContent = at === 0 ? ui.start : ui.next;
+  prevBtn.disabled = at === 0;
+  nextBtn.disabled = at === pages().length - 1;
+  notesBtn.textContent = document.body.classList.contains('notes-off') ? ui.notesOff : ui.notesOn;
+  autoBtn.textContent = autoplay ? ui.autoOn : ui.autoOff;
+  autoBtn.setAttribute('aria-pressed', String(autoplay));
+  startBtn.textContent = ui.cover;
+  fsBtn.textContent = big ? ui.small : ui.big;
+  document.getElementById('zooLink').textContent = ui.zoo;
+  artBtn.textContent = useImages ? ui.artPhoto : ui.artDrawn;
+  artBtn.setAttribute('aria-pressed', String(useImages));
+  document.getElementById('prevArrow').textContent = ui.arrowPrev;
+  document.getElementById('nextArrow').textContent = ui.arrowNext;
+
+  Array.prototype.forEach.call(dots.children, function (d, n) { d.classList.toggle('on', n === at); });
+
+  loadAudio();
+}
+
+function addBird(stage, page) {
+  var wrap = document.createElement('div');
+  wrap.innerHTML = BIRD;
+  var bird = wrap.firstChild;
+  bird.style.left = page.perch[0] + '%';
+  bird.style.top = page.perch[1] + '%';
+  stage.appendChild(bird);
+}
+
+function applyName() {
+  var fallback = lang === 'ar' ? 'يوسف' : 'Yusuf';
+  Array.prototype.forEach.call(document.querySelectorAll('.babyname'), function (s) {
+    s.textContent = babyName.trim() || fallback;
+  });
+}
+
+function buildDots() {
+  dots.innerHTML = '';
+  pages().forEach(function () { dots.appendChild(document.createElement('span')); });
+}
+
+/* ---------- audio ---------- */
+function loadAudio() {
+  player.pause();
+  player.src = AUDIO_DIR[ch][lang] + pages()[at].audio + '.mp3';
+  setPlayState(false);
+}
+
+function setPlayState(playing) {
+  var btn = document.getElementById('playBtn');
+  if (!btn) return;
+  btn.dataset.state = playing ? 'playing' : 'idle';
+  document.getElementById('playLabel').textContent = playing ? t('pause') : t('listen');
+}
+
+function togglePlay() {
+  unlocked = true;
+  if (player.paused) {
+    player.play().then(function () { setPlayState(true); }).catch(function () { setPlayState(false); });
+  } else {
+    player.pause();
+    setPlayState(false);
+  }
+}
+
+function playSound() {
+  unlocked = true;
+  var page = pages()[at];
+  if (!page.snd) return;
+  sfx.src = SFX_DIR[ch][lang] + page.snd + '.mp3';
+  sfx.currentTime = 0;
+  sfx.play().catch(function () {});
+}
+
+player.addEventListener('ended', function () { setPlayState(false); });
+player.addEventListener('pause', function () { setPlayState(false); });
+
+function show(i) {
+  at = Math.max(0, Math.min(pages().length - 1, i));
+  render();
+  if (autoplay && unlocked) {
+    player.play().then(function () { setPlayState(true); }).catch(function () {});
+  }
+  document.querySelector('.book').scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------- chrome events ---------- */
+nextBtn.addEventListener('click', function () { show(at + 1); });
+prevBtn.addEventListener('click', function () { show(at - 1); });
+startBtn.addEventListener('click', function () { show(0); });
+
+notesBtn.addEventListener('click', function () {
+  var off = document.body.classList.toggle('notes-off');
+  notesBtn.textContent = off ? t('notesOff') : t('notesOn');
+});
+
+autoBtn.addEventListener('click', function () {
+  autoplay = !autoplay;
+  autoBtn.textContent = autoplay ? t('autoOn') : t('autoOff');
+  autoBtn.setAttribute('aria-pressed', String(autoplay));
+});
+
+artBtn.addEventListener('click', function () {
+  useImages = !useImages;
+  try { localStorage.setItem('susu-art', useImages ? 'photo' : 'drawn'); } catch (e) {}
+  render();
+});
+
+fsBtn.addEventListener('click', function () {
+  big = !big;
+  document.body.classList.toggle('big', big);
+  if (big) {
+    var el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(function () {});
+  } else if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(function () {});
+  }
+  render();
+});
+
+document.addEventListener('fullscreenchange', function () {
+  if (!document.fullscreenElement && big) {
+    big = false;
+    document.body.classList.remove('big');
+    render();
+  }
+});
+
+document.getElementById('langs').addEventListener('click', function (e) {
+  var b = e.target.closest('button');
+  if (!b) return;
+  lang = b.dataset.lang;
+  Array.prototype.forEach.call(this.children, function (x) {
+    x.setAttribute('aria-pressed', String(x === b));
+  });
+  render();
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') show(lang === 'ar' ? at - 1 : at + 1);
+  if (e.key === 'ArrowLeft') show(lang === 'ar' ? at + 1 : at - 1);
+});
+
+var x0 = null;
+var book = document.querySelector('.book');
+book.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+book.addEventListener('touchend', function (e) {
+  if (x0 === null) return;
+  var dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 50) show(at + ((dx < 0) === (lang !== 'ar') ? 1 : -1));
+  x0 = null;
+}, { passive: true });
+
+try {
+  var saved = localStorage.getItem('susu-name');
+  if (saved) babyName = saved;
+  useImages = localStorage.getItem('susu-art') === 'photo';
+} catch (e) {}
+
+buildDots();
+render();
+</script>
+</body>
+</html>
