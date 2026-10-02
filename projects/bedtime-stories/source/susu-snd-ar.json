@@ -1,4 +1,21 @@
-{ "title":"أصوات سوسو","language":"ar","slides":[
- {"id":"s1","title":"Kitten","transcript":"القِطّةُ الصغيرةُ تقول: مياو! مياو، مياو!"},
- {"id":"s2","title":"Purr","transcript":"سوسو تُخَرخِر: خررررر، خررررر."},
- {"id":"s3","title":"Meow","transcript":"سوسو تقول: مياااو! مياو، مياو!"}]}
+{
+ "title": "أصوات سوسو",
+ "language": "ar",
+ "slides": [
+  {
+   "id": "s1",
+   "title": "Kitten",
+   "transcript": "[playfully] القِطّةُ الصغيرةُ تقول: مياو! مياو، مياو!"
+  },
+  {
+   "id": "s2",
+   "title": "Purr",
+   "transcript": "[softly] سوسو تُخَرخِر: خررررر، خررررر."
+  },
+  {
+   "id": "s3",
+   "title": "Meow",
+   "transcript": "[playfully] سوسو تقول: مياااو! مياو، مياو!"
+  }
+ ]
+}

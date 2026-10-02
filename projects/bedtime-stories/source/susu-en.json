@@ -5,52 +5,52 @@
   {
    "id": "p0",
    "title": "Cover",
-   "transcript": "Susu the Cat. A true story, for Yusuf. This is the story of our cat, and the family that grew around her."
+   "transcript": "[warmly] Susu the Cat. A true story, for Yusuf. <break time=\"0.5s\" /> [gently] This is the story of our cat, and the family that grew around her."
   },
   {
    "id": "p1",
    "title": "Oklahoma",
-   "transcript": "Oklahoma. Baba Hisham was studying far from home, where the winters are long and white. One cold day he came back carrying a small striped kitten with four white paws. Her name was Susu."
+   "transcript": "[warmly] Oklahoma. <break time=\"0.4s\" /> Baba Hisham was studying far from home, where the winters are long and white. <break time=\"0.5s\" /> [gently] One cold day he came back carrying a small striped kitten with four white paws. <break time=\"0.5s\" /> [softly] Her name was Susu."
   },
   {
    "id": "p2",
    "title": "Two",
-   "transcript": "The two of them. Susu sat on his papers while he worked, and slept by his feet when the nights ran long. Just the two of them."
+   "transcript": "[warmly] The two of them. <break time=\"0.4s\" /> Susu sat on his papers while he worked, and slept by his feet when the nights ran long. <break time=\"0.5s\" /> [softly] Just the two of them."
   },
   {
    "id": "p3",
    "title": "Road",
-   "transcript": "The long road. Then the books went into boxes, and Susu went into her soft carrier, and the road went on, and on, and on. Where are we going, Baba?"
+   "transcript": "[warmly] The long road. <break time=\"0.4s\" /> Then the books went into boxes, and Susu went into her soft carrier, <break time=\"0.3s\" /> and the road went on, and on, and on. <break time=\"0.5s\" /> [curious] Where are we going, Baba?"
   },
   {
    "id": "p4",
    "title": "California",
-   "transcript": "California. A new home, with a wide sunny window. Susu found the warmest spot in it before the boxes were even open. This will do nicely."
+   "transcript": "[warmly] California. <break time=\"0.4s\" /> A new home, with a wide sunny window. <break time=\"0.4s\" /> Susu found the warmest spot in it before the boxes were even open. <break time=\"0.5s\" /> [playfully] This will do nicely."
   },
   {
    "id": "p5",
    "title": "Mama",
-   "transcript": "Mama came. Then Mama came, and the house grew warmer and fuller. Susu sniffed her hand once, thought about it, and decided she was family. Now we are three."
+   "transcript": "[warmly] Mama came. <break time=\"0.4s\" /> Then Mama came, and the house grew warmer and fuller. <break time=\"0.4s\" /> Susu sniffed her hand once, thought about it, and decided she was family. <break time=\"0.5s\" /> [softly] Now we are three."
   },
   {
    "id": "p6",
    "title": "Yusuf",
-   "transcript": "And then Yusuf. Then a very small baby came home. Susu crept close, sniffed his toes, and lay down near him to keep watch. Now we are four."
+   "transcript": "[warmly] And then Yusuf. <break time=\"0.4s\" /> Then a very small baby came home. <break time=\"0.4s\" /> [gently] Susu crept close, sniffed his toes, and lay down near him to keep watch. <break time=\"0.5s\" /> [softly] Now we are four."
   },
   {
    "id": "p7",
    "title": "Days",
-   "transcript": "Susu's days. The sunny window in the morning. Baba's lap in the evening. Mama's kitchen whenever something smells good. And a baby to watch over, all day long. A very happy cat."
+   "transcript": "[warmly] Susu's days. <break time=\"0.4s\" /> The sunny window in the morning. <break time=\"0.3s\" /> Baba's lap in the evening. <break time=\"0.3s\" /> Mama's kitchen whenever something smells good. <break time=\"0.3s\" /> And a baby to watch over, all day long. <break time=\"0.5s\" /> [softly] A very happy cat."
   },
   {
    "id": "p8",
    "title": "Kindness",
-   "transcript": "Be kind to cats. Our Prophet, peace be upon him, taught us to be gentle with every animal. He told of a woman who shut a cat away, and gave her no food and no water, and would not let her go and find food for herself. And it counted against her. So Susu's bowls are never empty."
+   "transcript": "[gently] Be kind to cats. <break time=\"0.5s\" /> Our Prophet, peace be upon him, taught us to be gentle with every animal. <break time=\"0.5s\" /> He told of a woman who shut a cat away, and gave her no food and no water, and would not let her go and find food for herself. <break time=\"0.4s\" /> And it counted against her. <break time=\"0.6s\" /> [warmly] So Susu's bowls are never empty."
   },
   {
    "id": "p9",
    "title": "Goodnight",
-   "transcript": "Goodnight, Susu. Goodnight Baba. Goodnight Mama. Goodnight Susu, curled up at the end of the bed. Goodnight, Yusuf."
+   "transcript": "[softly] Goodnight, Susu. <break time=\"0.5s\" /> Goodnight Baba. <break time=\"0.4s\" /> Goodnight Mama. <break time=\"0.4s\" /> Goodnight Susu, curled up at the end of the bed. <break time=\"0.6s\" /> [whispers] Goodnight, Yusuf."
   }
  ]
 }
