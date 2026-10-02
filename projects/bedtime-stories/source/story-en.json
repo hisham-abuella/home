@@ -5,57 +5,57 @@
   {
    "id": "p0",
    "title": "Cover",
-   "transcript": "The Black and White Zoo. A book for Yusuf. Nine bold animals to look at together. Are you ready, Yusuf? Let's turn the page."
+   "transcript": "[warmly] The Black and White Zoo. <break time=\"0.4s\" /> A book for Yusuf. Nine bold animals to look at together. Are you ready, Yusuf? <break time=\"0.5s\" /> [warmly] Let's turn the page."
   },
   {
    "id": "p1",
    "title": "Zebra",
-   "transcript": "Zebra. Black stripe, white stripe, all in a row. Clip clop! Clip clop!"
+   "transcript": "[warmly] Zebra. <break time=\"0.4s\" /> Black stripe, white stripe, all in a row. Clip clop! <break time=\"0.5s\" /> [playfully] Clip clop!"
   },
   {
    "id": "p2",
    "title": "Panda",
-   "transcript": "Panda. A round white face, with two black ears. Munch! Munch! Mmmm, munch!"
+   "transcript": "[warmly] Panda. <break time=\"0.4s\" /> A round white face, with two black ears. Munch! Munch! <break time=\"0.5s\" /> [playfully] Mmmm, munch!"
   },
   {
    "id": "p3",
    "title": "Cow",
-   "transcript": "Cow. Big white cow, with big black spots. Moooooo! Moooooooooo!"
+   "transcript": "[warmly] Cow. <break time=\"0.4s\" /> Big white cow, with big black spots. Moooooo! <break time=\"0.5s\" /> [playfully] Moooooooooo!"
   },
   {
    "id": "p4",
    "title": "Penguin",
-   "transcript": "Penguin. A little black coat, and a soft white tummy. Waddle, waddle, waddle... Splash!"
+   "transcript": "[warmly] Penguin. <break time=\"0.4s\" /> A little black coat, and a soft white tummy. Waddle, waddle, waddle... <break time=\"0.5s\" /> [playfully] Splash!"
   },
   {
    "id": "p5",
    "title": "Owl",
-   "transcript": "Owl. Two big eyes, wide awake in the dark. Hoooooo! Hoooooo!"
+   "transcript": "[warmly] Owl. <break time=\"0.4s\" /> Two big eyes, wide awake in the dark. Hoooooo! <break time=\"0.5s\" /> [softly] Hoooooo!"
   },
   {
    "id": "p6",
    "title": "Orca",
-   "transcript": "Orca. Black on top, white underneath, up and over the waves. Whoooooosh! Sploooosh!"
+   "transcript": "[warmly] Orca. <break time=\"0.4s\" /> Black on top, white underneath, up and over the waves. Whoooooosh! <break time=\"0.5s\" /> [excited] Sploooosh!"
   },
   {
    "id": "p7",
    "title": "Sheep",
-   "transcript": "Sheep. A little white cloud, with four little legs. Baaaaaa! Baaaaaa!"
+   "transcript": "[warmly] Sheep. <break time=\"0.4s\" /> A little white cloud, with four little legs. Baaaaaa! <break time=\"0.5s\" /> [softly] Baaaaaa!"
   },
   {
    "id": "p8",
    "title": "Puppy",
-   "transcript": "Puppy. Spots on his back, spots on his nose. Woof! Woof woof! Woof!"
+   "transcript": "[warmly] Puppy. <break time=\"0.4s\" /> Spots on his back, spots on his nose. Woof! Woof woof! <break time=\"0.5s\" /> [playfully] Woof!"
   },
   {
    "id": "p10",
    "title": "Cat",
-   "transcript": "Cat. A black cat with four white paws, and long white whiskers. Meow! Meow!"
+   "transcript": "[warmly] Cat. <break time=\"0.4s\" /> A black cat with four white paws, and long white whiskers. Meow! <break time=\"0.5s\" /> [playfully] Meow!"
   },
   {
    "id": "p9",
    "title": "Goodnight",
-   "transcript": "Goodnight. Goodnight zebra, goodnight panda, goodnight owl in the tree. Goodnight, Yusuf. Sleep well, little one."
+   "transcript": "[warmly] Goodnight. <break time=\"0.4s\" /> Goodnight zebra, goodnight panda, goodnight owl in the tree. Goodnight, Yusuf. <break time=\"0.5s\" /> [whispers] Sleep well, little one."
   }
  ]
 }

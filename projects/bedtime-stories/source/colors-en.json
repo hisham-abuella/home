@@ -5,57 +5,57 @@
   {
    "id": "c0",
    "title": "Cover",
-   "transcript": "Now, the colours. Nine bright animals, and nine new colours to learn. Here we go."
+   "transcript": "[warmly] Now, the colours. <break time=\"0.4s\" /> Nine bright animals, and nine new colours to learn. <break time=\"0.5s\" /> [warmly] Here we go."
   },
   {
    "id": "c1",
    "title": "Red",
-   "transcript": "Red. A little ladybug, round and red. Spot! Spot! Spot, spot, spot!"
+   "transcript": "[warmly] Red. <break time=\"0.4s\" /> A little ladybug, round and red. Spot! Spot! <break time=\"0.5s\" /> [playfully] Spot, spot, spot!"
   },
   {
    "id": "c2",
    "title": "Yellow",
-   "transcript": "Yellow. A soft yellow duckling. Peep! Peep! Peep peep peep!"
+   "transcript": "[warmly] Yellow. <break time=\"0.4s\" /> A soft yellow duckling. Peep! Peep! <break time=\"0.5s\" /> [playfully] Peep peep peep!"
   },
   {
    "id": "c3",
    "title": "Blue",
-   "transcript": "Blue. A big blue whale, in the deep blue sea. Splaaaash! Sploooosh!"
+   "transcript": "[warmly] Blue. <break time=\"0.4s\" /> A big blue whale, in the deep blue sea. Splaaaash! <break time=\"0.5s\" /> [excited] Sploooosh!"
   },
   {
    "id": "c4",
    "title": "Green",
-   "transcript": "Green. A little green frog, sitting on a leaf. Ribbit! Ribbit! Ribbit ribbit!"
+   "transcript": "[warmly] Green. <break time=\"0.4s\" /> A little green frog, sitting on a leaf. Ribbit! Ribbit! <break time=\"0.5s\" /> [playfully] Ribbit ribbit!"
   },
   {
    "id": "c5",
    "title": "Orange",
-   "transcript": "Orange. An orange tiger, with black stripes. Rrrroooaaar! Rrrroooaaar!"
+   "transcript": "[warmly] Orange. <break time=\"0.4s\" /> An orange tiger, with black stripes. Rrrroooaaar! <break time=\"0.5s\" /> [excited] Rrrroooaaar!"
   },
   {
    "id": "c6",
    "title": "Purple",
-   "transcript": "Purple. A purple butterfly, up and away. Flutter, flutter, flutter away!"
+   "transcript": "[warmly] Purple. <break time=\"0.4s\" /> A purple butterfly, up and away. <break time=\"0.5s\" /> [gently] Flutter, flutter, flutter away!"
   },
   {
    "id": "c7",
    "title": "Pink",
-   "transcript": "Pink. A round pink pig, in the squishy mud. Oink! Oink! Oink oink oink!"
+   "transcript": "[warmly] Pink. <break time=\"0.4s\" /> A round pink pig, in the squishy mud. Oink! Oink! <break time=\"0.5s\" /> [playfully] Oink oink oink!"
   },
   {
    "id": "c8",
    "title": "Brown",
-   "transcript": "Brown. A big brown bear, sleepy and slow. Grrrrrr... grrrrumble... grrrr!"
+   "transcript": "[warmly] Brown. <break time=\"0.4s\" /> A big brown bear, sleepy and slow. Grrrrrr... grrrrumble... <break time=\"0.5s\" /> [softly] grrrr!"
   },
   {
    "id": "c10",
    "title": "Grey",
-   "transcript": "Grey. A soft grey cat, curled up and sleepy. Purr... purr..."
+   "transcript": "[warmly] Grey. <break time=\"0.4s\" /> A soft grey cat, curled up and sleepy. Purr... <break time=\"0.5s\" /> [softly] purr..."
   },
   {
    "id": "c9",
    "title": "Rainbow",
-   "transcript": "All the colours. Red, yellow, blue, green, orange, purple, pink, brown and grey. All of them together. Goodnight, Yusuf."
+   "transcript": "[warmly] All the colours. <break time=\"0.4s\" /> Red, yellow, blue, green, orange, purple, pink, brown and grey. All of them together. <break time=\"0.5s\" /> [whispers] Goodnight, Yusuf."
   }
  ]
 }
