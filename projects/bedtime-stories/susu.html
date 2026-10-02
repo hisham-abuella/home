@@ -584,7 +584,7 @@ var sfx     = document.getElementById('sfx');
 var fsBtn   = document.getElementById('fsBtn');
 var artBtn  = document.getElementById('artBtn');
 
-var ch = 'susu', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = false;
+var ch = 'susu', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = true;
 
 function t(k){ return UI[lang][k]; }
 function pages(){ return BOOK[ch].pages; }
@@ -838,7 +838,8 @@ book.addEventListener('touchend', function (e) {
 try {
   var saved = localStorage.getItem('susu-name');
   if (saved) babyName = saved;
-  useImages = localStorage.getItem('susu-art') === 'photo';
+  var savedArt = localStorage.getItem('susu-art');
+  if (savedArt) useImages = savedArt === 'photo';
 } catch (e) {}
 
 buildDots();
