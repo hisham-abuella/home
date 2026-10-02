@@ -5,47 +5,47 @@
   {
    "id": "s1",
    "title": "Ladybug",
-   "transcript": "The ladybug has spots. Spot, spot, spot!"
+   "transcript": "[playfully] The ladybug has spots. Spot, spot, spot!"
   },
   {
    "id": "s2",
    "title": "Duckling",
-   "transcript": "The duckling says peep! Peep, peep!"
+   "transcript": "[playfully] The duckling says peep! Peep, peep!"
   },
   {
    "id": "s3",
    "title": "Whale",
-   "transcript": "The whale goes splash! Whoosh!"
+   "transcript": "[playfully] The whale goes splash! Whoosh!"
   },
   {
    "id": "s4",
    "title": "Frog",
-   "transcript": "The frog says ribbit! Ribbit, ribbit!"
+   "transcript": "[playfully] The frog says ribbit! Ribbit, ribbit!"
   },
   {
    "id": "s5",
    "title": "Tiger",
-   "transcript": "The tiger says roar! Roar!"
+   "transcript": "[playfully] The tiger says roar! Roar!"
   },
   {
    "id": "s6",
    "title": "Butterfly",
-   "transcript": "The butterfly goes flutter, flutter, flutter."
+   "transcript": "[playfully] The butterfly goes flutter, flutter, flutter."
   },
   {
    "id": "s7",
    "title": "Pig",
-   "transcript": "The pig says oink! Oink, oink!"
+   "transcript": "[playfully] The pig says oink! Oink, oink!"
   },
   {
    "id": "s8",
    "title": "Bear",
-   "transcript": "The bear says grr! Grr, grumble."
+   "transcript": "[playfully] The bear says grr! Grr, grumble."
   },
   {
    "id": "s9",
    "title": "Grey cat",
-   "transcript": "The sleepy cat goes purr, purr, purr."
+   "transcript": "[softly] The sleepy cat goes purr, purr, purr."
   }
  ]
 }

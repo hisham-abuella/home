@@ -5,47 +5,47 @@
   {
    "id": "s1",
    "title": "Ladybug",
-   "transcript": "الدُّعْسوقةُ عليها نُقَط: نُقطة، نُقطة، نُقطة!"
+   "transcript": "[warmly] الدُّعْسوقةُ عليها نُقَط: <break time=\"0.3s\" /> [playfully] نُقطة، نُقطة، نُقطة!"
   },
   {
    "id": "s2",
    "title": "Duckling",
-   "transcript": "البَطّةُ الصغيرةُ تقول: كواك! كواك! كواك!"
+   "transcript": "[warmly] البَطّةُ الصغيرةُ تقول: <break time=\"0.3s\" /> [playfully] كواك! كواك! كواك!"
   },
   {
    "id": "s3",
    "title": "Whale",
-   "transcript": "الحوتُ يقفِز: طُشاش! ووش!"
+   "transcript": "[warmly] الحوتُ يقفِز: <break time=\"0.3s\" /> [playfully] طُشاش! ووش!"
   },
   {
    "id": "s4",
    "title": "Frog",
-   "transcript": "الضِّفدعُ يقول: نَقْ! نَقْ، نَقْ!"
+   "transcript": "[warmly] الضِّفدعُ يقول: <break time=\"0.3s\" /> [playfully] نَقْ! نَقْ، نَقْ!"
   },
   {
    "id": "s5",
    "title": "Tiger",
-   "transcript": "النَّمِرُ يُزَمجِر: رررر! رررر!"
+   "transcript": "[warmly] النَّمِرُ يُزَمجِر: <break time=\"0.3s\" /> [playfully] رررر! رررر!"
   },
   {
    "id": "s6",
    "title": "Butterfly",
-   "transcript": "الفَراشةُ تُرَفرِفُ بجناحَيها، ثمّ تطيرُ بعيداً."
+   "transcript": "[playfully] الفَراشةُ تُرَفرِفُ بجناحَيها، ثمّ تطيرُ بعيداً."
   },
   {
    "id": "s7",
    "title": "Pig",
-   "transcript": "الخِنزيرُ يقول: أويك! أويك، أويك!"
+   "transcript": "[warmly] الخِنزيرُ يقول: <break time=\"0.3s\" /> [playfully] أويك! أويك، أويك!"
   },
   {
    "id": "s8",
    "title": "Bear",
-   "transcript": "الدُّبُّ يقول: غرررر! غرررر."
+   "transcript": "[warmly] الدُّبُّ يقول: <break time=\"0.3s\" /> [playfully] غرررر! غرررر."
   },
   {
    "id": "s9",
    "title": "Grey cat",
-   "transcript": "القِطّةُ النَّعسانةُ تُخَرخِر: خُرخَرة، خُرخَرة."
+   "transcript": "[warmly] القِطّةُ النَّعسانةُ تُخَرخِر: <break time=\"0.3s\" /> [softly] خُرخَرة، خُرخَرة."
   }
  ]
 }
