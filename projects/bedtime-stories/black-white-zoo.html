@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%A6%93%3C/text%3E%3C/svg%3E">
+<meta name="description" content="A high-contrast bilingual board book for a three-month-old: eight black-and-white animals, eight colours, narrated in English and Arabic.">
+<meta property="og:title" content="The Black and White Zoo">
+<meta property="og:description" content="A high-contrast bilingual board book for babies, with narration in English and Arabic.">
+<meta property="og:type" content="website">
+<title>The Black and White Zoo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Fredoka:wght@400..700&family=Noto+Kufi+Arabic:wght@400..900&display=swap">
+<style>
+  :root{
+    --page:#FCFBF6;
+    --ink:#111010;
+    --red:#D7263D;
+    --surround:#1C1B17;
+    --surround-2:#262519;
+    --quiet:#8E8A7D;
+    --rule:rgba(17,16,16,.14);
+    --accent:var(--red);
+    --tint:transparent;
+    --display:"Fraunces","Iowan Old Style",Georgia,serif;
+    --story:"Fredoka","Avenir Next Rounded","Trebuchet MS",system-ui,sans-serif;
+  }
+  [lang="ar"]{
+    --display:"Noto Kufi Arabic","Fraunces",Georgia,serif;
+    --story:"Baloo Bhaijaan 2","Noto Kufi Arabic",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(120% 80% at 50% 0%, var(--surround-2) 0%, var(--surround) 62%);
+    color:var(--page);
+    font-family:var(--story);
+    padding:20px 16px 36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+
+  /* ---------- top bar ---------- */
+  .bar{
+    width:min(820px,100%);
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(252,251,246,.08);border:1px solid rgba(252,251,246,.14)}
+  .seg button{
+    background:transparent;border:none;color:#C9C5B4;
+    font-family:var(--display);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 13px;border-radius:999px;transition:background .18s ease,color .18s ease;
+  }
+  .seg button[aria-pressed="true"]{background:var(--page);color:var(--ink);font-weight:700}
+  .seg button:hover:not([aria-pressed="true"]){color:var(--page)}
+  .seg.lang button{font-family:var(--story);letter-spacing:.04em;text-transform:none;font-size:.86rem}
+
+  /* ---------- the book ---------- */
+  .book{
+    width:min(820px,100%);
+    background:var(--page);
+    color:var(--ink);
+    border-radius:14px;
+    box-shadow:0 26px 60px -24px rgba(0,0,0,.85);
+    overflow:hidden;
+  }
+  .spread{
+    padding:28px 26px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    animation:settle .42s ease both;
+  }
+  @keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    max-height:min(56vh,480px);
+    margin-inline:auto;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:var(--tint);
+    overflow:hidden;
+  }
+  .stage svg.art{width:100%;height:100%;max-width:100%;display:block}
+  .stage img.art{width:100%;height:100%;max-width:100%;max-height:100%;min-width:0;min-height:0;display:block;object-fit:contain;border-radius:12px}
+  .breathe{animation:breathe 5.2s ease-in-out infinite;transform-origin:50% 62%}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.022)}}
+  .bird{position:absolute;width:14%;animation:flit 7s ease-in-out infinite}
+  @keyframes flit{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+
+  /* ---------- words ---------- */
+  .words{display:flex;flex-direction:column;gap:9px;text-align:center;max-width:32ch;margin-inline:auto}
+  .animal{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(2.2rem,9.5vw,3.3rem);
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    line-height:1;
+    text-wrap:balance;
+    margin:0;
+    color:var(--accent);
+  }
+  [lang="ar"] .animal{text-transform:none;letter-spacing:0;line-height:1.3}
+  .animal.plain{color:var(--ink)}
+  .line{font-size:clamp(1.1rem,4.2vw,1.45rem);font-weight:500;line-height:1.4;text-wrap:balance;margin:0}
+  .sound{
+    font-family:var(--display);font-style:italic;font-weight:600;
+    font-size:clamp(1.25rem,5vw,1.7rem);color:var(--accent);margin:0;
+  }
+  [lang="ar"] .sound{font-style:normal;font-weight:700}
+
+  /* ---------- cover ---------- */
+  .cover h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.4rem,10vw,3.7rem);line-height:.95;margin:0;text-wrap:balance;
+  }
+  [lang="ar"] .cover h1{line-height:1.25}
+  .cover h1 em{font-style:normal;color:var(--accent)}
+  .eyebrow{
+    font-family:var(--display);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--quiet);margin:0;
+  }
+  [lang="ar"] .eyebrow{letter-spacing:0;font-size:.85rem}
+.dedication{
+    font-family:var(--display);font-style:italic;font-weight:600;
+    font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--accent);margin:0;
+  }
+  [lang="ar"] .dedication{font-style:normal}
+  .cover-rule{height:6px;background:var(--ink);width:72px;margin:2px auto;border-radius:4px}
+  .namer{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;
+    border-top:1px solid var(--rule);padding-top:14px;
+  }
+  .namer label{font-size:.95rem;color:#3b3a35}
+  .namer input{
+    font:inherit;font-size:1rem;padding:8px 12px;width:11ch;
+    border:2px solid var(--ink);border-radius:9px;background:var(--page);color:var(--ink);text-align:center;
+  }
+  .namer input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+  /* ---------- listen ---------- */
+  .listen{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .play{
+    display:inline-flex;align-items:center;gap:10px;
+    border:2px solid var(--ink);background:var(--ink);color:var(--page);
+    border-radius:999px;padding:11px 22px;font-family:var(--story);font-size:1.02rem;font-weight:600;
+    transition:transform .14s ease;
+  }
+  .play:hover{transform:translateY(-2px)}
+  .play[data-state="playing"]{background:var(--accent);border-color:var(--accent)}
+  .play.ghost{background:transparent;color:var(--ink)}
+  .play.ghost:active{background:var(--ink);color:var(--page)}
+  .play .ico{width:15px;height:17px;flex:none}
+
+  .note{
+    border-top:1px solid var(--rule);padding-top:11px;
+    display:flex;gap:10px;align-items:flex-start;
+    font-family:var(--display);font-style:italic;font-size:.9rem;line-height:1.45;color:#4a4842;
+  }
+  [lang="ar"] .note{font-family:var(--story);font-style:normal;font-size:.92rem}
+  .note b{
+    font-style:normal;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    font-size:.62rem;color:var(--quiet);padding-top:.3em;white-space:nowrap;flex:none;
+  }
+  [lang="ar"] .note b{letter-spacing:0;font-size:.72rem}
+  body.notes-off .note{display:none}
+
+  /* ---------- controls ---------- */
+  .controls{width:min(820px,100%);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  button{font:inherit;cursor:pointer}
+  .turn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--page);color:var(--ink);border:none;border-radius:999px;
+    padding:12px 20px;font-weight:600;font-size:1rem;
+    box-shadow:0 8px 20px -10px rgba(0,0,0,.9);transition:transform .14s ease;
+  }
+  .turn:hover{transform:translateY(-2px)}
+  .turn .arrow{font-size:1.05em;line-height:1}
+  .turn[disabled]{opacity:.3;cursor:default;transform:none}
+  :focus-visible{outline:3px solid var(--red);outline-offset:3px}
+  .dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+  .dots span{width:9px;height:9px;border-radius:50%;background:rgba(252,251,246,.3);transition:background .2s,transform .2s}
+  .dots span.on{background:var(--page);transform:scale(1.35)}
+
+  .footer{width:min(820px,100%);display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .pill{
+    background:transparent;border:1px solid rgba(252,251,246,.26);color:#C9C5B4;border-radius:999px;
+    padding:7px 14px;font-family:var(--display);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  }
+  [lang="ar"] .pill{font-family:var(--story);letter-spacing:0;font-size:.82rem;text-transform:none}
+  .pill:hover{border-color:rgba(252,251,246,.6);color:var(--page)}
+  .pill[aria-pressed="true"]{border-color:var(--page);color:var(--page)}
+
+  /* ---------- full screen ---------- */
+  body.big{padding:8px 0 0;gap:8px;justify-content:flex-start;min-height:100vh}
+  body.big .bar{width:min(1000px,96%)}
+  body.big .book{width:100%;max-width:none;border-radius:0;box-shadow:none;flex:1;display:flex;align-items:center}
+  body.big .spread{width:min(1000px,100%);margin-inline:auto;padding:12px 24px 104px;gap:20px}
+  body.big .stage{max-height:min(66vh,820px)}
+  body.big .animal{font-size:clamp(3rem,7vw,5rem)}
+  body.big .line{font-size:clamp(1.3rem,2.6vw,2rem)}
+  body.big .sound{font-size:clamp(1.5rem,3vw,2.4rem)}
+  body.big .cover h1{font-size:clamp(3rem,7.5vw,5.4rem)}
+  body.big .words{max-width:40ch}
+  body.big .note{display:none}
+  body.big .footer{display:none}
+  body.big .controls{
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    width:min(1000px,96%);z-index:5;
+  }
+
+  @media (max-width:430px){
+    .turn{padding:11px 15px;font-size:.94rem}
+    .spread{padding:18px 15px 16px}
+    .controls{gap:8px}
+  }
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<style>
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  .home-link{text-decoration:none;display:inline-flex;align-items:center}
+  body.big .home-link{display:none}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="seg" id="chapters" role="group" aria-label="Chapter">
+    <button type="button" data-ch="bw" aria-pressed="true" id="chBw">Black &amp; White</button>
+    <button type="button" data-ch="color" aria-pressed="false" id="chColor">Colors</button>
+  </div>
+  <a class="pill home-link" href="../../index.html">&larr; hisham abuella</a>
+  <button class="pill" id="artBtn" type="button"></button>
+  <button class="pill" id="fsBtn" type="button"></button>
+  <div class="seg lang" id="langs" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">English</button>
+    <button type="button" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+  </div>
+</div>
+
+<div class="book"><section class="spread" id="spread"></section></div>
+
+<div class="controls">
+  <button class="turn" id="prev" type="button"><span class="arrow" id="prevArrow">&larr;</span><span data-t="back">Back</span></button>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <button class="turn" id="next" type="button"><span data-t="next">Turn the page</span><span class="arrow" id="nextArrow">&rarr;</span></button>
+</div>
+
+<div class="footer">
+  <button class="pill" id="autoBtn" type="button" aria-pressed="true"></button>
+  <button class="pill" id="notesBtn" type="button"></button>
+  <button class="pill" id="startBtn" type="button"></button>
+</div>
+
+<audio id="player" preload="none"></audio>
+<audio id="sfx" preload="none"></audio>
+
+<script>
+/* ============================================================
+   Art — every animal drawn as bold shapes on a 400x400 field
+   ============================================================ */
+var INK = '#111010', PAPER = '#FCFBF6', RED = '#D7263D';
+
+var ART = {};
+
+ART.cover = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A zebra, a panda and a penguin together">
+  <g transform="translate(-26,28) scale(.58)">
+    <circle cx="112" cy="118" r="44" fill="${INK}"/><circle cx="288" cy="118" r="44" fill="${INK}"/>
+    <circle cx="200" cy="215" r="118" fill="${PAPER}" stroke="${INK}" stroke-width="7"/>
+    <ellipse cx="152" cy="200" rx="36" ry="44" fill="${INK}" transform="rotate(-16 152 200)"/>
+    <ellipse cx="248" cy="200" rx="36" ry="44" fill="${INK}" transform="rotate(16 248 200)"/>
+    <circle cx="152" cy="200" r="12" fill="${PAPER}"/><circle cx="248" cy="200" r="12" fill="${PAPER}"/>
+    <ellipse cx="200" cy="262" rx="24" ry="17" fill="${INK}"/>
+    <path d="M200 279 q-20 26 -40 6 M200 279 q20 26 40 6" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(230,84) scale(.52)">
+    <ellipse cx="200" cy="230" rx="112" ry="168" fill="${INK}"/>
+    <ellipse cx="200" cy="262" rx="70" ry="124" fill="${PAPER}"/>
+    <circle cx="170" cy="150" r="20" fill="${PAPER}"/><circle cx="230" cy="150" r="20" fill="${PAPER}"/>
+    <circle cx="172" cy="152" r="9" fill="${INK}"/><circle cx="228" cy="152" r="9" fill="${INK}"/>
+    <path d="M200 176 l26 18 -26 18 -26 -18 z" fill="${RED}"/>
+    <path d="M150 384 q-34 14 -4 20 h58 z" fill="${RED}"/><path d="M250 384 q34 14 4 20 h-58 z" fill="${RED}"/>
+  </g>
+  <g transform="translate(74,122) scale(.70)">
+    <ellipse cx="128" cy="78" rx="27" ry="42" fill="${INK}" transform="rotate(-22 128 78)"/>
+    <ellipse cx="272" cy="78" rx="27" ry="42" fill="${INK}" transform="rotate(22 272 78)"/>
+    <clipPath id="cz"><path d="M200 60 c62 0 96 54 96 116 c0 46 -10 70 -24 92 c-14 22 -34 46 -72 46 s-58 -24 -72 -46 c-14 -22 -24 -46 -24 -92 c0 -62 34 -116 96 -116 z"/></clipPath>
+    <path d="M200 60 c62 0 96 54 96 116 c0 46 -10 70 -24 92 c-14 22 -34 46 -72 46 s-58 -24 -72 -46 c-14 -22 -24 -46 -24 -92 c0 -62 34 -116 96 -116 z" fill="${PAPER}" stroke="${INK}" stroke-width="7"/>
+    <g clip-path="url(#cz)" fill="${INK}">
+      <path d="M196 54 h16 l10 72 h-22 z"/><path d="M150 70 l20 -8 22 58 -20 10 z"/><path d="M250 70 l-20 -8 -22 58 20 10 z"/>
+      <path d="M104 150 l-6 24 70 6 2 -22 z"/><path d="M296 150 l6 24 -70 6 -2 -22 z"/>
+    </g>
+    <circle cx="166" cy="176" r="13" fill="${INK}"/><circle cx="234" cy="176" r="13" fill="${INK}"/>
+    <ellipse cx="200" cy="286" rx="52" ry="40" fill="${INK}"/>
+    <circle cx="184" cy="280" r="8" fill="${PAPER}"/><circle cx="216" cy="280" r="8" fill="${PAPER}"/>
+  </g></svg>`;
+
+ART.zebra = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A zebra with bold black stripes">
+  <ellipse cx="118" cy="92" rx="30" ry="46" fill="${INK}" transform="rotate(-22 118 92)"/>
+  <ellipse cx="282" cy="92" rx="30" ry="46" fill="${INK}" transform="rotate(22 282 92)"/>
+  <ellipse cx="118" cy="98" rx="14" ry="24" fill="${PAPER}" transform="rotate(-22 118 98)"/>
+  <ellipse cx="282" cy="98" rx="14" ry="24" fill="${PAPER}" transform="rotate(22 282 98)"/>
+  <clipPath id="zClip"><path d="M200 66 c66 0 102 56 102 122 c0 48 -10 74 -26 97 c-15 23 -36 49 -76 49 s-61 -26 -76 -49 c-16 -23 -26 -49 -26 -97 c0 -66 36 -122 102 -122 z"/></clipPath>
+  <path d="M200 66 c66 0 102 56 102 122 c0 48 -10 74 -26 97 c-15 23 -36 49 -76 49 s-61 -26 -76 -49 c-16 -23 -26 -49 -26 -97 c0 -66 36 -122 102 -122 z" fill="${PAPER}" stroke="${INK}" stroke-width="8"/>
+  <g clip-path="url(#zClip)" fill="${INK}">
+    <path d="M192 56 h18 l12 80 h-26 z"/><path d="M146 76 l22 -10 26 64 -22 12 z"/><path d="M254 76 l-22 -10 -26 64 22 12 z"/>
+    <path d="M96 156 l-8 26 78 8 3 -26 z"/><path d="M304 156 l8 26 -78 8 -3 -26 z"/>
+    <path d="M98 214 l-6 24 70 2 2 -24 z"/><path d="M302 214 l6 24 -70 2 -2 -24 z"/>
+  </g>
+  <circle cx="162" cy="190" r="15" fill="${INK}"/><circle cx="238" cy="190" r="15" fill="${INK}"/>
+  <circle cx="167" cy="185" r="5" fill="${PAPER}"/><circle cx="243" cy="185" r="5" fill="${PAPER}"/>
+  <ellipse cx="200" cy="300" rx="56" ry="43" fill="${INK}"/>
+  <ellipse cx="182" cy="293" rx="8" ry="10" fill="${PAPER}"/><ellipse cx="218" cy="293" rx="8" ry="10" fill="${PAPER}"/></svg>`;
+
+ART.panda = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A panda face with round black ears">
+  <circle cx="94" cy="118" r="52" fill="${INK}"/><circle cx="306" cy="118" r="52" fill="${INK}"/>
+  <circle cx="200" cy="224" r="134" fill="${PAPER}" stroke="${INK}" stroke-width="8"/>
+  <ellipse cx="144" cy="206" rx="42" ry="52" fill="${INK}" transform="rotate(-18 144 206)"/>
+  <ellipse cx="256" cy="206" rx="42" ry="52" fill="${INK}" transform="rotate(18 256 206)"/>
+  <circle cx="146" cy="206" r="16" fill="${PAPER}"/><circle cx="254" cy="206" r="16" fill="${PAPER}"/>
+  <circle cx="146" cy="206" r="7" fill="${INK}"/><circle cx="254" cy="206" r="7" fill="${INK}"/>
+  <path d="M200 254 q30 0 30 18 q0 16 -30 20 q-30 -4 -30 -20 q0 -18 30 -18 z" fill="${INK}"/>
+  <path d="M200 292 v12 M200 304 q-22 26 -44 6 M200 304 q22 26 44 6" fill="none" stroke="${INK}" stroke-width="8" stroke-linecap="round"/></svg>`;
+
+ART.cow = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A spotted cow with horns">
+  <path d="M96 96 q-30 -34 -8 -56 q24 -4 24 22" fill="${PAPER}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M304 96 q30 -34 8 -56 q-24 -4 -24 22" fill="${PAPER}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <ellipse cx="78" cy="150" rx="46" ry="28" fill="${INK}" transform="rotate(-18 78 150)"/>
+  <ellipse cx="322" cy="150" rx="46" ry="28" fill="${INK}" transform="rotate(18 322 150)"/>
+  <clipPath id="cowClip"><path d="M200 78 c70 0 108 48 108 112 c0 76 -48 136 -108 136 s-108 -60 -108 -136 c0 -64 38 -112 108 -112 z"/></clipPath>
+  <path d="M200 78 c70 0 108 48 108 112 c0 76 -48 136 -108 136 s-108 -60 -108 -136 c0 -64 38 -112 108 -112 z" fill="${PAPER}" stroke="${INK}" stroke-width="8"/>
+  <g clip-path="url(#cowClip)" fill="${INK}">
+    <path d="M92 110 q56 -40 76 2 q16 44 -32 54 q-52 10 -56 -22 z"/>
+    <path d="M300 94 q22 46 -16 62 q-28 12 -34 -16 q-6 -34 28 -50 z"/>
+    <path d="M112 236 q34 -16 46 10 q10 26 -20 30 q-34 4 -34 -22 z"/>
+  </g>
+  <circle cx="158" cy="186" r="16" fill="${INK}"/>
+  <circle cx="242" cy="186" r="16" fill="${PAPER}" stroke="${INK}" stroke-width="6"/>
+  <circle cx="242" cy="186" r="8" fill="${INK}"/>
+  <ellipse cx="200" cy="286" rx="72" ry="52" fill="${PAPER}" stroke="${INK}" stroke-width="8"/>
+  <ellipse cx="176" cy="276" rx="10" ry="13" fill="${INK}"/><ellipse cx="224" cy="276" rx="10" ry="13" fill="${INK}"/>
+  <path d="M172 312 q28 18 56 0" fill="none" stroke="${INK}" stroke-width="8" stroke-linecap="round"/></svg>`;
+
+ART.penguin = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A penguin with a white tummy and red feet">
+  <path d="M118 352 q-40 16 -6 24 h74 v-24 z" fill="${RED}"/><path d="M282 352 q40 16 6 24 h-74 v-24 z" fill="${RED}"/>
+  <ellipse cx="200" cy="208" rx="124" ry="176" fill="${INK}"/>
+  <ellipse cx="200" cy="244" rx="78" ry="134" fill="${PAPER}"/>
+  <ellipse cx="84" cy="236" rx="26" ry="88" fill="${INK}" transform="rotate(12 84 236)"/>
+  <ellipse cx="316" cy="236" rx="26" ry="88" fill="${INK}" transform="rotate(-12 316 236)"/>
+  <circle cx="164" cy="128" r="30" fill="${PAPER}"/><circle cx="236" cy="128" r="30" fill="${PAPER}"/>
+  <circle cx="168" cy="132" r="14" fill="${INK}"/><circle cx="232" cy="132" r="14" fill="${INK}"/>
+  <circle cx="172" cy="127" r="5" fill="${PAPER}"/><circle cx="236" cy="127" r="5" fill="${PAPER}"/>
+  <path d="M200 162 l34 24 -34 26 -34 -26 z" fill="${RED}"/></svg>`;
+
+ART.owl = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="An owl with two enormous round eyes">
+  <path d="M108 128 l-6 -72 l66 44 z" fill="${INK}"/><path d="M292 128 l6 -72 l-66 44 z" fill="${INK}"/>
+  <ellipse cx="200" cy="226" rx="132" ry="162" fill="${INK}"/>
+  <circle cx="146" cy="186" r="60" fill="${PAPER}"/><circle cx="254" cy="186" r="60" fill="${PAPER}"/>
+  <circle cx="146" cy="186" r="28" fill="${INK}"/><circle cx="254" cy="186" r="28" fill="${INK}"/>
+  <circle cx="154" cy="178" r="9" fill="${PAPER}"/><circle cx="262" cy="178" r="9" fill="${PAPER}"/>
+  <path d="M200 216 l22 26 -22 24 -22 -24 z" fill="${RED}"/>
+  <g fill="none" stroke="${PAPER}" stroke-width="9" stroke-linecap="round">
+    <path d="M152 296 q24 24 48 0 q24 24 48 0"/><path d="M152 336 q24 24 48 0 q24 24 48 0"/>
+  </g>
+  <g stroke="${RED}" stroke-width="10" stroke-linecap="round" fill="none">
+    <path d="M160 384 v-14 M160 384 h-20 M160 384 h20"/><path d="M240 384 v-14 M240 384 h-20 M240 384 h20"/>
+  </g></svg>`;
+
+ART.orca = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="An orca whale leaping over waves">
+  <path d="M206 96 l-16 -70 l56 50 z" fill="${INK}"/>
+  <path d="M66 228 q6 -92 116 -96 q84 -4 122 44 q18 22 54 20 q-22 26 -56 34 q-56 14 -120 10 q-96 -6 -116 -12 z" fill="${INK}"/>
+  <path d="M352 196 q14 -42 40 -52 q-6 42 10 70 q-30 -2 -50 -18 z" fill="${INK}"/>
+  <path d="M110 236 q54 26 136 20 q58 -4 86 -22 q-24 34 -92 40 q-86 8 -130 -38 z" fill="${PAPER}"/>
+  <ellipse cx="116" cy="188" rx="30" ry="15" fill="${PAPER}" transform="rotate(-14 116 188)"/>
+  <circle cx="98" cy="206" r="10" fill="${PAPER}"/><circle cx="98" cy="206" r="5" fill="${INK}"/>
+  <path d="M172 268 q28 42 68 10" fill="none" stroke="${PAPER}" stroke-width="8" stroke-linecap="round"/>
+  <g fill="none" stroke="${INK}" stroke-width="10" stroke-linecap="round">
+    <path d="M24 318 q30 -24 60 0 q30 24 60 0 q30 -24 60 0 q30 24 60 0 q30 -24 60 0"/>
+    <path d="M24 362 q30 -24 60 0 q30 24 60 0 q30 -24 60 0 q30 24 60 0 q30 -24 60 0"/>
+  </g></svg>`;
+
+ART.sheep = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A fluffy sheep like a little cloud">
+  <g fill="${INK}"><rect x="146" y="286" width="24" height="86" rx="11"/><rect x="206" y="286" width="24" height="86" rx="11"/><rect x="266" y="282" width="24" height="90" rx="11"/></g>
+  <g fill="${INK}"><circle cx="150" cy="190" r="62"/><circle cx="222" cy="160" r="66"/><circle cx="292" cy="196" r="60"/><circle cx="168" cy="252" r="58"/><circle cx="248" cy="256" r="60"/><circle cx="306" cy="252" r="46"/></g>
+  <g fill="${PAPER}" transform="translate(228,220) scale(.9) translate(-228,-220)"><circle cx="150" cy="190" r="62"/><circle cx="222" cy="160" r="66"/><circle cx="292" cy="196" r="60"/><circle cx="168" cy="252" r="58"/><circle cx="248" cy="256" r="60"/><circle cx="306" cy="252" r="46"/></g>
+  <ellipse cx="60" cy="178" rx="34" ry="22" fill="${INK}" transform="rotate(-28 60 178)"/>
+  <ellipse cx="104" cy="226" rx="56" ry="64" fill="${INK}"/>
+  <circle cx="86" cy="212" r="13" fill="${PAPER}"/><circle cx="130" cy="212" r="13" fill="${PAPER}"/>
+  <circle cx="86" cy="214" r="6" fill="${INK}"/><circle cx="130" cy="214" r="6" fill="${INK}"/>
+  <path d="M92 266 q16 14 32 0" fill="none" stroke="${PAPER}" stroke-width="8" stroke-linecap="round"/></svg>`;
+
+ART.puppy = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A spotted puppy sitting with a red collar">
+  <ellipse cx="214" cy="292" rx="104" ry="92" fill="${PAPER}" stroke="${INK}" stroke-width="8"/>
+  <g fill="${INK}"><circle cx="178" cy="282" r="21"/><circle cx="246" cy="258" r="15"/><circle cx="258" cy="318" r="24"/><circle cx="168" cy="340" r="14"/></g>
+  <path d="M300 330 q54 -10 46 40 q-4 22 -24 10 q-18 -12 -34 -22 z" fill="${PAPER}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <ellipse cx="96" cy="176" rx="36" ry="62" fill="${INK}" transform="rotate(-14 96 176)"/>
+  <circle cx="178" cy="176" r="108" fill="${PAPER}" stroke="${INK}" stroke-width="8"/>
+  <ellipse cx="266" cy="150" rx="38" ry="64" fill="${INK}" transform="rotate(16 266 150)"/>
+  <circle cx="126" cy="112" r="24" fill="${INK}"/><circle cx="226" cy="214" r="17" fill="${INK}"/>
+  <circle cx="146" cy="170" r="17" fill="${INK}"/><circle cx="212" cy="170" r="17" fill="${INK}"/>
+  <circle cx="152" cy="164" r="6" fill="${PAPER}"/><circle cx="218" cy="164" r="6" fill="${PAPER}"/>
+  <path d="M180 212 q22 0 22 13 q0 12 -22 15 q-22 -3 -22 -15 q0 -13 22 -13 z" fill="${INK}"/>
+  <path d="M180 240 v10 M180 250 q-18 20 -34 4 M180 250 q18 20 34 4" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+  <path d="M112 252 q66 44 134 4" fill="none" stroke="${RED}" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="180" cy="290" r="15" fill="${RED}" stroke="${PAPER}" stroke-width="4"/></svg>`;
+
+ART.moon = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A sleeping moon with a little red bird">
+  <circle cx="200" cy="196" r="140" fill="${INK}"/><circle cx="248" cy="166" r="118" fill="${PAPER}"/>
+  <path d="M118 176 q18 -16 36 0" fill="none" stroke="${PAPER}" stroke-width="9" stroke-linecap="round"/>
+  <path d="M96 232 q14 12 28 0" fill="none" stroke="${PAPER}" stroke-width="9" stroke-linecap="round"/>
+  <g fill="${INK}">
+    <path d="M44 62 l9 24 24 9 -24 9 -9 24 -9 -24 -24 -9 24 -9 z"/>
+    <path d="M350 300 l7 19 19 7 -19 7 -7 19 -7 -19 -19 -7 19 -7 z"/>
+    <path d="M66 330 l6 15 15 6 -15 6 -6 15 -6 -15 -15 -6 15 -6 z"/>
+  </g>
+  <g transform="translate(252,250)">
+    <ellipse cx="0" cy="0" rx="32" ry="24" fill="${RED}"/><circle cx="24" cy="-16" r="17" fill="${RED}"/>
+    <path d="M38 -18 l18 6 -18 7 z" fill="${INK}"/><circle cx="28" cy="-20" r="4" fill="${PAPER}"/>
+    <path d="M-34 -6 q-26 -10 -30 4 q16 10 30 4 z" fill="${INK}"/>
+  </g></svg>`;
+
+/* ---------- colour chapter ---------- */
+var C = { red:'#E02020', yellow:'#F2B705', blue:'#1A6FD4', green:'#2E9E4F',
+          orange:'#EE7215', purple:'#7B3FB5', pink:'#EF6BA8', brown:'#8A5A33', grey:'#8E949B' };
+
+ART.palette = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="Eight coloured circles">
+  <g stroke="${INK}" stroke-width="7">
+    <circle cx="124" cy="124" r="52" fill="${C.red}"/><circle cx="238" cy="110" r="52" fill="${C.yellow}"/>
+    <circle cx="332" cy="186" r="48" fill="${C.blue}"/><circle cx="286" cy="292" r="52" fill="${C.green}"/>
+    <circle cx="176" cy="316" r="50" fill="${C.orange}"/><circle cx="74" cy="248" r="46" fill="${C.purple}"/>
+    <circle cx="204" cy="212" r="56" fill="${C.pink}"/><circle cx="332" cy="60" r="34" fill="${C.brown}"/>
+  </g></svg>`;
+
+ART.ladybug = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A red ladybug with black spots">
+  <g stroke="${INK}" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M150 90 q-26 -34 -52 -42"/><path d="M250 90 q26 -34 52 -42"/>
+    <path d="M96 250 h-54 M104 304 l-46 36 M304 250 h54 M296 304 l46 36"/>
+  </g>
+  <circle cx="98" cy="42" r="13" fill="${INK}"/><circle cx="302" cy="42" r="13" fill="${INK}"/>
+  <ellipse cx="200" cy="232" rx="136" ry="140" fill="${C.red}" stroke="${INK}" stroke-width="8"/>
+  <path d="M200 92 a136 140 0 0 0 0 280 z" fill="${C.red}"/>
+  <path d="M200 92 v280" stroke="${INK}" stroke-width="9"/>
+  <path d="M200 92 a92 78 0 0 1 -92 78 a92 78 0 0 1 92 -78 z" fill="${INK}" opacity="0"/>
+  <path d="M110 128 q90 -58 180 0 q-24 -56 -90 -56 q-66 0 -90 56 z" fill="${INK}"/>
+  <g fill="${INK}"><circle cx="138" cy="208" r="26"/><circle cx="262" cy="208" r="26"/>
+    <circle cx="156" cy="292" r="22"/><circle cx="244" cy="292" r="22"/></g>
+  <circle cx="166" cy="100" r="9" fill="${PAPER}"/><circle cx="234" cy="100" r="9" fill="${PAPER}"/></svg>`;
+
+ART.duckling = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A yellow duckling">
+  <g stroke="${INK}" stroke-width="8" fill="${C.orange}" stroke-linejoin="round">
+    <path d="M168 352 l-32 26 h64 z"/><path d="M248 352 l32 26 h-64 z"/>
+  </g>
+  <ellipse cx="208" cy="266" rx="112" ry="98" fill="${C.yellow}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="156" cy="152" r="86" fill="${C.yellow}" stroke="${INK}" stroke-width="8"/>
+  <path d="M276 236 q66 20 42 70 q-16 30 -48 2" fill="${C.yellow}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M70 150 q-50 8 -48 24 q2 16 48 16 z" fill="${C.orange}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="132" cy="126" r="15" fill="${INK}"/><circle cx="138" cy="120" r="5" fill="${PAPER}"/>
+  <path d="M150 70 q16 -34 42 -28 q-20 14 -14 34" fill="${C.yellow}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/></svg>`;
+
+ART.whale = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A big blue whale">
+  <g fill="none" stroke="${C.blue}" stroke-width="10" stroke-linecap="round" opacity=".5">
+    <path d="M186 64 q-14 -34 10 -50"/><path d="M212 64 q12 -30 40 -34"/>
+  </g>
+  <path d="M72 230 q4 -96 124 -96 q96 0 128 56 q16 26 66 18 q-26 48 -92 56 q-78 10 -140 2 q-86 -10 -86 -36 z" fill="${C.blue}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M352 192 q22 -44 46 -56 q-10 46 6 78 q-34 -2 -52 -22 z" fill="${C.blue}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M104 244 q64 30 148 22 q50 -6 76 -22 q-20 36 -92 44 q-92 10 -132 -44 z" fill="${PAPER}"/>
+  <circle cx="118" cy="196" r="13" fill="${INK}"/><circle cx="123" cy="191" r="4" fill="${PAPER}"/>
+  <path d="M86 236 q24 20 52 8" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+  <g fill="none" stroke="${C.blue}" stroke-width="10" stroke-linecap="round">
+    <path d="M30 334 q30 -22 60 0 q30 22 60 0 q30 -22 60 0 q30 22 60 0 q30 -22 60 0"/>
+    <path d="M30 372 q30 -22 60 0 q30 22 60 0 q30 -22 60 0 q30 22 60 0 q30 -22 60 0"/>
+  </g></svg>`;
+
+ART.frog = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A green frog on a leaf">
+  <ellipse cx="200" cy="360" rx="168" ry="30" fill="${C.green}" opacity=".35"/>
+  <g fill="${C.green}" stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <path d="M86 268 q-56 20 -46 68 q6 26 42 10 q24 -12 40 -28 z"/>
+    <path d="M314 268 q56 20 46 68 q-6 26 -42 10 q-24 -12 -40 -28 z"/>
+  </g>
+  <ellipse cx="200" cy="254" rx="140" ry="112" fill="${C.green}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="132" cy="138" r="54" fill="${C.green}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="268" cy="138" r="54" fill="${C.green}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="132" cy="138" r="30" fill="${PAPER}"/><circle cx="268" cy="138" r="30" fill="${PAPER}"/>
+  <circle cx="134" cy="140" r="15" fill="${INK}"/><circle cx="266" cy="140" r="15" fill="${INK}"/>
+  <path d="M120 272 q80 46 160 0" fill="none" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="150" cy="300" r="11" fill="${INK}" opacity=".35"/><circle cx="250" cy="300" r="11" fill="${INK}" opacity=".35"/>
+  <circle cx="166" cy="212" r="8" fill="${INK}"/><circle cx="234" cy="212" r="8" fill="${INK}"/></svg>`;
+
+ART.tiger = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="An orange tiger with black stripes">
+  <circle cx="86" cy="104" r="48" fill="${C.orange}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="314" cy="104" r="48" fill="${C.orange}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="86" cy="104" r="22" fill="${INK}"/><circle cx="314" cy="104" r="22" fill="${INK}"/>
+  <clipPath id="tg"><circle cx="200" cy="216" r="146"/></clipPath>
+  <circle cx="200" cy="216" r="146" fill="${C.orange}" stroke="${INK}" stroke-width="8"/>
+  <g clip-path="url(#tg)" fill="${INK}">
+    <path d="M192 68 h16 l10 56 h-36 z"/><path d="M146 84 l18 -8 16 48 -22 8 z"/><path d="M254 84 l-18 -8 -16 48 22 8 z"/>
+    <path d="M58 170 l-4 24 72 2 -2 -22 z"/><path d="M342 170 l4 24 -72 2 2 -22 z"/>
+    <path d="M60 232 l-2 22 66 -2 -2 -20 z"/><path d="M340 232 l2 22 -66 -2 2 -20 z"/>
+  </g>
+  <path d="M200 236 q62 0 62 46 q0 42 -62 54 q-62 -12 -62 -54 q0 -46 62 -46 z" fill="${PAPER}" stroke="${INK}" stroke-width="7"/>
+  <circle cx="152" cy="192" r="19" fill="${PAPER}" stroke="${INK}" stroke-width="6"/>
+  <circle cx="248" cy="192" r="19" fill="${PAPER}" stroke="${INK}" stroke-width="6"/>
+  <circle cx="152" cy="192" r="9" fill="${INK}"/><circle cx="248" cy="192" r="9" fill="${INK}"/>
+  <path d="M200 254 l22 16 -22 16 -22 -16 z" fill="${INK}"/>
+  <path d="M200 286 v12 M200 298 q-18 20 -34 2 M200 298 q18 20 34 2" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+  <g stroke="${INK}" stroke-width="5" stroke-linecap="round"><path d="M132 268 h-54 M134 288 h-54 M268 268 h54 M266 288 h54"/></g></svg>`;
+
+ART.butterfly = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A purple butterfly">
+  <g stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <path d="M190 180 q-100 -108 -150 -40 q-40 56 48 86 q60 20 102 -10 z" fill="${C.purple}"/>
+    <path d="M210 180 q100 -108 150 -40 q40 56 -48 86 q-60 20 -102 -10 z" fill="${C.purple}"/>
+    <path d="M190 212 q-80 -4 -102 56 q-20 56 46 54 q50 -2 68 -62 z" fill="${C.pink}"/>
+    <path d="M210 212 q80 -4 102 56 q20 56 -46 54 q-50 -2 -68 -62 z" fill="${C.pink}"/>
+  </g>
+  <g fill="${PAPER}"><circle cx="104" cy="152" r="20"/><circle cx="296" cy="152" r="20"/>
+    <circle cx="128" cy="286" r="15"/><circle cx="272" cy="286" r="15"/></g>
+  <ellipse cx="200" cy="222" rx="22" ry="106" fill="${INK}"/>
+  <circle cx="200" cy="120" r="28" fill="${INK}"/>
+  <path d="M188 98 q-26 -40 -52 -46 M212 98 q26 -40 52 -46" fill="none" stroke="${INK}" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="136" cy="52" r="11" fill="${INK}"/><circle cx="264" cy="52" r="11" fill="${INK}"/>
+  <circle cx="190" cy="114" r="6" fill="${PAPER}"/><circle cx="212" cy="114" r="6" fill="${PAPER}"/></svg>`;
+
+ART.pig = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A round pink pig">
+  <g fill="${C.pink}" stroke="${INK}" stroke-width="8" stroke-linejoin="round">
+    <path d="M96 112 l-10 -76 l78 32 z"/><path d="M304 112 l10 -76 l-78 32 z"/>
+  </g>
+  <circle cx="200" cy="222" r="148" fill="${C.pink}" stroke="${INK}" stroke-width="8"/>
+  <ellipse cx="200" cy="262" rx="74" ry="56" fill="#E8508F" stroke="${INK}" stroke-width="8"/>
+  <ellipse cx="176" cy="260" rx="13" ry="18" fill="${INK}"/><ellipse cx="224" cy="260" rx="13" ry="18" fill="${INK}"/>
+  <circle cx="142" cy="172" r="18" fill="${INK}"/><circle cx="258" cy="172" r="18" fill="${INK}"/>
+  <circle cx="148" cy="166" r="6" fill="${PAPER}"/><circle cx="264" cy="166" r="6" fill="${PAPER}"/>
+  <path d="M120 300 q24 28 50 18 M280 300 q-24 28 -50 18" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/></svg>`;
+
+ART.bear = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A big brown bear">
+  <circle cx="86" cy="112" r="56" fill="${C.brown}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="314" cy="112" r="56" fill="${C.brown}" stroke="${INK}" stroke-width="8"/>
+  <circle cx="86" cy="112" r="26" fill="#C08552"/><circle cx="314" cy="112" r="26" fill="#C08552"/>
+  <circle cx="200" cy="224" r="146" fill="${C.brown}" stroke="${INK}" stroke-width="8"/>
+  <ellipse cx="200" cy="278" rx="86" ry="66" fill="#C08552" stroke="${INK}" stroke-width="7"/>
+  <path d="M200 244 q28 0 28 17 q0 15 -28 19 q-28 -4 -28 -19 q0 -17 28 -17 z" fill="${INK}"/>
+  <path d="M200 280 v12 M200 292 q-20 22 -38 4 M200 292 q20 22 38 4" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+  <path d="M136 186 q18 -16 38 0 M226 186 q18 -16 38 0" fill="none" stroke="${INK}" stroke-width="9" stroke-linecap="round"/></svg>`;
+
+ART.rainbow = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A rainbow of eight colours">
+  <g fill="none" stroke-width="26" stroke-linecap="round">
+    <path d="M38 330 a162 162 0 0 1 324 0" stroke="${C.red}"/>
+    <path d="M64 330 a136 136 0 0 1 272 0" stroke="${C.orange}"/>
+    <path d="M90 330 a110 110 0 0 1 220 0" stroke="${C.yellow}"/>
+    <path d="M116 330 a84 84 0 0 1 168 0" stroke="${C.green}"/>
+    <path d="M142 330 a58 58 0 0 1 116 0" stroke="${C.blue}"/>
+    <path d="M168 330 a32 32 0 0 1 64 0" stroke="${C.purple}"/>
+  </g>
+  <g fill="${PAPER}" stroke="${INK}" stroke-width="7">
+    <circle cx="62" cy="120" r="34"/><circle cx="104" cy="96" r="26"/><circle cx="36" cy="100" r="22"/>
+    <circle cx="340" cy="150" r="32"/><circle cx="302" cy="130" r="24"/>
+  </g>
+  <g transform="translate(200,356)">
+    <ellipse cx="0" cy="0" rx="30" ry="22" fill="${C.pink}" stroke="${INK}" stroke-width="6"/>
+    <circle cx="22" cy="-15" r="16" fill="${C.pink}" stroke="${INK}" stroke-width="6"/>
+    <path d="M36 -17 l18 6 -18 7 z" fill="${C.brown}"/><circle cx="26" cy="-19" r="4" fill="${INK}"/>
+  </g></svg>`;
+
+
+ART.cat = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A black cat with white paws and whiskers">
+  <path d="M104 150 l-14 -96 l86 56 z" fill="${INK}"/><path d="M296 150 l14 -96 l-86 56 z" fill="${INK}"/>
+  <ellipse cx="200" cy="286" rx="126" ry="104" fill="${INK}"/>
+  <path d="M322 310 q60 -8 54 44 q-4 28 -28 14 q-22 -14 -40 -30 z" fill="${INK}"/>
+  <g fill="${PAPER}" stroke="${INK}" stroke-width="6">
+    <ellipse cx="136" cy="372" rx="36" ry="22"/><ellipse cx="216" cy="372" rx="36" ry="22"/>
+  </g>
+  <path d="M200 232 q58 44 56 150 h-112 q-2 -106 56 -150 z" fill="${PAPER}"/>
+  <circle cx="200" cy="184" r="120" fill="${INK}"/>
+  <g fill="${PAPER}"><ellipse cx="152" cy="176" rx="26" ry="34"/><ellipse cx="248" cy="176" rx="26" ry="34"/></g>
+  <g fill="${INK}"><ellipse cx="152" cy="176" rx="9" ry="30"/><ellipse cx="248" cy="176" rx="9" ry="30"/></g>
+  <path d="M200 216 l20 14 -20 16 -20 -16 z" fill="${RED}"/>
+  <path d="M200 246 v10 M200 256 q-18 20 -34 2 M200 256 q18 20 34 2" fill="none" stroke="${PAPER}" stroke-width="7" stroke-linecap="round"/>
+  <g stroke="${PAPER}" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M150 226 l-74 -18 M150 244 l-76 10 M250 226 l74 -18 M250 244 l76 10"/>
+  </g></svg>`;
+
+ART.greycat = `<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="A grey cat curled up asleep">
+  <ellipse cx="200" cy="320" rx="176" ry="46" fill="${C.grey}" opacity=".3"/>
+  <path d="M200 112 q156 0 160 110 q4 86 -116 86 q-66 0 -66 -40 q0 -34 56 -34 q50 0 50 -34 q0 -40 -84 -40 z"
+        fill="${C.grey}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M68 180 l-16 -74 l74 40 z" fill="${C.grey}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M184 150 l26 -70 l-78 36 z" fill="${C.grey}" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="132" cy="206" r="96" fill="${C.grey}" stroke="${INK}" stroke-width="8"/>
+  <path d="M86 196 q22 22 44 0 M178 196 q-22 22 -44 0" fill="none" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
+  <path d="M132 232 l18 14 -18 14 -18 -14 z" fill="${C.pink}" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M132 262 q-16 18 -30 2 M132 262 q16 18 30 2" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+  <g stroke="${INK}" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M88 240 l-62 -16 M88 256 l-64 10 M176 240 l58 -16 M176 256 l60 10"/>
+  </g>
+  <g fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round" opacity=".55">
+    <path d="M300 96 q22 -14 0 -28 q-22 -14 0 -28"/><path d="M344 60 q18 -12 0 -24"/>
+  </g></svg>`;
+
+/* ============================================================
+   The book
+   ============================================================ */
+function P(o){ return o; }
+
+var BOOK = {
+  bw: {
+    accent: RED,
+    pages: [
+      P({ art:ART.cover, cover:true, audio:'p0',
+          en:{ eyebrow:'Bedtime, naptime, anytime', title:'The Black<br>and White <em>Zoo</em>', line:'Eight bold animals to look at together.',
+               note:'At three months, your baby sees strong black-and-white edges most clearly, and red is the first colour coming into view. Hold the screen about 30&nbsp;cm / 12&nbsp;inches away and read slowly — or let the recording do it.' },
+          ar:{ eyebrow:'قبلَ النوم، أو في أيِّ وقت', title:'حديقةُ الحيوان<br>بالأبيضِ <em>والأسود</em>', line:'ثمانيةُ حيواناتٍ واضحةٍ ننظرُ إليها معاً.',
+               note:'في الشهرِ الثالث، يرى طفلُك الحوافَّ السوداءَ والبيضاءَ بوضوحٍ أكبر، واللونُ الأحمرُ هو أوّلُ لونٍ يبدأُ في رؤيته. أمسِك الشاشةَ على بُعدِ ٣٠ سم تقريباً، واقرأ ببطء.' } }),
+      P({ art:ART.zebra, audio:'p1', perch:[6,4],
+          en:{ name:'Zebra', line:'Black stripe, white stripe, all in a row.', sound:'Clip‑clop, clip‑clop!',
+               note:'Stripes are the easiest pattern in the world for a newborn to find. Trace one with your finger and watch the eyes follow.' },
+          ar:{ name:'الحمارُ الوحشي', line:'خَطٌّ أسود، وخَطٌّ أبيض، واحداً بعدَ الآخر.', sound:'طَقْ طَقْ، طَقْ طَقْ!',
+               note:'الخطوطُ أسهلُ نمطٍ يستطيعُ المولودُ تمييزَه. مرِّر إصبعَك فوقَ خَطٍّ منها وراقِب عينيه تتبعانِه.' } }),
+      P({ art:ART.panda, audio:'p2', perch:[78,8],
+          en:{ name:'Panda', line:'A round white face with two black ears.', sound:'Munch, munch, munch.',
+               note:'Babies this age love faces above all else. A panda is a face made of the strongest contrast there is.' },
+          ar:{ name:'الباندا', line:'وجهٌ أبيضُ مستدير، وأُذُنانِ سوداوان.', sound:'مَضْغ، مَضْغ، مَضْغ.',
+               note:'في هذا العمر يحبُّ الأطفالُ الوجوهَ أكثرَ من أيِّ شيء. والباندا وجهٌ مصنوعٌ من أقوى تبايُنٍ ممكن.' } }),
+      P({ art:ART.cow, audio:'p3', perch:[4,70],
+          en:{ name:'Cow', line:'Big white cow with big black spots.', sound:'Moooooo!',
+               note:'Stretch the <em>moo</em> out long and low. Slow, sing-song speech is what babies tune into first.' },
+          ar:{ name:'البقرة', line:'بقرةٌ بيضاءُ كبيرة، عليها بُقَعٌ سوداءُ كبيرة.', sound:'مُووووو!',
+               note:'مُدَّ صوتَ «مُوو» طويلاً وهادئاً. الكلامُ البطيءُ الغِنائيُّ هو أوّلُ ما ينتبهُ له الرُّضَّع.' } }),
+      P({ art:ART.penguin, audio:'p4', perch:[80,72],
+          en:{ name:'Penguin', line:'A little black coat and a soft white tummy.', sound:'Waddle, waddle — splash!',
+               note:'The red beak and feet are here on purpose: red is the first colour newborn eyes pick up.' },
+          ar:{ name:'البطريق', line:'مِعطفٌ أسودُ صغير، وبَطنٌ أبيضُ ناعم.', sound:'يتمايلُ ويتمايل… طُشاش!',
+               note:'المِنقارُ والقدمانِ باللونِ الأحمرِ عن قصد: الأحمرُ أوّلُ لونٍ تلتقطُه عينا المولود.' } }),
+      P({ art:ART.owl, audio:'p5', perch:[5,10],
+          en:{ name:'Owl', line:'Two big eyes, wide awake in the dark.', sound:'Hoo… hoo…',
+               note:'Big dark circles on a light field are close to the shape of a human eye — which is why owls hold a baby’s gaze.' },
+          ar:{ name:'البومة', line:'عينانِ كبيرتانِ مفتوحتانِ في الليل.', sound:'هُووو… هُووو…',
+               note:'الدوائرُ الداكنةُ الكبيرةُ على خلفيةٍ فاتحةٍ تُشبِهُ شكلَ العين، ولذلك تجذِبُ البومةُ نظرَ الطفلِ طويلاً.' } }),
+      P({ art:ART.orca, audio:'p6', perch:[8,74],
+          en:{ name:'Orca', line:'Black on top, white underneath, up and over the waves.', sound:'Whooooosh!',
+               note:'Sweep a finger along the waves as you read. Slow, steady movement is what a three-month-old can now track.' },
+          ar:{ name:'الأوركا', line:'أسودُ من فوق، أبيضُ من تحت، يقفزُ فوقَ الأمواج.', sound:'ووووش!',
+               note:'مرِّر إصبعَك فوقَ الأمواجِ أثناءَ القراءة. الحركةُ البطيئةُ الثابتةُ هي ما يستطيعُ تتبُّعَه الآن.' } }),
+      P({ art:ART.sheep, audio:'p7', perch:[78,10],
+          en:{ name:'Sheep', line:'A little white cloud with four little legs.', sound:'Baa… baa…',
+               note:'A good page to slow down on at bedtime. Drop your voice a little softer with each animal from here.' },
+          ar:{ name:'الخروف', line:'غيمةٌ بيضاءُ صغيرةٌ لها أربعُ أرجُلٍ صغيرة.', sound:'مَااااع… مَااااع…',
+               note:'صفحةٌ مناسبةٌ للتمهُّلِ قبلَ النوم. اخفِض صوتَك قليلاً مع كلِّ حيوانٍ بعدَ هنا.' } }),
+      P({ art:ART.puppy, audio:'p8', perch:[4,8],
+          en:{ name:'Puppy', line:'Spots on his back, spots on his nose.', sound:'Woof! Woof!',
+               note:'Try the <em>woof</em> twice: once big, once tiny. Surprise and repetition together are a baby’s first joke.' },
+          ar:{ name:'الجَرْو', line:'نُقَطٌ على ظهرِه، ونُقطةٌ على أنفِه.', sound:'هَوْ! هَوْ!',
+               note:'جرِّب «هَوْ» مرّتين: مرّةً بصوتٍ كبير، ومرّةً بصوتٍ صغير. المفاجأةُ والتكرارُ أوّلُ نُكتةٍ يفهمُها الطفل.' } }),
+      P({ art:ART.cat, audio:'p10', perch:[80,6],
+          en:{ name:'Cat', line:'A black cat with four white paws and long white whiskers.', sound:'Meow! Meow!',
+               note:'Whiskers are thin, straight, high-contrast lines on a dark field \u2014 the kind of edge newborn eyes lock onto fastest.' },
+          ar:{ name:'القِطّة', line:'قِطّةٌ سوداء، بأربعِ أقدامٍ بيضاء، وشواربَ بيضاءَ طويلة.', sound:'مياو! مياو!',
+               note:'الشواربُ خطوطٌ رفيعةٌ مستقيمةٌ شديدةُ التبايُن على خلفيةٍ داكنة \u2014 وهي أسرعُ ما تلتقطُه عينا المولود.' } }),
+      P({ art:ART.moon, audio:'p9',
+          en:{ name:'Goodnight', line:'Goodnight zebra, goodnight panda, goodnight owl in the tree.', sound:'Goodnight, <span class="babyname">Yusuf</span>.',
+               note:'The red bird was hiding on every page — eight hiding places in all. In a few months, your baby will be the one who finds it.' },
+          ar:{ name:'تُصبِحُ على خير', line:'تصبحُ على خيرٍ يا حمارَ الوحش، وياباندا، ويا بومةَ الشجرة.', sound:'تصبحُ على خير، يا <span class="babyname">يوسف</span>.',
+               note:'العصفورُ الأحمرُ كان مُختبئاً في كلِّ صفحة — ثمانيةُ مخابئَ في الكتاب. بعدَ أشهرٍ قليلةٍ سيكونُ طفلُك هو مَن يجدُه.' } })
+    ]
+  },
+  color: {
+    accent: C.red,
+    pages: [
+      P({ art:ART.palette, cover:true, audio:'c0', tint:'#F6F1E6',
+          en:{ eyebrow:'Chapter two', title:'Eight Bright<br><em>Colours</em>', line:'One colour, one animal, one word to learn.',
+               note:'Colour vision keeps developing through the first year: red first, then yellow and green, with blue the last to arrive. Name the colour every time you turn the page — the word comes long before the answer does.' },
+          ar:{ eyebrow:'الفصلُ الثاني', title:'ثمانيةُ<br><em>ألوان</em>', line:'لونٌ واحد، وحيوانٌ واحد، وكلمةٌ نتعلّمُها.',
+               note:'تتطوّرُ رؤيةُ الألوانِ خلالَ السنةِ الأولى: الأحمرُ أوّلاً، ثمّ الأصفرُ والأخضر، والأزرقُ أخيراً. سَمِّ اللونَ في كلِّ مرّة — الكلمةُ تسبقُ الفهمَ بزمنٍ طويل.' } }),
+      P({ art:ART.ladybug, audio:'c1', tint:C.red,
+          en:{ name:'Red',    line:'A little ladybug, round and red.',     sound:'Spot, spot, spot!',  note:'Red first — it is the one colour your baby can already pick out today.' },
+          ar:{ name:'أحمر',   line:'دُعْسوقةٌ صغيرةٌ مستديرةٌ حمراء.',      sound:'نُقطة، نُقطة، نُقطة!', note:'نبدأُ بالأحمر — فهو اللونُ الوحيدُ الذي يستطيعُ طفلُك تمييزَه اليوم.' } }),
+      P({ art:ART.duckling, audio:'c2', tint:C.yellow,
+          en:{ name:'Yellow', line:'A soft yellow duckling.',              sound:'Peep, peep, peep!',  note:'Yellow is bright enough to catch the eye even before it is seen as a colour.' },
+          ar:{ name:'أصفر',   line:'بَطّةٌ صغيرةٌ صفراءُ ناعمة.',           sound:'بيب، بيب، بيب!',   note:'الأصفرُ ساطعٌ بما يكفي ليلفتَ النظرَ حتى قبلَ أن يُرى كلون.' } }),
+      P({ art:ART.whale, audio:'c3', tint:C.blue,
+          en:{ name:'Blue',   line:'A big blue whale in the deep blue sea.', sound:'Splash!',          note:'Blue is the slowest to arrive — usually near the end of the first year.' },
+          ar:{ name:'أزرق',   line:'حوتٌ أزرقُ كبيرٌ في البحرِ العميق.',    sound:'طُشاش!',           note:'الأزرقُ آخرُ الألوانِ وصولاً — غالباً قربَ نهايةِ السنةِ الأولى.' } }),
+      P({ art:ART.frog, audio:'c4', tint:C.green,
+          en:{ name:'Green',  line:'A little green frog, sitting on a leaf.', sound:'Ribbit, ribbit!', note:'Pair each colour with a sound. Two senses together make the word stick.' },
+          ar:{ name:'أخضر',   line:'ضِفدعٌ أخضرُ صغيرٌ فوقَ ورقة.',          sound:'نَقْ، نَقْ!',     note:'اربِط كلَّ لونٍ بصوت. الحاسّتانِ معاً تُثبّتانِ الكلمةَ في الذاكرة.' } }),
+      P({ art:ART.tiger, audio:'c5', tint:C.orange,
+          en:{ name:'Orange', line:'An orange tiger with black stripes.',   sound:'Rrrroar!',          note:'Black stripes on orange keep the high contrast working while the colour is new.' },
+          ar:{ name:'برتقالي',line:'نَمِرٌ برتقاليٌّ بخطوطٍ سوداء.',        sound:'ررررر!',          note:'الخطوطُ السوداءُ على البرتقاليِّ تُبقي التبايُنَ قوياً بينما اللونُ جديدٌ على العين.' } }),
+      P({ art:ART.butterfly, audio:'c6', tint:C.purple,
+          en:{ name:'Purple', line:'A purple butterfly, up and away.',      sound:'Flutter, flutter.', note:'Move the screen slowly left and right here — tracking practice, disguised as a butterfly.' },
+          ar:{ name:'بنفسجي', line:'فراشةٌ بنفسجيّةٌ تطيرُ عالياً.',         sound:'رَفرَفة، رَفرَفة.', note:'حرِّك الشاشةَ ببطءٍ يميناً ويساراً هنا — تمرينُ تتبُّعٍ في ثوبِ فراشة.' } }),
+      P({ art:ART.pig, audio:'c7', tint:C.pink,
+          en:{ name:'Pink',   line:'A round pink pig in the squishy mud.',  sound:'Oink, oink!',       note:'Pink and red look alike to new eyes. Saying both names builds the difference early.' },
+          ar:{ name:'وردي',   line:'خنزيرٌ ورديٌّ مستديرٌ في الطين.',        sound:'أويك، أويك!',     note:'الورديُّ والأحمرُ متشابهانِ للعينِ الجديدة. تسميةُ الاثنينِ تبني الفرقَ مبكّراً.' } }),
+      P({ art:ART.bear, audio:'c8', tint:C.brown,
+          en:{ name:'Brown',  line:'A big brown bear, sleepy and slow.',    sound:'Grrrumble.',        note:'A quiet, low-saturation page — a good one to end awake time on.' },
+          ar:{ name:'بُنّي',   line:'دُبٌّ بُنّيٌّ كبير، نَعسانُ وبطيء.',     sound:'غررررر.',        note:'صفحةٌ هادئةٌ قليلةُ التشبُّع — مناسبةٌ لإنهاءِ وقتِ اللعب.' } }),
+      P({ art:ART.greycat, audio:'c10', tint:C.grey,
+          en:{ name:'Grey',  line:'A soft grey cat, curled up and sleepy.', sound:'Purr\u2026 purr\u2026',
+               note:'Grey sits between the black-and-white pages and the bright ones \u2014 a gentle colour to end on.' },
+          ar:{ name:'رَماديّ', line:'قِطّةٌ رماديّةٌ ناعمة، مُتكوّرةٌ ونعسانة.', sound:'خُرخَرة… خُرخَرة…',
+               note:'الرماديُّ يقعُ بينَ صفحاتِ الأبيضِ والأسودِ والصفحاتِ الزاهية \u2014 لونٌ هادئٌ نختِمُ به.' } }),
+      P({ art:ART.rainbow, audio:'c9', tint:'#F6F1E6',
+          en:{ name:'All the Colours', line:'Red, yellow, blue, green, orange, purple, pink and brown.', sound:'Goodnight, <span class="babyname">Yusuf</span>.',
+               note:'Eight colours, eight animals. Say them in the same order each night — repetition is how the names are learned.' },
+          ar:{ name:'كلُّ الألوان', line:'أحمر، أصفر، أزرق، أخضر، برتقالي، بنفسجي، ورديّ، وبُنّي.', sound:'تصبحُ على خير، يا <span class="babyname">يوسف</span>.',
+               note:'ثمانيةُ ألوانٍ وثمانيةُ حيوانات. رَدِّدها بالترتيبِ نفسِه كلَّ ليلة — بالتكرارِ تُتعلَّمُ الأسماء.' } })
+    ]
+  }
+};
+
+var AUDIO_DIR = { bw:{ en:'audio/en/', ar:'audio/ar/' }, color:{ en:'audio/cen/', ar:'audio/car/' } };
+var SFX_DIR   = { bw:{ en:'audio/ens/', ar:'audio/ars/' }, color:{ en:'audio/cens/', ar:'audio/cars/' } };
+
+// v1 artwork: a generated illustration per page, drawn locally with Qwen-Image / Z-Image
+var IMG_V1 = {
+  bw:    ['cover','zebra','panda','cow','penguin','owl','orca','sheep','puppy','cat','moon'],
+  color: ['palette','ladybug','duckling','whale','frog','tiger','butterfly','pig','bear','greycat','rainbow']
+};
+['bw','color'].forEach(function (k) {
+  BOOK[k].pages.forEach(function (pg, i) {
+    pg.img = 'images-v1/' + IMG_V1[k][i] + '.png';
+  });
+});
+
+// every page between the cover and the goodnight page has its own animal sound
+['bw','color'].forEach(function (k) {
+  BOOK[k].pages.forEach(function (pg, i) {
+    if (i > 0 && i < BOOK[k].pages.length - 1) pg.snd = 's' + i;
+  });
+});
+
+var UI = {
+  en: { back:'Back', next:'Turn the page', start:'Start reading', listen:'Read to me',
+        pause:'Pause', readTo:'Read it to:', placeholder:'Yusuf', grownups:'Grown-ups',
+        notesOn:'Hide grown-up notes', notesOff:'Show grown-up notes',
+        autoOn:'Auto-play: on', autoOff:'Auto-play: off', cover:'Back to the cover', dir:'ltr',
+        chBw:'Black & White', chColor:'Colours', arrowNext:'\u2192', arrowPrev:'\u2190',
+        sound:'Hear the sound', big:'Full screen', small:'Exit full screen',
+        artDrawn:'Artwork: drawn', artPhoto:'Artwork: illustrated' },
+  ar: { back:'رجوع', next:'اقلِب الصفحة', start:'ابدأ القراءة', listen:'اقرأ لي',
+        pause:'إيقاف', readTo:'نقرؤها لـ:', placeholder:'يوسف', grownups:'للكبار',
+        notesOn:'إخفاء ملاحظات الكبار', notesOff:'إظهار ملاحظات الكبار',
+        autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا', cover:'العودة للغلاف', dir:'rtl',
+        chBw:'أبيض وأسود', chColor:'ألوان', arrowNext:'\u2190', arrowPrev:'\u2192',
+        sound:'اسمَع الصوت', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
+        artDrawn:'الرسم اليدوي', artPhoto:'الصور المولَّدة' }
+};
+
+var BIRD = '<svg class="bird" viewBox="0 0 100 80" aria-hidden="true">' +
+  '<ellipse cx="46" cy="44" rx="30" ry="22" fill="' + RED + '"/>' +
+  '<circle cx="70" cy="28" r="16" fill="' + RED + '"/>' +
+  '<path d="M84 26 l17 6 -17 7 z" fill="' + INK + '"/>' +
+  '<circle cx="74" cy="24" r="4" fill="' + PAPER + '"/>' +
+  '<path d="M16 38 q-14 14 2 22 q12 -2 18 -14 z" fill="' + INK + '"/>' +
+  '<path d="M22 60 v12 M62 62 v10" stroke="' + INK + '" stroke-width="5" stroke-linecap="round" fill="none"/></svg>';
+
+/* ============================================================
+   Wiring
+   ============================================================ */
+var spread  = document.getElementById('spread');
+var dots    = document.getElementById('dots');
+var prevBtn = document.getElementById('prev');
+var nextBtn = document.getElementById('next');
+var notesBtn= document.getElementById('notesBtn');
+var autoBtn = document.getElementById('autoBtn');
+var startBtn= document.getElementById('startBtn');
+var player  = document.getElementById('player');
+var sfx     = document.getElementById('sfx');
+var fsBtn   = document.getElementById('fsBtn');
+var artBtn  = document.getElementById('artBtn');
+
+var ch = 'bw', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = false;
+
+function t(k){ return UI[lang][k]; }
+function pages(){ return BOOK[ch].pages; }
+
+function nameOr(fallback){ return babyName || fallback; }
+
+function render(){
+  var page = pages()[at];
+  var copy = page[lang];
+  var ui = UI[lang];
+
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', ui.dir);
+  document.body.setAttribute('lang', lang);
+  document.body.setAttribute('dir', ui.dir);
+
+  document.documentElement.style.setProperty('--accent', BOOK[ch].accent);
+  spread.className = 'spread' + (page.cover ? ' cover' : '');
+  spread.parentNode.style.setProperty('--tint', page.tint ? page.tint + '26' : 'transparent');
+
+  var artwork = (useImages && page.img)
+    ? '<img class="art photo breathe" id="pageArt" src="' + page.img + '" alt="">'
+    : page.art;
+  var html = '<div class="stage" style="--tint:' + (page.tint ? page.tint + '26' : 'transparent') + '">' + artwork + '</div>';
+
+  if (page.cover) {
+    html += '<div class="words">' +
+      '<p class="eyebrow">' + copy.eyebrow + '</p>' +
+      '<h1>' + copy.title + '</h1>' +
+      '<div class="cover-rule"></div>' +
+      '<p class="dedication">' + (lang === 'ar' ? 'إلى ' : 'For ') + '<span class="babyname">Yusuf</span></p>' +
+      '<p class="line">' + copy.line + '</p>' +
+    '</div>';
+  } else {
+    html += '<div class="words">' +
+      '<h2 class="animal' + (ch === 'bw' ? ' plain' : '') + '"' +
+        (ch === 'color' && page.tint ? ' style="color:' + page.tint + '"' : '') + '>' + copy.name + '</h2>' +
+      '<p class="line">' + copy.line + '</p>' +
+      '<p class="sound">' + copy.sound + '</p>' +
+    '</div>';
+  }
+
+  html += '<div class="listen"><button class="play" id="playBtn" type="button">' +
+    '<svg class="ico" viewBox="0 0 15 17" aria-hidden="true"><path d="M1 1 L14 8.5 L1 16 Z" fill="currentColor"/></svg>' +
+    '<span id="playLabel">' + ui.listen + '</span></button>';
+  if (page.snd) {
+    html += '<button class="play ghost" id="sfxBtn" type="button">' +
+      '<svg class="ico" viewBox="0 0 18 17" aria-hidden="true">' +
+        '<path d="M1 6 h4 L10 1.5 v14 L5 11 H1 Z" fill="currentColor"/>' +
+        '<path d="M13 5.5 q2.6 3 0 6 M15.6 3.4 q4.4 5.1 0 10.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+      '</svg><span>' + ui.sound + '</span></button>';
+  }
+  html += '</div>';
+
+  if (page.cover) {
+    html += '<div class="namer"><label for="babyname">' + ui.readTo + '</label>' +
+      '<input id="babyname" type="text" autocomplete="off" maxlength="18" placeholder="' + ui.placeholder + '" value="' +
+      babyName.replace(/"/g, '&quot;') + '"></div>';
+  }
+
+  html += '<p class="note"><b>' + ui.grownups + '</b><span>' + copy.note + '</span></p>';
+
+  spread.innerHTML = html;
+
+  // an illustration that has not been generated yet falls back to the drawing
+  var photo = document.getElementById('pageArt');
+  if (photo) {
+    var toDrawing = function () {
+      var stage = photo.parentNode;
+      if (!stage) return;
+      stage.innerHTML = page.art;
+      if (page.perch) addBird(stage, page);
+    };
+    photo.addEventListener('error', toDrawing);
+    // the error may already have fired before this handler was attached
+    if (photo.complete && photo.naturalWidth === 0) toDrawing();
+  }
+
+  // the red bird, hiding in a different corner on every animal page
+  if (page.perch) addBird(spread.querySelector('.stage'), page);
+
+  applyName();
+
+  var input = document.getElementById('babyname');
+  if (input) {
+    input.addEventListener('input', function () {
+      babyName = input.value;
+      applyName();
+      try { localStorage.setItem('bwzoo-name', babyName.trim()); } catch (e) {}
+    });
+  }
+  document.getElementById('playBtn').addEventListener('click', togglePlay);
+  var sfxBtn = document.getElementById('sfxBtn');
+  if (sfxBtn) sfxBtn.addEventListener('click', playSound);
+
+  // chrome
+  prevBtn.querySelector('[data-t]').textContent = ui.back;
+  nextBtn.querySelector('[data-t]').textContent = at === 0 ? ui.start : ui.next;
+  prevBtn.disabled = at === 0;
+  nextBtn.disabled = at === pages().length - 1;
+  notesBtn.textContent = document.body.classList.contains('notes-off') ? ui.notesOff : ui.notesOn;
+  autoBtn.textContent = autoplay ? ui.autoOn : ui.autoOff;
+  autoBtn.setAttribute('aria-pressed', String(autoplay));
+  startBtn.textContent = ui.cover;
+  fsBtn.textContent = big ? ui.small : ui.big;
+  artBtn.textContent = useImages ? ui.artPhoto : ui.artDrawn;
+  artBtn.setAttribute('aria-pressed', String(useImages));
+  document.getElementById('chBw').textContent = ui.chBw;
+  document.getElementById('chColor').textContent = ui.chColor;
+  document.getElementById('prevArrow').textContent = ui.arrowPrev;
+  document.getElementById('nextArrow').textContent = ui.arrowNext;
+
+  Array.prototype.forEach.call(dots.children, function (d, n) { d.classList.toggle('on', n === at); });
+
+  loadAudio();
+}
+
+function addBird(stage, page) {
+  var wrap = document.createElement('div');
+  wrap.innerHTML = BIRD;
+  var bird = wrap.firstChild;
+  bird.style.left = page.perch[0] + '%';
+  bird.style.top = page.perch[1] + '%';
+  stage.appendChild(bird);
+}
+
+function applyName() {
+  var fallback = lang === 'ar' ? 'يوسف' : 'Yusuf';
+  Array.prototype.forEach.call(document.querySelectorAll('.babyname'), function (s) {
+    s.textContent = babyName.trim() || fallback;
+  });
+}
+
+function buildDots() {
+  dots.innerHTML = '';
+  pages().forEach(function () { dots.appendChild(document.createElement('span')); });
+}
+
+/* ---------- audio ---------- */
+function loadAudio() {
+  player.pause();
+  player.src = AUDIO_DIR[ch][lang] + pages()[at].audio + '.mp3';
+  setPlayState(false);
+}
+
+function setPlayState(playing) {
+  var btn = document.getElementById('playBtn');
+  if (!btn) return;
+  btn.dataset.state = playing ? 'playing' : 'idle';
+  document.getElementById('playLabel').textContent = playing ? t('pause') : t('listen');
+}
+
+function togglePlay() {
+  unlocked = true;
+  if (player.paused) {
+    player.play().then(function () { setPlayState(true); }).catch(function () { setPlayState(false); });
+  } else {
+    player.pause();
+    setPlayState(false);
+  }
+}
+
+function playSound() {
+  unlocked = true;
+  var page = pages()[at];
+  if (!page.snd) return;
+  sfx.src = SFX_DIR[ch][lang] + page.snd + '.mp3';
+  sfx.currentTime = 0;
+  sfx.play().catch(function () {});
+}
+
+player.addEventListener('ended', function () { setPlayState(false); });
+player.addEventListener('pause', function () { setPlayState(false); });
+
+function show(i) {
+  at = Math.max(0, Math.min(pages().length - 1, i));
+  render();
+  if (autoplay && unlocked) {
+    player.play().then(function () { setPlayState(true); }).catch(function () {});
+  }
+  document.querySelector('.book').scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------- chrome events ---------- */
+nextBtn.addEventListener('click', function () { show(at + 1); });
+prevBtn.addEventListener('click', function () { show(at - 1); });
+startBtn.addEventListener('click', function () { show(0); });
+
+notesBtn.addEventListener('click', function () {
+  var off = document.body.classList.toggle('notes-off');
+  notesBtn.textContent = off ? t('notesOff') : t('notesOn');
+});
+
+autoBtn.addEventListener('click', function () {
+  autoplay = !autoplay;
+  autoBtn.textContent = autoplay ? t('autoOn') : t('autoOff');
+  autoBtn.setAttribute('aria-pressed', String(autoplay));
+});
+
+artBtn.addEventListener('click', function () {
+  useImages = !useImages;
+  try { localStorage.setItem('bwzoo-art', useImages ? 'photo' : 'drawn'); } catch (e) {}
+  render();
+});
+
+fsBtn.addEventListener('click', function () {
+  big = !big;
+  document.body.classList.toggle('big', big);
+  if (big) {
+    var el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(function () {});
+  } else if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(function () {});
+  }
+  render();
+});
+
+document.addEventListener('fullscreenchange', function () {
+  if (!document.fullscreenElement && big) {
+    big = false;
+    document.body.classList.remove('big');
+    render();
+  }
+});
+
+document.getElementById('chapters').addEventListener('click', function (e) {
+  var b = e.target.closest('button');
+  if (!b) return;
+  ch = b.dataset.ch;
+  Array.prototype.forEach.call(this.children, function (x) {
+    x.setAttribute('aria-pressed', String(x === b));
+  });
+  at = 0;
+  buildDots();
+  render();
+});
+
+document.getElementById('langs').addEventListener('click', function (e) {
+  var b = e.target.closest('button');
+  if (!b) return;
+  lang = b.dataset.lang;
+  Array.prototype.forEach.call(this.children, function (x) {
+    x.setAttribute('aria-pressed', String(x === b));
+  });
+  render();
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') show(lang === 'ar' ? at - 1 : at + 1);
+  if (e.key === 'ArrowLeft') show(lang === 'ar' ? at + 1 : at - 1);
+});
+
+var x0 = null;
+var book = document.querySelector('.book');
+book.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+book.addEventListener('touchend', function (e) {
+  if (x0 === null) return;
+  var dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 50) show(at + ((dx < 0) === (lang !== 'ar') ? 1 : -1));
+  x0 = null;
+}, { passive: true });
+
+try {
+  var saved = localStorage.getItem('bwzoo-name');
+  if (saved) babyName = saved;
+  useImages = localStorage.getItem('bwzoo-art') === 'photo';
+} catch (e) {}
+
+buildDots();
+render();
+</script>
+</body>
+</html>

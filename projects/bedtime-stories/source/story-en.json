@@ -1,0 +1,56 @@
+{
+ "title": "The Black and White Zoo (EN)",
+ "language": "en",
+ "slides": [
+  {
+   "id": "p0",
+   "title": "Cover",
+   "transcript": "The Black and White Zoo. Eight bold animals to look at together. Are you ready, little one? Let's turn the page."
+  },
+  {
+   "id": "p1",
+   "title": "Zebra",
+   "transcript": "Zebra. Black stripe, white stripe, all in a row. Clip clop! Clip clop!"
+  },
+  {
+   "id": "p2",
+   "title": "Panda",
+   "transcript": "Panda. A round white face, with two black ears. Munch! Munch! Mmmm, munch!"
+  },
+  {
+   "id": "p3",
+   "title": "Cow",
+   "transcript": "Cow. Big white cow, with big black spots. Moooooo! Moooooooooo!"
+  },
+  {
+   "id": "p4",
+   "title": "Penguin",
+   "transcript": "Penguin. A little black coat, and a soft white tummy. Waddle, waddle, waddle... Splash!"
+  },
+  {
+   "id": "p5",
+   "title": "Owl",
+   "transcript": "Owl. Two big eyes, wide awake in the dark. Hoooooo! Hoooooo!"
+  },
+  {
+   "id": "p6",
+   "title": "Orca",
+   "transcript": "Orca. Black on top, white underneath, up and over the waves. Whoooooosh! Sploooosh!"
+  },
+  {
+   "id": "p7",
+   "title": "Sheep",
+   "transcript": "Sheep. A little white cloud, with four little legs. Baaaaaa! Baaaaaa!"
+  },
+  {
+   "id": "p8",
+   "title": "Puppy",
+   "transcript": "Puppy. Spots on his back, spots on his nose. Woof! Woof woof! Woof!"
+  },
+  {
+   "id": "p9",
+   "title": "Goodnight",
+   "transcript": "Goodnight. Goodnight zebra, goodnight panda, goodnight owl in the tree. Goodnight, little one."
+  }
+ ]
+}
