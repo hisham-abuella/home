@@ -5,7 +5,7 @@
   {
    "id": "p0",
    "title": "Cover",
-   "transcript": "The Black and White Zoo. Eight bold animals to look at together. Are you ready, little one? Let's turn the page."
+   "transcript": "The Black and White Zoo. A book for Yusuf. Nine bold animals to look at together. Are you ready, Yusuf? Let's turn the page."
   },
   {
    "id": "p1",
@@ -48,9 +48,14 @@
    "transcript": "Puppy. Spots on his back, spots on his nose. Woof! Woof woof! Woof!"
   },
   {
+   "id": "p10",
+   "title": "Cat",
+   "transcript": "Cat. A black cat with four white paws, and long white whiskers. Meow! Meow!"
+  },
+  {
    "id": "p9",
    "title": "Goodnight",
-   "transcript": "Goodnight. Goodnight zebra, goodnight panda, goodnight owl in the tree. Goodnight, little one."
+   "transcript": "Goodnight. Goodnight zebra, goodnight panda, goodnight owl in the tree. Goodnight, Yusuf. Sleep well, little one."
   }
  ]
 }

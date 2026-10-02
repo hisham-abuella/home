@@ -5,7 +5,7 @@
   {
    "id": "c0",
    "title": "Cover",
-   "transcript": "Now, the colors. Eight bright animals, and eight new colors to learn. Here we go."
+   "transcript": "Now, the colours. Nine bright animals, and nine new colours to learn. Here we go."
   },
   {
    "id": "c1",
@@ -48,9 +48,14 @@
    "transcript": "Brown. A big brown bear, sleepy and slow. Grrrrrr... grrrrumble... grrrr!"
   },
   {
+   "id": "c10",
+   "title": "Grey",
+   "transcript": "Grey. A soft grey cat, curled up and sleepy. Purr... purr..."
+  },
+  {
    "id": "c9",
    "title": "Rainbow",
-   "transcript": "Rainbow. Red, yellow, blue, green, orange, purple, pink and brown. All the colors, all together. Goodnight, little one."
+   "transcript": "All the colours. Red, yellow, blue, green, orange, purple, pink, brown and grey. All of them together. Goodnight, Yusuf."
   }
  ]
 }
