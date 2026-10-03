@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Building a Personal AI Engine - Hisham Abuella</title>
-    <meta name="description" content="Running local LLMs on a Mac Studio M4 Max with 64GB, powered by Ollama, accessible from any device through a custom webapp.">
+    <meta name="description" content="A private AI assistant on a Mac Studio M4 Max: local LLMs through Ollama, on-device image generation and voice, and an Obsidian vault of every conversation, reachable from any device at home.">
     <meta property="og:title" content="Building a Personal AI Engine - Hisham Abuella">
-    <meta property="og:description" content="Running local LLMs on a Mac Studio M4 Max with Ollama, accessible from any device at home.">
+    <meta property="og:description" content="Local LLMs, on-device images and voice, and a private notes vault on a Mac Studio M4 Max.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,6 +74,19 @@
             box-shadow: var(--card-shadow);
         }
 
+        .update-note {
+            border-left: 3px solid var(--accent);
+            background: var(--bg-elevated);
+            border-radius: 0 12px 12px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0 2rem;
+            color: var(--text-secondary);
+        }
+
+        .update-note strong {
+            color: var(--text-primary);
+        }
+
         @media (max-width: 768px) {
             .spec-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -115,16 +128,21 @@
             <h1 class="article-title enter delay-1">Building a Personal AI Engine</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> February 16, 2026</span>
-                <span><i class="fas fa-clock"></i> 8 min read</span>
+                <span><i class="fas fa-sync-alt"></i> Updated October 2, 2026</span>
+                <span><i class="fas fa-clock"></i> 12 min read</span>
                 <span><i class="fas fa-user"></i> Hisham Abuella</span>
             </div>
-            <p class="article-subtitle enter delay-3">Running local LLMs on a Mac Studio M4 Max with 64 GB, powered by Ollama, accessible from any device at home through a custom webapp</p>
+            <p class="article-subtitle enter delay-3">Local LLMs, on-device image generation and voice, and a private notes vault &mdash; all running on a Mac Studio M4 Max and reachable from any device at home</p>
         </div>
 
         <div class="article-content">
             <p>I got tired of depending on cloud APIs for everything. The latency, the cost, the privacy concerns &mdash; I wanted my own AI that runs locally, responds instantly, and stays completely private. So I built one. A <span class="highlight">personal AI engine</span> running on my Mac Studio M4 Max, accessible from any device in my house through a custom web interface I call <strong>H_AI</strong>.</p>
 
-            <p>This project is still a work in progress, but it's already my daily driver for coding, writing, and research.</p>
+            <div class="update-note">
+                <strong>Update, October 2026.</strong> When I first wrote this in February, H_AI was a chat window with some tools. Since then it has learned to see, draw, listen and speak &mdash; all on the same machine &mdash; and it keeps every conversation in an Obsidian vault it can search. It also went through a series of code reviews by a small team of AI agents, which taught me more about failure than any feature did. This article has been rewritten to match.
+            </div>
+
+            <p>The goal is now written down at the top of the project&rsquo;s to-do list: <em>a local AI assistant, for one person, good enough to replace the external AI tools I currently pay for and send my data to.</em> Every change is measured against that sentence.</p>
 
             <h2>The Hardware</h2>
 
@@ -143,7 +161,7 @@
                     </div>
                     <div class="spec-item">
                         <div class="spec-icon">⚡</div>
-                        <span class="spec-value">Ollama</span>
+                        <span class="spec-value">Ollama + MLX</span>
                         <span class="spec-label">LLM Runtime</span>
                     </div>
                     <div class="spec-item">
@@ -154,10 +172,10 @@
                 </div>
             </div>
 
-            <p>The M4 Max with 64 GB of unified memory is a sweet spot for running local LLMs. The unified memory architecture means the GPU and CPU share the same memory pool &mdash; no copying data between RAM and VRAM. Models that would need a dedicated GPU with 24+ GB of VRAM on a PC just run natively here. Ollama handles model loading and inference, and it's remarkably fast on Apple Silicon.</p>
+            <p>The M4 Max with 64 GB of unified memory is a sweet spot for running local LLMs. The GPU and CPU share the same memory pool &mdash; no copying data between RAM and VRAM &mdash; so models that would need a 24 GB+ graphics card on a PC just run natively here. Ollama handles model loading and inference, and its MLX builds are tuned specifically for Apple Silicon.</p>
 
             <h2>The Models</h2>
-            <p>With 64 GB of memory, I can run a wide range of models locally. Here's what I currently have available:</p>
+            <p>The line-up has changed almost completely since February. The current set is newer, bigger, and has far longer memory:</p>
 
             <table class="model-table">
                 <tr>
@@ -166,126 +184,185 @@
                     <th>Best For</th>
                 </tr>
                 <tr>
-                    <td><strong>DeepSeek-R1</strong></td>
+                    <td><strong>Claude Sonnet</strong></td>
+                    <td>~150,000 words</td>
+                    <td>Default for hard questions &mdash; with an automatic local fallback</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen 3.8 27B (MLX)</strong></td>
+                    <td>~100,000 words</td>
+                    <td>Main local model, vision, the fallback when Claude is unavailable</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen 3.6 35B-A3B</strong></td>
+                    <td>~100,000 words</td>
+                    <td>Mixture-of-experts &mdash; large model, small per-token cost</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemma 4 26B / 31B</strong></td>
+                    <td>~100,000 words</td>
+                    <td>General reasoning and writing</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemma 4 (small)</strong></td>
                     <td>~50,000 words</td>
-                    <td>Reasoning, complex analysis</td>
+                    <td>Quick everyday questions</td>
                 </tr>
                 <tr>
-                    <td><strong>Qwen3-Coder</strong></td>
-                    <td>~25,000 words</td>
-                    <td>Code generation, debugging</td>
-                </tr>
-                <tr>
-                    <td><strong>Llama 3.1 8B</strong></td>
-                    <td>~10,000 words</td>
-                    <td>General tasks, fast responses</td>
-                </tr>
-                <tr>
-                    <td><strong>Mistral</strong></td>
+                    <td><strong>gpt-oss 20B</strong></td>
                     <td>~6,000 words</td>
-                    <td>Quick queries, lightweight tasks</td>
+                    <td>Short, focused tasks</td>
+                </tr>
+                <tr>
+                    <td><strong>DeepSeek-OCR</strong></td>
+                    <td>&mdash;</td>
+                    <td>Reading text out of images and scans</td>
                 </tr>
             </table>
 
-            <p>I can switch between models on the fly from the web interface. Need deep reasoning? Switch to DeepSeek. Quick code fix? Llama is faster. The model selector is right in the header &mdash; one click and I'm on a different model mid-conversation.</p>
-
-            <img src="../Pictures/ai-server-dashboard.jpg" alt="H_AI Dashboard showing models, usage stats, and projects" style="max-width:500px;width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem auto;display:block;">
+            <p>I can still switch models mid-conversation from the header. What&rsquo;s new is that the default is <strong>Claude</strong>, reached through the Claude Code CLI, and the server checks it before every turn. If the CLI is missing, logged out or rate-limited, the turn quietly moves to Qwen 3.8 &mdash; but never <em>silently</em>: the chat shows a notice with Claude&rsquo;s own error, because a hidden downgrade would just read as Claude answering badly. Claude is a convenience, not a pillar; the real work is closing the gap until the local models don&rsquo;t need it.</p>
 
             <h2>The Web Interface</h2>
-            <p>The heart of the project is the webapp. It's a custom-built chat interface that runs on <span class="highlight">FastAPI</span> with a vanilla HTML/CSS/JS frontend. I access it from my laptop, phone, or tablet &mdash; any device on my home network.</p>
+            <p>The heart of the project is still the webapp: <span class="highlight">FastAPI</span> on the back end, vanilla HTML/CSS/JS on the front, served over HTTPS to my laptop, phone and tablet. In March it got a full redesign, and in September a phone pass: the input box went from 48% of a phone&rsquo;s width to 64%, and every button now meets the touch-target minimum.</p>
 
-            <img src="../Pictures/ai-server-chat.png" alt="H_AI dark theme chat interface with web fetch and file listing" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
+            <img src="../Pictures/ai-server-2026-phone.jpg" alt="H_AI on a phone: a grounded answer about the project README, with the compact composer" style="max-width:320px;width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem auto;display:block;">
 
             <div class="feature-grid stagger">
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
                     <div>
                         <strong>Streaming Chat</strong>
-                        <span>Real-time token streaming via Server-Sent Events &mdash; responses appear word by word</span>
+                        <span>Real-time token streaming via Server-Sent Events, with a &ldquo;Thinking&hellip;&rdquo; state for reasoning models</span>
                     </div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
+                    <div class="feature-icon">🗂️</div>
                     <div>
-                        <strong>Session Persistence</strong>
-                        <span>Chat history saves to disk and survives page reloads, browser closes, and server restarts</span>
+                        <strong>Conversations</strong>
+                        <span>Reopen any past conversation from a side panel; the transcript survives reloads and server restarts</span>
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🧠</div>
                     <div>
                         <strong>Smart Compaction</strong>
-                        <span>When context fills up, the AI summarizes the conversation to stay within limits without losing context</span>
+                        <span>When context fills up, the conversation is summarized to stay within the model&rsquo;s limit</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎙️</div>
+                    <div>
+                        <strong>Voice In &amp; Out</strong>
+                        <span>Record a question on the phone; have an answer read aloud &mdash; transcription and speech both run locally</span>
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎨</div>
                     <div>
-                        <strong>Dark &amp; Light Themes</strong>
-                        <span>Full theme toggle with a polished UI built for long coding sessions</span>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <div>
-                        <strong>Code Actions</strong>
-                        <span>Copy code blocks, save snippets to files, and collapse/expand &mdash; all with one click</span>
+                        <strong>Image Generation</strong>
+                        <span>Ask for a picture and it appears in the chat, rendered on the Mac by Draw Things</span>
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🖼️</div>
                     <div>
-                        <strong>Image Support</strong>
-                        <span>Paste images directly into the chat for vision-capable models to analyze</span>
+                        <strong>Vision &amp; Documents</strong>
+                        <span>Paste an image or upload a document and ask about it; scans go through a dedicated OCR model</span>
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🛠️</div>
                     <div>
-                        <strong>22 Built-in Skills</strong>
-                        <span>File read/write, git operations, web fetch, grep search, calculator &mdash; the AI can take action</span>
+                        <strong>30 Built-in Skills</strong>
+                        <span>Files, git, web search, web fetch, grep, calculator, images, audio, and a search of my own notes</span>
                     </div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📁</div>
+                    <div class="feature-icon">📓</div>
                     <div>
-                        <strong>Project Switching</strong>
-                        <span>Navigate between projects with git branch and status shown in real-time</span>
+                        <strong>Obsidian Vault</strong>
+                        <span>Every conversation, image, recording and code block saved as linked Markdown notes</span>
                     </div>
                 </div>
             </div>
 
+            <h2>Beyond Text: Seeing, Drawing, Listening</h2>
+            <p>The biggest change this year is that H_AI stopped being text-only &mdash; without anything leaving the house.</p>
+
+            <p><strong>Images.</strong> Generation runs through <span class="highlight">Draw Things</span>&rsquo; command-line tool, with three models for three jobs: a fast &ldquo;turbo&rdquo; model for drafts, a higher-quality one when it matters, and an editing model that modifies an existing picture. Generated images show up inline in the chat and land in the vault.</p>
+
+            <img src="../Pictures/ai-server-2026-image.jpg" alt="Asking H_AI for a lighthouse at dusk: the image is rendered locally by Draw Things and saved to the vault" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
+
+            <p><strong>Vision and OCR.</strong> Qwen 3.8 can look at a pasted photo or screenshot; DeepSeek-OCR reads text out of scans. You can generate an image and then ask the vision model to describe it &mdash; a round trip I use as a smoke test (&ldquo;a single blue marble&rdquo; came back as &ldquo;a glossy blue stone sphere&rdquo;).</p>
+
+            <p><strong>Voice.</strong> Speech-to-text and text-to-speech go through <span class="highlight">Voicebox</span>, running locally &mdash; the same setup I wrote about in <a href="local-voice-generation.html">Generating Voice from Text Using Local Models</a>. Voice input was the first item on my &ldquo;what&rsquo;s next&rdquo; list in February. It&rsquo;s done.</p>
+
+            <h2>A Memory That Stays Home</h2>
+            <p>Every conversation is now written to an <strong>Obsidian vault</strong> as a Markdown note: the exchange, any code it produced, and links to the images and audio it made. Conversations can branch, and the branch keeps a link back to its parent, so the vault reads as a graph of how my thinking went, not just a pile of logs.</p>
+
+            <p>More importantly, the assistant can <em>search</em> that vault. &ldquo;What did we decide about the database?&rdquo; or &ldquo;Search my notes for the gold price&rdquo; runs a search over my own notes and answers from what&rsquo;s there. This is the one capability no external tool can match, because the notes only exist on this machine. And when nothing matches, it says so &mdash; before this was wired up, asking a local model about my notes made it cheerfully invent one called &ldquo;Gold Price History.&rdquo;</p>
+
             <h2>The Skills System</h2>
-            <p>This is where it gets interesting. The AI isn't just a chatbot &mdash; it can <span class="highlight">take actions</span>. I built a skills system with 22 tools that the AI can invoke: reading and writing files, running shell commands, searching codebases with grep, managing git, fetching web pages, and more.</p>
+            <p>The AI isn&rsquo;t just a chatbot &mdash; it can <span class="highlight">take actions</span>. There are now 30 skills: reading and writing files, searching code, git, fetching web pages, web search, calculations, generating images and speech, moving between projects, and searching the vault.</p>
 
-            <p>The AI analyzes each request and recommends the right tool when confidence is above 90%. Dangerous operations like file deletion or git commits require explicit confirmation. It's like having a junior developer who can actually touch the filesystem &mdash; but asks before doing anything risky.</p>
+            <p>The model asks for a tool by writing a short fenced block. The server runs it, and then &mdash; this was the big fix of the summer &mdash; hands the result <em>back</em> to the model and has it answer from that evidence. Before, the model would call a web search and then answer from memory anyway; now answers are <strong>grounded</strong> in what the tool actually returned.</p>
 
-            <img src="../Pictures/ai-server-skills.jpg" alt="H_AI Skills and Programming capabilities interface" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
+            <p>Read-only tools run immediately. Anything that changes something &mdash; writing a file, committing, playing audio out loud &mdash; shows a confirmation card first. Once approved, the tool runs and the model answers from its output, the same way it does for automatic tools.</p>
+
+            <img src="../Pictures/ai-server-2026-chat.jpg" alt="A grounded answer: Qwen 3.8 reads README.md with the read_file skill and summarizes it from the file's actual contents" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
+
+            <h2>Failures That Look Like Success</h2>
+            <p>The most useful lesson of the year wasn&rsquo;t a feature. It was a pattern, and it&rsquo;s now written at the top of the project plan:</p>
+
+            <div class="quote">
+                Failures here announce themselves as successes. Fixes should make failure visible, not just rarer.
+            </div>
+
+            <p>The symptom was almost always the same: a <strong>blank answer bubble</strong> that finished cleanly, as if the model had simply had nothing to say. Behind it were very different causes:</p>
+
+            <p><strong>&ldquo;What is 2+2?&rdquo; answered nothing.</strong> The calculator&rsquo;s pattern matched a single space, so it computed an empty expression, failed &mdash; and the server counted the tool as having handled the question, so the model was never asked.</p>
+
+            <p><strong>A typo in a model name streamed nothing.</strong> Ollama replies with a &ldquo;model not found&rdquo; error, but the HTTP client doesn&rsquo;t raise on it, so the stream just&hellip; ended. Now the error is shown in the bubble.</p>
+
+            <p><strong>Gemma kept going quiet.</strong> This one was disputed for weeks: I could reproduce it four times in nine, my QA agent couldn&rsquo;t at all. The answer turned out to be that Gemma 4 is a <em>thinking</em> model &mdash; it was generating the whole time, just into a hidden reasoning field, leaving the visible answer empty. QA&rsquo;s test question (&ldquo;Paris&rdquo;) simply didn&rsquo;t make it think. Turning thinking off took it from four blanks in nine to zero in six.</p>
+
+            <p>Every one of these was fixed by making the failure say what it is &mdash; an error in the bubble, a notice in the chat &mdash; not only by making it rarer.</p>
+
+            <h2>A Team That Reviews the Code</h2>
+            <p>In September I gave the project a standing team of AI agents in Claude Code, each with one job: a <strong>CEO</strong> who holds the goal and decides what&rsquo;s worth doing, a <strong>QA lead</strong> who reproduces every claim end to end before anything is called done, a <strong>security reviewer</strong>, and owners for the dashboard, the models, tool calling, local media, the vault, and operations.</p>
+
+            <p>Their first security review found a real chain: text from a fetched web page could reach the page as HTML, which could then drive the tools &mdash; a path from a malicious page to running commands on my Mac. It was closed within the day. Later reviews turned up dozens of quieter bugs, including a feature whose conversation history had <em>never</em> worked because an error was silently swallowed. The rule that came out of it: every finding is reproduced before it&rsquo;s fixed, and nothing is self-certified.</p>
 
             <h2>Security</h2>
-            <p>Since this runs on my home network and is accessible from any device, security matters. The server uses <strong>API key authentication</strong> with SHA-256 hashing and constant-time comparison to prevent timing attacks. There's <strong>rate limiting</strong> at 60 requests per minute. And <strong>SSL/HTTPS</strong> support for encrypted connections. The skills system has three confirmation levels &mdash; none, normal, and dangerous &mdash; so the AI can't accidentally <code>rm -rf</code> anything.</p>
+            <p>H_AI is <strong>LAN-only by design</strong> &mdash; a deliberate choice, revisited when there&rsquo;s a reason to reach further. Inside that boundary:</p>
+
+            <p><strong>Access:</strong> HTTPS everywhere with a self-signed certificate, API keys compared as hashes in constant time, bcrypt-hashed dashboard passwords, and rate limits on both the API and the login page. Images and audio use short-lived signed links instead of exposing the key. The dashboard page no longer carries the API key at all &mdash; the browser authenticates with its login session instead, and only from the server&rsquo;s own pages.</p>
+
+            <p><strong>Untrusted content:</strong> anything that comes from outside &mdash; a web page, an uploaded document, an old note &mdash; is fenced as <em>data</em> before it reaches the model, with a random marker the content can&rsquo;t forge. A PDF that says &ldquo;ignore all previous instructions&rdquo; gets reported, not obeyed. Web fetches can&rsquo;t be pointed back at the services running on the Mac itself.</p>
+
+            <p><strong>Actions:</strong> anything that changes the system needs a confirmation, and the experimental agent mode &mdash; which can run model-written shell commands &mdash; is switched off unless I turn it on.</p>
 
             <h2>The Architecture</h2>
-            <p>The stack is intentionally simple:</p>
+            <p>The stack is still intentionally simple:</p>
 
-            <p><strong>Backend:</strong> FastAPI with async streaming, Pydantic for validation, file-based JSON storage for sessions and logs. No database needed &mdash; everything persists as JSON files on disk.</p>
+            <p><strong>Backend:</strong> FastAPI with async streaming and Pydantic validation. No database &mdash; sessions and logs are JSON files on disk, and long-lived memory is the Markdown vault.</p>
 
-            <p><strong>Frontend:</strong> Vanilla HTML, CSS, and JavaScript. Marked.js for markdown rendering, Highlight.js for syntax highlighting. No React, no build tools. It's a PWA so it can be installed on any device's home screen.</p>
+            <p><strong>Frontend:</strong> Vanilla HTML, CSS, and JavaScript, with Marked.js and Highlight.js. No React, no build step. It&rsquo;s a PWA, so it installs to the home screen.</p>
 
-            <p><strong>AI Runtime:</strong> Ollama handles model loading and inference locally. I also have Claude API integration for when I need a cloud model's capabilities. The interface switches seamlessly between local and cloud models.</p>
+            <p><strong>AI and media runtimes:</strong> Ollama for local models, the Claude Code CLI for Claude, Draw Things for images, Voicebox for speech. Each is a separate local service; if one is down, only its features stop, and a services panel shows which.</p>
+
+            <img src="../Pictures/ai-server-2026-services.png" alt="The Local Services panel: Ollama, Voicebox, Draw Things, the Claude CLI and the vault, each with the skills it powers" style="max-width:320px;width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem auto;display:block;">
 
             <div class="quote">
                 The best AI setup is the one you actually use every day. By making it accessible from every device at home, it became a natural part of my workflow.
             </div>
 
-            <h2>What's Next</h2>
-            <p>This is still a work in progress. Here's what I'm planning:</p>
+            <h2>What&rsquo;s Next</h2>
+            <p>Voice is done. So are images, vision, and long-term memory. What remains:</p>
 
-            <p><strong>Voice input and output</strong> &mdash; talk to the AI from across the room and hear responses spoken back. <strong>Remote access</strong> via Tailscale so I can use it outside my home network. <strong>Multi-model conversations</strong> where different models collaborate on the same problem. <strong>Better analytics</strong> to track usage patterns and model performance. And <strong>templates</strong> for common prompts I use repeatedly.</p>
+            <p><strong>Closing the gap with Claude</strong> &mdash; making the local models good enough at tool use that the cloud default becomes optional. Claude is still noticeably better at deciding <em>when</em> to reach for a tool. <strong>Remote access</strong>, probably through an overlay network like Tailscale, once there&rsquo;s a reason for it &mdash; the prerequisites are written down, and taking the API key out of the page was one of them. And more of the same work that turned out to matter most: finding the places where it fails quietly, and making them speak up.</p>
 
-            <p>The foundation is solid. Every week I add something new, and every week it becomes more useful. The dream is a fully autonomous AI assistant that knows my codebase, manages my projects, and runs entirely on hardware I own.</p>
-
-            <p>No cloud dependency. No subscription fees. No data leaving my network. Just raw compute, good software, and complete ownership.</p>
+            <p>No subscription for the local models. No data leaving my network unless I pick the cloud model. Just my own hardware, good software, and complete ownership.</p>
         </div>
 
         <div class="article-nav reveal-up">
