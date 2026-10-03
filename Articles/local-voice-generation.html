@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
     <title>Generating Voice from Text with Local Models - Hisham Abuella</title>
-    <meta name="description" content="Running open-source text-to-speech models locally on a Mac Studio M4 Max, comparing VibeVoice to ElevenLabs cloud services.">
+    <meta name="description" content="Local text-to-speech on a Mac Studio M4 Max with Voicebox and VibeVoice, compared with ElevenLabs Eleven v4 &mdash; with examples from bilingual bedtime stories.">
     <meta property="og:title" content="Generating Voice from Text Using Local Models - Hisham Abuella">
-    <meta property="og:description" content="Running open-source TTS models locally on a Mac Studio M4 Max, with a comparison to ElevenLabs.">
+    <meta property="og:description" content="Local voices with Voicebox and VibeVoice vs. ElevenLabs Eleven v4, with bedtime-story examples.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,6 +84,19 @@
         .pro-list li::before { content: '\2705'; }
         .con-list li::before { content: '\26A0\FE0F'; }
 
+        .update-note {
+            border-left: 3px solid var(--accent);
+            background: var(--bg-elevated);
+            border-radius: 0 12px 12px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0 2rem;
+            color: var(--text-secondary);
+        }
+
+        .update-note strong {
+            color: var(--text-primary);
+        }
+
         .script-preview {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -141,19 +154,158 @@
             <h1 class="article-title enter delay-1">Generating Voice from Text Using Local Models</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> February 17, 2026</span>
-                <span><i class="fas fa-clock"></i> 7 min read</span>
+                <span><i class="fas fa-sync-alt"></i> Updated October 2, 2026</span>
+                <span><i class="fas fa-clock"></i> 11 min read</span>
                 <span><i class="fas fa-user"></i> Hisham Abuella</span>
             </div>
-            <p class="article-subtitle enter delay-3">Running open-source text-to-speech models locally on a Mac Studio M4 Max, and comparing them to cloud services like ElevenLabs</p>
+            <p class="article-subtitle enter delay-3">Running open-source text-to-speech locally on a Mac Studio M4 Max &mdash; now built into my AI engine &mdash; and comparing it with ElevenLabs Eleven v4 on real bedtime stories</p>
         </div>
 
         <div class="article-content">
             <p>I've been building a <a href="building-ai-server.html" class="site-link">personal AI engine</a> that runs entirely on my Mac Studio M4 Max. Text generation was the first step. The natural next question was: can I generate <span class="highlight">voice</span> locally too? Turns out, yes &mdash; and the results are surprisingly good.</p>
 
-            <p>This article covers my experience using <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">VibeVoice</a>, an open-source text-to-speech model, to generate podcast-style narration on local hardware &mdash; and how it compares to cloud services like ElevenLabs.</p>
+            <div class="update-note">
+                <strong>Update, October 2026.</strong> When I first wrote this in February, local voice meant one model, VibeVoice, and one experiment. Since then voice has become part of everyday projects: <a href="bedtime-stories.html" class="site-link">bedtime stories for my son</a> narrated in my own voice, a set of local voice engines wired into H_AI through <strong>Voicebox</strong>, and a batch tool that renders a whole story locally or through ElevenLabs from the same script. ElevenLabs moved too &mdash; my default is now <strong>Eleven v4</strong>. New examples and lessons below; the original February comparison is still here.
+            </div>
 
-            <h2>Listen First &mdash; Compare for Yourself</h2>
-            <p>Before we get into the details, listen to both versions. Same script about my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a> project &mdash; one generated locally with VibeVoice, the other with ElevenLabs using a clone of my voice. Judge for yourself:</p>
+            <h2>The Same Bedtime Page, Three Voices</h2>
+            <p>The newest example is the goodnight page from <a href="../projects/bedtime-stories/susu.html" class="site-link">Susu the Cat</a>, the second of my son&rsquo;s bedtime books. Same script, three voices &mdash; one in the cloud, two on the Mac Studio:</p>
+
+            <div class="script-preview">
+                <p><em>[softly]</em> Goodnight, Susu. <em>&lt;pause&gt;</em> Goodnight Baba. Goodnight Mama. Goodnight Susu, curled up at the end of the bed. <em>&lt;pause&gt;</em> <em>[whispers]</em> Goodnight, Yusuf.</p>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>ElevenLabs Eleven v4 &mdash; my cloned voice</h3>
+                <p>Cloud &mdash; audio tags for delivery &mdash; the version that ships in the book &mdash; 8.6 s</p>
+                <audio controls preload="metadata">
+                    <source src="../projects/bedtime-stories/audio-susu/en/p9.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Kokoro via Voicebox &mdash; local</h3>
+                <p>Mac Studio &mdash; preset voice &ldquo;George&rdquo; &mdash; rendered in about 5 seconds &mdash; 13.6 s</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/susu-goodnight-kokoro.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Qwen Custom Voice via Voicebox &mdash; local</h3>
+                <p>Mac Studio &mdash; preset voice &ldquo;Ryan&rdquo; &mdash; rendered in about 20 seconds &mdash; 15.0 s</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/susu-goodnight-qwen.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <p>Two things stand out. The obvious one is that only the first sounds like me &mdash; the local versions use preset voices, because I haven&rsquo;t cloned my own voice locally yet. The less obvious one is timing: the local engines read the same page <strong>more than 50% slower</strong>. That matters for a picture book, where the next page shouldn&rsquo;t turn before the sentence ends.</p>
+
+            <h2>What Changed at ElevenLabs: Eleven v4</h2>
+            <p>The bedtime books are narrated with <span class="highlight">Eleven v4</span>, which is now my default. The big change from the older Multilingual v2 is how you steer it. v2 had dials &mdash; stability, style &mdash; and you tuned delivery by turning them. v3 and v4 ignore the style dial entirely and take <strong>audio tags</strong> written into the script instead: <code>[warmly]</code>, <code>[softly]</code>, <code>[whispers]</code>, plus <code>&lt;break time="0.5s" /&gt;</code> for pauses.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🏷️</div>
+                    <div>
+                        <strong>Tags, not dials</strong>
+                        <span>Expression lives in the script. Settings that worked on v2 silently do nothing on v4</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <div>
+                        <strong>One recipe, 106 clips</strong>
+                        <span>Stability 0.5, similarity 0.8, with tags &mdash; two bilingual books, first try, nothing re-cut</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <div>
+                        <strong>85 languages</strong>
+                        <span>Arabic narration with a choice of voices, which still matters a lot for my projects</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎲</div>
+                    <div>
+                        <strong>Not reproducible</strong>
+                        <span>The same seed and text gave different audio twice. Keep the file you like &mdash; you can&rsquo;t regenerate it</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>One pleasant surprise: on my account, v4 used roughly <strong>a tenth</strong> of the quota the script length suggested &mdash; about 740 credits for an 80-clip, 4,700-character book &mdash; and the tags and breaks didn&rsquo;t appear to count at all. Your plan may differ, so measure before you budget.</p>
+
+            <h2>Local Voices Inside H_AI: Voicebox</h2>
+            <p>In February I said the next step was building voice into my AI engine. It&rsquo;s done, through <span class="highlight">Voicebox</span>, an open-source local voice studio that runs on Apple Silicon through MLX. H_AI talks to it over a local API for both directions: <strong>speech-to-text</strong> (Whisper) when I record a question on my phone, and <strong>text-to-speech</strong> when I ask for an answer read aloud.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>Engine</th>
+                    <th>Type</th>
+                    <th>Languages</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td><strong>Kokoro</strong></td>
+                    <td>54 preset voices</td>
+                    <td>8, incl. English</td>
+                    <td>Fast drafts and auditions &mdash; a 327 MB model</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen Custom Voice</strong></td>
+                    <td>9 preset voices</td>
+                    <td>10</td>
+                    <td>Delivery directions written in plain language</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen, LuxTTS</strong></td>
+                    <td>Voice cloning</td>
+                    <td>10 / English</td>
+                    <td>A voice from a short reference recording</td>
+                </tr>
+                <tr>
+                    <td><strong>Chatterbox</strong></td>
+                    <td>Voice cloning</td>
+                    <td>23, incl. Arabic</td>
+                    <td>Arabic &mdash; with a reference voice</td>
+                </tr>
+                <tr>
+                    <td><strong>TADA 3B</strong></td>
+                    <td>Voice cloning</td>
+                    <td>10, incl. Arabic</td>
+                    <td>Multilingual cloning, the heaviest at 8 GB</td>
+                </tr>
+            </table>
+
+            <p>The catch for my projects is <strong>Arabic</strong>. None of the local engines ship an Arabic preset voice; only the cloning engines speak it, so Arabic narration needs a clean 15&ndash;30 second recording to clone from &mdash; ideally of someone speaking Arabic. In the cloud, I just pick an Arabic voice.</p>
+
+            <h2>One Script, Two Backends</h2>
+            <p>The newest piece is a batch voice-over tool in H_AI. It takes the same script file I use for ElevenLabs &mdash; one entry per page &mdash; and renders every page locally through Voicebox, with the same file names. A story player that plays <code>audio/en/p1.mp3</code> doesn&rsquo;t care which one made it.</p>
+
+            <p>Local engines have never heard of <code>[warmly]</code> and will read it out loud, so the tool strips the tags, splits the script at every <code>&lt;break&gt;</code>, renders each piece, and splices them back together with real silence of the requested length. As the tool&rsquo;s notes put it: <em>pacing survives the move; emotion does not.</em></p>
+
+            <p>After each batch it checks the results the same way my ElevenLabs pipeline does &mdash; flagging clips that are <strong>silent</strong>, <strong>too short</strong>, or <strong>stretched</strong>. Stretched is the clever one: garbled speech still decodes as a perfectly valid file, but it takes far longer per character than its neighbours, so it shows up as an outlier.</p>
+
+            <div class="quote">
+                Draft and iterate locally for free, then spend cloud credits on the final cut. Same script, one command to switch.
+            </div>
+
+            <h2>Lessons from the Bedtime Stories</h2>
+            <p><strong>Text-to-speech falls apart on bare sound words.</strong> My first pass at the animal sounds fed the model strings like <em>Mooooooo</em> with expressiveness turned up, and the output came back warbling. Nonsense gives the model no context. Wrapping each one in a short sentence &mdash; &ldquo;the cow says moo&rdquo; &mdash; and turning expressiveness down fixed it completely.</p>
+
+            <p><strong>Write for the ear.</strong> Numbers spelled out, no abbreviations, sentences under about 200 characters, one idea per page. Every script goes through a small linter before any audio is generated.</p>
+
+            <p><strong>Check the words, not just the file.</strong> When I made the local versions of the Susu pages for this article, I ran every clip back through speech-to-text to confirm it said what the script said. The goodnight page came back word-for-word from all three voices &mdash; which is why it&rsquo;s the example above.</p>
+
+            <h2>The Podcast, Then and Now</h2>
+            <p>This is where the project started. In February I wrote a five-minute podcast script about my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a> project and generated it twice &mdash; once locally with VibeVoice, once with ElevenLabs using a clone of my voice. In October I ran the <strong>exact same script</strong>, word for word, through the two new local engines, so all four can be compared directly.</p>
+
+            <h3>February 2026</h3>
 
             <div class="audio-player-wrap">
                 <h3>Version 1: VibeVoice (Local)</h3>
@@ -173,8 +325,65 @@
                 </audio>
             </div>
 
+            <h3>October 2026 &mdash; the new local engines</h3>
+
+            <div class="audio-player-wrap">
+                <h3>Version 3: Kokoro via Voicebox (Local)</h3>
+                <p>Mac Studio &mdash; preset voice &ldquo;George&rdquo; &mdash; the whole episode rendered in <strong>26 seconds</strong> &mdash; 5:10</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/building-ai-server-podcast-kokoro.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Version 4: Qwen Custom Voice via Voicebox (Local)</h3>
+                <p>Mac Studio &mdash; preset voice &ldquo;Ryan&rdquo; &mdash; rendered in about 9 minutes &mdash; 5:34</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/building-ai-server-podcast-qwen.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <table class="model-table">
+                <tr>
+                    <th>Version</th>
+                    <th>Runs</th>
+                    <th>Length</th>
+                    <th>Time to Generate</th>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 7B</strong></td>
+                    <td>Local</td>
+                    <td>4:31</td>
+                    <td>A few minutes</td>
+                </tr>
+                <tr>
+                    <td><strong>Kokoro</strong></td>
+                    <td>Local</td>
+                    <td>5:10</td>
+                    <td>26 seconds</td>
+                </tr>
+                <tr>
+                    <td><strong>ElevenLabs (my voice)</strong></td>
+                    <td>Cloud</td>
+                    <td>5:24</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen Custom Voice</strong></td>
+                    <td>Local</td>
+                    <td>5:34</td>
+                    <td>About 9 minutes</td>
+                </tr>
+            </table>
+
+            <p>The new versions were made with the batch voice-over tool described above: the script went in as ten paragraphs, each was rendered separately, and the pieces were joined with a short pause between them. Kokoro is the surprise &mdash; a five-minute episode in less time than it takes to listen to the first paragraph. Running every paragraph back through speech-to-text, both new versions matched the script about 98% word for word; nearly all the differences were spelling (&ldquo;Fast API&rdquo; for FastAPI), not misreadings.</p>
+
+            <p>One thing to keep in mind while listening: the script is from February, so it describes the project as it was then &mdash; DeepSeek, Llama and 22 skills. I kept it unchanged on purpose, so every version reads the same words.</p>
+
             <h2>What is VibeVoice?</h2>
-            <p>VibeVoice is a <span class="highlight">frontier long-form conversational TTS model</span> originally developed by Microsoft and now maintained by the open-source community. It generates expressive, multi-speaker audio from plain text &mdash; think podcast conversations, narrations, even content with background music that it generates spontaneously based on context.</p>
+            <p>VibeVoice is a <span class="highlight">frontier long-form conversational TTS model</span> originally developed by Microsoft and now maintained by the open-source community. It generates expressive, multi-speaker audio from plain text &mdash; think podcast conversations, narrations, even content with background music that it generates spontaneously based on context. It&rsquo;s still what I reach for when a script has more than one speaker.</p>
 
             <p>The key innovation is its architecture: continuous speech tokenizers running at 7.5 Hz combined with a next-token diffusion framework. An LLM handles textual context while a diffusion head generates the acoustic details. The result is speech that sounds natural, with proper pacing, intonation, and speaker consistency.</p>
 
@@ -192,7 +401,7 @@
                     <td>Low-latency live TTS</td>
                 </tr>
                 <tr>
-                    <td><strong>VibeVoice 7B</strong></td>
+                    <td><strong>VibeVoice 1.5B</strong></td>
                     <td>~90 min</td>
                     <td>Up to 4</td>
                     <td>Long-form podcasts</td>
@@ -206,73 +415,62 @@
             </table>
 
             <h2>Running It Locally</h2>
-            <p>With 64 GB of unified memory on the M4 Max, I can comfortably run the 7B model &mdash; the largest and most realistic option. The setup is straightforward:</p>
-
-            <p>Clone the <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">VibeVoice repo</a>, install dependencies with <code>uv pip install -e .</code>, download the model weights, and run inference from a text file. The input format is simple &mdash; just plain text with speaker labels like <code>Speaker 1: Hello, welcome to the show.</code></p>
+            <p>With 64 GB of unified memory on the M4 Max, I can comfortably run the 7B model &mdash; the largest and most realistic option. Clone the <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">VibeVoice repo</a>, install dependencies with <code>uv pip install -e .</code>, download the model weights, and run inference from a text file with speaker labels like <code>Speaker 1: Hello, welcome to the show.</code></p>
 
             <p>Generation takes a few minutes for a full podcast episode. Not real-time, but completely acceptable for producing content. And every bit of it happens on my machine &mdash; no data leaves my network, no API calls, no per-minute charges.</p>
 
-            <h2>The Script</h2>
-            <p>Here's the script I wrote about my Personal AI Engine project. I formatted it as a solo podcast episode:</p>
-
             <div class="script-preview">
                 <p><strong>Speaker 1:</strong> Welcome to The Build Log, where we break down real engineering projects from the ground up. Today, we're looking at something really cool. A developer named Hisham got fed up with cloud AI services, the latency, the costs, the privacy headaches, and decided to build his own personal AI engine that runs entirely on local hardware. Let's dive in.</p>
-                <p><strong>Speaker 1:</strong> So the foundation of this whole setup is a Mac Studio with the M4 Max chip and 64 gigabytes of unified memory. Now, if you're not familiar with Apple Silicon, here's why this matters. Unified memory means the CPU and GPU share the same memory pool...</p>
-                <p><strong>Speaker 1:</strong> For the actual model serving, he's using Ollama, which is an open-source runtime that handles loading and running large language models locally. And with 64 gigs of memory, he can run some serious models...</p>
                 <p style="text-align:center;color:var(--text-secondary);font-style:italic;">[ Full script continues for ~19 paragraphs covering hardware, webapp, skills system, security, and roadmap ]</p>
             </div>
 
-            <h2>Local vs. Cloud: ElevenLabs Comparison</h2>
-            <p>I've also used <span class="highlight">ElevenLabs</span> extensively &mdash; it powers the bilingual narration in my <a href="building-islamic-kids.html" class="site-link">Islamic Kids Website</a>. Both approaches have their place. Here's an honest comparison:</p>
+            <h2>Local vs. Cloud, Eight Months Later</h2>
+            <p>I use <span class="highlight">ElevenLabs</span> for anything that ships &mdash; the bilingual narration in my <a href="building-islamic-kids.html" class="site-link">Islamic Kids Website</a>, the Wireless 101 podcasts, and the bedtime books. Local covers everything before that. Here&rsquo;s the honest comparison now:</p>
 
             <div class="comparison-grid stagger">
                 <div class="comparison-card">
-                    <h3>VibeVoice (Local)</h3>
+                    <h3>Local (Voicebox + VibeVoice)</h3>
                     <ul class="pro-list">
-                        <li>Completely free, no API costs</li>
-                        <li>Total privacy &mdash; no data leaves your machine</li>
-                        <li>No rate limits or quotas</li>
-                        <li>Multi-speaker conversations built in</li>
-                        <li>Up to 90 minutes of audio in one generation</li>
-                        <li>Spontaneous background music/sounds</li>
+                        <li>Free and unlimited &mdash; ideal for drafts and auditions</li>
+                        <li>Total privacy &mdash; nothing leaves the machine</li>
+                        <li>Kokoro renders a page in seconds</li>
+                        <li>Multi-speaker podcasts with VibeVoice</li>
+                        <li>Built into H_AI for voice in and voice out</li>
                     </ul>
                     <ul class="con-list">
-                        <li>Requires powerful hardware (64 GB+ recommended)</li>
-                        <li>Not real-time for large models</li>
-                        <li>Voice cloning quality still improving</li>
+                        <li>No audio tags &mdash; pacing carries over, emotion doesn&rsquo;t</li>
+                        <li>Arabic only through voice cloning</li>
+                        <li>Reads noticeably slower than ElevenLabs</li>
+                        <li>My own voice isn&rsquo;t cloned locally yet</li>
                     </ul>
                 </div>
                 <div class="comparison-card">
-                    <h3>ElevenLabs (Cloud)</h3>
+                    <h3>ElevenLabs Eleven v4 (Cloud)</h3>
                     <ul class="pro-list">
-                        <li>Industry-leading voice quality</li>
-                        <li>Excellent voice cloning</li>
-                        <li>Multiple language support</li>
-                        <li>Near real-time generation</li>
-                        <li>Easy API integration</li>
+                        <li>Best quality, and the clone sounds like me</li>
+                        <li>Audio tags for whispering, warmth, pauses</li>
+                        <li>85 languages, with ready Arabic voices</li>
+                        <li>One recipe worked across two whole books</li>
                     </ul>
                     <ul class="con-list">
-                        <li>Costs money (per character)</li>
-                        <li>Data sent to cloud servers</li>
-                        <li>Rate limits on free tier</li>
-                        <li>Dependent on internet connection</li>
+                        <li>Costs credits &mdash; though less than expected</li>
+                        <li>Text is sent to a third party</li>
+                        <li>The same seed doesn&rsquo;t reproduce the same audio</li>
+                        <li>Dependent on an internet connection</li>
                     </ul>
                 </div>
             </div>
 
-            <p>For the Islamic Kids Website, ElevenLabs was the right choice &mdash; I needed high-quality bilingual voices in both English and Arabic, and the API made it easy to batch-generate audio for each story slide. But for personal projects, experiments, and content where I want full control, VibeVoice running locally is hard to beat.</p>
-
             <div class="quote">
-                The gap between local and cloud TTS is closing fast. A year ago, local models sounded robotic. Today, VibeVoice on a Mac Studio produces podcast-quality audio that most listeners wouldn't distinguish from a human recording.
+                The gap between local and cloud TTS keeps closing. Local is now good enough to draft a whole book for free; the cloud still earns its place on the final cut &mdash; especially when the voice has to be mine.
             </div>
 
-            <h2>Building a Skill for H_AI</h2>
-            <p>The natural next step was integrating this into my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a>. I created a skill in H_AI that can generate voice from text using local models. The workflow is simple: write a script in the chat, invoke the voice generation skill, and get a WAV file back. It ties the whole system together &mdash; text generation, voice synthesis, and file management, all running locally on the same machine.</p>
+            <h2>What&rsquo;s Next</h2>
+            <p>In February, the next step was voice input. That&rsquo;s done &mdash; I can record a question on my phone and H_AI transcribes it locally. What&rsquo;s next now:</p>
 
-            <h2>What's Next</h2>
-            <p>I'm working on integrating voice input as well &mdash; using VibeVoice's ASR (speech-to-text) model that can handle 60-minute audio in a single pass with speaker diarization. The vision is a fully voice-enabled AI assistant: speak to it, it understands, it responds in natural speech. All local. All private.</p>
+            <p><strong>Cloning my own voice locally</strong>, so local drafts sound like the final cut. <strong>Arabic narration locally</strong>, through Chatterbox or TADA with a proper Arabic reference recording. And <strong>more bedtime books</strong> &mdash; the series grows with my son, and each new one is another chance to see how far the local voices have come.</p>
 
-            <p>The tools are here. The hardware is capable. The open-source community keeps pushing the models forward. We're entering an era where running your own AI voice pipeline is no longer a research project &mdash; it's a weekend project.</p>
+            <p>The tools are here. The hardware is capable. The open-source community keeps pushing the models forward. Running your own AI voice pipeline is no longer a research project &mdash; it&rsquo;s a weekend project.</p>
 
             <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
                 <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
