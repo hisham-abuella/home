@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bedtime Stories</title>
+<meta name="description" content="Board books made for a three-month-old — high contrast, bilingual, narrated page by page in English and Arabic.">
+<meta property="og:title" content="Bedtime Stories">
+<meta property="og:description" content="Board books made for a three-month-old — high contrast, bilingual, narrated page by page.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..700&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Fredoka:wght@400..600&display=swap">
+<style>
+  :root{
+    --page:#FCFBF6;
+    --ink:#121110;
+    --quiet:#7E7A6E;
+    --rule:rgba(18,17,16,.13);
+    --red:#D7263D;
+    --warm:#C7643F;
+    --surround:#1C1B17;
+    --surround-2:#262519;
+    --display:"Fraunces","Iowan Old Style",Georgia,serif;
+    --body:"Fredoka","Avenir Next Rounded","Trebuchet MS",system-ui,sans-serif;
+    --arabic:"Baloo Bhaijaan 2",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;
+    background:radial-gradient(130% 80% at 50% 0%, var(--surround-2) 0%, var(--surround) 60%);
+    color:var(--page);
+    font-family:var(--body);
+    padding:28px 16px 64px;
+    display:flex;flex-direction:column;align-items:center;gap:26px;
+  }
+  .wrap{width:min(960px,100%)}
+
+  /* ---------- hero ---------- */
+  .hero{text-align:center;display:flex;flex-direction:column;gap:12px;padding:18px 0 4px}
+  .eyebrow{
+    font-family:var(--display);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:#A8A396;margin:0;
+  }
+  h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.6rem,8vw,4.4rem);line-height:.98;margin:0;text-wrap:balance;
+  }
+  h1 em{font-style:normal;color:var(--red)}
+  .lede{
+    margin:4px auto 0;max-width:54ch;font-size:clamp(1.05rem,2.6vw,1.25rem);
+    line-height:1.55;color:#DAD6C8;text-wrap:balance;
+  }
+  .langs{
+    display:flex;gap:10px;justify-content:center;align-items:center;
+    font-family:var(--display);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#A8A396;
+  }
+  .langs span[lang="ar"]{font-family:var(--arabic);letter-spacing:0;font-size:.95rem;text-transform:none}
+  .dot{opacity:.45}
+
+  /* ---------- the shelf ---------- */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:22px;margin-top:8px}
+  .book{
+    background:var(--page);color:var(--ink);
+    border-radius:16px;overflow:hidden;
+    box-shadow:0 24px 54px -26px rgba(0,0,0,.85);
+    display:flex;flex-direction:column;
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .book:hover{transform:translateY(-3px);box-shadow:0 30px 62px -26px rgba(0,0,0,.9)}
+  .cover{aspect-ratio:1/1;background:#F3EFE4;display:block;width:100%;object-fit:cover}
+  .book-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .book h2{
+    font-family:var(--display);font-weight:900;font-size:1.6rem;line-height:1.1;margin:0;text-wrap:balance;
+  }
+  .for{font-family:var(--display);font-style:italic;color:var(--warm);font-size:.95rem;margin:0}
+  .book p{margin:0;font-size:.98rem;line-height:1.5;color:#43403A}
+  .facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .fact{
+    font-family:var(--display);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid var(--rule);border-radius:999px;padding:3px 10px;color:var(--quiet);
+  }
+  .open{
+    margin-top:auto;align-self:flex-start;
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--ink);color:var(--page);text-decoration:none;
+    border-radius:999px;padding:11px 20px;font-weight:600;font-size:1rem;
+    transition:background .16s ease;
+  }
+  .open:hover{background:var(--warm)}
+  .open .arr{font-size:1.1em;line-height:1}
+
+  /* ---------- what's inside ---------- */
+  .inside{
+    margin-top:34px;padding-top:26px;border-top:1px solid rgba(252,251,246,.16);
+  }
+  .inside h3,.made h3{
+    font-family:var(--display);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+    color:#A8A396;margin:0 0 16px;font-weight:700;
+  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .item{display:flex;flex-direction:column;gap:5px}
+  .item b{font-size:1rem;font-weight:600;color:var(--page)}
+  .item span{font-size:.93rem;line-height:1.5;color:#B9B5A7}
+
+  .made{margin-top:32px;padding-top:26px;border-top:1px solid rgba(252,251,246,.16)}
+  .made p{margin:0 0 12px;max-width:68ch;font-size:.97rem;line-height:1.6;color:#B9B5A7}
+  .made p:last-child{margin-bottom:0}
+  .made b{color:var(--page);font-weight:600}
+
+  footer{
+    margin-top:38px;padding-top:22px;border-top:1px solid rgba(252,251,246,.16);
+    display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    font-size:.9rem;color:#8C887C;
+  }
+  footer a{color:#B9B5A7}
+  footer a:hover{color:var(--page)}
+
+  @media (max-width:430px){
+    body{padding:20px 14px 48px}
+    .book-body{padding:18px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Made for Yusuf</p>
+    <h1>Bedtime <em>Stories</em></h1>
+    <p class="lede">Board books built for a three-month-old — matched to what a newborn's eyes can actually resolve, and read aloud on every page, in English and Arabic.</p>
+    <p class="langs"><span>English</span><span class="dot">&middot;</span><span lang="ar">العربية</span><span class="dot">&middot;</span><span>Narrated</span></p>
+  </header>
+
+  <main class="shelf">
+
+    <article class="book">
+      <img class="cover" src="images-v1/cover.png" alt="A zebra, a panda and a penguin in bold black and white">
+      <div class="book-body">
+        <h2>The Black and White Zoo</h2>
+        <p class="for">For brand-new eyes</p>
+        <p>Nine bold animals in pure black and white, then nine bright colours in the order a baby learns to see them — red first, blue last. A little red bird hides on every page.</p>
+        <div class="facts">
+          <span class="fact">2 chapters</span><span class="fact">22 pages</span><span class="fact">80 clips</span>
+        </div>
+        <a class="open" href="black-white-zoo.html">Open the book <span class="arr">&rarr;</span></a>
+      </div>
+    </article>
+
+    <article class="book">
+      <img class="cover" src="images-susu/cover.png" alt="Susu, a brown and grey tabby cat with white paws and green eyes">
+      <div class="book-body">
+        <h2>Susu the Cat</h2>
+        <p class="for">A true story</p>
+        <p>The cat Baba Hisham adopted in Oklahoma, the long drive to California, then Mama, then Yusuf. One page steps aside to tell the hadith about being kind to cats.</p>
+        <div class="facts">
+          <span class="fact">10 pages</span><span class="fact">26 clips</span><span class="fact">True story</span>
+        </div>
+        <a class="open" href="susu.html">Open the book <span class="arr">&rarr;</span></a>
+      </div>
+    </article>
+
+    <article class="book">
+      <img class="cover" src="images-bismillah/cover.png" alt="Sunrise over a quiet house">
+      <div class="book-body">
+        <h2>Bismillah</h2>
+        <p class="for">A first word</p>
+        <p>One ordinary moment of the day on every page — waking, washing, eating, going out, coming home — each one opened with the same word. The whole book is one word repeated.</p>
+        <div class="facts">
+          <span class="fact">10 pages</span><span class="fact">20 clips</span><span class="fact">One refrain</span>
+        </div>
+        <a class="open" href="bismillah.html">Open the book <span class="arr">&rarr;</span></a>
+      </div>
+    </article>
+
+    <article class="book">
+      <img class="cover" src="images-alhamdulillah/cover.png" alt="Two small open hands">
+      <div class="book-body">
+        <h2>Alhamdulillah, Little One</h2>
+        <p class="for">A book of thank-you</p>
+        <p>Eight plain gifts he already has — two hands, two eyes, Mama's voice, warm bread, cool water, the rain, the cat, a warm bed — and then one more at the end.</p>
+        <div class="facts">
+          <span class="fact">10 pages</span><span class="fact">20 clips</span><span class="fact">Gratitude</span>
+        </div>
+        <a class="open" href="alhamdulillah.html">Open the book <span class="arr">&rarr;</span></a>
+      </div>
+    </article>
+
+    <article class="book">
+      <img class="cover" src="images-khalaqa/cover.png" alt="A crescent moon over the sea with a date palm">
+      <div class="book-body">
+        <h2>Allah Made It</h2>
+        <p class="for">A first book of the world</p>
+        <p>The sky, the sea, the date palm, the bee, the bird, the cat, the moon, the rain. The same question on every page, and the same answer.</p>
+        <div class="facts">
+          <span class="fact">10 pages</span><span class="fact">20 clips</span><span class="fact">The world</span>
+        </div>
+        <a class="open" href="khalaqa.html">Open the book <span class="arr">&rarr;</span></a>
+      </div>
+    </article>
+
+    <article class="book">
+      <img class="cover" src="images-nabina/cover.png" alt="A mosque with a green dome under a crescent moon">
+      <div class="book-body">
+        <h2>The Prophet Loved</h2>
+        <p class="for">Peace be upon him</p>
+        <p>Eight gentle things he loved — children, a greeting, a smile, a cat, dates and milk, clean water, feeding whoever was hungry, helping at home. There is no picture of him in it, and there never will be.</p>
+        <div class="facts">
+          <span class="fact">10 pages</span><span class="fact">20 clips</span><span class="fact">No depiction</span>
+        </div>
+        <a class="open" href="nabina.html">Open the book <span class="arr">&rarr;</span></a>
+      </div>
+    </article>
+
+  </main>
+
+  <section class="inside">
+    <h3>What's in every book</h3>
+    <div class="grid">
+      <div class="item"><b>Read to me</b><span>Every page narrated — English in Baba's own voice, Arabic alongside it. Auto-plays as the pages turn.</span></div>
+      <div class="item"><b>Two sets of artwork</b><span>Hand-drawn flat shapes for a newborn, or generated illustrations for later. One switch in the top bar.</span></div>
+      <div class="item"><b>Hear the sound</b><span>A separate clip per animal, so the moo or the meow can be repeated as many times as he wants.</span></div>
+      <div class="item"><b>Full screen</b><span>The artwork fills the display, which is how it should be held in front of a baby.</span></div>
+      <div class="item"><b>His name in it</b><span>A field on the cover puts any child's name into the dedication and the last goodnight.</span></div>
+      <div class="item"><b>Notes for grown-ups</b><span>One line per page on what a baby's eyes are doing, and how to read it aloud.</span></div>
+    </div>
+  </section>
+
+  <section class="made">
+    <h3>How they're made</h3>
+    <p>Each book is a <b>single HTML file</b> plus a folder of audio — no framework, no build step, nothing to install. They work offline once loaded and will still open in ten years.</p>
+    <p>The artwork is <b>hand-written SVG</b>: a zebra is a white head, five black wedges and two eyes. The second set was drawn by <b>image models running locally</b> on a Mac Studio. The narration is <b>ElevenLabs v4</b>, with delivery written into the script as audio tags — <em>[warmly]</em> to open a page, <em>[whispers]</em> for the goodnight.</p>
+    <p>Everything regenerates from the transcripts in <b>source/</b>, so a story can be re-cut in a different voice, or a new one added, without touching the pages.</p>
+  </section>
+
+  <footer>
+    <span>More stories as he grows.</span>
+    <span><a href="https://www.hishamabuella.com/Articles/bedtime-stories.html">Read how they were built</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

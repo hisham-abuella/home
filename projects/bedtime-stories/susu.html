@@ -239,7 +239,7 @@
 </head>
 <body>
 <div class="bar">
-  <a class="pill home-link" href="../../index.html">&larr; hisham abuella</a>
+  <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
   <a class="pill home-link" href="black-white-zoo.html" id="zooLink">the zoo book</a>
   <button class="pill" id="artBtn" type="button"></button>
   <button class="pill" id="fsBtn" type="button"></button>
@@ -550,14 +550,14 @@ var UI = {
         notesOn:'Hide grown-up notes', notesOff:'Show grown-up notes',
         autoOn:'Auto-play: on', autoOff:'Auto-play: off', cover:'Back to the cover', dir:'ltr',
         chBw:'Black & White', chColor:'Colours', arrowNext:'\u2192', arrowPrev:'\u2190',
-        sound:'Hear Susu', zoo:'The zoo book', big:'Full screen', small:'Exit full screen',
+        sound:'Hear Susu', zoo:'The zoo book', shelf:'All the stories', big:'Full screen', small:'Exit full screen',
         artDrawn:'Artwork: drawn', artPhoto:'Artwork: illustrated' },
   ar: { back:'رجوع', next:'اقلِب الصفحة', start:'ابدأ القراءة', listen:'اقرأ لي',
         pause:'إيقاف', readTo:'نقرؤها لـ:', placeholder:'يوسف', grownups:'للكبار',
         notesOn:'إخفاء ملاحظات الكبار', notesOff:'إظهار ملاحظات الكبار',
         autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا', cover:'العودة للغلاف', dir:'rtl',
         chBw:'أبيض وأسود', chColor:'ألوان', arrowNext:'\u2190', arrowPrev:'\u2192',
-        sound:'اسمَع سوسو', zoo:'كتابُ حديقةِ الحيوان', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
+        sound:'اسمَع سوسو', zoo:'كتابُ حديقةِ الحيوان', shelf:'كلُّ القصص', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
         artDrawn:'الرسم اليدوي', artPhoto:'الصور المولَّدة' }
 };
 
@@ -690,6 +690,7 @@ function render(){
   autoBtn.setAttribute('aria-pressed', String(autoplay));
   startBtn.textContent = ui.cover;
   fsBtn.textContent = big ? ui.small : ui.big;
+  document.getElementById('shelfLink').textContent = '\u2190 ' + ui.shelf;
   document.getElementById('zooLink').textContent = ui.zoo;
   artBtn.textContent = useImages ? ui.artPhoto : ui.artDrawn;
   artBtn.setAttribute('aria-pressed', String(useImages));

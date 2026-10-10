@@ -1,0 +1,56 @@
+{
+ "title": "Bismillah EN",
+ "language": "en",
+ "slides": [
+  {
+   "id": "p0",
+   "title": "A first word",
+   "transcript": "[warmly] Bismillah. A first word, for Yusuf. <break time=\"0.5s\" /> [gently] The word we say before everything. Say it with me."
+  },
+  {
+   "id": "p1",
+   "title": "When You Wake",
+   "transcript": "[warmly] When You Wake. <break time=\"0.4s\" /> The light comes in at the window. You open your eyes, and the whole day is still in front of you. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p2",
+   "title": "Clean Hands",
+   "transcript": "[warmly] Clean Hands. <break time=\"0.4s\" /> Cool water runs over your fingers, and over mine. Wash them well, little one. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p3",
+   "title": "Before You Eat",
+   "transcript": "[warmly] Before You Eat. <break time=\"0.4s\" /> Warm bread. Sweet dates. A small bowl that is yours and nobody else's. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p4",
+   "title": "A Drink of Water",
+   "transcript": "[warmly] A Drink of Water. <break time=\"0.4s\" /> Small sips, and a rest in between. Nothing in the world is better than water when you are thirsty. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p5",
+   "title": "Out the Door",
+   "transcript": "[warmly] Out the Door. <break time=\"0.4s\" /> Little shoes on. The door swings open. The air outside smells like morning. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p6",
+   "title": "Home Again",
+   "transcript": "[warmly] Home Again. <break time=\"0.4s\" /> Back through the same door, into the same warm room, where everyone was waiting for you. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p7",
+   "title": "Susu's Bowl",
+   "transcript": "[warmly] Susu's Bowl. <break time=\"0.4s\" /> You fill the bowl, and the cat comes running. A small kindness is still a kindness. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p8",
+   "title": "Time to Sleep",
+   "transcript": "[warmly] Time to Sleep. <break time=\"0.4s\" /> The lamp goes low. The blanket comes up. Your eyes are closing already, and that is allowed. <break time=\"0.5s\" /> [softly] Bismillah."
+  },
+  {
+   "id": "p9",
+   "title": "Goodnight",
+   "transcript": "[softly] Goodnight. <break time=\"0.4s\" /> Every day begins with one word, and every day ends with it too. <break time=\"0.5s\" /> [whispers] Bismillah. Goodnight, Yusuf."
+  }
+ ]
+}

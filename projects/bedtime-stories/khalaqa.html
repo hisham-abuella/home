@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Eight things a baby can see, and who made them, in English and Arabic.">
+<meta property="og:title" content="Allah Made It">
+<meta property="og:description" content="The sky, the sea, the palm, the bee — one on every page, with the same answer each time.">
+<meta property="og:type" content="website">
+<title>Allah Made It</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Fredoka:wght@400..700&family=Noto+Kufi+Arabic:wght@400..900&display=swap">
+<style>
+  :root{
+    --page:#FCFBF6;
+    --ink:#111010;
+    --red:#D7263D;
+    --surround:#1C1B17;
+    --surround-2:#262519;
+    --quiet:#8E8A7D;
+    --rule:rgba(17,16,16,.14);
+    --accent:var(--red);
+    --tint:transparent;
+    --display:"Fraunces","Iowan Old Style",Georgia,serif;
+    --story:"Fredoka","Avenir Next Rounded","Trebuchet MS",system-ui,sans-serif;
+  }
+  [lang="ar"]{
+    --display:"Noto Kufi Arabic","Fraunces",Georgia,serif;
+    --story:"Baloo Bhaijaan 2","Noto Kufi Arabic",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(120% 80% at 50% 0%, var(--surround-2) 0%, var(--surround) 62%);
+    color:var(--page);
+    font-family:var(--story);
+    padding:20px 16px 36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+
+  /* ---------- top bar ---------- */
+  .bar{
+    width:min(820px,100%);
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(252,251,246,.08);border:1px solid rgba(252,251,246,.14)}
+  .seg button{
+    background:transparent;border:none;color:#C9C5B4;
+    font-family:var(--display);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 13px;border-radius:999px;transition:background .18s ease,color .18s ease;
+  }
+  .seg button[aria-pressed="true"]{background:var(--page);color:var(--ink);font-weight:700}
+  .seg button:hover:not([aria-pressed="true"]){color:var(--page)}
+  .seg.lang button{font-family:var(--story);letter-spacing:.04em;text-transform:none;font-size:.86rem}
+
+  /* ---------- the book ---------- */
+  .book{
+    width:min(820px,100%);
+    background:var(--page);
+    color:var(--ink);
+    border-radius:14px;
+    box-shadow:0 26px 60px -24px rgba(0,0,0,.85);
+    overflow:hidden;
+  }
+  .spread{
+    padding:28px 26px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    animation:settle .42s ease both;
+  }
+  @keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    max-height:min(56vh,480px);
+    margin-inline:auto;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:var(--tint);
+    overflow:hidden;
+  }
+  .stage svg.art{width:100%;height:100%;max-width:100%;display:block}
+  .stage img.art{width:100%;height:100%;max-width:100%;max-height:100%;min-width:0;min-height:0;display:block;object-fit:contain;border-radius:12px}
+  .breathe{animation:breathe 5.2s ease-in-out infinite;transform-origin:50% 62%}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.022)}}
+  .bird{position:absolute;width:14%;animation:flit 7s ease-in-out infinite}
+  @keyframes flit{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+
+  /* ---------- words ---------- */
+  .words{display:flex;flex-direction:column;gap:9px;text-align:center;max-width:32ch;margin-inline:auto}
+  .animal{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:clamp(2.2rem,9.5vw,3.3rem);
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    line-height:1;
+    text-wrap:balance;
+    margin:0;
+    color:var(--accent);
+  }
+  [lang="ar"] .animal{text-transform:none;letter-spacing:0;line-height:1.3}
+  .animal.plain{color:var(--ink)}
+  .line{font-size:clamp(1.1rem,4.2vw,1.45rem);font-weight:500;line-height:1.4;text-wrap:balance;margin:0}
+  .sound{
+    font-family:var(--display);font-style:italic;font-weight:600;
+    font-size:clamp(1.25rem,5vw,1.7rem);color:var(--accent);margin:0;
+  }
+  [lang="ar"] .sound{font-style:normal;font-weight:700}
+
+  /* ---------- cover ---------- */
+  .cover h1{
+    font-family:var(--display);font-weight:900;
+    font-size:clamp(2.4rem,10vw,3.7rem);line-height:.95;margin:0;text-wrap:balance;
+  }
+  [lang="ar"] .cover h1{line-height:1.25}
+  .cover h1 em{font-style:normal;color:var(--accent)}
+  .eyebrow{
+    font-family:var(--display);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--quiet);margin:0;
+  }
+  [lang="ar"] .eyebrow{letter-spacing:0;font-size:.85rem}
+.dedication{
+    font-family:var(--display);font-style:italic;font-weight:600;
+    font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--accent);margin:0;
+  }
+  [lang="ar"] .dedication{font-style:normal}
+  .cover-rule{height:6px;background:var(--ink);width:72px;margin:2px auto;border-radius:4px}
+  .namer{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;
+    border-top:1px solid var(--rule);padding-top:14px;
+  }
+  .namer label{font-size:.95rem;color:#3b3a35}
+  .namer input{
+    font:inherit;font-size:1rem;padding:8px 12px;width:11ch;
+    border:2px solid var(--ink);border-radius:9px;background:var(--page);color:var(--ink);text-align:center;
+  }
+  .namer input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+  /* ---------- listen ---------- */
+  .listen{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .play{
+    display:inline-flex;align-items:center;gap:10px;
+    border:2px solid var(--ink);background:var(--ink);color:var(--page);
+    border-radius:999px;padding:11px 22px;font-family:var(--story);font-size:1.02rem;font-weight:600;
+    transition:transform .14s ease;
+  }
+  .play:hover{transform:translateY(-2px)}
+  .play[data-state="playing"]{background:var(--accent);border-color:var(--accent)}
+  .play.ghost{background:transparent;color:var(--ink)}
+  .play.ghost:active{background:var(--ink);color:var(--page)}
+  .play .ico{width:15px;height:17px;flex:none}
+
+  .note{
+    border-top:1px solid var(--rule);padding-top:11px;
+    display:flex;gap:10px;align-items:flex-start;
+    font-family:var(--display);font-style:italic;font-size:.9rem;line-height:1.45;color:#4a4842;
+  }
+  [lang="ar"] .note{font-family:var(--story);font-style:normal;font-size:.92rem}
+  .note b{
+    font-style:normal;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    font-size:.62rem;color:var(--quiet);padding-top:.3em;white-space:nowrap;flex:none;
+  }
+  [lang="ar"] .note b{letter-spacing:0;font-size:.72rem}
+  body.notes-off .note{display:none}
+
+  /* ---------- controls ---------- */
+  .controls{width:min(820px,100%);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  button{font:inherit;cursor:pointer}
+  .turn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--page);color:var(--ink);border:none;border-radius:999px;
+    padding:12px 20px;font-weight:600;font-size:1rem;
+    box-shadow:0 8px 20px -10px rgba(0,0,0,.9);transition:transform .14s ease;
+  }
+  .turn:hover{transform:translateY(-2px)}
+  .turn .arrow{font-size:1.05em;line-height:1}
+  .turn[disabled]{opacity:.3;cursor:default;transform:none}
+  :focus-visible{outline:3px solid var(--red);outline-offset:3px}
+  .dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+  .dots span{width:9px;height:9px;border-radius:50%;background:rgba(252,251,246,.3);transition:background .2s,transform .2s}
+  .dots span.on{background:var(--page);transform:scale(1.35)}
+
+  .footer{width:min(820px,100%);display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+  .pill{
+    background:transparent;border:1px solid rgba(252,251,246,.26);color:#C9C5B4;border-radius:999px;
+    padding:7px 14px;font-family:var(--display);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  }
+  [lang="ar"] .pill{font-family:var(--story);letter-spacing:0;font-size:.82rem;text-transform:none}
+  .pill:hover{border-color:rgba(252,251,246,.6);color:var(--page)}
+  .pill[aria-pressed="true"]{border-color:var(--page);color:var(--page)}
+
+  /* ---------- full screen ---------- */
+  body.big{padding:8px 0 0;gap:8px;justify-content:flex-start;min-height:100vh}
+  body.big .bar{width:min(1000px,96%)}
+  body.big .book{width:100%;max-width:none;border-radius:0;box-shadow:none;flex:1;display:flex;align-items:center}
+  body.big .spread{width:min(1000px,100%);margin-inline:auto;padding:12px 24px 104px;gap:20px}
+  body.big .stage{max-height:min(66vh,820px)}
+  body.big .animal{font-size:clamp(3rem,7vw,5rem)}
+  body.big .line{font-size:clamp(1.3rem,2.6vw,2rem)}
+  body.big .sound{font-size:clamp(1.5rem,3vw,2.4rem)}
+  body.big .cover h1{font-size:clamp(3rem,7.5vw,5.4rem)}
+  body.big .words{max-width:40ch}
+  body.big .note{display:none}
+  body.big .footer{display:none}
+  body.big .controls{
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    width:min(1000px,96%);z-index:5;
+  }
+
+  @media (max-width:430px){
+    .turn{padding:11px 15px;font-size:.94rem}
+    .spread{padding:18px 15px 16px}
+    .controls{gap:8px}
+  }
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<style>
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  .home-link{text-decoration:none;display:inline-flex;align-items:center}
+  body.big .home-link{display:none}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
+  <button class="pill" id="artBtn" type="button"></button>
+  <button class="pill" id="fsBtn" type="button"></button>
+  <div class="seg lang" id="langs" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">English</button>
+    <button type="button" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+  </div>
+</div>
+
+<div class="book"><section class="spread" id="spread"></section></div>
+
+<div class="controls">
+  <button class="turn" id="prev" type="button"><span class="arrow" id="prevArrow">&larr;</span><span data-t="back">Back</span></button>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <button class="turn" id="next" type="button"><span data-t="next">Turn the page</span><span class="arrow" id="nextArrow">&rarr;</span></button>
+</div>
+
+<div class="footer">
+  <button class="pill" id="autoBtn" type="button" aria-pressed="true"></button>
+  <button class="pill" id="notesBtn" type="button"></button>
+  <button class="pill" id="startBtn" type="button"></button>
+</div>
+
+<audio id="player" preload="none"></audio>
+<audio id="sfx" preload="none"></audio>
+
+<script>
+/* ============================================================
+   Art — every animal drawn as bold shapes on a 400x400 field
+   ============================================================ */
+var INK = '#111010', PAPER = '#FCFBF6', RED = '#D7263D';
+
+var ART = {};
+
+/* Shared drawing kit for the story books.
+   Every page is one motif on a 400x400 field: thick outlines, flat fills,
+   plenty of empty paper. A baby resolves edges long before he resolves detail,
+   so the outline is doing most of the work here. */
+
+var SKY = '#9CC4D8', SEA = '#2F6FA8', SAND = '#E8C27A', LEAF = '#8FB58A',
+    DEEP = '#2E8B74', CLAY = '#C97B4A', GOLD = '#C9842E', NIGHT = '#6E7FA8',
+    CREAM = '#FCFBF6', MINT = '#8FCBB8', SKIN = '#E3B894', FUR = '#A89079',
+    STRIPE = '#4F4136';
+
+function svg(label, body) {
+  return '<svg class="art breathe" viewBox="0 0 400 400" role="img" aria-label="' +
+    label + '">' + body + '</svg>';
+}
+function g(body, attrs) { return '<g ' + (attrs || '') + '>' + body + '</g>'; }
+function out(w) { return 'stroke="' + INK + '" stroke-width="' + (w || 8) + '" stroke-linejoin="round" stroke-linecap="round"'; }
+function circ(cx, cy, r, fill, w) { return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + fill + '" ' + out(w) + '/>'; }
+function ell(cx, cy, rx, ry, fill, w) { return '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="' + fill + '" ' + out(w) + '/>'; }
+function rect(x, y, w, h, r, fill, sw) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + r + '" fill="' + fill + '" ' + out(sw) + '/>'; }
+function path(d, fill, w) { return '<path d="' + d + '" fill="' + (fill || 'none') + '" ' + out(w) + '/>'; }
+
+/* the sun, low and friendly */
+function sun(cx, cy, r) {
+  var rays = '';
+  for (var i = 0; i < 8; i++) {
+    var a = i * Math.PI / 4,
+        x1 = cx + Math.cos(a) * (r + 14), y1 = cy + Math.sin(a) * (r + 14),
+        x2 = cx + Math.cos(a) * (r + 34), y2 = cy + Math.sin(a) * (r + 34);
+    rays += '<path d="M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' L' + x2.toFixed(1) + ' ' + y2.toFixed(1) +
+            '" stroke="' + GOLD + '" stroke-width="10" stroke-linecap="round"/>';
+  }
+  return rays + circ(cx, cy, r, SAND);
+}
+
+/* a crescent: one disc with a second disc of the page colour bitten out of it.
+   Two arcs in a single path collapse into a lens, so this does it the way the
+   zoo book's moon does — it only works on the page colour, which is what the
+   stage always is. */
+function crescent(cx, cy, r, fill) {
+  return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + (fill || CREAM) + '" ' + out(8) + '/>' +
+         '<circle cx="' + (cx + r * 0.36) + '" cy="' + (cy - r * 0.22) + '" r="' + (r * 0.86) + '" fill="' + PAPER + '"/>';
+}
+
+function star(cx, cy, r, fill) {
+  var p = '';
+  for (var i = 0; i < 10; i++) {
+    var a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.44 : r;
+    p += (i ? 'L' : 'M') + (cx + Math.cos(a) * rr).toFixed(1) + ' ' + (cy + Math.sin(a) * rr).toFixed(1) + ' ';
+  }
+  return '<path d="' + p + 'z" fill="' + (fill || SAND) + '" ' + out(6) + '/>';
+}
+
+/* a child: round head, round body, no features beyond eyes and a smile */
+function child(cx, cy, s, shirt) {
+  s = s || 1;
+  var t = 'translate(' + cx + ',' + cy + ') scale(' + s + ')';
+  return g(
+    path('M-38 86 q0 -62 38 -62 q38 0 38 62 z', shirt || CLAY) +
+    circ(0, -24, 40, SKIN) +
+    '<circle cx="-14" cy="-28" r="5" fill="' + INK + '"/>' +
+    '<circle cx="14" cy="-28" r="5" fill="' + INK + '"/>' +
+    path('M-13 -6 q13 12 26 0', null, 6),
+    'transform="' + t + '"');
+}
+
+/* an open hand, fingers up */
+function hand(cx, cy, s, flip) {
+  s = s || 1;
+  return g(
+    path('M-26 40 q-6 -34 -4 -56 q2 -12 10 -11 q8 1 8 13 l0 26 l0 -46 q0 -12 9 -12 q9 0 9 12 l0 44 l0 -38 q0 -12 9 -12 q9 0 9 12 l0 40 l2 -26 q2 -11 10 -10 q8 2 7 13 l-6 44 q-4 24 -28 24 q-26 0 -35 -17 z', SKIN),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + (flip ? -s : s) + ',' + s + ')"');
+}
+
+/* a simple sitting cat, Susu-coloured: body, head, ears, tail, whiskers */
+function cat(cx, cy, s) {
+  s = s || 1;
+  return g(
+    path('M48 44 q44 4 40 -34 q-2 -18 -18 -15 q-13 3 -10 17', null, 14) +
+    ell(0, 34, 50, 54, FUR) +
+    path('M0 -12 q24 22 24 60 q0 24 -24 26 q-24 -2 -24 -26 q0 -38 24 -60 z', CREAM, 0) +
+    path('M-42 -40 l4 -40 l34 24 z', FUR) +
+    path('M42 -40 l-4 -40 l-34 24 z', FUR) +
+    ell(0, -26, 44, 38, FUR) +
+    '<circle cx="-16" cy="-32" r="7" fill="' + INK + '"/>' +
+    '<circle cx="16" cy="-32" r="7" fill="' + INK + '"/>' +
+    path('M0 -10 l-8 -7 h16 z', '#E0919E', 4) +
+    path('M-44 -16 h-22 M-44 -6 h-20 M44 -16 h22 M44 -6 h20', null, 4),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+/* a bowl, optionally full */
+function bowl(cx, cy, s, fill) {
+  s = s || 1;
+  return g(
+    path('M-56 -8 h112 a56 56 0 0 1 -112 0 z', CREAM) +
+    (fill ? path('M-44 -8 q44 -18 88 0 z', fill, 6) : ''),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+/* a loaf of bread, scored on top */
+function loaf(cx, cy, s) {
+  s = s || 1;
+  return g(
+    path('M-82 34 q-8 -72 82 -72 q90 0 82 72 z', GOLD) +
+    path('M-44 -16 l16 -16 M-6 -22 l16 -16 M32 -16 l16 -16', null, 7),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+/* a cup with a handle */
+function cup(cx, cy, s, fill) {
+  s = s || 1;
+  return g(
+    path('M44 -16 q26 0 26 22 q0 22 -26 22', null, 8) +
+    path('M-44 -30 h88 l-8 72 q-2 14 -16 14 h-40 q-14 0 -16 -14 z', fill || CREAM),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+/* a water drop */
+function drop(cx, cy, s, fill) {
+  s = s || 1;
+  return g(path('M0 -46 q34 40 34 62 a34 34 0 0 1 -68 0 q0 -22 34 -62 z', fill || SKY),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+/* a date palm: a short thick trunk under a wide crown, so it reads as a tree
+   and not as a sprig floating above a line */
+function palmTree(cx, cy, s) {
+  s = s || 1;
+  return g(
+    path('M-13 150 q-8 -86 4 -152 l20 2 q-10 68 2 150 z', CLAY) +
+    path('M-10 90 h18 M-11 46 h20 M-10 2 h20', null, 5) +
+    g(path('M0 0 q-76 -34 -106 22 q62 22 106 -22 z', LEAF) +
+      path('M0 0 q76 -34 106 22 q-62 22 -106 -22 z', LEAF) +
+      path('M0 0 q-36 -76 22 -96 q30 58 -22 96 z', LEAF) +
+      path('M0 0 q48 -68 100 -40 q-40 52 -100 40 z', LEAF) +
+      path('M0 0 q-54 -62 -102 -26 q44 50 102 26 z', LEAF) +
+      circ(-20, 24, 12, CLAY, 5) + circ(12, 30, 12, CLAY, 5) + circ(-4, 46, 12, CLAY, 5),
+      'transform="translate(0,-4)"'),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+/* rolling hills along the bottom */
+function ground(y, fill) {
+  return path('M0 ' + y + ' q100 -34 200 0 q100 34 200 0 L400 400 L0 400 z', fill || LEAF);
+}
+
+
+/* Allah Made It — eight pieces of the world. */
+
+function puff(cx, cy, s) {
+  s = s || 1;
+  return g(path('M-86 24 a40 40 0 0 1 8 -78 a52 52 0 0 1 96 -16 a44 44 0 0 1 60 48 a34 34 0 0 1 -26 46 z', CREAM),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
+ART.cover = svg('A crescent moon, a palm tree and the sea',
+  crescent(306, 86, 44, CREAM) +
+  star(104, 70, 16) +
+  path('M0 258 q100 -30 200 0 q100 30 200 0 L400 400 L0 400 z', SEA) +
+  path('M0 300 q100 -26 200 0 q100 26 200 0 L400 400 L0 400 z', DEEP) +
+  palmTree(116, 230, .86));
+
+ART.sky = svg('A wide blue sky with two clouds',
+  rect(32, 56, 336, 230, 24, SKY) +
+  puff(146, 158, .74) +
+  puff(268, 222, .54) +
+  sun(300, 116, 30));
+
+ART.sea = svg('The sea coming up the sand',
+  rect(32, 70, 336, 128, 16, SKY) +
+  path('M32 180 q84 -34 168 0 q84 34 168 0 v76 H32 z', SEA) +
+  path('M32 232 q84 -30 168 0 q84 30 168 0 v24 H32 z', DEEP) +
+  path('M32 256 h336 v62 a16 16 0 0 1 -16 16 H48 a16 16 0 0 1 -16 -16 z', SAND));
+
+ART.palm = svg('A tall date palm in the sand',
+  path('M0 320 q100 -26 200 0 q100 26 200 0 L400 400 L0 400 z', SAND) +
+  palmTree(200, 196, 1.15));
+
+ART.bee = svg('A bee with round wings',
+  g(ell(-54, -34, 36, 26, CREAM) + ell(54, -34, 36, 26, CREAM) +
+    ell(0, 10, 66, 52, SAND) +
+    path('M-26 -34 q10 76 0 88 M14 -40 q12 84 0 94', null, 11) +
+    circ(-70, 14, 24, INK, 0) +
+    '<circle cx="-78" cy="8" r="6" fill="' + CREAM + '"/>' +
+    path('M-80 -14 q-10 -22 -26 -26 M-62 -18 q-4 -26 -18 -34', null, 6),
+    'transform="translate(208,198) scale(1.1)"'));
+
+ART.bird = svg('A small red bird on a branch',
+  path('M48 300 q120 -26 300 -10', null, 12) +
+  g(ell(0, 0, 58, 44, RED) + circ(44, -32, 31, RED) +
+    path('M70 -34 l34 11 -34 13 z', GOLD) +
+    '<circle cx="52" cy="-38" r="7" fill="' + CREAM + '"/>' +
+    path('M-32 -8 q-26 -20 -56 6 q30 22 56 -6 z', CLAY) +
+    path('M-10 42 v22 M24 44 v20', null, 8),
+    'transform="translate(176,214)"'));
+
+ART.cat = svg('A cat with wide eyes in the dark',
+  cat(200, 210, 1.5) +
+  star(336, 86, 15) + star(72, 100, 12));
+
+ART.moon = svg('A crescent moon and many stars',
+  crescent(196, 196, 108, CREAM) +
+  star(324, 96, 22) + star(86, 92, 16) + star(100, 300, 14) + star(316, 290, 12) + star(236, 44, 11));
+
+ART.rain = svg('Rain falling on green ground',
+  puff(200, 118, 1) +
+  g(path('M0 0 v46', null, 10), 'transform="translate(132,200)"') +
+  g(path('M0 0 v60', null, 10), 'transform="translate(186,206)"') +
+  g(path('M0 0 v46', null, 10), 'transform="translate(242,200)"') +
+  g(path('M0 0 v36', null, 10), 'transform="translate(292,212)"') +
+  path('M0 316 q100 -28 200 0 q100 28 200 0 L400 400 L0 400 z', LEAF));
+
+ART.goodnight = svg('A crescent moon over a sleeping child',
+  crescent(292, 104, 56, CREAM) +
+  star(96, 88, 16) + star(150, 148, 11) +
+  rect(60, 246, 280, 96, 20, MINT) +
+  circ(122, 226, 44, SKIN) +
+  path('M102 220 q10 -8 20 0 M142 220 q10 -8 20 0', null, 5) +
+  path('M114 244 q10 8 20 0', null, 5));
+
+/* ============================================================
+   The book
+   ============================================================ */
+function P(o){ return o; }
+
+var BOOK = {
+  khalaqa: {
+    accent: '#2F6FA8',
+    pages: [
+      P({ art:ART['cover'], cover:true, audio:'p0', tint:'#9CC4D8',
+          en:{ eyebrow:'A first book of the world',
+               title:'<em>Allah</em><br>Made It',
+               line:'Eight things you can see from where you are lying.',
+               note:'The same question and the same answer on every page. The repetition is the teaching — he will know the answer long before he knows what the question means.' },
+          ar:{ eyebrow:'كتابُ الدنيا الأوّل',
+               title:'<em>اللهُ</em><br>خَلَقَها',
+               line:'ثمانيةُ أشياءَ تراها من مكانِك هذا.',
+               note:'السؤالُ نفسُه والجوابُ نفسُه في كلِّ صفحة. التكرارُ هو التعليم — سيعرِفُ الجوابَ قبلَ أن يفهمَ السؤالَ بزمنٍ طويل.' } }),
+
+      P({ art:ART['sky'], audio:'p1', tint:'#7FA6C9',
+          en:{ name:'The Sky',
+               line:'Wide and blue and nothing holding it up. It is there every single morning when you look.',
+               sound:'Allah is the Maker of everything.',
+               note:'Blue is the last colour a baby\'s eyes learn to see, so this one may read as pale grey to him for a while yet.' },
+          ar:{ name:'السَّماء',
+               line:'واسعةٌ زرقاء، ولا شيءَ يُمسِكُها. وهي هناك كلَّ صباحٍ حينَ تنظُر.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'الأزرقُ آخِرُ لونٍ تتعلّمُ عينُ الطفلِ رؤيتَه، فقد تبدو له هذه الصفحةُ رماديّةً باهتةً بعضَ الوقت.' } }),
+
+      P({ art:ART['sea'], audio:'p2', tint:'#2F6FA8',
+          en:{ name:'The Sea',
+               line:'It comes up the sand and goes back again, all day and all night, and never once forgets.',
+               sound:'Allah is the Maker of everything.',
+               note:'Rock him in time with the sentence. The back-and-forth of the words is doing as much work as the picture.' },
+          ar:{ name:'البَحر',
+               line:'يصعَدُ على الرَّمْلِ ثمّ يعود، طَوالَ النهارِ وطَوالَ الليل، ولا ينسى مرّةً واحدة.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'هُزَّه على إيقاعِ الجملة. فذهابُ الكلماتِ وإيابُها يعملُ بقَدرِ ما تعملُ الصورة.' } }),
+
+      P({ art:ART['palm'], audio:'p3', tint:'#8FB58A',
+          en:{ name:'The Date Palm',
+               line:'Tall, with its feet in the sand, holding up a hundred sweet dates for whoever walks past.',
+               sound:'Allah is the Maker of everything.',
+               note:'Dates turn up all through the Qur\'an and the sunnah. Worth a tree of their own.' },
+          ar:{ name:'النَّخْلَة',
+               line:'طويلةٌ، قدَماها في الرَّمْل، تحمِلُ مِئةَ تمرةٍ حُلوةٍ لمن يمُرُّ بها.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'التمرُ حاضرٌ في القرآنِ والسُّنّةِ كثيراً. ويستحقُّ شجرةً خاصّةً به.' } }),
+
+      P({ art:ART['bee'], audio:'p4', tint:'#E8C27A',
+          en:{ name:'The Bee',
+               line:'Smaller than your thumb, and it knows the way to every flower and the way home again.',
+               sound:'Allah is the Maker of everything.',
+               note:'There is a whole surah named after her. Bees are a good first example of something tiny doing something very clever.' },
+          ar:{ name:'النَّحْلَة',
+               line:'أصغرُ من إبهامِك، وتعرِفُ طريقَها إلى كلِّ زهرة، وطريقَ العودةِ إلى بيتِها.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'لها سورةٌ كاملةٌ باسمِها. والنحلُ مثالٌ أوّلُ جميلٌ على كائنٍ صغيرٍ جدّاً يصنَعُ شيئاً بالِغَ الذكاء.' } }),
+
+      P({ art:ART['bird'], audio:'p5', tint:'#C7643F',
+          en:{ name:'The Bird',
+               line:'It leaves the branch with nothing underneath it at all, and the air holds it up anyway.',
+               sound:'Allah is the Maker of everything.',
+               note:'A red bird hides somewhere on every page of the zoo book too. Point at this one and he may start looking for it.' },
+          ar:{ name:'الطَّائِر',
+               line:'يترُكُ الغُصنَ ولا شيءَ تحتَه أبداً، ومع ذلك يحمِلُه الهواء.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'في كتابِ حديقةِ الحيوانِ طائرٌ أحمرُ يختبئُ في كلِّ صفحة. أشِر إلى هذا الطائر، فقد يبدأُ بالبحثِ عنه.' } }),
+
+      P({ art:ART['cat'], audio:'p6', tint:'#C97B4A',
+          en:{ name:'The Cat',
+               line:'Four soft feet that make no sound at all, and eyes that can see in the dark better than yours.',
+               sound:'Allah is the Maker of everything.',
+               note:'Susu, naturally. Cats see about six times better than we do in low light, which is a fact worth keeping for later.' },
+          ar:{ name:'القِطَّة',
+               line:'أربعُ أقدامٍ ناعمةٍ لا تُصدِرُ صوتاً، وعَينانِ تُبصِرانِ في الظلامِ أفضلَ من عينَيك.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'سوسو، بالطبع. والقِطَطُ تُبصِرُ في الضوءِ الخافتِ نحوَ ستِّ مرّاتٍ أفضلَ منّا، ومعلومةٌ تُحفَظُ لوقتِها.' } }),
+
+      P({ art:ART['moon'], audio:'p7', tint:'#6E7FA8',
+          en:{ name:'The Moon and the Stars',
+               line:'A thin white curve, and behind it more stars than anyone has ever finished counting.',
+               sound:'Allah is the Maker of everything.',
+               note:'The crescent is how the month is counted, so this page quietly explains Ramadan and Eid years before you need to.' },
+          ar:{ name:'القَمَرُ والنُّجوم',
+               line:'قَوسٌ أبيضُ رفيع، ومن ورائِه نُجومٌ أكثرُ ممّا أتمَّ أحدٌ عدَّه.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'بالهِلالِ يُحسَبُ الشهر، فهذه الصفحةُ تشرَحُ رمضانَ والعيدَ بهدوءٍ قبلَ سنواتٍ من حاجتِك إلى شرحِهما.' } }),
+
+      P({ art:ART['rain'], audio:'p8', tint:'#7FA6C9',
+          en:{ name:'The Rain',
+               line:'It goes up without anyone seeing, and comes down again on the dry ground, and the ground turns green.',
+               sound:'Allah is the Maker of everything.',
+               note:'Dead earth turning green is one of the oldest pictures in the Qur\'an for being brought back to life.' },
+          ar:{ name:'المَطَر',
+               line:'يصعَدُ دونَ أن يراه أحد، ثمّ ينزِلُ على الأرضِ اليابسة، فتُصبِحُ الأرضُ خَضراء.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'اخضرارُ الأرضِ بعدَ موتِها من أقدمِ صُوَرِ القرآنِ للبعثِ والحياة.' } }),
+
+      P({ art:ART['goodnight'], audio:'p9', tint:'#6E7FA8',
+          en:{ name:'And You',
+               line:'The sky, the sea, the palm, the bee, the bird, the cat, the moon, the rain — and one small boy in a blanket.',
+               sound:'Goodnight, <span class="babyname">Yusuf</span>.',
+               note:'The list at the end is the whole book in one breath. Read it slowly enough that each one lands.' },
+          ar:{ name:'وأنتَ أيضاً',
+               line:'السماءُ، والبحرُ، والنخلةُ، والنحلةُ، والطائرُ، والقِطّةُ، والقمرُ، والمطر — وطفلٌ صغيرٌ في غِطائِه.',
+               sound:'تُصبِحُ على خير، يا <span class="babyname">يوسف</span>.',
+               note:'التعدادُ في الخاتمةِ هو الكتابُ كلُّه في نَفَسٍ واحد. اقرأه ببطءٍ يكفي ليصِلَ كلُّ اسم.' } })
+    ]
+  }
+};
+
+var AUDIO_DIR = { khalaqa:{ en:'audio-khalaqa/en/', ar:'audio-khalaqa/ar/' } };
+var SFX_DIR   = {};
+
+var IMG_V1 = {
+  khalaqa: ['cover', 'sky', 'sea', 'palm', 'bee', 'bird', 'cat', 'moon', 'rain', 'goodnight']
+};
+['khalaqa'].forEach(function (k) {
+  BOOK[k].pages.forEach(function (pg, i) {
+    pg.img = 'images-khalaqa/' + IMG_V1[k][i] + '.png';
+  });
+});
+
+var UI = {
+  en: { back:'Back', next:'Turn the page', start:'Start reading', listen:'Read to me',
+        pause:'Pause', readTo:'Read it to:', placeholder:'Yusuf', grownups:'Grown-ups',
+        notesOn:'Hide grown-up notes', notesOff:'Show grown-up notes',
+        autoOn:'Auto-play: on', autoOff:'Auto-play: off', cover:'Back to the cover', dir:'ltr',
+        chBw:'Black & White', chColor:'Colours', arrowNext:'\u2192', arrowPrev:'\u2190',
+        sound:'', zoo:'', shelf:'All the stories', big:'Full screen', small:'Exit full screen',
+        artDrawn:'Artwork: drawn', artPhoto:'Artwork: illustrated' },
+  ar: { back:'رجوع', next:'اقلِب الصفحة', start:'ابدأ القراءة', listen:'اقرأ لي',
+        pause:'إيقاف', readTo:'نقرؤها لـ:', placeholder:'يوسف', grownups:'للكبار',
+        notesOn:'إخفاء ملاحظات الكبار', notesOff:'إظهار ملاحظات الكبار',
+        autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا', cover:'العودة للغلاف', dir:'rtl',
+        chBw:'أبيض وأسود', chColor:'ألوان', arrowNext:'\u2190', arrowPrev:'\u2192',
+        sound:'', zoo:'', shelf:'كلُّ القصص', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
+        artDrawn:'الرسم اليدوي', artPhoto:'الصور المولَّدة' }
+};
+
+var BIRD = '<svg class="bird" viewBox="0 0 100 80" aria-hidden="true">' +
+  '<ellipse cx="46" cy="44" rx="30" ry="22" fill="' + RED + '"/>' +
+  '<circle cx="70" cy="28" r="16" fill="' + RED + '"/>' +
+  '<path d="M84 26 l17 6 -17 7 z" fill="' + INK + '"/>' +
+  '<circle cx="74" cy="24" r="4" fill="' + PAPER + '"/>' +
+  '<path d="M16 38 q-14 14 2 22 q12 -2 18 -14 z" fill="' + INK + '"/>' +
+  '<path d="M22 60 v12 M62 62 v10" stroke="' + INK + '" stroke-width="5" stroke-linecap="round" fill="none"/></svg>';
+
+/* ============================================================
+   Wiring
+   ============================================================ */
+var spread  = document.getElementById('spread');
+var dots    = document.getElementById('dots');
+var prevBtn = document.getElementById('prev');
+var nextBtn = document.getElementById('next');
+var notesBtn= document.getElementById('notesBtn');
+var autoBtn = document.getElementById('autoBtn');
+var startBtn= document.getElementById('startBtn');
+var player  = document.getElementById('player');
+var sfx     = document.getElementById('sfx');
+var fsBtn   = document.getElementById('fsBtn');
+var artBtn  = document.getElementById('artBtn');
+
+var ch = 'khalaqa', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = true;
+
+function t(k){ return UI[lang][k]; }
+function pages(){ return BOOK[ch].pages; }
+
+function nameOr(fallback){ return babyName || fallback; }
+
+function render(){
+  var page = pages()[at];
+  var copy = page[lang];
+  var ui = UI[lang];
+
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', ui.dir);
+  document.body.setAttribute('lang', lang);
+  document.body.setAttribute('dir', ui.dir);
+
+  document.documentElement.style.setProperty('--accent', BOOK[ch].accent);
+  spread.className = 'spread' + (page.cover ? ' cover' : '');
+  spread.parentNode.style.setProperty('--tint', page.tint ? page.tint + '26' : 'transparent');
+
+  var artwork = (useImages && page.img)
+    ? '<img class="art photo breathe" id="pageArt" src="' + page.img + '" alt="">'
+    : page.art;
+  var html = '<div class="stage" style="--tint:' + (page.tint ? page.tint + '26' : 'transparent') + '">' + artwork + '</div>';
+
+  if (page.cover) {
+    html += '<div class="words">' +
+      '<p class="eyebrow">' + copy.eyebrow + '</p>' +
+      '<h1>' + copy.title + '</h1>' +
+      '<div class="cover-rule"></div>' +
+      '<p class="dedication">' + (lang === 'ar' ? 'إلى ' : 'For ') + '<span class="babyname">Yusuf</span></p>' +
+      '<p class="line">' + copy.line + '</p>' +
+    '</div>';
+  } else {
+    html += '<div class="words">' +
+      '<h2 class="animal' + (ch === 'bw' ? ' plain' : '') + '"' +
+        (ch === 'color' && page.tint ? ' style="color:' + page.tint + '"' : '') + '>' + copy.name + '</h2>' +
+      '<p class="line">' + copy.line + '</p>' +
+      '<p class="sound">' + copy.sound + '</p>' +
+    '</div>';
+  }
+
+  html += '<div class="listen"><button class="play" id="playBtn" type="button">' +
+    '<svg class="ico" viewBox="0 0 15 17" aria-hidden="true"><path d="M1 1 L14 8.5 L1 16 Z" fill="currentColor"/></svg>' +
+    '<span id="playLabel">' + ui.listen + '</span></button>';
+  if (page.snd) {
+    html += '<button class="play ghost" id="sfxBtn" type="button">' +
+      '<svg class="ico" viewBox="0 0 18 17" aria-hidden="true">' +
+        '<path d="M1 6 h4 L10 1.5 v14 L5 11 H1 Z" fill="currentColor"/>' +
+        '<path d="M13 5.5 q2.6 3 0 6 M15.6 3.4 q4.4 5.1 0 10.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+      '</svg><span>' + ui.sound + '</span></button>';
+  }
+  html += '</div>';
+
+  if (page.cover) {
+    html += '<div class="namer"><label for="babyname">' + ui.readTo + '</label>' +
+      '<input id="babyname" type="text" autocomplete="off" maxlength="18" placeholder="' + ui.placeholder + '" value="' +
+      babyName.replace(/"/g, '&quot;') + '"></div>';
+  }
+
+  html += '<p class="note"><b>' + ui.grownups + '</b><span>' + copy.note + '</span></p>';
+
+  spread.innerHTML = html;
+
+  // an illustration that has not been generated yet falls back to the drawing
+  var photo = document.getElementById('pageArt');
+  if (photo) {
+    var toDrawing = function () {
+      var stage = photo.parentNode;
+      if (!stage) return;
+      stage.innerHTML = page.art;
+      if (page.perch) addBird(stage, page);
+    };
+    photo.addEventListener('error', toDrawing);
+    // the error may already have fired before this handler was attached
+    if (photo.complete && photo.naturalWidth === 0) toDrawing();
+  }
+
+  // the red bird, hiding in a different corner on every animal page
+  if (page.perch) addBird(spread.querySelector('.stage'), page);
+
+  applyName();
+
+  var input = document.getElementById('babyname');
+  if (input) {
+    input.addEventListener('input', function () {
+      babyName = input.value;
+      applyName();
+      try { localStorage.setItem('khalaqa-name', babyName.trim()); } catch (e) {}
+    });
+  }
+  document.getElementById('playBtn').addEventListener('click', togglePlay);
+  var sfxBtn = document.getElementById('sfxBtn');
+  if (sfxBtn) sfxBtn.addEventListener('click', playSound);
+
+  // chrome
+  prevBtn.querySelector('[data-t]').textContent = ui.back;
+  nextBtn.querySelector('[data-t]').textContent = at === 0 ? ui.start : ui.next;
+  prevBtn.disabled = at === 0;
+  nextBtn.disabled = at === pages().length - 1;
+  notesBtn.textContent = document.body.classList.contains('notes-off') ? ui.notesOff : ui.notesOn;
+  autoBtn.textContent = autoplay ? ui.autoOn : ui.autoOff;
+  autoBtn.setAttribute('aria-pressed', String(autoplay));
+  startBtn.textContent = ui.cover;
+  fsBtn.textContent = big ? ui.small : ui.big;
+  document.getElementById('shelfLink').textContent = '\u2190 ' + ui.shelf;
+  var sibling = document.getElementById('zooLink');
+  if (sibling) sibling.textContent = ui.zoo;
+  artBtn.textContent = useImages ? ui.artPhoto : ui.artDrawn;
+  artBtn.setAttribute('aria-pressed', String(useImages));
+  document.getElementById('prevArrow').textContent = ui.arrowPrev;
+  document.getElementById('nextArrow').textContent = ui.arrowNext;
+
+  Array.prototype.forEach.call(dots.children, function (d, n) { d.classList.toggle('on', n === at); });
+
+  loadAudio();
+}
+
+function addBird(stage, page) {
+  var wrap = document.createElement('div');
+  wrap.innerHTML = BIRD;
+  var bird = wrap.firstChild;
+  bird.style.left = page.perch[0] + '%';
+  bird.style.top = page.perch[1] + '%';
+  stage.appendChild(bird);
+}
+
+function applyName() {
+  var fallback = lang === 'ar' ? 'يوسف' : 'Yusuf';
+  Array.prototype.forEach.call(document.querySelectorAll('.babyname'), function (s) {
+    s.textContent = babyName.trim() || fallback;
+  });
+}
+
+function buildDots() {
+  dots.innerHTML = '';
+  pages().forEach(function () { dots.appendChild(document.createElement('span')); });
+}
+
+/* ---------- audio ---------- */
+function loadAudio() {
+  player.pause();
+  player.src = AUDIO_DIR[ch][lang] + pages()[at].audio + '.mp3';
+  setPlayState(false);
+}
+
+function setPlayState(playing) {
+  var btn = document.getElementById('playBtn');
+  if (!btn) return;
+  btn.dataset.state = playing ? 'playing' : 'idle';
+  document.getElementById('playLabel').textContent = playing ? t('pause') : t('listen');
+}
+
+function togglePlay() {
+  unlocked = true;
+  if (player.paused) {
+    player.play().then(function () { setPlayState(true); }).catch(function () { setPlayState(false); });
+  } else {
+    player.pause();
+    setPlayState(false);
+  }
+}
+
+function playSound() {
+  unlocked = true;
+  var page = pages()[at];
+  if (!page.snd) return;
+  sfx.src = SFX_DIR[ch][lang] + page.snd + '.mp3';
+  sfx.currentTime = 0;
+  sfx.play().catch(function () {});
+}
+
+player.addEventListener('ended', function () { setPlayState(false); });
+player.addEventListener('pause', function () { setPlayState(false); });
+
+function show(i) {
+  at = Math.max(0, Math.min(pages().length - 1, i));
+  render();
+  if (autoplay && unlocked) {
+    player.play().then(function () { setPlayState(true); }).catch(function () {});
+  }
+  document.querySelector('.book').scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------- chrome events ---------- */
+nextBtn.addEventListener('click', function () { show(at + 1); });
+prevBtn.addEventListener('click', function () { show(at - 1); });
+startBtn.addEventListener('click', function () { show(0); });
+
+notesBtn.addEventListener('click', function () {
+  var off = document.body.classList.toggle('notes-off');
+  notesBtn.textContent = off ? t('notesOff') : t('notesOn');
+});
+
+autoBtn.addEventListener('click', function () {
+  autoplay = !autoplay;
+  autoBtn.textContent = autoplay ? t('autoOn') : t('autoOff');
+  autoBtn.setAttribute('aria-pressed', String(autoplay));
+});
+
+artBtn.addEventListener('click', function () {
+  useImages = !useImages;
+  try { localStorage.setItem('khalaqa-art', useImages ? 'photo' : 'drawn'); } catch (e) {}
+  render();
+});
+
+fsBtn.addEventListener('click', function () {
+  big = !big;
+  document.body.classList.toggle('big', big);
+  if (big) {
+    var el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen().catch(function () {});
+  } else if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(function () {});
+  }
+  render();
+});
+
+document.addEventListener('fullscreenchange', function () {
+  if (!document.fullscreenElement && big) {
+    big = false;
+    document.body.classList.remove('big');
+    render();
+  }
+});
+
+document.getElementById('langs').addEventListener('click', function (e) {
+  var b = e.target.closest('button');
+  if (!b) return;
+  lang = b.dataset.lang;
+  Array.prototype.forEach.call(this.children, function (x) {
+    x.setAttribute('aria-pressed', String(x === b));
+  });
+  render();
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') show(lang === 'ar' ? at - 1 : at + 1);
+  if (e.key === 'ArrowLeft') show(lang === 'ar' ? at + 1 : at - 1);
+});
+
+var x0 = null;
+var book = document.querySelector('.book');
+book.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+book.addEventListener('touchend', function (e) {
+  if (x0 === null) return;
+  var dx = e.changedTouches[0].clientX - x0;
+  if (Math.abs(dx) > 50) show(at + ((dx < 0) === (lang !== 'ar') ? 1 : -1));
+  x0 = null;
+}, { passive: true });
+
+try {
+  var saved = localStorage.getItem('khalaqa-name');
+  if (saved) babyName = saved;
+  var savedArt = localStorage.getItem('khalaqa-art');
+  if (savedArt) useImages = savedArt === 'photo';
+} catch (e) {}
+
+buildDots();
+render();
+</script>
+</body>
+</html>
