@@ -26,7 +26,7 @@
     --display:"Fraunces","Iowan Old Style",Georgia,serif;
     --story:"Fredoka","Avenir Next Rounded","Trebuchet MS",system-ui,sans-serif;
   }
-  [lang="ar"]{
+  [lang|="ar"]{
     --display:"Noto Kufi Arabic","Fraunces",Georgia,serif;
     --story:"Baloo Bhaijaan 2","Noto Kufi Arabic",system-ui,sans-serif;
   }
@@ -62,6 +62,7 @@
   }
   .seg button[aria-pressed="true"]{background:var(--page);color:var(--ink);font-weight:700}
   .seg button:hover:not([aria-pressed="true"]){color:var(--page)}
+  .seg[hidden]{display:none}
   .seg.lang button{font-family:var(--story);letter-spacing:.04em;text-transform:none;font-size:.86rem}
 
   /* ---------- the book ---------- */
@@ -114,32 +115,32 @@
     margin:0;
     color:var(--accent);
   }
-  [lang="ar"] .animal{text-transform:none;letter-spacing:0;line-height:1.3}
+  [lang|="ar"] .animal{text-transform:none;letter-spacing:0;line-height:1.3}
   .animal.plain{color:var(--ink)}
   .line{font-size:clamp(1.1rem,4.2vw,1.45rem);font-weight:500;line-height:1.4;text-wrap:balance;margin:0}
   .sound{
     font-family:var(--display);font-style:italic;font-weight:600;
     font-size:clamp(1.25rem,5vw,1.7rem);color:var(--accent);margin:0;
   }
-  [lang="ar"] .sound{font-style:normal;font-weight:700}
+  [lang|="ar"] .sound{font-style:normal;font-weight:700}
 
   /* ---------- cover ---------- */
   .cover h1{
     font-family:var(--display);font-weight:900;
     font-size:clamp(2.4rem,10vw,3.7rem);line-height:.95;margin:0;text-wrap:balance;
   }
-  [lang="ar"] .cover h1{line-height:1.25}
+  [lang|="ar"] .cover h1{line-height:1.25}
   .cover h1 em{font-style:normal;color:var(--accent)}
   .eyebrow{
     font-family:var(--display);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
     color:var(--quiet);margin:0;
   }
-  [lang="ar"] .eyebrow{letter-spacing:0;font-size:.85rem}
+  [lang|="ar"] .eyebrow{letter-spacing:0;font-size:.85rem}
 .dedication{
     font-family:var(--display);font-style:italic;font-weight:600;
     font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--accent);margin:0;
   }
-  [lang="ar"] .dedication{font-style:normal}
+  [lang|="ar"] .dedication{font-style:normal}
   .cover-rule{height:6px;background:var(--ink);width:72px;margin:2px auto;border-radius:4px}
   .namer{
     display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;
@@ -171,12 +172,12 @@
     display:flex;gap:10px;align-items:flex-start;
     font-family:var(--display);font-style:italic;font-size:.9rem;line-height:1.45;color:#4a4842;
   }
-  [lang="ar"] .note{font-family:var(--story);font-style:normal;font-size:.92rem}
+  [lang|="ar"] .note{font-family:var(--story);font-style:normal;font-size:.92rem}
   .note b{
     font-style:normal;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
     font-size:.62rem;color:var(--quiet);padding-top:.3em;white-space:nowrap;flex:none;
   }
-  [lang="ar"] .note b{letter-spacing:0;font-size:.72rem}
+  [lang|="ar"] .note b{letter-spacing:0;font-size:.72rem}
   body.notes-off .note{display:none}
 
   /* ---------- controls ---------- */
@@ -201,16 +202,29 @@
     background:transparent;border:1px solid rgba(252,251,246,.26);color:#C9C5B4;border-radius:999px;
     padding:7px 14px;font-family:var(--display);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
   }
-  [lang="ar"] .pill{font-family:var(--story);letter-spacing:0;font-size:.82rem;text-transform:none}
+  [lang|="ar"] .pill{font-family:var(--story);letter-spacing:0;font-size:.82rem;text-transform:none}
   .pill:hover{border-color:rgba(252,251,246,.6);color:var(--page)}
   .pill[aria-pressed="true"]{border-color:var(--page);color:var(--page)}
 
   /* ---------- full screen ---------- */
-  body.big{padding:8px 0 0;gap:8px;justify-content:flex-start;min-height:100vh}
-  body.big .bar{width:min(1000px,96%)}
-  body.big .book{width:100%;max-width:none;border-radius:0;box-shadow:none;flex:1;display:flex;align-items:center}
-  body.big .spread{width:min(1000px,100%);margin-inline:auto;padding:12px 24px 104px;gap:20px}
-  body.big .stage{max-height:min(66vh,820px)}
+  /* dvh, not vh: on a phone vh counts the space behind the browser's own
+     address bar, which left the page scrollable by a dozen pixels in what is
+     supposed to be a full screen. */
+  /* Full screen means one screen. The body is exactly the viewport tall and
+     nothing may push past it: the picture gives up height first, then the
+     words scroll inside their own column. dvh, not vh, because vh counts the
+     space behind a phone's address bar. */
+  body.big{
+    padding:8px 0 0;gap:8px;justify-content:flex-start;
+    height:100vh;height:100dvh;min-height:0;overflow:hidden;
+  }
+  body.big .bar{width:min(1000px,96%);flex:none}
+  body.big .book{width:100%;max-width:none;border-radius:0;box-shadow:none;
+    flex:1 1 auto;min-height:0;display:flex;align-items:center}
+  body.big .spread{width:min(1000px,100%);margin-inline:auto;padding:12px 24px 104px;gap:20px;
+    height:100%;max-height:100%;min-height:0}
+  body.big .stage{flex:0 1 auto;min-height:0;max-height:min(52dvh,820px)}
+  body.big .words{min-height:0;overflow-y:auto}
   body.big .animal{font-size:clamp(3rem,7vw,5rem)}
   body.big .line{font-size:clamp(1.3rem,2.6vw,2rem)}
   body.big .sound{font-size:clamp(1.5rem,3vw,2.4rem)}
@@ -221,6 +235,36 @@
   body.big .controls{
     position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
     width:min(1000px,96%);z-index:5;
+  }
+
+  /* A phone held sideways has about 390px of height, and the picture alone
+     wants most of it. Stacked, the words ended up under the floating controls
+     and 223px below the fold. Side by side, both fit. */
+  @media (orientation:landscape) and (max-height:620px){
+    /* No magic numbers: the body is exactly one screen tall and the book takes
+       whatever the top bar leaves. The zoo's bar is a row taller than the
+       others' because of its chapter switch, and subtracting a fixed height
+       left every one of its pages scrolling by 30px. */
+    body.big{padding:4px 0 0;gap:4px;height:100dvh;min-height:0;overflow:hidden}
+    body.big .book{flex:1 1 auto;min-height:0}
+    body.big .spread{
+      flex-direction:row; align-items:center; justify-content:center;
+      gap:18px; padding:6px 16px 66px;   /* clears the fixed controls: 52px tall + 6px up */
+      height:100%; max-height:100%; min-height:0;
+    }
+    body.big .stage{flex:0 0 40%; width:40%; margin:0; max-height:100%; min-height:0}
+    /* the long pages (the hadith, the covers) still outgrow a sideways phone;
+       let that one column scroll rather than push the page past the bottom */
+    body.big .words{
+      flex:1 1 0; min-width:0; max-width:36ch; margin:0;
+      max-height:100%; min-height:0; overflow-y:auto;
+    }
+    body.big .line{font-size:clamp(.95rem,2.1vw,1.3rem)}
+    body.big .sound{font-size:clamp(1.05rem,2.4vw,1.5rem)}
+    body.big .animal{font-size:clamp(1.8rem,4.5vw,3rem)}
+    body.big .cover h1{font-size:clamp(1.5rem,4.2vw,2.4rem)}
+    body.big .controls{bottom:6px}
+    body.big .bar{gap:6px}
   }
 
   @media (max-width:430px){
@@ -242,9 +286,14 @@
   <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
   <button class="pill" id="artBtn" type="button"></button>
   <button class="pill" id="fsBtn" type="button"></button>
+  <button class="pill" id="turnBtn" type="button" aria-pressed="false"></button>
   <div class="seg lang" id="langs" role="group" aria-label="Language">
     <button type="button" data-lang="en" aria-pressed="true">English</button>
     <button type="button" data-lang="ar" aria-pressed="false" lang="ar">العربية</button>
+  </div>
+  <div class="seg lang" id="dialects" role="group" aria-label="Arabic: standard or Egyptian" hidden>
+    <button type="button" data-lang="ar" aria-pressed="true" lang="ar">فصحى</button>
+    <button type="button" data-lang="eg" aria-pressed="false" lang="ar-EG">مصري</button>
   </div>
 </div>
 
@@ -397,6 +446,23 @@ function drop(cx, cy, s, fill) {
     'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
 }
 
+/* a date palm: a short thick trunk under a wide crown, so it reads as a tree
+   and not as a sprig floating above a line */
+function palmTree(cx, cy, s) {
+  s = s || 1;
+  return g(
+    path('M-13 150 q-8 -86 4 -152 l20 2 q-10 68 2 150 z', CLAY) +
+    path('M-10 90 h18 M-11 46 h20 M-10 2 h20', null, 5) +
+    g(path('M0 0 q-76 -34 -106 22 q62 22 106 -22 z', LEAF) +
+      path('M0 0 q76 -34 106 22 q-62 22 -106 -22 z', LEAF) +
+      path('M0 0 q-36 -76 22 -96 q30 58 -22 96 z', LEAF) +
+      path('M0 0 q48 -68 100 -40 q-40 52 -100 40 z', LEAF) +
+      path('M0 0 q-54 -62 -102 -26 q44 50 102 26 z', LEAF) +
+      circ(-20, 24, 12, CLAY, 5) + circ(12, 30, 12, CLAY, 5) + circ(-4, 46, 12, CLAY, 5),
+      'transform="translate(0,-4)"'),
+    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
+}
+
 /* rolling hills along the bottom */
 function ground(y, fill) {
   return path('M0 ' + y + ' q100 -34 200 0 q100 34 200 0 L400 400 L0 400 z', fill || LEAF);
@@ -482,7 +548,7 @@ var BOOK = {
   bismillah: {
     accent: '#C9842E',
     pages: [
-      P({ art:ART.cover, cover:true, audio:'p0', tint:'#E8C27A',
+      P({ art:ART['cover'], cover:true, audio:'p0', tint:'#E8C27A',
           en:{ eyebrow:'A first word',
                title:'<em>Bismillah</em>',
                line:'The word we say before everything. Say it with me.',
@@ -492,7 +558,7 @@ var BOOK = {
                line:'الكلمةُ التي نقولُها قبلَ كلِّ شيء. قُلها معي.',
                note:'الكتابُ كلُّه كلمةٌ واحدةٌ تتكرّر، وهذا مقصود. الطفلُ لا يتعلّمُ الكلمةَ من سماعِها مرّةً داخلَ جملة، بل من وقوعِها في الموضعِ نفسِه، مرّةً بعدَ مرّة، بصوتِك أنت.' } }),
 
-      P({ art:ART.waking, audio:'p1', tint:'#E8C27A',
+      P({ art:ART['waking'], audio:'p1', tint:'#E8C27A',
           en:{ name:'When You Wake',
                line:'The light comes in at the window. You open your eyes, and the whole day is still in front of you.',
                sound:'Bismillah.',
@@ -502,7 +568,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'صفحاتُ الصباحِ مناسبةٌ في هذا العُمر، لأنّ بصرَه يكونُ أحدَّ ما يكون. أمسِك الكتابَ على بُعدِ ذِراعٍ تقريباً.' } }),
 
-      P({ art:ART.water, audio:'p2', tint:'#9CC4D8',
+      P({ art:ART['water'], audio:'p2', tint:'#9CC4D8',
           en:{ name:'Clean Hands',
                line:'Cool water runs over your fingers, and over mine. Wash them well, little one.',
                sound:'Bismillah.',
@@ -512,7 +578,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'قُلها وأنت تغسِلُ يدَيه فعلاً. اقترانُ الكلمةِ بالماءِ هو ما يُثبّتُها.' } }),
 
-      P({ art:ART.eating, audio:'p3', tint:'#C97B4A',
+      P({ art:ART['eating'], audio:'p3', tint:'#C97B4A',
           en:{ name:'Before You Eat',
                line:'Warm bread. Sweet dates. A small bowl that is yours and nobody else\'s.',
                sound:'Bismillah.',
@@ -522,7 +588,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'هو لا يأكلُ بعد، ولا بأس. الصفحةُ تمرينٌ ليومٍ يأكلُ فيه.' } }),
 
-      P({ art:ART.drinking, audio:'p4', tint:'#9CC4D8',
+      P({ art:ART['drinking'], audio:'p4', tint:'#9CC4D8',
           en:{ name:'A Drink of Water',
                line:'Small sips, and a rest in between. Nothing in the world is better than water when you are thirsty.',
                sound:'Bismillah.',
@@ -532,7 +598,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'ثلاثُ رشفاتٍ، بينَ كلِّ واحدةٍ نَفَس، هي السُّنّة. أمرٌ صغيرٌ جميلٌ أن تفعلَه أمامَه.' } }),
 
-      P({ art:ART.door, audio:'p5', tint:'#8FB58A',
+      P({ art:ART['door'], audio:'p5', tint:'#8FB58A',
           en:{ name:'Out the Door',
                line:'Little shoes on. The door swings open. The air outside smells like morning.',
                sound:'Bismillah.',
@@ -542,7 +608,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'الأبوابُ صفحةٌ تستحقُّ الوقوفَ عندها — المِفصَل، وتبدُّلُ الضوء، والدرجة. كلُّ ذلك جديدٌ عليه.' } }),
 
-      P({ art:ART.home, audio:'p6', tint:'#C9842E',
+      P({ art:ART['home'], audio:'p6', tint:'#C9842E',
           en:{ name:'Home Again',
                line:'Back through the same door, into the same warm room, where everyone was waiting for you.',
                sound:'Bismillah.',
@@ -552,7 +618,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'العودةُ هي نصفُ الخروجِ الذي يفهمُه الطفلُ فعلاً. امنَح هذه الصفحةَ وقتاً أطولَ قليلاً.' } }),
 
-      P({ art:ART.bowl, audio:'p7', tint:'#C7643F',
+      P({ art:ART['bowl'], audio:'p7', tint:'#C7643F',
           en:{ name:'Susu\'s Bowl',
                line:'You fill the bowl, and the cat comes running. A small kindness is still a kindness.',
                sound:'Bismillah.',
@@ -562,7 +628,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'سوسو، من كتابِها هي. تكرارُ شخصيّةٍ بينَ الكُتبِ يمنحُه شيئاً يعرِفُه، وذلك أوّلُ القراءة.' } }),
 
-      P({ art:ART.sleep, audio:'p8', tint:'#6E7FA8',
+      P({ art:ART['sleep'], audio:'p8', tint:'#6E7FA8',
           en:{ name:'Time to Sleep',
                line:'The lamp goes low. The blanket comes up. Your eyes are closing already, and that is allowed.',
                sound:'Bismillah.',
@@ -572,7 +638,7 @@ var BOOK = {
                sound:'بِسمِ الله.',
                note:'إن نامَ هنا، فقِف هنا. الصفحةُ الأخيرةُ تنتظِرُ إلى الغد.' } }),
 
-      P({ art:ART.goodnight, audio:'p9', tint:'#6E7FA8',
+      P({ art:ART['goodnight'], audio:'p9', tint:'#6E7FA8',
           en:{ name:'Goodnight',
                line:'Every day begins with one word, and every day ends with it too.',
                sound:'Bismillah. Goodnight, <span class="babyname">Yusuf</span>.',
@@ -585,7 +651,64 @@ var BOOK = {
   }
 };
 
-var AUDIO_DIR = { bismillah:{ en:'audio-bismillah/en/', ar:'audio-bismillah/ar/' } };
+// Egyptian Arabic: the story words in مصري. Anything not given here (the
+// grown-up notes) falls back to the فصحى page.
+var EG = { bismillah: [
+ {
+  "eyebrow": "أوّل كلمة",
+  "line": "الكلمة اللي بنقولها قبل أي حاجة. قولها معايا."
+ },
+ {
+  "name": "لمّا تصحى",
+  "line": "النور داخل من الشبّاك. بتفتح عينيك، واليوم كلّه لسّه قدّامك.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "إيدين نضيفة",
+  "line": "الميّة الساقعة بتجري على صوابعك، وعلى صوابعي. اغسلهم كويّس يا حبيبي.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "قبل ما تاكل",
+  "line": "عيش سخن. وتمر حلو. وطبق صغيّر ليك لوحدك.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "شويّة ميّة",
+  "line": "بُقّ صغيّر، ونرتاح بين كل بُقّ والتاني. مفيش حاجة في الدنيا أحلى من الميّة وإنت عطشان.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "عند الباب",
+  "line": "جزمة صغيّرة في رجليك. والباب بيتفتح. وريحة الصبح برّه.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "ورجعنا البيت",
+  "line": "بنرجع من نفس الباب، لنفس الأوضة الدافية، اللي الكل كان مستنّيك فيها.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "طبق سوسو",
+  "line": "بتملا الطبق، والقطّة تيجي جري. والمعروف الصغيّر برضه معروف.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "وقت النوم",
+  "line": "النور بيوطى. والغطا بيتشدّ. وعينيك بتغمّض من دلوقتي، ومفيش مشكلة.",
+  "sound": "بِسمِ الله."
+ },
+ {
+  "name": "تصبح على خير",
+  "line": "كل يوم بيبدأ بكلمة واحدة، وبيها بيخلص برضه.",
+  "sound": "بِسمِ الله. تصبح على خير، يا <span class=\"babyname\">يوسف</span>."
+ }
+] };
+Object.keys(EG).forEach(function (k) {
+  BOOK[k].pages.forEach(function (pg, i) { pg.eg = Object.assign({}, pg.ar, EG[k][i]); });
+});
+
+var AUDIO_DIR = { bismillah:{ en:'audio-bismillah/en/', ar:'audio-bismillah/ar/', eg:'audio-bismillah/eg/' } };
 var SFX_DIR   = {};
 
 var IMG_V1 = {
@@ -601,18 +724,33 @@ var UI = {
   en: { back:'Back', next:'Turn the page', start:'Start reading', listen:'Read to me',
         pause:'Pause', readTo:'Read it to:', placeholder:'Yusuf', grownups:'Grown-ups',
         notesOn:'Hide grown-up notes', notesOff:'Show grown-up notes',
-        autoOn:'Auto-play: on', autoOff:'Auto-play: off', cover:'Back to the cover', dir:'ltr',
+        autoOn:'Auto-play: on', autoOff:'Auto-play: off',
+        turnOn:'Auto-turn: on', turnOff:'Auto-turn: off',
+        cover:'Back to the cover', dir:'ltr',
         chBw:'Black & White', chColor:'Colours', arrowNext:'\u2192', arrowPrev:'\u2190',
         sound:'', zoo:'', shelf:'All the stories', big:'Full screen', small:'Exit full screen',
         artDrawn:'Artwork: drawn', artPhoto:'Artwork: illustrated' },
   ar: { back:'رجوع', next:'اقلِب الصفحة', start:'ابدأ القراءة', listen:'اقرأ لي',
         pause:'إيقاف', readTo:'نقرؤها لـ:', placeholder:'يوسف', grownups:'للكبار',
         notesOn:'إخفاء ملاحظات الكبار', notesOff:'إظهار ملاحظات الكبار',
-        autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا', cover:'العودة للغلاف', dir:'rtl',
+        autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا',
+        turnOn:'تقليب تلقائي: نعم', turnOff:'تقليب تلقائي: لا',
+        cover:'العودة للغلاف', dir:'rtl',
         chBw:'أبيض وأسود', chColor:'ألوان', arrowNext:'\u2190', arrowPrev:'\u2192',
         sound:'', zoo:'', shelf:'كلُّ القصص', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
         artDrawn:'الرسم اليدوي', artPhoto:'الصور المولَّدة' }
 };
+
+// Egyptian Arabic: the same right-to-left page, in مصري
+UI.eg = Object.assign({}, UI.ar, {
+  back:'ارجع', next:'قلّب الصفحة', start:'يلّا نقرا', listen:'احكيلي',
+  pause:'استنّى', readTo:'بنقراها لـ:', notesOn:'خبّي ملاحظات الكبار', notesOff:'ورّيني ملاحظات الكبار',
+  autoOn:'تشغيل تلقائي: آه', autoOff:'تشغيل تلقائي: لأ',
+  turnOn:'تقليب لوحده: آه', turnOff:'تقليب لوحده: لأ',
+  cover:'ارجع للغلاف',
+  chBw:'أبيض وإسود', shelf:'كل الحواديت', small:'اقفل ملء الشاشة',
+  artDrawn:'الرسم باليد', artPhoto:'الصور المتولّدة'
+});
 
 var BIRD = '<svg class="bird" viewBox="0 0 100 80" aria-hidden="true">' +
   '<ellipse cx="46" cy="44" rx="30" ry="22" fill="' + RED + '"/>' +
@@ -631,6 +769,7 @@ var prevBtn = document.getElementById('prev');
 var nextBtn = document.getElementById('next');
 var notesBtn= document.getElementById('notesBtn');
 var autoBtn = document.getElementById('autoBtn');
+var turnBtn = document.getElementById('turnBtn');
 var startBtn= document.getElementById('startBtn');
 var player  = document.getElementById('player');
 var sfx     = document.getElementById('sfx');
@@ -638,6 +777,10 @@ var fsBtn   = document.getElementById('fsBtn');
 var artBtn  = document.getElementById('artBtn');
 
 var ch = 'bismillah', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = true;
+// Turn the pages by itself, for when nobody has a free hand. Off until
+// asked for: a book that starts moving on its own is startling.
+var autoturn = false, turnTimer = null;
+var TURN_PAUSE = 5000;
 
 function t(k){ return UI[lang][k]; }
 function pages(){ return BOOK[ch].pages; }
@@ -649,9 +792,9 @@ function render(){
   var copy = page[lang];
   var ui = UI[lang];
 
-  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('lang', lang === 'eg' ? 'ar-EG' : lang);
   document.documentElement.setAttribute('dir', ui.dir);
-  document.body.setAttribute('lang', lang);
+  document.body.setAttribute('lang', lang === 'eg' ? 'ar-EG' : lang);
   document.body.setAttribute('dir', ui.dir);
 
   document.documentElement.style.setProperty('--accent', BOOK[ch].accent);
@@ -668,7 +811,7 @@ function render(){
       '<p class="eyebrow">' + copy.eyebrow + '</p>' +
       '<h1>' + copy.title + '</h1>' +
       '<div class="cover-rule"></div>' +
-      '<p class="dedication">' + (lang === 'ar' ? 'إلى ' : 'For ') + '<span class="babyname">Yusuf</span></p>' +
+      '<p class="dedication">' + (t('dir') === 'rtl' ? 'إلى ' : 'For ') + '<span class="babyname">Yusuf</span></p>' +
       '<p class="line">' + copy.line + '</p>' +
     '</div>';
   } else {
@@ -741,6 +884,8 @@ function render(){
   notesBtn.textContent = document.body.classList.contains('notes-off') ? ui.notesOff : ui.notesOn;
   autoBtn.textContent = autoplay ? ui.autoOn : ui.autoOff;
   autoBtn.setAttribute('aria-pressed', String(autoplay));
+  turnBtn.textContent = autoturn ? ui.turnOn : ui.turnOff;
+  turnBtn.setAttribute('aria-pressed', String(autoturn));
   startBtn.textContent = ui.cover;
   fsBtn.textContent = big ? ui.small : ui.big;
   document.getElementById('shelfLink').textContent = '\u2190 ' + ui.shelf;
@@ -766,7 +911,7 @@ function addBird(stage, page) {
 }
 
 function applyName() {
-  var fallback = lang === 'ar' ? 'يوسف' : 'Yusuf';
+  var fallback = t('dir') === 'rtl' ? 'يوسف' : 'Yusuf';
   Array.prototype.forEach.call(document.querySelectorAll('.babyname'), function (s) {
     s.textContent = babyName.trim() || fallback;
   });
@@ -810,14 +955,33 @@ function playSound() {
   sfx.play().catch(function () {});
 }
 
-player.addEventListener('ended', function () { setPlayState(false); });
-player.addEventListener('pause', function () { setPlayState(false); });
+/* ---------- turning the pages by itself ---------- */
+// The wait runs AFTER the narration, not alongside it: a five second timer
+// started at the same time as a twelve second reading would turn the page
+// mid-sentence. With no narration it is just the five seconds.
+function stopTurning() { if (turnTimer) { clearTimeout(turnTimer); turnTimer = null; } }
+function queueTurn() {
+  stopTurning();
+  if (!autoturn) return;
+  if (at >= pages().length - 1) return;              // stop at the last page
+  if (!player.paused && !player.ended) return;       // the 'ended' handler takes over
+  turnTimer = setTimeout(function () {
+    if (autoturn && at < pages().length - 1) show(at + 1);
+  }, TURN_PAUSE);
+}
+
+player.addEventListener('ended', function () { setPlayState(false); queueTurn(); });
+player.addEventListener('pause', function () { setPlayState(false); stopTurning(); });
 
 function show(i) {
+  stopTurning();
   at = Math.max(0, Math.min(pages().length - 1, i));
   render();
   if (autoplay && unlocked) {
-    player.play().then(function () { setPlayState(true); }).catch(function () {});
+    player.play().then(function () { setPlayState(true); })
+      .catch(function () { queueTurn(); });          // nothing to play: just wait
+  } else {
+    queueTurn();
   }
   document.querySelector('.book').scrollIntoView({ block: 'nearest' });
 }
@@ -836,6 +1000,13 @@ autoBtn.addEventListener('click', function () {
   autoplay = !autoplay;
   autoBtn.textContent = autoplay ? t('autoOn') : t('autoOff');
   autoBtn.setAttribute('aria-pressed', String(autoplay));
+});
+
+turnBtn.addEventListener('click', function () {
+  autoturn = !autoturn;
+  turnBtn.textContent = autoturn ? t('turnOn') : t('turnOff');
+  turnBtn.setAttribute('aria-pressed', String(autoturn));
+  if (autoturn) { queueTurn(); } else { stopTurning(); }
 });
 
 artBtn.addEventListener('click', function () {
@@ -864,20 +1035,30 @@ document.addEventListener('fullscreenchange', function () {
   }
 });
 
-document.getElementById('langs').addEventListener('click', function (e) {
+// Two switches: English or Arabic, and — once in Arabic — فصحى or مصري.
+// The العربية button reopens whichever Arabic was picked last.
+var dialect = 'ar';
+function pickLang(e) {
   var b = e.target.closest('button');
   if (!b) return;
-  lang = b.dataset.lang;
-  Array.prototype.forEach.call(this.children, function (x) {
-    x.setAttribute('aria-pressed', String(x === b));
+  if (this.id === 'dialects') dialect = b.dataset.lang;
+  lang = b.dataset.lang === 'en' ? 'en' : dialect;
+  Array.prototype.forEach.call(document.querySelectorAll('#langs button'), function (x) {
+    x.setAttribute('aria-pressed', String((x.dataset.lang === 'en') === (lang === 'en')));
   });
+  Array.prototype.forEach.call(document.querySelectorAll('#dialects button'), function (x) {
+    x.setAttribute('aria-pressed', String(x.dataset.lang === lang));
+  });
+  document.getElementById('dialects').hidden = lang === 'en';
   render();
-});
+}
+document.getElementById('langs').addEventListener('click', pickLang);
+document.getElementById('dialects').addEventListener('click', pickLang);
 
 document.addEventListener('keydown', function (e) {
   if (e.target.tagName === 'INPUT') return;
-  if (e.key === 'ArrowRight') show(lang === 'ar' ? at - 1 : at + 1);
-  if (e.key === 'ArrowLeft') show(lang === 'ar' ? at + 1 : at - 1);
+  if (e.key === 'ArrowRight') show(t('dir') === 'rtl' ? at - 1 : at + 1);
+  if (e.key === 'ArrowLeft') show(t('dir') === 'rtl' ? at + 1 : at - 1);
 });
 
 var x0 = null;
@@ -886,7 +1067,7 @@ book.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clie
 book.addEventListener('touchend', function (e) {
   if (x0 === null) return;
   var dx = e.changedTouches[0].clientX - x0;
-  if (Math.abs(dx) > 50) show(at + ((dx < 0) === (lang !== 'ar') ? 1 : -1));
+  if (Math.abs(dx) > 50) show(at + ((dx < 0) === (t('dir') !== 'rtl') ? 1 : -1));
   x0 = null;
 }, { passive: true });
 

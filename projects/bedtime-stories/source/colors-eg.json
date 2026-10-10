@@ -1,0 +1,61 @@
+{
+ "title": "الألوان — مصري",
+ "language": "ar",
+ "slides": [
+  {
+   "id": "c0",
+   "title": "Cover",
+   "transcript": "[warmly] ودلوقتي… <break time=\"0.4s\" /> الألوان. تسع حيوانات ملوّنة، وتسع ألوان نتعلّمها سوا. <break time=\"0.5s\" /> [warmly] يلّا بينا."
+  },
+  {
+   "id": "c1",
+   "title": "Red",
+   "transcript": "[warmly] أحمر. <break time=\"0.4s\" /> دعسوقة صغيّرة مدوّرة حمرا. نقطة! نقطة! <break time=\"0.5s\" /> [playfully] نقطة، نقطة!"
+  },
+  {
+   "id": "c2",
+   "title": "Yellow",
+   "transcript": "[warmly] أصفر. <break time=\"0.4s\" /> بطّة صغيّرة صفرا وطريّة. كواك! كواك! <break time=\"0.5s\" /> [playfully] كواك!"
+  },
+  {
+   "id": "c3",
+   "title": "Blue",
+   "transcript": "[warmly] أزرق. <break time=\"0.4s\" /> حوت أزرق كبير، في البحر الأزرق الغويط. طشّ! <break time=\"0.5s\" /> [excited] طشّ!"
+  },
+  {
+   "id": "c4",
+   "title": "Green",
+   "transcript": "[warmly] أخضر. <break time=\"0.4s\" /> ضفدعة خضرا صغيّرة، فوق ورقة خضرا. نقّ! نقّ! <break time=\"0.5s\" /> [playfully] نقّ نقّ!"
+  },
+  {
+   "id": "c5",
+   "title": "Orange",
+   "transcript": "[warmly] برتقاني. <break time=\"0.4s\" /> نمر برتقاني، بخطوط سودا. ررررررر! <break time=\"0.5s\" /> [excited] ررررررر!"
+  },
+  {
+   "id": "c6",
+   "title": "Purple",
+   "transcript": "[warmly] بنفسجي. <break time=\"0.4s\" /> فراشة بنفسجي، بتطير لفوق. <break time=\"0.5s\" /> [gently] بترفرف بجناحاتها، وبعدين تطير بعيد!"
+  },
+  {
+   "id": "c7",
+   "title": "Pink",
+   "transcript": "[warmly] بمبي. <break time=\"0.4s\" /> خنزير صغيّر بمبي مدوّر، في الطين. أويك! أويك! <break time=\"0.5s\" /> [playfully] أويك أويك!"
+  },
+  {
+   "id": "c8",
+   "title": "Brown",
+   "transcript": "[warmly] بنّي. <break time=\"0.4s\" /> دبّ بنّي كبير، نعسان وبطيء. غررررر… <break time=\"0.5s\" /> [softly] غررررر!"
+  },
+  {
+   "id": "c10",
+   "title": "Grey",
+   "transcript": "[warmly] رصاصي. <break time=\"0.4s\" /> قطّة رصاصي طريّة، متكوّرة ونعسانة. خُرّ… <break time=\"0.5s\" /> [softly] خُرّ…"
+  },
+  {
+   "id": "c9",
+   "title": "All",
+   "transcript": "[warmly] كل الألوان. <break time=\"0.4s\" /> أحمر، أصفر، أزرق، أخضر، برتقاني، بنفسجي، بمبي، وبنّي، ورصاصي. كلّهم مع بعض. <break time=\"0.5s\" /> [whispers] تصبح على خير يا يوسف."
+  }
+ ]
+}
