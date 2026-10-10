@@ -1,0 +1,183 @@
+{
+  "slug": "nabina",
+  "title": "The Prophet Loved",
+  "icon": "🕌",
+  "accent": "#2E8B74",
+  "desc": "Eight gentle things our Prophet, peace be upon him, loved — a baby's first book about him, in English and Arabic.",
+  "ogdesc": "Children, cats, dates, clean water, a kind word. What he loved, told for a very small child.",
+  "pages": [
+    {
+      "key": "cover",
+      "img": "cover",
+      "cover": true,
+      "tint": "#8FCBB8",
+      "en": {
+        "eyebrow": "Peace be upon him",
+        "title": "The Prophet<br><em>Loved</em>",
+        "line": "Eight small things, and all of them easy to copy.",
+        "note": "There is no picture of him in this book, and there will never be one. He is known by what he did, which is the better likeness anyway — and it is the one a child can actually follow.",
+        "say": "[warmly] The Prophet Loved. A book for Yusuf, about our Prophet, peace be upon him. <break time=\"0.5s\" /> [gently] Eight small things, and all of them easy to copy."
+      },
+      "ar": {
+        "eyebrow": "صلّى اللهُ عليه وسلّم",
+        "title": "نَبيُّنا<br><em>كانَ يُحِبّ</em>",
+        "line": "ثمانيةُ أشياءَ صغيرة، وكلُّها سهلةُ الاقتداء.",
+        "note": "ليس في هذا الكتابِ صورةٌ له، ولن تكونَ فيه أبداً. إنّما يُعرَفُ بما فعَل، وهذه أصدقُ صورةٍ على كلِّ حال — وهي الصورةُ التي يستطيعُ الطفلُ أن يتبَعَها فعلاً.",
+        "say": "[warmly] نَبيُّنا كانَ يُحِبّ. كتابٌ ليوسف عن نبيِّنا، صلّى اللهُ عليه وسلّم. <break time=\"0.5s\" /> [gently] ثمانيةُ أشياءَ صغيرة، وكلُّها سهلةُ الاقتداء."
+      }
+    },
+    {
+      "key": "children",
+      "img": "children",
+      "tint": "#E8C27A",
+      "en": {
+        "name": "He Loved Children",
+        "line": "He stopped for them in the street. He let them climb on his back. He never once told a child to go away.",
+        "sound": "Peace be upon him.",
+        "note": "A man saw him kiss a child and said he had ten children and had never kissed one of them. He answered: whoever shows no mercy is shown none. — Sahih al-Bukhari."
+      },
+      "ar": {
+        "name": "كانَ يُحِبُّ الأطفال",
+        "line": "كان يقِفُ لهم في الطريق. ويدَعُهم يصعَدونَ على ظهرِه. ولم يقُل لطفلٍ قطُّ: ابتعِد.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "رآه رجلٌ يُقبّلُ طفلاً فقال: إنّ لي عَشَرةً من الولدِ ما قبّلتُ منهم أحداً. فقال: «مَن لا يَرحَمُ لا يُرحَم». — صحيح البخاري."
+      }
+    },
+    {
+      "key": "salam",
+      "img": "salam",
+      "tint": "#8FCBB8",
+      "en": {
+        "name": "He Said Salam First",
+        "line": "To the old and the young, to people he knew and people he did not. He liked to be the one who said it first.",
+        "sound": "Peace be upon him.",
+        "note": "He said: spread the salam among you, and you will love one another. — Sahih Muslim. It is the first piece of adab a child can manage, usually before the words come out properly."
+      },
+      "ar": {
+        "name": "كانَ يبدأُ بالسَّلام",
+        "line": "على الكبيرِ والصغير، وعلى من يعرِفُه ومن لا يعرِفُه. وكان يُحِبُّ أن يكونَ هو البادئَ بالسلام.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "قال: «أفشوا السلامَ بينكم تَحابّوا». — صحيح مسلم. وهو أوّلُ أدبٍ يُحسِنُه الطفل، غالباً قبلَ أن تستقيمَ الكلماتُ في فمِه."
+      }
+    },
+    {
+      "key": "smile",
+      "img": "smile",
+      "tint": "#C9842E",
+      "en": {
+        "name": "He Smiled a Lot",
+        "line": "People said they had never met anyone who smiled more. A smile costs nothing, and it still counts as a good deed.",
+        "sound": "Peace be upon him.",
+        "note": "He said: your smiling in your brother's face is charity. — Jami' at-Tirmidhi. Smile at the baby while you read this page; he has been copying faces since his first week."
+      },
+      "ar": {
+        "name": "كانَ كثيرَ الابتِسام",
+        "line": "قال أصحابُه: ما رأينا أحداً أكثرَ ابتساماً منه. والابتسامةُ لا تُكلِّفُ شيئاً، ومع ذلك تُكتَبُ حَسَنة.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "قال: «تبسُّمُكَ في وجهِ أخيكَ صدقة». — جامع الترمذي. ابتسِم لطفلِك وأنت تقرأُ هذه الصفحة؛ فهو يُقلّدُ الوجوهَ منذ أسبوعِه الأوّل."
+      }
+    },
+    {
+      "key": "cat",
+      "img": "cat",
+      "tint": "#C7643F",
+      "en": {
+        "name": "He Was Gentle with Animals",
+        "line": "A cat could drink from the same water he was about to use, and he would let her finish, and say she was not dirty at all.",
+        "sound": "Peace be upon him.",
+        "note": "He said of the cat: she is not impure; she is one of those who go about among you. — Sunan Abi Dawud and Jami' at-Tirmidhi. The same thread as the hadith in Susu's book."
+      },
+      "ar": {
+        "name": "كانَ رفيقاً بالحيوان",
+        "line": "كانت القِطّةُ تشرَبُ من الماءِ الذي يهُمُّ بالوضوءِ منه، فيدَعُها تُكمِل، ويقولُ إنّها ليست نَجِسة.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "قال في الهِرّة: «إنّها ليست بنَجَس، إنّما هي من الطوّافينَ عليكم والطوّافات». — سنن أبي داود وجامع الترمذي. وهو الخيطُ نفسُه الذي في حديثِ كتابِ سوسو."
+      }
+    },
+    {
+      "key": "dates",
+      "img": "dates",
+      "tint": "#C97B4A",
+      "en": {
+        "name": "He Loved Dates and Milk",
+        "line": "Plain food, and not very much of it. A few dates and a cup of milk, and he was glad.",
+        "sound": "Peace be upon him.",
+        "note": "He said a house with no dates in it is a hungry house. — Sahih Muslim. He broke his fast on dates and water before anything else."
+      },
+      "ar": {
+        "name": "كانَ يُحِبُّ التمرَ واللبَن",
+        "line": "طعامٌ بسيط، وقليلٌ منه. تمراتٌ وقَدَحُ لبَن، فيَرضى ويَحمَد.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "قال: «بيتٌ لا تمرَ فيه جِياعٌ أهلُه». — صحيح مسلم. وكان يُفطِرُ على التمرِ والماءِ قبلَ كلِّ شيء."
+      }
+    },
+    {
+      "key": "clean",
+      "img": "clean",
+      "tint": "#9CC4D8",
+      "en": {
+        "name": "He Kept Everything Clean",
+        "line": "Clean hands, clean clothes, clean teeth, clean water. He brushed his teeth with a soft green twig.",
+        "sound": "Peace be upon him.",
+        "note": "He said purity is half of faith. — Sahih Muslim. And that were it not hard on people, he would have asked them to use the siwak before every prayer. — Sahih al-Bukhari."
+      },
+      "ar": {
+        "name": "كانَ يُحِبُّ النَّظافة",
+        "line": "يَدانِ نظيفتان، وثوبٌ نظيف، وأسنانٌ نظيفة، وماءٌ نظيف. وكان يُنظّفُ أسنانَه بعودٍ أخضرَ ليّن.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "قال: «الطُّهورُ شَطرُ الإيمان». — صحيح مسلم. وقال: «لولا أن أشُقَّ على أُمّتي لأمَرتُهم بالسِّواكِ عندَ كلِّ صلاة». — صحيح البخاري."
+      }
+    },
+    {
+      "key": "bread",
+      "img": "bread",
+      "tint": "#C9842E",
+      "en": {
+        "name": "He Fed Whoever Was Hungry",
+        "line": "If there was food, it was shared. If there was little, it was shared more carefully. Nobody at his door was sent away empty.",
+        "sound": "Peace be upon him.",
+        "note": "He said: feed the hungry, visit the sick, and set the captive free. — Sahih al-Bukhari. Food for two is enough for three, he said, and food for three is enough for four."
+      },
+      "ar": {
+        "name": "كانَ يُطعِمُ الجائع",
+        "line": "إن وُجِدَ الطعامُ قُسِم. وإن قلَّ قُسِمَ بعنايةٍ أكثر. ولم يرجِع أحدٌ من بابِه خاليَ اليدَين.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "قال: «أطعِموا الجائع، وعودوا المريض، وفُكّوا العاني». — صحيح البخاري. وقال: «طعامُ الاثنينِ كافي الثلاثة، وطعامُ الثلاثةِ كافي الأربعة»."
+      }
+    },
+    {
+      "key": "home",
+      "img": "home",
+      "tint": "#8FB58A",
+      "en": {
+        "name": "He Helped at Home",
+        "line": "He mended his own sandals. He swept. He sat with his family, and he was easy to live with.",
+        "sound": "Peace be upon him.",
+        "note": "Asked what he did at home, Aisha said: he was in the service of his family. — Sahih al-Bukhari. And: the best of you is the best to his family. — Jami' at-Tirmidhi. A good page for a father to read out loud."
+      },
+      "ar": {
+        "name": "كانَ يُعينُ في البَيت",
+        "line": "كان يخصِفُ نعلَه بيدِه. ويكنُسُ البيت. ويجلِسُ مع أهلِه، وكان هيّناً ليّناً في عِشرتِه.",
+        "sound": "صلّى اللهُ عليه وسلّم.",
+        "note": "سُئِلَت عائشةُ: ما كان يصنَعُ في بيتِه؟ قالت: «كان في مِهنةِ أهلِه». — صحيح البخاري. وقال: «خيرُكم خيرُكم لأهلِه». — جامع الترمذي. صفحةٌ يحسُنُ أن يقرأَها الأبُ بصوتٍ مسموع."
+      }
+    },
+    {
+      "key": "goodnight",
+      "img": "goodnight",
+      "tint": "#6E7FA8",
+      "en": {
+        "name": "And So We Say",
+        "line": "Kind to children, kind to animals, kind to whoever was hungry. When we hear his name, we say one thing.",
+        "sound": "Peace be upon him. Goodnight, <span class=\"babyname\">Yusuf</span>.",
+        "note": "Say the whole phrase every time his name comes up, including now. He will have it by heart long before he knows what it means."
+      },
+      "ar": {
+        "name": "ولذلك نقول",
+        "line": "رفيقٌ بالأطفال، رفيقٌ بالحيوان، رفيقٌ بكلِّ جائع. وإذا سمِعنا اسمَه قُلنا كلمةً واحدة.",
+        "sound": "صلّى اللهُ عليه وسلّم. تُصبِحُ على خير، يا <span class=\"babyname\">يوسف</span>.",
+        "note": "قُل الصلاةَ كاملةً كلّما ذُكِرَ اسمُه، ومنها الآن. وسيحفَظُها قبلَ أن يعرِفَ معناها بزمنٍ طويل."
+      }
+    }
+  ]
+}

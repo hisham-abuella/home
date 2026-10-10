@@ -243,7 +243,7 @@
     <button type="button" data-ch="bw" aria-pressed="true" id="chBw">Black &amp; White</button>
     <button type="button" data-ch="color" aria-pressed="false" id="chColor">Colors</button>
   </div>
-  <a class="pill home-link" href="../../index.html">&larr; hisham abuella</a>
+  <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
   <a class="pill home-link" href="susu.html" id="susuLink">Susu the cat</a>
   <button class="pill" id="artBtn" type="button"></button>
   <button class="pill" id="fsBtn" type="button"></button>
@@ -749,14 +749,14 @@ var UI = {
         notesOn:'Hide grown-up notes', notesOff:'Show grown-up notes',
         autoOn:'Auto-play: on', autoOff:'Auto-play: off', cover:'Back to the cover', dir:'ltr',
         chBw:'Black & White', chColor:'Colours', arrowNext:'\u2192', arrowPrev:'\u2190',
-        sound:'Hear the sound', susu:'Susu the cat', big:'Full screen', small:'Exit full screen',
+        sound:'Hear the sound', susu:'Susu the cat', shelf:'All the stories', big:'Full screen', small:'Exit full screen',
         artDrawn:'Artwork: drawn', artPhoto:'Artwork: illustrated' },
   ar: { back:'رجوع', next:'اقلِب الصفحة', start:'ابدأ القراءة', listen:'اقرأ لي',
         pause:'إيقاف', readTo:'نقرؤها لـ:', placeholder:'يوسف', grownups:'للكبار',
         notesOn:'إخفاء ملاحظات الكبار', notesOff:'إظهار ملاحظات الكبار',
         autoOn:'تشغيل تلقائي: نعم', autoOff:'تشغيل تلقائي: لا', cover:'العودة للغلاف', dir:'rtl',
         chBw:'أبيض وأسود', chColor:'ألوان', arrowNext:'\u2190', arrowPrev:'\u2192',
-        sound:'اسمَع الصوت', susu:'سوسو القِطّة', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
+        sound:'اسمَع الصوت', susu:'سوسو القِطّة', shelf:'كلُّ القصص', big:'ملء الشاشة', small:'إنهاء ملء الشاشة',
         artDrawn:'الرسم اليدوي', artPhoto:'الصور المولَّدة' }
 };
 
@@ -889,6 +889,7 @@ function render(){
   autoBtn.setAttribute('aria-pressed', String(autoplay));
   startBtn.textContent = ui.cover;
   fsBtn.textContent = big ? ui.small : ui.big;
+  document.getElementById('shelfLink').textContent = '\u2190 ' + ui.shelf;
   document.getElementById('susuLink').textContent = ui.susu;
   artBtn.textContent = useImages ? ui.artPhoto : ui.artDrawn;
   artBtn.setAttribute('aria-pressed', String(useImages));
@@ -1010,16 +1011,24 @@ document.addEventListener('fullscreenchange', function () {
   }
 });
 
-document.getElementById('chapters').addEventListener('click', function (e) {
-  var b = e.target.closest('button');
-  if (!b) return;
-  ch = b.dataset.ch;
-  Array.prototype.forEach.call(this.children, function (x) {
-    x.setAttribute('aria-pressed', String(x === b));
+function setChapter(which) {
+  if (!BOOK[which]) return;
+  ch = which;
+  Array.prototype.forEach.call(document.getElementById('chapters').children, function (x) {
+    x.setAttribute('aria-pressed', String(x.dataset.ch === which));
   });
   at = 0;
   buildDots();
   render();
+}
+
+document.getElementById('chapters').addEventListener('click', function (e) {
+  var b = e.target.closest('button');
+  if (!b) return;
+  setChapter(b.dataset.ch);
+  // the chapter goes in the address so it can be linked to, which is how the
+  // printed colour chapter's QR opens the colour chapter and not the cover
+  if (history.replaceState) history.replaceState(null, '', '#' + ch);
 });
 
 document.getElementById('langs').addEventListener('click', function (e) {
@@ -1054,8 +1063,17 @@ try {
   useImages = localStorage.getItem('bwzoo-art') === 'photo';
 } catch (e) {}
 
-buildDots();
-render();
+var fromHash = (location.hash || '').replace('#', '');
+if (BOOK[fromHash]) {
+  setChapter(fromHash);
+} else {
+  buildDots();
+  render();
+}
+window.addEventListener('hashchange', function () {
+  var h = (location.hash || '').replace('#', '');
+  if (BOOK[h] && h !== ch) setChapter(h);
+});
 </script>
 </body>
 </html>
