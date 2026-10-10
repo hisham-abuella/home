@@ -283,7 +283,7 @@
 </head>
 <body>
 <div class="bar">
-  <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
+  <a class="pill home-link" href="../index.html" id="shelfLink">&larr; All the stories</a>
   <button class="pill" id="artBtn" type="button"></button>
   <button class="pill" id="fsBtn" type="button"></button>
   <button class="pill" id="turnBtn" type="button" aria-pressed="false"></button>
@@ -708,7 +708,7 @@ Object.keys(EG).forEach(function (k) {
   BOOK[k].pages.forEach(function (pg, i) { pg.eg = Object.assign({}, pg.ar, EG[k][i]); });
 });
 
-var AUDIO_DIR = { bismillah:{ en:'audio-bismillah/en/', ar:'audio-bismillah/ar/', eg:'audio-bismillah/eg/' } };
+var AUDIO_DIR = { bismillah:{ en:'../audio-bismillah/en/', ar:'../audio-bismillah/ar/', eg:'../audio-bismillah/eg/' } };
 var SFX_DIR   = {};
 
 var IMG_V1 = {
@@ -716,7 +716,7 @@ var IMG_V1 = {
 };
 ['bismillah'].forEach(function (k) {
   BOOK[k].pages.forEach(function (pg, i) {
-    pg.img = 'images-bismillah/' + IMG_V1[k][i] + '.png';
+    pg.img = '../images-bismillah/' + IMG_V1[k][i] + '.png';
   });
 });
 
