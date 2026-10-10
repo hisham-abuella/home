@@ -287,7 +287,7 @@
     <button type="button" data-ch="bw" aria-pressed="true" id="chBw">Black &amp; White</button>
     <button type="button" data-ch="color" aria-pressed="false" id="chColor">Colors</button>
   </div>
-  <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
+  <a class="pill home-link" href="../index.html" id="shelfLink">&larr; All the stories</a>
   <a class="pill home-link" href="susu.html" id="susuLink">Susu the cat</a>
   <button class="pill" id="artBtn" type="button"></button>
   <button class="pill" id="fsBtn" type="button"></button>
@@ -893,8 +893,8 @@ Object.keys(EG).forEach(function (k) {
   BOOK[k].pages.forEach(function (pg, i) { pg.eg = Object.assign({}, pg.ar, EG[k][i]); });
 });
 
-var AUDIO_DIR = { bw:{ en:'audio/en/', ar:'audio/ar/', eg:'audio/eg/' }, color:{ en:'audio/cen/', ar:'audio/car/', eg:'audio/ceg/' } };
-var SFX_DIR   = { bw:{ en:'audio/ens/', ar:'audio/ars/' }, color:{ en:'audio/cens/', ar:'audio/cars/' } };
+var AUDIO_DIR = { bw:{ en:'../audio/en/', ar:'../audio/ar/', eg:'../audio/eg/' }, color:{ en:'../audio/cen/', ar:'../audio/car/', eg:'../audio/ceg/' } };
+var SFX_DIR   = { bw:{ en:'../audio/ens/', ar:'../audio/ars/' }, color:{ en:'../audio/cens/', ar:'../audio/cars/' } };
 Object.keys(SFX_DIR).forEach(function (k) { SFX_DIR[k].eg = SFX_DIR[k].ar; });   // the sounds are not dialect
 
 
@@ -905,7 +905,7 @@ var IMG_V1 = {
 };
 ['bw','color'].forEach(function (k) {
   BOOK[k].pages.forEach(function (pg, i) {
-    pg.img = 'images-v1/' + IMG_V1[k][i] + '.png';
+    pg.img = '../images-v1/' + IMG_V1[k][i] + '.png';
   });
 });
 

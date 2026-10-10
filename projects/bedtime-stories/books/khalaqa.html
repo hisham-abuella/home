@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%95%8C%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Eight gentle things our Prophet, peace be upon him, loved — a baby's first book about him, in English and Arabic.">
-<meta property="og:title" content="The Prophet Loved">
-<meta property="og:description" content="Children, cats, dates, clean water, a kind word. What he loved, told for a very small child.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Eight things a baby can see, and who made them, in English and Arabic.">
+<meta property="og:title" content="Allah Made It">
+<meta property="og:description" content="The sky, the sea, the palm, the bee — one on every page, with the same answer each time.">
 <meta property="og:type" content="website">
-<title>The Prophet Loved</title>
+<title>Allah Made It</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Fredoka:wght@400..700&family=Noto+Kufi+Arabic:wght@400..900&display=swap">
@@ -283,7 +283,7 @@
 </head>
 <body>
 <div class="bar">
-  <a class="pill home-link" href="index.html" id="shelfLink">&larr; All the stories</a>
+  <a class="pill home-link" href="../index.html" id="shelfLink">&larr; All the stories</a>
   <button class="pill" id="artBtn" type="button"></button>
   <button class="pill" id="fsBtn" type="button"></button>
   <button class="pill" id="turnBtn" type="button" aria-pressed="false"></button>
@@ -469,92 +469,78 @@ function ground(y, fill) {
 }
 
 
-/* The Prophet Loved — what he loved, never him.
-   There is no figure standing in for the Prophet, peace be upon him, on any
-   page: every drawing is a thing or a child, and the pages about him show the
-   gentleness rather than the man. */
+/* Allah Made It — eight pieces of the world. */
 
-function mosque(cx, cy, s) {
+function puff(cx, cy, s) {
   s = s || 1;
-  return g(
-    rect(-110, -20, 220, 110, 10, CREAM) +
-    path('M-78 -20 q0 -78 78 -82 q78 4 78 82 z', DEEP) +
-    path('M0 -102 v-26', null, 8) +
-    crescent(0, -142, 18, CREAM) +
-    rect(-104, -96, 20, 76, 8, CREAM) +
-    rect(84, -96, 20, 76, 8, CREAM) +
-    path('M-94 -96 q0 -22 10 -22 q10 0 10 22 z', DEEP) +
-    path('M94 -96 q0 -22 10 -22 q10 0 10 22 z', DEEP) +
-    path('M-34 90 v-44 q0 -34 34 -34 q34 0 34 34 v44 z', GOLD),
+  return g(path('M-86 24 a40 40 0 0 1 8 -78 a52 52 0 0 1 96 -16 a44 44 0 0 1 60 48 a34 34 0 0 1 -26 46 z', CREAM),
     'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
 }
 
-/* a plate of dates */
-function dates(cx, cy, s) {
-  s = s || 1;
-  return g(
-    path('M-78 0 h156 a78 42 0 0 1 -156 0 z', CREAM) +
-    ell(-34, -12, 20, 13, CLAY, 6) + ell(2, -20, 20, 13, CLAY, 6) +
-    ell(38, -12, 20, 13, CLAY, 6) + ell(-14, -32, 20, 13, CLAY, 6) +
-    ell(22, -36, 20, 13, CLAY, 6),
-    'transform="translate(' + cx + ',' + cy + ') scale(' + s + ')"');
-}
+ART.cover = svg('A crescent moon, a palm tree and the sea',
+  crescent(306, 86, 44, CREAM) +
+  star(104, 70, 16) +
+  path('M0 258 q100 -30 200 0 q100 30 200 0 L400 400 L0 400 z', SEA) +
+  path('M0 300 q100 -26 200 0 q100 26 200 0 L400 400 L0 400 z', DEEP) +
+  palmTree(116, 230, .86));
 
-ART.cover = svg('A mosque with a green dome under a crescent moon',
-  star(74, 72, 16) + star(330, 96, 13) +
-  mosque(200, 252, 1.02));
+ART.sky = svg('A wide blue sky with two clouds',
+  rect(32, 56, 336, 230, 24, SKY) +
+  puff(146, 158, .74) +
+  puff(268, 222, .54) +
+  sun(300, 116, 30));
 
-ART.children = svg('Two small children side by side',
-  child(142, 206, 1.25, CLAY) +
-  child(262, 216, 1.1, DEEP));
+ART.sea = svg('The sea coming up the sand',
+  rect(32, 70, 336, 128, 16, SKY) +
+  path('M32 180 q84 -34 168 0 q84 34 168 0 v76 H32 z', SEA) +
+  path('M32 232 q84 -30 168 0 q84 30 168 0 v24 H32 z', DEEP) +
+  path('M32 256 h336 v62 a16 16 0 0 1 -16 16 H48 a16 16 0 0 1 -16 -16 z', SAND));
 
-ART.salam = svg('A child with an open hand raised in greeting',
-  child(166, 220, 1.3, MINT) +
-  hand(286, 196, 1.15));
+ART.palm = svg('A tall date palm in the sand',
+  path('M0 320 q100 -26 200 0 q100 26 200 0 L400 400 L0 400 z', SAND) +
+  palmTree(200, 196, 1.15));
 
-ART.smile = svg('A smiling child',
-  g(circ(0, 0, 96, SKIN) +
-    '<circle cx="-34" cy="-14" r="11" fill="' + INK + '"/>' +
-    '<circle cx="34" cy="-14" r="11" fill="' + INK + '"/>' +
-    path('M-44 26 q44 44 88 0', null, 10),
-    'transform="translate(200,194)"') +
-  star(332, 78, 15) + star(70, 96, 12));
+ART.bee = svg('A bee with round wings',
+  g(ell(-54, -34, 36, 26, CREAM) + ell(54, -34, 36, 26, CREAM) +
+    ell(0, 10, 66, 52, SAND) +
+    path('M-26 -34 q10 76 0 88 M14 -40 q12 84 0 94', null, 11) +
+    circ(-70, 14, 24, INK, 0) +
+    '<circle cx="-78" cy="8" r="6" fill="' + CREAM + '"/>' +
+    path('M-80 -14 q-10 -22 -26 -26 M-62 -18 q-4 -26 -18 -34', null, 6),
+    'transform="translate(208,198) scale(1.1)"'));
 
-ART.cat = svg('A cat drinking from a bowl of water',
-  cat(178, 176, 1.15) +
-  bowl(200, 318, 0.9, SKY));
+ART.bird = svg('A small red bird on a branch',
+  path('M48 300 q120 -26 300 -10', null, 12) +
+  g(ell(0, 0, 58, 44, RED) + circ(44, -32, 31, RED) +
+    path('M70 -34 l34 11 -34 13 z', GOLD) +
+    '<circle cx="52" cy="-38" r="7" fill="' + CREAM + '"/>' +
+    path('M-32 -8 q-26 -20 -56 6 q30 22 56 -6 z', CLAY) +
+    path('M-10 42 v22 M24 44 v20', null, 8),
+    'transform="translate(176,214)"'));
 
-ART.dates = svg('A plate of dates and a cup of milk',
-  dates(156, 244, 1.05) +
-  cup(300, 232, 0.92, CREAM));
+ART.cat = svg('A cat with wide eyes in the dark',
+  cat(200, 210, 1.5) +
+  star(336, 86, 15) + star(72, 100, 12));
 
-ART.clean = svg('A water jug, a cup and a green twig',
-  g(path('M62 -24 q30 4 30 32 q0 28 -30 30', null, 9) +
-    path('M-62 -56 q0 -20 22 -20 h80 q22 0 22 20 l-12 112 q-2 20 -24 20 h-52 q-22 0 -24 -20 z', SKY),
-    'transform="translate(168,222)"') +
-  g(path('M0 -70 v140', null, 13).replace('stroke="' + INK + '"', 'stroke="' + LEAF + '"') +
-    path('M0 -70 v140', null, 19).replace('fill="none"', 'fill="none" opacity=".001"') +
-    path('M-10 -74 q10 -14 20 0 q-10 8 -20 0 z', LEAF),
-    'transform="translate(312,230)"'));
+ART.moon = svg('A crescent moon and many stars',
+  crescent(196, 196, 108, CREAM) +
+  star(324, 96, 22) + star(86, 92, 16) + star(100, 300, 14) + star(316, 290, 12) + star(236, 44, 11));
 
-ART.bread = svg('A loaf of bread held out in two hands',
-  loaf(200, 168, 1.1) +
-  hand(142, 300, 1.05) +
-  hand(258, 300, 1.05, true));
+ART.rain = svg('Rain falling on green ground',
+  puff(200, 118, 1) +
+  g(path('M0 0 v46', null, 10), 'transform="translate(132,200)"') +
+  g(path('M0 0 v60', null, 10), 'transform="translate(186,206)"') +
+  g(path('M0 0 v46', null, 10), 'transform="translate(242,200)"') +
+  g(path('M0 0 v36', null, 10), 'transform="translate(292,212)"') +
+  path('M0 316 q100 -28 200 0 q100 28 200 0 L400 400 L0 400 z', LEAF));
 
-ART.home = svg('A lamp, a folded cloak and a broom at home',
-  path('M60 318 h280', null, 9) +
-  g(path('M-30 -4 q0 -44 30 -44 q30 0 30 44 z', GOLD) + path('M-18 -4 h36 l8 4 h-52 z', CLAY) + circ(0, -62, 11, SAND, 6),
-    'transform="translate(122,316)"') +
-  rect(196, 238, 104, 32, 8, MINT) +
-  rect(206, 268, 84, 26, 8, CREAM) +
-  g(path('M0 -96 v70', null, 11) + path('M-24 -26 h48 l12 52 h-72 z', SAND),
-    'transform="translate(324,290)"'));
-
-ART.goodnight = svg('A mosque at night under a crescent and stars',
-  crescent(316, 84, 42, CREAM) +
-  star(80, 70, 17) + star(140, 128, 11) + star(252, 58, 12) +
-  mosque(196, 288, 0.84));
+ART.goodnight = svg('A crescent moon over a sleeping child',
+  crescent(292, 104, 56, CREAM) +
+  star(96, 88, 16) + star(150, 148, 11) +
+  rect(60, 246, 280, 96, 20, MINT) +
+  circ(122, 226, 44, SKIN) +
+  path('M102 220 q10 -8 20 0 M142 220 q10 -8 20 0', null, 5) +
+  path('M114 244 q10 8 20 0', null, 5));
 
 /* ============================================================
    The book
@@ -562,179 +548,179 @@ ART.goodnight = svg('A mosque at night under a crescent and stars',
 function P(o){ return o; }
 
 var BOOK = {
-  nabina: {
-    accent: '#2E8B74',
+  khalaqa: {
+    accent: '#2F6FA8',
     pages: [
-      P({ art:ART['cover'], cover:true, audio:'p0', tint:'#8FCBB8',
-          en:{ eyebrow:'Peace be upon him',
-               title:'The Prophet<br><em>Loved</em>',
-               line:'Eight small things, and all of them easy to copy.',
-               note:'There is no picture of him in this book, and there will never be one. He is known by what he did, which is the better likeness anyway — and it is the one a child can actually follow.' },
-          ar:{ eyebrow:'صلّى اللهُ عليه وسلّم',
-               title:'نَبيُّنا<br><em>كانَ يُحِبّ</em>',
-               line:'ثمانيةُ أشياءَ صغيرة، وكلُّها سهلةُ الاقتداء.',
-               note:'ليس في هذا الكتابِ صورةٌ له، ولن تكونَ فيه أبداً. إنّما يُعرَفُ بما فعَل، وهذه أصدقُ صورةٍ على كلِّ حال — وهي الصورةُ التي يستطيعُ الطفلُ أن يتبَعَها فعلاً.' } }),
+      P({ art:ART['cover'], cover:true, audio:'p0', tint:'#9CC4D8',
+          en:{ eyebrow:'A first book of the world',
+               title:'<em>Allah</em><br>Made It',
+               line:'Eight things you can see from where you are lying.',
+               note:'The same question and the same answer on every page. The repetition is the teaching — he will know the answer long before he knows what the question means.' },
+          ar:{ eyebrow:'كتابُ الدنيا الأوّل',
+               title:'<em>اللهُ</em><br>خَلَقَها',
+               line:'ثمانيةُ أشياءَ تراها من مكانِك هذا.',
+               note:'السؤالُ نفسُه والجوابُ نفسُه في كلِّ صفحة. التكرارُ هو التعليم — سيعرِفُ الجوابَ قبلَ أن يفهمَ السؤالَ بزمنٍ طويل.' } }),
 
-      P({ art:ART['children'], audio:'p1', tint:'#E8C27A',
-          en:{ name:'He Loved Children',
-               line:'He stopped for them in the street. He let them climb on his back. He never once told a child to go away.',
-               sound:'Peace be upon him.',
-               note:'A man saw him kiss a child and said he had ten children and had never kissed one of them. He answered: whoever shows no mercy is shown none. — Sahih al-Bukhari.' },
-          ar:{ name:'كانَ يُحِبُّ الأطفال',
-               line:'كان يقِفُ لهم في الطريق. ويدَعُهم يصعَدونَ على ظهرِه. ولم يقُل لطفلٍ قطُّ: ابتعِد.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'رآه رجلٌ يُقبّلُ طفلاً فقال: إنّ لي عَشَرةً من الولدِ ما قبّلتُ منهم أحداً. فقال: «مَن لا يَرحَمُ لا يُرحَم». — صحيح البخاري.' } }),
+      P({ art:ART['sky'], audio:'p1', tint:'#7FA6C9',
+          en:{ name:'The Sky',
+               line:'Wide and blue and nothing holding it up. It is there every single morning when you look.',
+               sound:'Allah is the Maker of everything.',
+               note:'Blue is the last colour a baby\'s eyes learn to see, so this one may read as pale grey to him for a while yet.' },
+          ar:{ name:'السَّماء',
+               line:'واسعةٌ زرقاء، ولا شيءَ يُمسِكُها. وهي هناك كلَّ صباحٍ حينَ تنظُر.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'الأزرقُ آخِرُ لونٍ تتعلّمُ عينُ الطفلِ رؤيتَه، فقد تبدو له هذه الصفحةُ رماديّةً باهتةً بعضَ الوقت.' } }),
 
-      P({ art:ART['salam'], audio:'p2', tint:'#8FCBB8',
-          en:{ name:'He Said Salam First',
-               line:'To the old and the young, to people he knew and people he did not. He liked to be the one who said it first.',
-               sound:'Peace be upon him.',
-               note:'He said: spread the salam among you, and you will love one another. — Sahih Muslim. It is the first piece of adab a child can manage, usually before the words come out properly.' },
-          ar:{ name:'كانَ يبدأُ بالسَّلام',
-               line:'على الكبيرِ والصغير، وعلى من يعرِفُه ومن لا يعرِفُه. وكان يُحِبُّ أن يكونَ هو البادئَ بالسلام.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'قال: «أفشوا السلامَ بينكم تَحابّوا». — صحيح مسلم. وهو أوّلُ أدبٍ يُحسِنُه الطفل، غالباً قبلَ أن تستقيمَ الكلماتُ في فمِه.' } }),
+      P({ art:ART['sea'], audio:'p2', tint:'#2F6FA8',
+          en:{ name:'The Sea',
+               line:'It comes up the sand and goes back again, all day and all night, and never once forgets.',
+               sound:'Allah is the Maker of everything.',
+               note:'Rock him in time with the sentence. The back-and-forth of the words is doing as much work as the picture.' },
+          ar:{ name:'البَحر',
+               line:'يصعَدُ على الرَّمْلِ ثمّ يعود، طَوالَ النهارِ وطَوالَ الليل، ولا ينسى مرّةً واحدة.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'هُزَّه على إيقاعِ الجملة. فذهابُ الكلماتِ وإيابُها يعملُ بقَدرِ ما تعملُ الصورة.' } }),
 
-      P({ art:ART['smile'], audio:'p3', tint:'#C9842E',
-          en:{ name:'He Smiled a Lot',
-               line:'People said they had never met anyone who smiled more. A smile costs nothing, and it still counts as a good deed.',
-               sound:'Peace be upon him.',
-               note:'He said: your smiling in your brother\'s face is charity. — Jami\' at-Tirmidhi. Smile at the baby while you read this page; he has been copying faces since his first week.' },
-          ar:{ name:'كانَ كثيرَ الابتِسام',
-               line:'قال أصحابُه: ما رأينا أحداً أكثرَ ابتساماً منه. والابتسامةُ لا تُكلِّفُ شيئاً، ومع ذلك تُكتَبُ حَسَنة.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'قال: «تبسُّمُكَ في وجهِ أخيكَ صدقة». — جامع الترمذي. ابتسِم لطفلِك وأنت تقرأُ هذه الصفحة؛ فهو يُقلّدُ الوجوهَ منذ أسبوعِه الأوّل.' } }),
+      P({ art:ART['palm'], audio:'p3', tint:'#8FB58A',
+          en:{ name:'The Date Palm',
+               line:'Tall, with its feet in the sand, holding up a hundred sweet dates for whoever walks past.',
+               sound:'Allah is the Maker of everything.',
+               note:'Dates turn up all through the Qur\'an and the sunnah. Worth a tree of their own.' },
+          ar:{ name:'النَّخْلَة',
+               line:'طويلةٌ، قدَماها في الرَّمْل، تحمِلُ مِئةَ تمرةٍ حُلوةٍ لمن يمُرُّ بها.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'التمرُ حاضرٌ في القرآنِ والسُّنّةِ كثيراً. ويستحقُّ شجرةً خاصّةً به.' } }),
 
-      P({ art:ART['cat'], audio:'p4', tint:'#C7643F',
-          en:{ name:'He Was Gentle with Animals',
-               line:'A cat could drink from the same water he was about to use, and he would let her finish, and say she was not dirty at all.',
-               sound:'Peace be upon him.',
-               note:'He said of the cat: she is not impure; she is one of those who go about among you. — Sunan Abi Dawud and Jami\' at-Tirmidhi. The same thread as the hadith in Susu\'s book.' },
-          ar:{ name:'كانَ رفيقاً بالحيوان',
-               line:'كانت القِطّةُ تشرَبُ من الماءِ الذي يهُمُّ بالوضوءِ منه، فيدَعُها تُكمِل، ويقولُ إنّها ليست نَجِسة.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'قال في الهِرّة: «إنّها ليست بنَجَس، إنّما هي من الطوّافينَ عليكم والطوّافات». — سنن أبي داود وجامع الترمذي. وهو الخيطُ نفسُه الذي في حديثِ كتابِ سوسو.' } }),
+      P({ art:ART['bee'], audio:'p4', tint:'#E8C27A',
+          en:{ name:'The Bee',
+               line:'Smaller than your thumb, and it knows the way to every flower and the way home again.',
+               sound:'Allah is the Maker of everything.',
+               note:'There is a whole surah named after her. Bees are a good first example of something tiny doing something very clever.' },
+          ar:{ name:'النَّحْلَة',
+               line:'أصغرُ من إبهامِك، وتعرِفُ طريقَها إلى كلِّ زهرة، وطريقَ العودةِ إلى بيتِها.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'لها سورةٌ كاملةٌ باسمِها. والنحلُ مثالٌ أوّلُ جميلٌ على كائنٍ صغيرٍ جدّاً يصنَعُ شيئاً بالِغَ الذكاء.' } }),
 
-      P({ art:ART['dates'], audio:'p5', tint:'#C97B4A',
-          en:{ name:'He Loved Dates and Milk',
-               line:'Plain food, and not very much of it. A few dates and a cup of milk, and he was glad.',
-               sound:'Peace be upon him.',
-               note:'He said a house with no dates in it is a hungry house. — Sahih Muslim. He broke his fast on dates and water before anything else.' },
-          ar:{ name:'كانَ يُحِبُّ التمرَ واللبَن',
-               line:'طعامٌ بسيط، وقليلٌ منه. تمراتٌ وقَدَحُ لبَن، فيَرضى ويَحمَد.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'قال: «بيتٌ لا تمرَ فيه جِياعٌ أهلُه». — صحيح مسلم. وكان يُفطِرُ على التمرِ والماءِ قبلَ كلِّ شيء.' } }),
+      P({ art:ART['bird'], audio:'p5', tint:'#C7643F',
+          en:{ name:'The Bird',
+               line:'It leaves the branch with nothing underneath it at all, and the air holds it up anyway.',
+               sound:'Allah is the Maker of everything.',
+               note:'A red bird hides somewhere on every page of the zoo book too. Point at this one and he may start looking for it.' },
+          ar:{ name:'الطَّائِر',
+               line:'يترُكُ الغُصنَ ولا شيءَ تحتَه أبداً، ومع ذلك يحمِلُه الهواء.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'في كتابِ حديقةِ الحيوانِ طائرٌ أحمرُ يختبئُ في كلِّ صفحة. أشِر إلى هذا الطائر، فقد يبدأُ بالبحثِ عنه.' } }),
 
-      P({ art:ART['clean'], audio:'p6', tint:'#9CC4D8',
-          en:{ name:'He Kept Everything Clean',
-               line:'Clean hands, clean clothes, clean teeth, clean water. He cleaned his teeth with a siwak — a soft green twig.',
-               sound:'Peace be upon him.',
-               note:'He said purity is half of faith. — Sahih Muslim. And that were it not hard on people, he would have asked them to use the siwak before every prayer. — Sahih al-Bukhari.' },
-          ar:{ name:'كانَ يُحِبُّ النَّظافة',
-               line:'يَدانِ نظيفتان، وثوبٌ نظيف، وأسنانٌ نظيفة، وماءٌ نظيف. وكان يُنظّفُ أسنانَه بِالسِّواكِ، عودٍ أخضرَ ليِّن.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'قال: «الطُّهورُ شَطرُ الإيمان». — صحيح مسلم. وقال: «لولا أن أشُقَّ على أُمّتي لأمَرتُهم بالسِّواكِ عندَ كلِّ صلاة». — صحيح البخاري.' } }),
+      P({ art:ART['cat'], audio:'p6', tint:'#C97B4A',
+          en:{ name:'The Cat',
+               line:'Four soft feet that make no sound at all, and eyes that can see in the dark better than yours.',
+               sound:'Allah is the Maker of everything.',
+               note:'Susu, naturally. Cats see about six times better than we do in low light, which is a fact worth keeping for later.' },
+          ar:{ name:'القِطَّة',
+               line:'أربعُ أقدامٍ ناعمةٍ لا تُصدِرُ صوتاً، وعَينانِ تُبصِرانِ في الظلامِ أفضلَ من عينَيك.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'سوسو، بالطبع. والقِطَطُ تُبصِرُ في الضوءِ الخافتِ نحوَ ستِّ مرّاتٍ أفضلَ منّا، ومعلومةٌ تُحفَظُ لوقتِها.' } }),
 
-      P({ art:ART['bread'], audio:'p7', tint:'#C9842E',
-          en:{ name:'He Fed Whoever Was Hungry',
-               line:'If there was food, it was shared. If there was little, it was shared more carefully. Nobody at his door was sent away empty.',
-               sound:'Peace be upon him.',
-               note:'He said: feed the hungry, visit the sick, and set the captive free. — Sahih al-Bukhari. Food for two is enough for three, he said, and food for three is enough for four.' },
-          ar:{ name:'كانَ يُطعِمُ الجائع',
-               line:'إن وُجِدَ الطعامُ قُسِم. وإن قلَّ قُسِمَ بعنايةٍ أكثر. ولم يرجِع أحدٌ من بابِه خاليَ اليدَين.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'قال: «أطعِموا الجائع، وعودوا المريض، وفُكّوا العاني». — صحيح البخاري. وقال: «طعامُ الاثنينِ كافي الثلاثة، وطعامُ الثلاثةِ كافي الأربعة».' } }),
+      P({ art:ART['moon'], audio:'p7', tint:'#6E7FA8',
+          en:{ name:'The Moon and the Stars',
+               line:'A thin white curve, and behind it more stars than anyone has ever finished counting.',
+               sound:'Allah is the Maker of everything.',
+               note:'The crescent is how the month is counted, so this page quietly explains Ramadan and Eid years before you need to.' },
+          ar:{ name:'القَمَرُ والنُّجوم',
+               line:'قَوسٌ أبيضُ رفيع، ومن ورائِه نُجومٌ أكثرُ ممّا أتمَّ أحدٌ عدَّه.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'بالهِلالِ يُحسَبُ الشهر، فهذه الصفحةُ تشرَحُ رمضانَ والعيدَ بهدوءٍ قبلَ سنواتٍ من حاجتِك إلى شرحِهما.' } }),
 
-      P({ art:ART['home'], audio:'p8', tint:'#8FB58A',
-          en:{ name:'He Helped at Home',
-               line:'He mended his own sandals. He swept. He sat with his family, and he was easy to live with.',
-               sound:'Peace be upon him.',
-               note:'Asked what he did at home, Aisha said: he was in the service of his family. — Sahih al-Bukhari. And: the best of you is the best to his family. — Jami\' at-Tirmidhi. A good page for a father to read out loud.' },
-          ar:{ name:'كانَ يُعينُ في البَيت',
-               line:'كان يخصِفُ نعلَه بيدِه. ويكنُسُ البيت. ويجلِسُ مع أهلِه، وكان هيّناً ليّناً في عِشرتِه.',
-               sound:'صلّى اللهُ عليه وسلّم.',
-               note:'سُئِلَت عائشةُ: ما كان يصنَعُ في بيتِه؟ قالت: «كان في مِهنةِ أهلِه». — صحيح البخاري. وقال: «خيرُكم خيرُكم لأهلِه». — جامع الترمذي. صفحةٌ يحسُنُ أن يقرأَها الأبُ بصوتٍ مسموع.' } }),
+      P({ art:ART['rain'], audio:'p8', tint:'#7FA6C9',
+          en:{ name:'The Rain',
+               line:'It goes up without anyone seeing, and comes down again on the dry ground, and the ground turns green.',
+               sound:'Allah is the Maker of everything.',
+               note:'Dead earth turning green is one of the oldest pictures in the Qur\'an for being brought back to life.' },
+          ar:{ name:'المَطَر',
+               line:'يصعَدُ دونَ أن يراه أحد، ثمّ ينزِلُ على الأرضِ اليابسة، فتُصبِحُ الأرضُ خَضراء.',
+               sound:'اللهُ خالِقُ كُلِّ شيء.',
+               note:'اخضرارُ الأرضِ بعدَ موتِها من أقدمِ صُوَرِ القرآنِ للبعثِ والحياة.' } }),
 
       P({ art:ART['goodnight'], audio:'p9', tint:'#6E7FA8',
-          en:{ name:'And So We Say',
-               line:'Kind to children, kind to animals, kind to whoever was hungry. When we hear his name, we say one thing.',
-               sound:'Peace be upon him. Goodnight, <span class="babyname">Yusuf</span>.',
-               note:'Say the whole phrase every time his name comes up, including now. He will have it by heart long before he knows what it means.' },
-          ar:{ name:'ولذلك نقول',
-               line:'رفيقٌ بالأطفال، رفيقٌ بالحيوان، رفيقٌ بكلِّ جائع. وإذا سمِعنا اسمَه قُلنا كلمةً واحدة.',
-               sound:'صلّى اللهُ عليه وسلّم. تُصبِحُ على خير، يا <span class="babyname">يوسف</span>.',
-               note:'قُل الصلاةَ كاملةً كلّما ذُكِرَ اسمُه، ومنها الآن. وسيحفَظُها قبلَ أن يعرِفَ معناها بزمنٍ طويل.' } })
+          en:{ name:'And You',
+               line:'The sky, the sea, the palm, the bee, the bird, the cat, the moon, the rain — and one small boy in a blanket.',
+               sound:'Goodnight, <span class="babyname">Yusuf</span>.',
+               note:'The list at the end is the whole book in one breath. Read it slowly enough that each one lands.' },
+          ar:{ name:'وأنتَ أيضاً',
+               line:'السماءُ، والبحرُ، والنخلةُ، والنحلةُ، والطائرُ، والقِطّةُ، والقمرُ، والمطر — وطفلٌ صغيرٌ في غِطائِه.',
+               sound:'تُصبِحُ على خير، يا <span class="babyname">يوسف</span>.',
+               note:'التعدادُ في الخاتمةِ هو الكتابُ كلُّه في نَفَسٍ واحد. اقرأه ببطءٍ يكفي ليصِلَ كلُّ اسم.' } })
     ]
   }
 };
 
 // Egyptian Arabic: the story words in مصري. Anything not given here (the
 // grown-up notes) falls back to the فصحى page.
-var EG = { nabina: [
+var EG = { khalaqa: [
  {
-  "eyebrow": "صلّى اللهُ عليه وسلّم",
-  "title": "نبيّنا<br><em>كان بيحب</em>",
-  "line": "تمن حاجات صغيّرة، وكلّها سهل نعملها زيّه."
+  "eyebrow": "أوّل كتاب عن الدنيا",
+  "title": "<em>ربّنا</em><br>خلقها",
+  "line": "تمن حاجات تقدر تشوفها من مكانك ده."
  },
  {
-  "name": "كان بيحب الأطفال",
-  "line": "كان بيقف لهم في الطريق. ويسيبهم يطلعوا على ضهره. وعمره ما قال لطفل: ابعد.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "السما",
+  "line": "واسعة وزرقا، ومفيش حاجة ماسكاها. وموجودة كل صبح لمّا تبصّ.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان بيبدأ بالسلام",
-  "line": "على الكبير والصغير، وعلى اللي يعرفه واللي ميعرفوش. وكان بيحب يكون هو اللي يبدأ بالسلام.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "البحر",
+  "line": "بيطلع على الرملة ويرجع، طول النهار وطول الليل، وعمره ما نسي ولا مرّة.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان دايماً مبتسم",
-  "line": "صحابه قالوا: عمرنا ما شفنا حد بيبتسم أكتر منه. والابتسامة مبتكلّفش حاجة، ومع كده بتتكتب حسنة.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "النخلة",
+  "line": "طويلة، ورجليها في الرملة، شايلة ميت بلحة حلوة لأي حد معدّي.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان حنيّن على الحيوان",
-  "line": "القطّة كانت بتشرب من الميّة اللي كان هيتوضّى منها، فيسيبها تكمّل، ويقول إنها مش نجسة.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "النحلة",
+  "line": "أصغر من صباعك الكبير، وعارفة طريقها لكل وردة، وطريق الرجوع لبيتها.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان بيحب التمر واللبن",
-  "line": "أكل بسيط، وحاجة قليلة. شويّة تمرات وكوباية لبن، ويرضى ويحمد ربّنا.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "العصفورة",
+  "line": "بتسيب الغصن ومفيش تحتها أي حاجة، ومع كده الهوا شايلها.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان بيحب النضافة",
-  "line": "إيدين نضيفة، وهدوم نضيفة، وسنان نضيفة، وميّة نضيفة. وكان بينضّف سنانه بالسواك، عود أخضر طري.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "القطّة",
+  "line": "أربع رجلين طريّين مبيعملوش صوت، وعينين بتشوف في الضلمة أحسن من عينيك.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان بيأكّل الجعان",
-  "line": "لو فيه أكل يتقسم. ولو قليل يتقسم بعناية أكتر. ومحدّش رجع من عنده إيده فاضية.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "القمر والنجوم",
+  "line": "قوس أبيض رفيع، ووراه نجوم كتير محدّش يقدر يعدّها.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "كان بيساعد في البيت",
-  "line": "كان بيصلّح نعله بإيده. ويكنس البيت. ويقعد مع أهله، وكان طيّب وحنيّن معاهم.",
-  "sound": "صلّى اللهُ عليه وسلّم."
+  "name": "المطر",
+  "line": "بيطلع لفوق من غير ما حد يشوفه، وبعدين ينزل على الأرض الناشفة، فالأرض تبقى خضرا.",
+  "sound": "اللهُ خالِقُ كُلِّ شيء."
  },
  {
-  "name": "وعشان كده بنقول",
-  "line": "حنيّن على الأطفال، حنيّن على الحيوان، حنيّن على كل جعان. ولمّا بنسمع اسمه بنقول كلمة واحدة.",
-  "sound": "صلّى اللهُ عليه وسلّم. تصبح على خير، يا <span class=\"babyname\">يوسف</span>."
+  "name": "وإنت كمان",
+  "line": "السما، والبحر، والنخلة، والنحلة، والعصفورة، والقطّة، والقمر، والمطر — وبيبي صغيّر في غطاه.",
+  "sound": "تصبح على خير، يا <span class=\"babyname\">يوسف</span>."
  }
 ] };
 Object.keys(EG).forEach(function (k) {
   BOOK[k].pages.forEach(function (pg, i) { pg.eg = Object.assign({}, pg.ar, EG[k][i]); });
 });
 
-var AUDIO_DIR = { nabina:{ en:'audio-nabina/en/', ar:'audio-nabina/ar/', eg:'audio-nabina/eg/' } };
+var AUDIO_DIR = { khalaqa:{ en:'../audio-khalaqa/en/', ar:'../audio-khalaqa/ar/', eg:'../audio-khalaqa/eg/' } };
 var SFX_DIR   = {};
 
 var IMG_V1 = {
-  nabina: ['cover', 'children', 'salam', 'smile', 'cat', 'dates', 'clean', 'bread', 'home', 'goodnight']
+  khalaqa: ['cover', 'sky', 'sea', 'palm', 'bee', 'bird', 'cat', 'moon', 'rain', 'goodnight']
 };
-['nabina'].forEach(function (k) {
+['khalaqa'].forEach(function (k) {
   BOOK[k].pages.forEach(function (pg, i) {
-    pg.img = 'images-nabina/' + IMG_V1[k][i] + '.png';
+    pg.img = '../images-khalaqa/' + IMG_V1[k][i] + '.png';
   });
 });
 
@@ -794,7 +780,7 @@ var sfx     = document.getElementById('sfx');
 var fsBtn   = document.getElementById('fsBtn');
 var artBtn  = document.getElementById('artBtn');
 
-var ch = 'nabina', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = true;
+var ch = 'khalaqa', lang = 'en', at = 0, autoplay = true, unlocked = false, babyName = '', big = false, useImages = true;
 // Turn the pages by itself, for when nobody has a free hand. Off until
 // asked for: a book that starts moving on its own is startling.
 var autoturn = false, turnTimer = null;
@@ -887,7 +873,7 @@ function render(){
     input.addEventListener('input', function () {
       babyName = input.value;
       applyName();
-      try { localStorage.setItem('nabina-name', babyName.trim()); } catch (e) {}
+      try { localStorage.setItem('khalaqa-name', babyName.trim()); } catch (e) {}
     });
   }
   document.getElementById('playBtn').addEventListener('click', togglePlay);
@@ -1029,7 +1015,7 @@ turnBtn.addEventListener('click', function () {
 
 artBtn.addEventListener('click', function () {
   useImages = !useImages;
-  try { localStorage.setItem('nabina-art', useImages ? 'photo' : 'drawn'); } catch (e) {}
+  try { localStorage.setItem('khalaqa-art', useImages ? 'photo' : 'drawn'); } catch (e) {}
   render();
 });
 
@@ -1090,9 +1076,9 @@ book.addEventListener('touchend', function (e) {
 }, { passive: true });
 
 try {
-  var saved = localStorage.getItem('nabina-name');
+  var saved = localStorage.getItem('khalaqa-name');
   if (saved) babyName = saved;
-  var savedArt = localStorage.getItem('nabina-art');
+  var savedArt = localStorage.getItem('khalaqa-art');
   if (savedArt) useImages = savedArt === 'photo';
 } catch (e) {}
 

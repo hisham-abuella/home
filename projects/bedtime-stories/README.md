@@ -212,6 +212,36 @@ quartile correction, **and add a `viewBox`**: segno writes `width`/`height` but
 no `viewBox`, so without one the symbol renders at natural size and the page
 clips it into something that will not scan.
 
+### Two Arabics in print
+
+Every printed edition comes in two versions: the fusha the books are written
+in, and the Egyptian of the مصري switch. Same pictures, same English, the
+other Arabic underneath. The Egyptian ones carry an `-eg` suffix and set
+`lang="ar-EG"` so the right shaping is used.
+
+```sh
+node tools/make-print.js nabina.html out.html --board --dialect eg
+```
+
+Both come from the book's own `BOOK` data, so neither can drift from the
+screen version.
+
+### Checking the QR codes
+
+Every chapter cover carries a code that opens the narrated version. A QR that
+is clipped, stale or pointing at the wrong book still looks exactly like a QR,
+so it is checked by reading it back out of the finished PDF:
+
+```sh
+tools/check-qr.py      # needs zxing-cpp and pillow
+```
+
+It rasterises every page of every PDF, decodes what it finds, and fails if any
+code is missing or points somewhere that is not that book. It also knows how
+many codes each edition should have: a Lulu interior has none, because the
+cover moved to its own spread — except the zoo's, whose second chapter opens
+with its own cover inside the book.
+
 ### Checking a print edition before you print it
 
 A page whose words run past the bottom is clipped silently by `overflow:hidden`,
