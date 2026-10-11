@@ -35,7 +35,7 @@
   {
    "id": "s7",
    "title": "Pig",
-   "transcript": "[warmly] الخِنزيرُ يقول: <break time=\"0.3s\" /> [playfully] أويك! أويك، أويك!"
+   "transcript": "[warmly] الفلامنغو يقول: <break time=\"0.3s\" /> [playfully] هونك! هونك، هونك!"
   },
   {
    "id": "s8",
@@ -46,6 +46,36 @@
    "id": "s9",
    "title": "Grey cat",
    "transcript": "[warmly] القِطّةُ النَّعسانةُ تُخَرخِر: <break time=\"0.3s\" /> [softly] خُرخَرة، خُرخَرة."
+  },
+  {
+   "id": "s10",
+   "title": "s10",
+   "transcript": "[warmly] الحمامةُ تقول: <break time=\"0.3s\" /> [softly] هديل! هديل، هديل!"
+  },
+  {
+   "id": "s11",
+   "title": "s11",
+   "transcript": "[warmly] الغرابُ يقول: <break time=\"0.3s\" /> [playfully] غاق! غاق، غاق!"
+  },
+  {
+   "id": "s12",
+   "title": "s12",
+   "transcript": "[warmly] الطاووسُ يقول: <break time=\"0.3s\" /> [playfully] كيـاو! كيـاو!"
+  },
+  {
+   "id": "s13",
+   "title": "s13",
+   "transcript": "[warmly] الأسدُ يقول: <break time=\"0.3s\" /> [playfully] زَئير! زَئير!"
+  },
+  {
+   "id": "s14",
+   "title": "s14",
+   "transcript": "[warmly] الجملُ يقول: <break time=\"0.3s\" /> [playfully] همهمة! همهمة!"
+  },
+  {
+   "id": "s15",
+   "title": "s15",
+   "transcript": "[warmly] الببغاءُ يقول: <break time=\"0.3s\" /> [playfully] أهلاً! أهلاً، أهلاً!"
   }
  ]
 }

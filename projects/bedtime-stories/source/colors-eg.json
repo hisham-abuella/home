@@ -40,7 +40,7 @@
   {
    "id": "c7",
    "title": "Pink",
-   "transcript": "[warmly] بمبي. <break time=\"0.4s\" /> خنزير صغيّر بمبي مدوّر، في الطين. أويك! أويك! <break time=\"0.5s\" /> [playfully] أويك أويك!"
+   "transcript": "[warmly] بمبي. <break time=\"0.4s\" /> فلامنجو بمبي طويل، واقف على رجل واحدة. هونك! هونك! <break time=\"0.5s\" /> [playfully] هونك هونك هونك!"
   },
   {
    "id": "c8",
@@ -53,9 +53,39 @@
    "transcript": "[warmly] رصاصي. <break time=\"0.4s\" /> قطّة رصاصي طريّة، متكوّرة ونعسانة. خُرّ… <break time=\"0.5s\" /> [softly] خُرّ…"
   },
   {
+   "id": "c11",
+   "title": "أبيض",
+   "transcript": "[warmly] أبيض. <break time=\"0.4s\" /> حمامة بيضا، على السطح. هديل! هديل! <break time=\"0.5s\" /> [softly] هديل… هديل…"
+  },
+  {
+   "id": "c12",
+   "title": "إسود",
+   "transcript": "[warmly] إسود. <break time=\"0.4s\" /> غراب إسود، على سور الجنينة. غاق! غاق! <break time=\"0.5s\" /> [playfully] غاق غاق غاق!"
+  },
+  {
+   "id": "c13",
+   "title": "فيروزي",
+   "transcript": "[warmly] فيروزي. <break time=\"0.4s\" /> طاووس فيروزي بيفتح ديله. كيـاو! <break time=\"0.5s\" /> [playfully] كيـاو!"
+  },
+  {
+   "id": "c14",
+   "title": "دهبي",
+   "transcript": "[warmly] دهبي. <break time=\"0.4s\" /> أسد دهبي، بلبدة كبيرة. زئير! <break time=\"0.5s\" /> [playfully] زئير!"
+  },
+  {
+   "id": "c15",
+   "title": "لون الرمل",
+   "transcript": "[warmly] لون الرمل. <break time=\"0.4s\" /> جمل لون الرمل، بيمشي في الصحرا. همهمة! <break time=\"0.5s\" /> [playfully] همهمة!"
+  },
+  {
+   "id": "c16",
+   "title": "أخضر فاتح",
+   "transcript": "[warmly] أخضر فاتح. <break time=\"0.4s\" /> بغبغان أخضر فاتح، بيتعلّم الكلام. أهلاً! أهلاً! <break time=\"0.5s\" /> [playfully] أهلاً، أهلاً!"
+  },
+  {
    "id": "c9",
    "title": "All",
-   "transcript": "[warmly] كل الألوان. <break time=\"0.4s\" /> أحمر، أصفر، أزرق، أخضر، برتقاني، بنفسجي، بمبي، وبنّي، ورصاصي. كلّهم مع بعض. <break time=\"0.5s\" /> [whispers] تصبح على خير يا يوسف."
+   "transcript": "[warmly] كل الألوان. <break time=\"0.4s\" /> أحمر، أصفر، أزرق، أخضر، برتقاني، بنفسجي، بمبي، بنّي، رصاصي، <break time=\"0.3s\" /> أبيض، إسود، فيروزي، دهبي، لون الرمل، وأخضر فاتح. كلّهم مع بعض. <break time=\"0.5s\" /> [whispers] تصبح على خير يا يوسف."
   }
  ]
 }

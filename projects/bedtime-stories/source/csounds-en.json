@@ -35,7 +35,7 @@
   {
    "id": "s7",
    "title": "Pig",
-   "transcript": "[playfully] The pig says oink! Oink, oink!"
+   "transcript": "[playfully] The flamingo says honk! Honk, honk!"
   },
   {
    "id": "s8",
@@ -46,6 +46,36 @@
    "id": "s9",
    "title": "Grey cat",
    "transcript": "[softly] The sleepy cat goes purr, purr, purr."
+  },
+  {
+   "id": "s10",
+   "title": "s10",
+   "transcript": "[playfully] The dove says coo! Coo, coo!"
+  },
+  {
+   "id": "s11",
+   "title": "s11",
+   "transcript": "[playfully] The crow says caw! Caw, caw!"
+  },
+  {
+   "id": "s12",
+   "title": "s12",
+   "transcript": "[playfully] The peacock says kee-ow! Kee-ow!"
+  },
+  {
+   "id": "s13",
+   "title": "s13",
+   "transcript": "[playfully] The lion says roar! Roar, roar!"
+  },
+  {
+   "id": "s14",
+   "title": "s14",
+   "transcript": "[playfully] The camel says hummph! Hummph!"
+  },
+  {
+   "id": "s15",
+   "title": "s15",
+   "transcript": "[playfully] The parrot says hello! Hello, hello!"
   }
  ]
 }
