@@ -6,22 +6,39 @@ no framework, no build step. Open `index.html` for the shelf.
 
 | Story | File | What it is |
 | --- | --- | --- |
-| The Black and White Zoo | `black-white-zoo.html` | Contrast, then colour |
-| Susu the Cat | `susu.html` | A true family story |
-| Bismillah | `bismillah.html` | One word, every page |
-| Alhamdulillah, Little One | `alhamdulillah.html` | Eight plain gifts |
-| Allah Made It | `khalaqa.html` | Eight pieces of the world |
-| The Prophet Loved | `nabina.html` | Eight things he loved |
+| The Black and White Zoo | `books/black-white-zoo.html` | Contrast, then colour |
+| Susu the Cat | `books/susu.html` | A true family story |
+| Bismillah | `books/bismillah.html` | One word, every page |
+| Alhamdulillah, Little One | `books/alhamdulillah.html` | Eight plain gifts |
+| Allah Made It | `books/khalaqa.html` | Eight pieces of the world |
+| The Prophet Loved | `books/nabina.html` | Eight things he loved |
+
+## Where things live
+
+```
+index.html     the shelf, and the only page at the root
+books/         the six stories, one self-contained HTML file each
+audio*/        narration, one folder per book per language
+images*/       the generated artwork the pages load
+input/         what the print build reads: qr codes and print-weight JPEGs
+build/         scratch HTML the PDF renderer runs on; nothing to keep
+print/arabic/     finished PDFs, fusha
+print/egyptian/   finished PDFs, مصري
+```
+
+The books sit a directory down, so they reach their audio and artwork as
+`../audio-susu/en/`. Only `index.html` is at the root.
 
 ## The Black and White Zoo
 
-Two chapters, 11 pages each, English and Arabic.
+Two chapters, 28 pages, in English, fusha and Egyptian.
 
-- **Black & White** — zebra, panda, cow, penguin, owl, orca, sheep, puppy, cat,
-  goodnight moon. Maximum contrast, because that is what a newborn resolves best.
-- **Colours** — red, yellow, blue, green, orange, purple, pink, brown, grey, rainbow.
-  Introduced in the order infant colour vision develops; heavy black outlines keep the
-  contrast working.
+- **Black & White** — 11 pages: zebra, panda, cow, penguin, owl, orca, sheep, puppy,
+  cat, goodnight moon. Maximum contrast, because that is what a newborn resolves best.
+- **Colours** — 17 pages: red, yellow, blue, green, orange, purple, pink, brown, grey,
+  then white, black, turquoise, gold, sand and light green, then a rainbow. The first
+  nine come in the order infant colour vision develops; the six after them widen the
+  vocabulary once the basics are in. Heavy black outlines keep the contrast working.
 
 A red bird hides in a different corner of every animal page — red is the first colour
 a baby can pick out. Nine hiding places.
@@ -196,9 +213,9 @@ whoever is holding the printed book can play the same voice reading it.
 
 | Cover | Opens |
 |---|---|
-| The Black and White Zoo | `.../black-white-zoo.html` |
-| Nine Bright Colours (chapter two) | `.../black-white-zoo.html#color` |
-| Susu the Cat | `.../susu.html` |
+| The Black and White Zoo | `.../books/black-white-zoo.html` |
+| Fifteen Bright Colours (chapter two) | `.../books/black-white-zoo.html#color` |
+| Susu the Cat | `.../books/susu.html` |
 
 They point at this repo's own GitHub Pages site,
 `https://hisham-abuella.github.io/bedtime-stories/`, which serves the html, the

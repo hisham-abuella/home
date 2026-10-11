@@ -40,7 +40,7 @@
   {
    "id": "c7",
    "title": "Pink",
-   "transcript": "[warmly] Pink. <break time=\"0.4s\" /> A round pink pig, in the squishy mud. Oink! Oink! <break time=\"0.5s\" /> [playfully] Oink oink oink!"
+   "transcript": "[warmly] Pink. <break time=\"0.4s\" /> A tall pink flamingo, standing on one leg. Honk! Honk! <break time=\"0.5s\" /> [playfully] Honk honk honk!"
   },
   {
    "id": "c8",
@@ -53,9 +53,39 @@
    "transcript": "[warmly] Grey. <break time=\"0.4s\" /> A soft grey cat, curled up and sleepy. Purr... <break time=\"0.5s\" /> [softly] purr..."
   },
   {
+   "id": "c11",
+   "title": "White",
+   "transcript": "[warmly] White. <break time=\"0.4s\" /> A white dove, up on the roof. Coo! Coo! <break time=\"0.5s\" /> [softly] Coo… coo…"
+  },
+  {
+   "id": "c12",
+   "title": "Black",
+   "transcript": "[warmly] Black. <break time=\"0.4s\" /> A black crow, on the garden wall. Caw! Caw! <break time=\"0.5s\" /> [playfully] Caw caw caw!"
+  },
+  {
+   "id": "c13",
+   "title": "Turquoise",
+   "transcript": "[warmly] Turquoise. <break time=\"0.4s\" /> A turquoise peacock opens his tail. Kee-ow! <break time=\"0.5s\" /> [playfully] Kee-ow!"
+  },
+  {
+   "id": "c14",
+   "title": "Gold",
+   "transcript": "[warmly] Gold. <break time=\"0.4s\" /> A gold lion, with a great big mane. Roar! <break time=\"0.5s\" /> [playfully] Roooar!"
+  },
+  {
+   "id": "c15",
+   "title": "Sand",
+   "transcript": "[warmly] Sand. <break time=\"0.4s\" /> A sandy camel, walking in the desert. Hummph! <break time=\"0.5s\" /> [playfully] Hummph!"
+  },
+  {
+   "id": "c16",
+   "title": "Light Green",
+   "transcript": "[warmly] Light green. <break time=\"0.4s\" /> A light green parrot, learning to talk. Hello! Hello! <break time=\"0.5s\" /> [playfully] Hello, hello!"
+  },
+  {
    "id": "c9",
    "title": "Rainbow",
-   "transcript": "[warmly] All the colours. <break time=\"0.4s\" /> Red, yellow, blue, green, orange, purple, pink, brown and grey. All of them together. <break time=\"0.5s\" /> [whispers] Goodnight, Yusuf."
+   "transcript": "[warmly] All the colours. <break time=\"0.4s\" /> Red, yellow, blue, green, orange, purple, pink, brown, grey, <break time=\"0.3s\" /> white, black, turquoise, gold, sand and light green. All of them together. <break time=\"0.5s\" /> [whispers] Goodnight, Yusuf."
   }
  ]
 }

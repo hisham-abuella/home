@@ -40,7 +40,7 @@
   {
    "id": "c7",
    "title": "Pink",
-   "transcript": "[warmly] وَرْديّ. <break time=\"0.4s\" /> خِنزيرٌ صغيرٌ وَرْديٌّ مُستدير، في الطين. أويك! أويك! <break time=\"0.5s\" /> [playfully] أويك أويك!"
+   "transcript": "[warmly] وَرْديّ. <break time=\"0.4s\" /> فلامنغو ورديٌّ طويل، واقفٌ على ساقٍ واحدة. هونك! هونك! <break time=\"0.5s\" /> [playfully] هونك هونك هونك!"
   },
   {
    "id": "c8",
@@ -53,9 +53,39 @@
    "transcript": "[warmly] رَماديّ. <break time=\"0.4s\" /> قِطّةٌ رماديّةٌ ناعمة، مُتكوّرةٌ ونعسانة. خُرخَرة… <break time=\"0.5s\" /> [softly] خُرخَرة…"
   },
   {
+   "id": "c11",
+   "title": "أبيض",
+   "transcript": "[warmly] أبيض. <break time=\"0.4s\" /> حمامةٌ بيضاءُ، على السطح. هديل! هديل! <break time=\"0.5s\" /> [softly] هديل… هديل…"
+  },
+  {
+   "id": "c12",
+   "title": "أسود",
+   "transcript": "[warmly] أسود. <break time=\"0.4s\" /> غرابٌ أسودُ، على سورِ الحديقة. غاق! غاق! <break time=\"0.5s\" /> [playfully] غاق غاق غاق!"
+  },
+  {
+   "id": "c13",
+   "title": "فيروزي",
+   "transcript": "[warmly] فيروزي. <break time=\"0.4s\" /> طاووسٌ فيروزيٌّ يفتَحُ ذيلَه. كيـاو! <break time=\"0.5s\" /> [playfully] كيـاو!"
+  },
+  {
+   "id": "c14",
+   "title": "ذهبي",
+   "transcript": "[warmly] ذهبي. <break time=\"0.4s\" /> أسدٌ ذهبيٌّ، بِلِبدةٍ كبيرة. زَئير! <break time=\"0.5s\" /> [playfully] زَئير!"
+  },
+  {
+   "id": "c15",
+   "title": "رَملي",
+   "transcript": "[warmly] رَملي. <break time=\"0.4s\" /> جملٌ رمليٌّ، يمشي في الصحراء. همهمة! <break time=\"0.5s\" /> [playfully] همهمة!"
+  },
+  {
+   "id": "c16",
+   "title": "أخضر فاتح",
+   "transcript": "[warmly] أخضرُ فاتح. <break time=\"0.4s\" /> ببغاءٌ أخضرُ فاتحٌ، يتعلّمُ الكلام. أهلاً! أهلاً! <break time=\"0.5s\" /> [playfully] أهلاً، أهلاً!"
+  },
+  {
    "id": "c9",
    "title": "Rainbow",
-   "transcript": "[warmly] كلُّ الألوان. <break time=\"0.4s\" /> أحمر، أصفر، أزرق، أخضر، بُرتُقاليّ، بَنَفْسَجيّ، وَرْديّ، وبُنّيّ، ورَماديّ. كلُّها معاً. <break time=\"0.5s\" /> [whispers] تُصبِحُ على خيرٍ يا يوسف."
+   "transcript": "[warmly] كلُّ الألوان. <break time=\"0.4s\" /> أحمر، أصفر، أزرق، أخضر، بُرتُقاليّ، بَنَفْسَجيّ، وَرْديّ، بُنّيّ، رَماديّ، <break time=\"0.3s\" /> أبيض، أسود، فيروزيّ، ذهبيّ، رَمليّ، وأخضرُ فاتح. كلُّها معاً. <break time=\"0.5s\" /> [whispers] تُصبِحُ على خيرٍ يا يوسف."
   }
  ]
 }
