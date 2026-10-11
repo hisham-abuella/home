@@ -11,7 +11,7 @@ no framework, no build step. Open `index.html` for the shelf.
 | Bismillah | `books/bismillah.html` | One word, every page |
 | Alhamdulillah, Little One | `books/alhamdulillah.html` | Eight plain gifts |
 | Allah Made It | `books/khalaqa.html` | Eight pieces of the world |
-| The Prophet Loved | `books/nabina.html` | Eight things he loved |
+| Our Prophet | `books/nabina.html` | Eight things he loved |
 
 ## Where things live
 
@@ -283,6 +283,40 @@ Anything it reports is text that will not be on the paper. The size tiers
 (`snug` at 150 characters, `dense` at 245) were set by running this until all
 twelve editions came back clean, not by eye.
 
+### Two bound volumes
+
+Six separate 10-page books are below every binding Lulu offers except staples.
+Bound as two volumes they are 40 pages each, which clears the 32-page
+perfect-bound minimum and the 24-page hardcover one — so these can be a real
+hardcover instead of a stapled pamphlet.
+
+Checked against Lulu's own Square template pack: their interior template is
+630 x 630 pts and ours matches exactly. Their generic cover template carries a
+0.1321in spine, which is their formula (`pages / 444 + 0.06`) at the 32-page
+minimum — at 40 pages that is wrong, so the spine is computed from the real
+page count instead and comes out 3.81mm.
+
+| Volume | Chapters | Pages |
+|---|---|---|
+| **First Words** · أوّلُ الكلمات | Bismillah · Alhamdulillah · Allah Made It · Our Prophet ﷺ | 40 |
+| **Animals and Colours** · الحيوانات والألوان | Black & White · Fifteen Colours · Susu the Cat | 40 |
+
+```sh
+tools/build-volumes.sh     # 8 PDFs: interior + cover, each in both Arabics
+```
+
+Each volume gets a cover of its own listing what is inside, in both languages,
+and every book keeps its own cover as a section divider. The volume cover's QR
+opens the shelf rather than whichever story happens to be first; the dividers
+inside keep their own per-story codes.
+
+`print/` now holds only what you would upload or print:
+
+```
+print/arabic/     fusha    — 2 volumes (interior + cover) + 6 board editions
+print/egyptian/   مصري     — the same again
+```
+
 ### Ordering from a print-on-demand printer (Lulu)
 
 The board edition is built for a kitchen table: crop marks to cut to, a folio to
@@ -292,18 +326,21 @@ opposite, so there is a separate format rather than a tweak to the old one.
 
 ```sh
 tools/regen-print-art.sh   # once: 1536px artwork, ~2 hours on the Mac Studio
-tools/build-lulu.sh        # 24 PDFs: interior + cover, drawn and illustrated
-tools/check-lulu.sh        # verifies all of it against the spec below
+tools/make-qr.py           # the printed codes, whenever a URL changes
+tools/build-volumes.sh     # the two bound volumes
+tools/build-print.sh       # the home board editions
+tools/check-lulu.sh        # trim, page count, resolution, fonts, stray marks
+tools/check-qr.py          # decodes every code back out of every PDF
 ```
 
 | Lulu requires | Board edition | `--lulu` |
 |---|---|---|
-| Small Square: 7.5in trim, 0.125in bleed | 180mm + 3mm | 7.5in + 0.125in |
+| Square: 8.5in trim, 0.125in bleed | 180mm + 3mm | 8.5in + 0.125in |
 | Safety margin 0.5in / 12.7mm | 8mm | 12.7mm |
 | No trim, bleed or margin lines | crop marks + folio | none |
 | Cover as its own back+front spread | cover is interior page 1 | separate 15.25 x 7.75in file |
 | Images 300-600ppi | 1024px art, 241ppi at full size | 1536px art, 318-395ppi |
-| Saddle stitch 4-48 pages | 10 and 22 | padded to 12 and 24 |
+| Perfect bound 32-800 pages, multiple of 4 | 10 and 22 | two volumes of 40 |
 
 Two of those are worth explaining.
 
