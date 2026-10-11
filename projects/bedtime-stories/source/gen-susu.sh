@@ -1,6 +1,11 @@
 #!/bin/zsh
-DEST=/Users/hishamabuella/Work/personal_website/home/projects/bedtime-stories/images-susu
-REF=/private/tmp/claude-501/-Users-hishamabuella-Work/00b1ad39-acac-4ee0-8191-40b45b61f32e/scratchpad/susu/susu-ref1-sm.png
+DEST=${DEST:-/Users/hishamabuella/Work/personal_website/home/projects/bedtime-stories/images-susu}
+SIZE=${SIZE:-1024}
+mkdir -p "$DEST"
+# Her cover is drawn from her real photograph, which lives in the repo so this
+# script keeps working after any scratch directory is cleared.
+REPO=$(cd "$(dirname "$0")/.." && pwd)
+REF=${REF:-$REPO/images/susu-photo.jpg}
 CLI=/opt/homebrew/bin/draw-things-cli
 SUSU="a brown and grey mackerel tabby cat with a white chest, four white paws, a pink nose and green eyes"
 STYLE="warm children's picture book illustration, soft gouache, gentle rounded shapes, cosy, generous negative space, muted warm palette"
@@ -10,16 +15,15 @@ gen () {
   [[ -f "$DEST/$1.png" ]] && { echo "skip $1"; return; }
   $CLI generate --model z_image_turbo_1.0_q8p.ckpt \
     --prompt "$2" --negative-prompt "$NEG" \
-    --width 1024 --height 1024 --seed "$3" \
+    --width $SIZE --height $SIZE --seed "$3" \
     --output "$DEST/$1.png" >/dev/null 2>&1 && echo "done $1" || echo "FAIL $1"
 }
 
-# the cover is drawn from her actual photograph
-$CLI generate --model z_image_turbo_1.0_q8p.ckpt \
-  --prompt "portrait of $SUSU resting by a sunny window, $STYLE" \
-  --negative-prompt "$NEG" --image "$REF" --strength 0.62 \
-  --width 1024 --height 1024 --seed 301 \
-  --output "$DEST/cover.png" >/dev/null 2>&1 && echo "done cover (img2img)" || echo "FAIL cover"
+# The cover is still taken from her real photograph ($REF) — the pose and the
+# light below are described from it — but drawn rather than traced. Z-Image
+# Turbo's img2img reproduces a photograph almost exactly at any strength worth
+# using, which left a photographic cover on a book of gouache illustrations.
+gen cover "portrait of $SUSU lying on her side in a warm patch of afternoon sunlight on a soft cream carpet, eyes half open, one ear lit from behind, $STYLE" 301
 
 gen oklahoma   "$SUSU as a small kitten sitting beside a stack of books, a snowy window behind, $STYLE" 302
 gen desk       "$SUSU curled asleep on a desk full of papers beside a glowing lamp at night, $STYLE" 303
