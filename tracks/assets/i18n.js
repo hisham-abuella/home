@@ -5,7 +5,9 @@
    data-i18n="key", and the page holds its Arabic in
    <script type="application/json" id="i18n-ar">{ "key": "…" }</script>.
    Any button with [data-lang-toggle] flips the language; ?lang=ar opens in
-   Arabic. Switching sets <html lang dir>, so layout written with logical
+   Arabic. Labels only screen readers hear change too: data-i18n-aria="key"
+   swaps aria-label and data-i18n-alt="key" swaps an image's alt, from the
+   same Arabic block. Switching sets <html lang dir>, so layout written with logical
    properties (inline-start/end) mirrors itself without per-page RTL rules.
    ========================================================================== */
 
@@ -17,7 +19,14 @@
     var ar = source ? JSON.parse(source.textContent) : {};
     var nodes = document.querySelectorAll('[data-i18n]');
 
+    var attrs = [['data-i18n-aria', 'aria-label'], ['data-i18n-alt', 'alt']];
+
     nodes.forEach(function (el) { el.dataset.en = el.innerHTML; });
+    attrs.forEach(function (a) {
+        document.querySelectorAll('[' + a[0] + ']').forEach(function (el) {
+            el.setAttribute(a[0] + '-en', el.getAttribute(a[1]) || '');
+        });
+    });
 
     function apply(lang) {
         var isAr = lang === 'ar';
@@ -26,6 +35,12 @@
         nodes.forEach(function (el) {
             var text = isAr ? ar[el.dataset.i18n] : el.dataset.en;
             if (text != null) el.innerHTML = text;
+        });
+        attrs.forEach(function (a) {
+            document.querySelectorAll('[' + a[0] + ']').forEach(function (el) {
+                var text = isAr ? ar[el.getAttribute(a[0])] : el.getAttribute(a[0] + '-en');
+                if (text != null) el.setAttribute(a[1], text);
+            });
         });
         document.querySelectorAll('[data-lang-toggle]').forEach(function (b) {
             b.textContent = isAr ? 'English' : 'عربي';
@@ -41,6 +56,14 @@
     try { start = localStorage.getItem('mockup-lang') || start; } catch (e) { /* storage unavailable */ }
     var param = new URLSearchParams(location.search).get('lang');
     if (param === 'ar' || param === 'en') start = param;
+
+    // Opened as the Arabic page: point canonical and og:url at the ?lang=ar address.
+    if (param === 'ar') {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        var ogUrl = document.querySelector('meta[property="og:url"]');
+        if (canonical) canonical.href = canonical.href.split('?')[0] + '?lang=ar';
+        if (ogUrl) ogUrl.content = ogUrl.content.split('?')[0] + '?lang=ar';
+    }
 
     document.querySelectorAll('[data-lang-toggle]').forEach(function (b) {
         b.addEventListener('click', function () { apply(root.dir === 'rtl' ? 'en' : 'ar'); });
