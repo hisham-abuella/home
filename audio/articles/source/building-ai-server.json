@@ -1,0 +1,66 @@
+{
+ "title": "Building a Personal AI Engine",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Building a Personal AI Engine. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> I got tired of depending on cloud services for everything. The latency, the cost, the privacy worries. I wanted my own AI that runs locally, responds instantly, and stays completely private. [cheerful] So I built one. A personal AI engine on my Mac Studio, reachable from any device in my house, through a web app I call aitch ay eye. <break time=\"0.5s\" /> When I first wrote this in February, it was a chat window with some tools. Since then it has learned to see, draw, listen, and speak, all on the same machine, and it keeps every conversation in a notes vault it can search. It also went through a series of code reviews by a small team of AI agents, which taught me more about failure than any feature did. <break time=\"0.4s\" /> The goal is now written at the top of the project's to do list. A local AI assistant, for one person, good enough to replace the outside AI tools I pay for and send my data to. Every change is measured against that sentence."
+  },
+  {
+   "id": "s01",
+   "title": "The Hardware",
+   "transcript": "The hardware. <break time=\"0.5s\" /> It runs on a Mac Studio with the M four Max chip and sixty four gigabytes of unified memory, [happy] which is a sweet spot for local models. The processor and the graphics share one pool of memory, with no copying back and forth, so models that would need a big graphics card on a PC just run here. Ollama loads and runs the models, and its M L X builds are tuned for Apple Silicon."
+  },
+  {
+   "id": "s02",
+   "title": "The Models",
+   "transcript": "The models. <break time=\"0.5s\" /> The line up has changed almost completely since February. The main local model is Kwen three point eight, at twenty seven billion parameters, which can also see images, with a memory of about a hundred thousand words. Next to it are a larger mixture of experts model from the same family, Google's Gemma four for reasoning and writing, a few smaller models for quick questions, and a dedicated model for reading text out of scans. <break time=\"0.4s\" /> I can switch models in the middle of a conversation. What's new is that the default for hard questions is Claude, reached through the Claude Code command line tool, and the server checks it before every turn. If Claude is unavailable, the turn moves to the local Kwen model. But never silently. The chat shows a notice with Claude's own error, because a hidden downgrade would just look like Claude answering badly. <break time=\"0.4s\" /> [serious] Claude is a convenience, not a pillar. The real work is closing the gap until the local models don't need it."
+  },
+  {
+   "id": "s03",
+   "title": "The Web Interface",
+   "transcript": "The web interface. <break time=\"0.5s\" /> The heart of the project is still the web app, a Python server on the back end and plain web pages on the front, served securely to my laptop, phone, and tablet. In March it got a full redesign, and in September a pass for phones, with a wider input box and buttons that are big enough to tap. <break time=\"0.4s\" /> It streams answers as they're written, with a thinking state for reasoning models. Past conversations reopen from a side panel and survive restarts. When the context fills up, the conversation is summarized to fit. I can record a question on my phone and have the answer read aloud, all locally. I can ask for a picture, or paste one in and ask about it. There are thirty built in skills. And every conversation is saved to my notes vault."
+  },
+  {
+   "id": "s04",
+   "title": "Seeing, Drawing, Listening",
+   "transcript": "Beyond text. Seeing, drawing, listening. <break time=\"0.5s\" /> The biggest change this year is that aitch ay eye stopped being text only, without anything leaving the house. <break time=\"0.4s\" /> Images are made with Draw Things, with three models for three jobs. A fast one for drafts, a better one when it matters, and one that edits an existing picture. They appear right in the chat, and land in the vault. <break time=\"0.4s\" /> For vision, the Kwen model can look at a photo or screenshot, and a separate model reads text out of scans. You can make an image and ask the vision model to describe it. [playfully] A single blue marble came back as a glossy blue stone sphere. <break time=\"0.4s\" /> And voice runs through Voicebox, locally. Voice input was the first item on my what's next list in February. [excited] It's done."
+  },
+  {
+   "id": "s05",
+   "title": "A Memory That Stays Home",
+   "transcript": "A memory that stays home. <break time=\"0.5s\" /> Every conversation is now written to my Obsidian vault as a note, with the exchange, any code, and links to the images and audio it made. Conversations can branch, and each branch links back to its parent, so the vault reads like a map of how my thinking went. <break time=\"0.4s\" /> More importantly, the assistant can search it. What did we decide about the database? Search my notes for the gold price. It answers from what's actually there. No outside tool can do this, because these notes only exist on this machine. <break time=\"0.4s\" /> [playfully] And when nothing matches, it says so. Before this was wired up, asking a local model about my notes made it cheerfully invent one called Gold Price History."
+  },
+  {
+   "id": "s06",
+   "title": "The Skills System",
+   "transcript": "The skills system. <break time=\"0.5s\" /> It isn't just a chatbot. It can take actions. There are thirty skills, from reading and writing files and searching code, to fetching web pages, doing calculations, making images and speech, and searching the vault. <break time=\"0.4s\" /> The model asks for a tool, the server runs it, and then, and this was the big fix of the summer, the result goes back to the model so it answers from that evidence. [sighs] Before, it would run a web search and then answer from memory anyway. <break time=\"0.4s\" /> Read only tools run right away. Anything that changes something, like writing a file or playing audio out loud, shows a confirmation card first."
+  },
+  {
+   "id": "s07",
+   "title": "Failures That Look Like Success",
+   "transcript": "Failures that look like success. <break time=\"0.5s\" /> The most useful lesson of the year wasn't a feature. It was a pattern, and it's now written at the top of the plan. [serious] Failures here announce themselves as successes. Fixes should make failure visible, not just rarer. <break time=\"0.5s\" /> The symptom was nearly always the same. A blank answer that finished cleanly, as if the model had nothing to say. The causes were very different. <break time=\"0.4s\" /> What is two plus two answered nothing. The calculator matched a single space, computed nothing, failed, and the server still counted the question as handled. <break time=\"0.4s\" /> A typo in a model name streamed nothing, because the error never surfaced. Now it shows in the chat. <break time=\"0.4s\" /> And Gemma kept going quiet. [laughs] That one was disputed for weeks. It turned out Gemma is a thinking model, and it was thinking the whole time, into a hidden field, leaving the visible answer empty. Turning thinking off took it from four blanks in nine tries to none in six. <break time=\"0.4s\" /> Every one of these was fixed by making the failure say what it is."
+  },
+  {
+   "id": "s08",
+   "title": "A Team That Reviews the Code",
+   "transcript": "A team that reviews the code. <break time=\"0.5s\" /> In September I gave the project a standing team of AI agents in Claude Code, each with one job. A chief executive who holds the goal and decides what's worth doing. A Q A lead who reproduces every claim before anything is called done. A security reviewer. And owners for the dashboard, the models, the tools, the media, the vault, and operations. <break time=\"0.4s\" /> [serious] Their first security review found a real problem. Text from a fetched web page could end up driving the tools, a path from a malicious page to running commands on my Mac. It was closed within the day. Later reviews found dozens of quieter bugs. [serious] The rule that came out of it. Every finding is reproduced before it's fixed, and nothing is self certified."
+  },
+  {
+   "id": "s09",
+   "title": "Security",
+   "transcript": "Security. <break time=\"0.5s\" /> Aitch ay eye only works on my home network, by design. Inside that boundary, everything is encrypted, keys and passwords are stored as hashes, and both the login page and the interface are rate limited. Images and audio use short lived links, and the dashboard no longer carries the key at all. <break time=\"0.4s\" /> Anything that comes from outside, a web page, a document, an old note, is fenced off as data before the model sees it. A document that says ignore all previous instructions gets reported, not obeyed. <break time=\"0.4s\" /> And anything that changes the system needs my confirmation. The experimental agent mode, which can run shell commands the model writes, stays off unless I turn it on."
+  },
+  {
+   "id": "s10",
+   "title": "The Architecture",
+   "transcript": "The architecture. <break time=\"0.5s\" /> The stack is still simple on purpose. A Python server with streaming, and no database. Sessions are plain files on disk, and long term memory is the notes vault. The front end is plain web pages, no framework, and it installs to the home screen like an app. Local models, Claude, images, and speech each run as a separate service, so if one is down, only its features stop, and a panel shows which. <break time=\"0.5s\" /> [warmly] The best AI setup is the one you actually use every day. Because I can reach it from every device at home, it became a natural part of how I work."
+  },
+  {
+   "id": "s11",
+   "title": "What's Next",
+   "transcript": "What's next. <break time=\"0.5s\" /> Voice is done. So are images, vision, and long term memory. What remains is closing the gap with Claude, making the local models good enough at using tools that the cloud default becomes optional. Remote access, probably through Tailscale, once there's a reason for it. And more of the work that turned out to matter most. Finding the places where it fails quietly, and making them speak up. <break time=\"0.5s\" /> [warmly] No subscription for the local models. No data leaving my network unless I choose the cloud. Just my own hardware, good software, and complete ownership."
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "title": "My Journey",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] My Journey. From Cairo to California. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> Every journey has a beginning, and mine started in the vibrant city of Cairo, Egypt. Today, as I reflect on my path from the banks of the Nile to the innovation hubs of California, I'm amazed by how each step has shaped me. Not just my career, but my understanding of what it means to push the boundaries of wireless communication."
+  },
+  {
+   "id": "s01",
+   "title": "The Foundation Years",
+   "transcript": "The foundation years. <break time=\"0.5s\" /> [warmly] Growing up in Cairo, I was always fascinated by how invisible signals could carry voices, data, and connections across vast distances. That curiosity led me to electrical engineering, where I first met the beautiful complexity of signal processing and wireless communications. <break time=\"0.5s\" /> [gently] The best engineers are not just problem solvers. They are bridge builders, connecting the impossible with the inevitable."
+  },
+  {
+   "id": "s02",
+   "title": "Academic Research",
+   "transcript": "Academic research. <break time=\"0.5s\" /> My academic journey took me deep into visible light communications and sensing. [excited] One of my most memorable projects during the doctorate was a system that used a Raspberry Pi to control a photodetector, detecting vital signs, heartbeats and breathing, using nothing but visible light. <break time=\"0.4s\" /> That work led to publications at I triple E conferences, and showed what optical sensing could do for healthcare. Along the way came more than ten technical publications, on visible light communications, O F D M systems, wireless prototyping, and machine learning for wireless. And a United States patent, bridging academic research and practical engineering."
+  },
+  {
+   "id": "s03",
+   "title": "Industry",
+   "transcript": "Moving into industry. <break time=\"0.5s\" /> [curious] The move from academia to industry brought new challenges, and new opportunities. Over more than four years in industry, I've worked across the whole chain. Simulation and modeling of wireless systems. Fixed point implementation for hardware. The R F digital front end, and digital pre distortion to make power amplifiers more efficient. And channel estimation, including five gee baseband channel estimation."
+  },
+  {
+   "id": "s04",
+   "title": "Tools and Learning",
+   "transcript": "Tools, and continuous learning. <break time=\"0.5s\" /> Along the way I've worked with a wide set of tools. Matlab and LabVIEW for modeling and hardware, C, C plus plus, and Python for algorithm development. Each one opened new possibilities. <break time=\"0.4s\" /> [excited] The arrival of machine learning in wireless communications has been especially exciting. Watching AI change how we approach channel estimation, signal processing, and system optimization has convinced me that the future belongs to engineers who can bridge more than one field."
+  },
+  {
+   "id": "s05",
+   "title": "Egypt to California",
+   "transcript": "From Egypt to California. <break time=\"0.5s\" /> [warmly] Moving from Cairo to California wasn't just a change of place. It was a cultural and professional transformation. California's diverse, innovation driven environment showed me new ways to solve problems, and widened how I see global technology. <break time=\"0.5s\" /> [gently] Innovation knows no borders. The best solutions emerge when diverse perspectives work toward a common goal."
+  },
+  {
+   "id": "s06",
+   "title": "Current Focus",
+   "transcript": "Where I am today. <break time=\"0.5s\" /> Today I'm a cellular systems engineer, with more than nine years of research experience behind me. My work still sits where theory meets practical implementation, always aimed at real connectivity problems. <break time=\"0.4s\" /> [excited] The wireless industry is at a turning point. Five gee is spreading fast, six gee research is beginning, and wireless is converging with AI and connected devices in ways that will reshape how we communicate."
+  },
+  {
+   "id": "s07",
+   "title": "Looking Ahead",
+   "transcript": "Looking ahead. <break time=\"0.5s\" /> I'm excited about what comes next. Whether it's more efficient signal processing, new sensing applications, or helping shape the standards for future wireless systems, I'm committed to pushing what's possible. <break time=\"0.5s\" /> [gently] The journey of a thousand innovations begins with a single idea, and the courage to pursue it. <break time=\"0.6s\" /> [warmly] This is my story. From Cairo to California, from curiosity to expertise, from research to implementation. And more than anything, it's just the beginning. The most exciting chapters are yet to be written."
+  }
+ ]
+}

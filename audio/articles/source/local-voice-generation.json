@@ -1,0 +1,56 @@
+{
+ "title": "Generating Voice from Text Using Local Models",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Generating Voice from Text Using Local Models. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> I've been building a personal AI engine that runs entirely on my Mac Studio. Text was the first step. The natural next question was, can I generate voice locally too? [excited] It turns out, yes. And the results are surprisingly good. <break time=\"0.5s\" /> When I first wrote this in February, local voice meant one model and one experiment. Since then, voice has become part of everyday projects. Bedtime stories for my son, narrated in my own voice. Local voice engines built into my AI engine. And a tool that renders a whole story locally or through ElevenLabs, from the same script. [playfully] And yes, this reading is my cloned voice too."
+  },
+  {
+   "id": "s01",
+   "title": "Three Voices",
+   "transcript": "The same bedtime page, three voices. <break time=\"0.5s\" /> The newest example is the goodnight page from Susu the Cat, the second of my son's bedtime books. Same script, three voices. One from ElevenLabs in the cloud, and two made locally on the Mac Studio. You can play all three on the page. <break time=\"0.4s\" /> Two things stand out. The obvious one is that only the cloud version sounds like me. The local ones use preset voices, because I haven't cloned my own voice locally yet. [curious] The less obvious one is timing. The local engines read the same page more than fifty percent slower. That matters in a picture book, where the page shouldn't turn before the sentence ends."
+  },
+  {
+   "id": "s02",
+   "title": "Eleven v4",
+   "transcript": "What changed at ElevenLabs. <break time=\"0.5s\" /> The bedtime books are narrated with ElevenLabs version four, my default now. The big change from the older models is how you steer it. Older versions had dials, like stability and style. Version four ignores the style dial, and takes directions written into the script instead. Words like warmly, softly, or whispers, in brackets, plus exact pauses. <break time=\"0.4s\" /> One recipe, stability at one half and similarity at point eight, produced a hundred and six clips across two bilingual books, first try, with nothing redone. It speaks eighty five languages, which matters for my Arabic projects. But it isn't reproducible. The same seed and text gave different audio twice, so keep the file you like. <break time=\"0.4s\" /> [playfully] One pleasant surprise. On my account it used roughly a tenth of the quota the script length suggested, and the directions and pauses didn't seem to count at all. Your plan may differ, so measure first."
+  },
+  {
+   "id": "s03",
+   "title": "Voicebox",
+   "transcript": "Local voices inside my AI engine. <break time=\"0.5s\" /> In February I said the next step was building voice into my AI engine. That's done, through Voicebox, an open source voice studio that runs on Apple Silicon. My engine uses it both ways. Speech to text when I record a question on my phone, and text to speech when I want an answer read aloud. <break time=\"0.4s\" /> It comes with several engines. Kokoro, with dozens of preset voices, for fast drafts. Kwen Custom Voice, which takes delivery directions in plain language. And a few cloning engines, Chatterbox and Tada among them, which can copy a voice from a short recording. <break time=\"0.4s\" /> The catch for my projects is Arabic. None of the local engines ship an Arabic preset voice. Only the cloning engines speak it, so Arabic needs a clean recording to clone from. In the cloud, I just pick an Arabic voice."
+  },
+  {
+   "id": "s04",
+   "title": "One Script, Two Backends",
+   "transcript": "One script, two backends. <break time=\"0.5s\" /> The newest piece is a batch voice over tool. It takes the same script I use for ElevenLabs, one entry per page, and renders every page locally, with the same file names. The story player doesn't care which one made the audio. <break time=\"0.4s\" /> Local engines have never heard of a direction like warmly, and would read it out loud. So the tool removes the directions, splits the script at every pause, renders each piece, and stitches them back together with real silence. [gently] As the notes put it, pacing survives the move. Emotion does not. <break time=\"0.4s\" /> Afterwards it checks every clip for silence, truncation, or stretching. [excited] Stretching is the clever one. Garbled speech still plays as a perfectly valid file, but it takes far longer per character than its neighbours, so it stands out. <break time=\"0.5s\" /> Draft locally for free, then spend cloud credits on the final cut. Same script, one command to switch."
+  },
+  {
+   "id": "s05",
+   "title": "Lessons",
+   "transcript": "Lessons from the bedtime stories. <break time=\"0.5s\" /> Text to speech falls apart on bare sound words. My first try at the animal sounds used strings like moo with ten o's, with the expression turned up, [laughs] and it came back warbling. Wrapping each one in a short sentence, like the cow says moo, fixed it completely. <break time=\"0.4s\" /> Write for the ear. Spell out numbers, skip abbreviations, keep sentences short, one idea per page. Every script goes through a small checker before any audio is made. <break time=\"0.4s\" /> And check the words, not just the file. For this article, I ran every local clip back through speech to text to confirm it said what the script said. The goodnight page came back word for word from all three voices."
+  },
+  {
+   "id": "s06",
+   "title": "The Podcast",
+   "transcript": "The podcast, then and now. <break time=\"0.5s\" /> This is where the project started. In February I wrote a five minute podcast script about my AI engine, and generated it twice. Once locally with VibeVoice, and once with ElevenLabs, using a clone of my voice. In October I ran the exact same script through the two new local engines, so all four versions can be compared on the page. <break time=\"0.4s\" /> [surprised] Kokoro is the surprise. It rendered the whole five minute episode in twenty six seconds, less time than it takes to listen to the first paragraph. Kwen Custom Voice took about nine minutes. Checked back through speech to text, both new versions matched the script about ninety eight percent word for word, and nearly every difference was spelling, not a misreading. <break time=\"0.4s\" /> One thing to keep in mind. The script is from February, so it describes the project as it was then. I kept it unchanged on purpose, so every version reads the same words."
+  },
+  {
+   "id": "s07",
+   "title": "VibeVoice",
+   "transcript": "What is VibeVoice? <break time=\"0.5s\" /> VibeVoice is a long form, conversational text to speech model, first developed by Microsoft and now maintained by the open source community. It makes expressive, multi speaker audio from plain text. Podcast conversations, narration, even background music it decides to add on its own. It's still what I reach for when a script has more than one speaker. <break time=\"0.4s\" /> Under the hood, a language model handles the text, while a diffusion model generates the fine detail of the sound. The result has natural pacing, intonation, and consistent speakers. It comes in three sizes, from a small real time model to a seven billion parameter model with the most realistic output. <break time=\"0.4s\" /> With sixty four gigabytes of memory, I can comfortably run the largest one. A full podcast episode takes a few minutes. Not real time, but perfectly fine for making content. And all of it happens on my machine."
+  },
+  {
+   "id": "s08",
+   "title": "Local vs Cloud",
+   "transcript": "Local versus cloud, eight months later. <break time=\"0.5s\" /> I use ElevenLabs for anything that ships. The bilingual narration on my Islamic kids website, the Wireless one oh one podcasts, and the bedtime books. Local covers everything before that. <break time=\"0.4s\" /> Local is free and unlimited, ideal for drafts. It's completely private. Kokoro renders a page in seconds, VibeVoice does multi speaker podcasts, and it's built right into my AI engine. On the other hand, it ignores emotional directions, speaks Arabic only by cloning, reads slower, and doesn't have my voice yet. <break time=\"0.4s\" /> ElevenLabs has the best quality, and the clone sounds like me. It follows directions for whispering, warmth, and pauses, and has ready Arabic voices. [sighs] But it costs credits, the text goes to a third party, the same seed won't give the same audio, and it needs the internet. <break time=\"0.5s\" /> [gently] The gap keeps closing. Local is now good enough to draft a whole book for free. The cloud still earns its place on the final cut, especially when the voice has to be mine."
+  },
+  {
+   "id": "s09",
+   "title": "What's Next",
+   "transcript": "What's next. <break time=\"0.5s\" /> In February the next step was voice input. That's done. I can record a question on my phone and have it transcribed locally. Next is cloning my own voice locally, so drafts sound like the final cut. Arabic narration locally, with a proper Arabic reference recording. And more bedtime books. The series grows with my son, and each new one is another chance to see how far the local voices have come. <break time=\"0.5s\" /> [warmly] The tools are here. The hardware is capable. The open source community keeps pushing the models forward. Running your own AI voice pipeline is no longer a research project. It's a weekend project."
+  }
+ ]
+}

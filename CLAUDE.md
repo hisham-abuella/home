@@ -42,6 +42,21 @@ All designs are self-contained HTML files with:
 - **Light V1/V2**: Clean, professional layouts with gradient accents
 - **Dark Version**: Creative dark theme with animated floating shapes, sidebar navigation, and morphing profile container
 
+## Articles and Narration (current conventions)
+
+`README.md` is the up-to-date guide to the live site; parts of this file describe older
+designs. In short:
+
+- Articles live in `Articles/`, use `css/article.css` and the shared theme files, and
+  are linked from the Writing list in `index.html` and from each other's prev/next nav.
+- Every article has a hidden `.listen` player shown by `js/listen.js` once
+  `audio/articles/<slug>.mp3` exists.
+- Narration is generated with `audio/articles/build.sh` from the spoken transcripts in
+  `audio/articles/source/`. When an article's text changes, update its transcript too,
+  and regenerate only the sections that changed.
+- Keep personal details (account or policy numbers, emails, photo GPS data) out of
+  articles and images.
+
 ## Development Workflow
 
 Since this is a static website with no build process:

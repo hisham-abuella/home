@@ -1,0 +1,41 @@
+{
+ "title": "Building an Interactive Islamic Kids Website",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Building an Interactive Islamic Kids Website. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> As a father and an engineer, I wanted to make something meaningful for Muslim kids. A place where they could learn about the prophets, the Quran, and Islamic values through interactive stories, rather than static text. That idea became Islamic Kids Stories, and Claude Code helped me bring it to life."
+  },
+  {
+   "id": "s01",
+   "title": "The Idea",
+   "transcript": "The idea. <break time=\"0.5s\" /> Most Islamic educational content for kids is either a dry document or a video with nothing to do. [excited] I wanted something different. A website where children swipe through illustrated story slides, answer quiz questions, earn stars, and hear the story read aloud in English and Arabic. No app store. No downloads. Just open a link and start learning. <break time=\"0.4s\" /> [gently] The goal was to make Islamic learning as engaging as the best children's apps, but completely free, on any device."
+  },
+  {
+   "id": "s02",
+   "title": "What We Built",
+   "transcript": "What we built. <break time=\"0.5s\" /> The site has stories of Prophet Adam, the first human, with eighteen interactive slides and a quiz. Prophet Ibrahim's trust, exploring faith and sacrifice. Prophet Nuh and the great ark, a story of patience and perseverance. Prophet Yusuf's beautiful dream, a journey of trust in Allah through hardship. And Surah Al Fatiha, the opening chapter of the Quran, verse by verse. <break time=\"0.5s\" /> [cheerful] Every story is narrated in English and Arabic. Kids earn stars for finishing stories and quizzes. There are drag and drop activities, quizzes with instant feedback, swipe navigation for phones and tablets, and a full language switch with right to left layout for Arabic. And there are no accounts. Progress stays in the browser, so nothing is collected."
+  },
+  {
+   "id": "s03",
+   "title": "Building with Claude Code",
+   "transcript": "Building with Claude Code. <break time=\"0.5s\" /> This was a bigger project than a blog. Each story is a slide based experience with animations, quizzes, activities, audio, and two languages. Claude Code handled all of it as a pair programmer. <break time=\"0.4s\" /> The workflow was a conversation. I'd ask for a story about Prophet Nuh, with slides, a quiz at the end, and narration, and Claude would build the whole page. When I wanted a drag and drop activity on slide five, it would read the file, understand the structure, and add it in the right place. <break time=\"0.4s\" /> [excited] What impressed me most was the bilingual side. Arabic needs right to left layout, different fonts, and careful handling where the two languages mix. Claude got that right, consistently. <break time=\"0.5s\" /> [gently] It didn't just write code. It understood the teaching. Simple language for young children, activities at the right moments, and quizzes that reinforce the lesson."
+  },
+  {
+   "id": "s04",
+   "title": "The Tech Stack",
+   "transcript": "The tech stack. <break time=\"0.5s\" /> Like my other projects, I kept it deliberately simple. Plain H T M L, C S S, and JavaScript, with no framework and no build step. Each story page stands on its own, loads instantly, and works offline after the first visit. <break time=\"0.4s\" /> The narration comes from ElevenLabs. A small script reads each story from a data file and generates English and Arabic audio for every slide. It sounds natural and warm, which is exactly what you want for children. <break time=\"0.4s\" /> And progress is kept in the browser. No server, no database. A child's name, stars, and finished stories simply stay on their device."
+  },
+  {
+   "id": "s05",
+   "title": "Lessons Learned",
+   "transcript": "Lessons learned. <break time=\"0.5s\" /> Kids' content demands higher quality. The language has to be simple without talking down. The interactions have to work without instructions. And the feedback has to be immediate and encouraging. <break time=\"0.5s\" /> [sighs] Bilingual is hard, but worth it. It isn't just translation. It means right to left layouts, different typography, separate audio, and a smooth switch between languages. And it opens the site to families everywhere. <break time=\"0.5s\" /> And static sites scale to any complexity. Slides, audio, activities, quizzes, progress, and two languages, all without a framework. Staying simple actually led to cleaner code."
+  },
+  {
+   "id": "s06",
+   "title": "Check It Out",
+   "transcript": "Check it out. <break time=\"0.5s\" /> The site is live, and the link is in the article. If you have young kids, or know a Muslim family, please share it. It's completely free, with no ads and no tracking, and it was built with love. <break time=\"0.4s\" /> [warmly] More stories and surahs are on the way. The vision is to build the most engaging free Islamic learning platform for children on the web. One story at a time."
+  }
+ ]
+}

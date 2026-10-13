@@ -342,6 +342,36 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
 }
 
 /* ==========================================================================
+   Listen to this article
+   ========================================================================== */
+
+.listen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin: 8px 0 34px;
+  padding: 14px 18px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+}
+
+.listen-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.listen-label strong { font-weight: 600; }
+.listen-label i { color: var(--accent); margin-right: 8px; }
+.listen-label span { font-size: 0.8125rem; font-weight: 400; color: var(--text-tertiary); }
+.listen audio { flex: 1 1 260px; min-width: 0; height: 40px; }
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 

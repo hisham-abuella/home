@@ -1,0 +1,41 @@
+{
+ "title": "Building Wireless 101",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Building Wireless one oh one. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> After years in wireless engineering, from a doctorate in visible light communications to building cellular systems, [sighs] one thing has always bothered me. The knowledge gap. Too many excellent resources in this field are behind paywalls, buried in dense textbooks, or only available in English. I wanted to change that. <break time=\"0.4s\" /> Wireless one oh one is an open platform that teaches wireless communications, digital signal processing, statistics, machine learning, linear algebra, and generative AI. All of it free, in English and in Arabic."
+  },
+  {
+   "id": "s01",
+   "title": "Why I'm Building This",
+   "transcript": "Why I'm building this. <break time=\"0.5s\" /> First, knowledge should be free. When I was studying, I spent hours hunting for clear explanations of things like O F D M, beamforming, or the Fourier transform. The best material was scattered across expensive textbooks, paywalled papers, and courses that cost thousands of dollars. Yet the fundamentals haven't changed. They rest on well established physics and mathematics. <break time=\"0.4s\" /> [gently] Anyone with curiosity and an internet connection should be able to learn how their phone reaches a cell tower, how Wi-Fi works, or how five gee gets its speed. These systems connect billions of people. Understanding them shouldn't be a privilege. <break time=\"0.5s\" /> Second, Arabic speakers deserve quality technical content. There are more than four hundred million Arabic speakers, and many engineering students across the Middle East and North Africa learn in Arabic. Yet almost all good wireless material exists only in English. [serious] That's a real barrier. <break time=\"0.4s\" /> So every course is available in full Arabic, with proper right to left layout. It isn't a machine translation added at the end. The Arabic is written to read naturally, with technical terms given in Arabic and in their common English form, so students can work in both."
+  },
+  {
+   "id": "s02",
+   "title": "What's Inside",
+   "transcript": "What's inside. <break time=\"0.5s\" /> [excited] The platform now has seven connected courses, each building on the others. Wireless Communications, from modulation and antennas to channel models and modern protocols, Wi-Fi through five gee. Digital Signal Processing, the math that makes wireless work. Statistics, for engineers working with real data. Machine Learning, seen through an engineer's eyes. Linear Algebra, with its uses in signal processing and machine learning. Generative AI, from transformers to prompting. And Gen AI Engineering, about building and shipping real tools with agents and Claude Code."
+  },
+  {
+   "id": "s03",
+   "title": "Story-Style Learning",
+   "transcript": "Story style learning. <break time=\"0.5s\" /> Traditional textbooks present ideas in dense blocks of text and equations. That works for some people, but for many first time learners it feels overwhelming. <break time=\"0.4s\" /> [cheerful] Wireless one oh one uses short, swipeable lessons that unfold like a story. Here's the problem. Here's why it matters. Here's the intuition. And here's the math that makes it precise. Interactive visuals let you change a parameter and see what happens, instead of just reading about it. <break time=\"0.4s\" /> There's also narration you can switch on for every lesson. Some people learn better by listening, and it means you can keep learning away from a screen."
+  },
+  {
+   "id": "s04",
+   "title": "Design Principles",
+   "transcript": "Design principles. <break time=\"0.5s\" /> No paywalls, ever. Knowledge that connects the world should be open to everyone in it. <break time=\"0.3s\" /> Bilingual by design. Arabic and English are both first class, with native layout and natural phrasing. <break time=\"0.3s\" /> Visual first. Anything that can be visualized, is. <break time=\"0.3s\" /> Learn by doing. Interactive labs let you experiment and see results right away. <break time=\"0.3s\" /> And bridge theory and practice. Every module connects the math to the real systems you'd meet on the job."
+  },
+  {
+   "id": "s05",
+   "title": "Built with AI, Verified by Engineers",
+   "transcript": "Built with AI, verified by engineers. <break time=\"0.5s\" /> The content is drafted with Claude, but every module goes through engineering review. AI is excellent at clear explanations and at structuring a curriculum, but wireless engineering demands precision. [serious] A wrong sign in a beamforming equation, or a misdescribed channel model, can mislead a student. The human review is what makes the content not just well written, but correct."
+  },
+  {
+   "id": "s06",
+   "title": "What's Next",
+   "transcript": "What's next. <break time=\"0.5s\" /> Wireless one oh one is a living project. The seven courses keep growing, with more interactive labs and deeper Arabic coverage. If you're a wireless engineer, a student, or just curious how the invisible signals around you actually work, come learn with us. <break time=\"0.4s\" /> [warmly] And if you speak Arabic, share it with someone who could use it. That's the whole point. Knowledge that reaches the people who need it, in the language they think in."
+  }
+ ]
+}
