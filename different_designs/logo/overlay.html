@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Arabic Overlays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@600;700&family=Reem+Kufi:wght@700&family=Manrope:wght@400;600;800&display=block" rel="stylesheet">
+<style>
+/* Image models garble Arabic, so every generated logo keeps its image untouched and gets
+   an SVG layer on top: a patch in the background colour over the broken lettering, then
+   the real name set in a real Arabic font. This page renders those layers.
+     overlay.html                 all logos, with an Original / Corrected toggle
+     overlay.html?logo=<name>     one logo at 1024×1024 (what gets exported to fixed/) */
+:root { --bg: #F3F3F0; --ink: #16181B; --muted: #5E636B; --line: #DADAD5; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.5 'Manrope', system-ui, sans-serif; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { margin: 0 0 6px; font-size: 24px; }
+.wrap > p { margin: 0 0 18px; color: var(--muted); max-width: 70ch; }
+.toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; margin-bottom: 20px; }
+.toggle button { font: 600 14px/1 'Manrope', sans-serif; padding: 10px 16px; border: 0; background: #fff; cursor: pointer; }
+.toggle button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+figcaption { padding: 10px 14px; font-weight: 600; font-size: 14px; }
+.logo { position: relative; width: 100%; aspect-ratio: 1; }
+.logo img, .logo svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+body.original .logo svg { display: none; }
+h2 { margin: 44px 0 6px; font-size: 20px; }
+.marks { display: grid; gap: 16px; }
+.mark { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 18px; align-items: center; }
+.mark[hidden] { display: none; }
+.mark svg { width: 100%; height: auto; display: block; }
+.mark h3 { margin: 0 0 8px; font-size: 15px; }
+.sizes { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+.tile { display: grid; justify-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
+.tile .bg { display: grid; place-items: center; padding: 8px; border-radius: 8px; border: 1px solid var(--line); }
+.tile.dark .bg { background: #1F2329; border-color: #1F2329; }
+.tile img { display: block; image-rendering: auto; }
+.tab { margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 10px 10px 0 0; background: #E8E8E4; font-size: 13px; max-width: 100%; }
+.tab img { width: 16px; height: 16px; }
+@media (max-width: 760px) { .mark { grid-template-columns: 1fr; } }
+body.single { background: #fff; }
+body.single .wrap { padding: 0; max-width: none; }
+body.single .logo { width: 1024px; height: 1024px; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <h1>Logo concepts with correct Arabic</h1>
+  <p>Each concept is the untouched image from Draw Things plus an SVG layer that covers the garbled Arabic and sets هشام أبو العلا in a real font. Switch to "Original" to see what the model drew.</p>
+  <div class="toggle" role="group" aria-label="View">
+    <button type="button" data-view="fixed" aria-pressed="true">Corrected</button>
+    <button type="button" data-view="original" aria-pressed="false">Original</button>
+  </div>
+  <div class="grid" id="grid"></div>
+  <h2>Favicon-first marks</h2>
+  <p>Generated as icons only, with no lettering. The names are set in real type beside the mark. Each one is shown at real favicon sizes on light and dark.</p>
+  <div class="marks" id="marks"></div>
+</div>
+<script>
+(function () {
+  var AR = 'هشام أبو العلا';
+
+  // Geometry helpers for ring-shaped logos. Angles in degrees, measured clockwise from
+  // 3 o'clock (SVG's y axis points down), around the image centre (512, 512).
+  function pt(r, a) { var t = a * Math.PI / 180; return [512 + r * Math.cos(t), 512 + r * Math.sin(t)]; }
+  // A band between radii r1 < r2, from angle a1 clockwise to a2 (e.g. 14 → 166 is the bottom).
+  function band(r1, r2, a1, a2) {
+    var p1 = pt(r2, a1), p2 = pt(r2, a2), p3 = pt(r1, a2), p4 = pt(r1, a1);
+    return 'M' + p1 + ' A' + r2 + ' ' + r2 + ' 0 0 1 ' + p2 + ' L' + p3 + ' A' + r1 + ' ' + r1 + ' 0 0 0 ' + p4 + ' Z';
+  }
+  // A text baseline along the bottom of a ring, drawn left to right so letters stand upright.
+  function bottomArc(r, a1, a2) {
+    var p1 = pt(r, a2), p2 = pt(r, a1);
+    return 'M' + p1 + ' A' + r + ' ' + r + ' 0 0 0 ' + p2;
+  }
+  function text(x, y, size, fill, anchor, family, weight, value) {
+    return '<text x="' + x + '" y="' + y + '" text-anchor="' + anchor + '" font-family="' + family + '" font-weight="' + weight +
+           '" font-size="' + size + '" fill="' + fill + '" direction="rtl">' + value + '</text>';
+  }
+
+  // One entry per concept: the patch (background colour, sampled from the image) and the lettering.
+  var LOGOS = {
+    '1-wave-monogram': {
+      label: '1 · Wave monogram',
+      svg: '<rect x="255" y="656" width="520" height="120" fill="#FEFFEC"/>' +
+           text(512, 724, 58, '#001B32', 'middle', 'IBM Plex Sans Arabic', 600, AR)
+    },
+    '2-constellation-h': {
+      label: '2 · Constellation H',
+      svg: '<rect x="448" y="562" width="420" height="82" fill="#032438"/>' +
+           text(462, 622, 56, '#FFFFFF', 'end', 'IBM Plex Sans Arabic', 600, AR)
+    },
+    '3-square-kufic': {
+      label: '3 · Square Kufic',
+      svg: '<rect x="214" y="258" width="596" height="410" fill="#000000"/>' +
+           '<rect x="580" y="275" width="108" height="110" fill="#C98225"/>' +
+           text(512, 600, 250, '#FEFAE5', 'middle', 'Reem Kufi', 700, 'هشام')
+    },
+    '5-signal-wordmark': {
+      label: '5 · Signal wordmark',
+      svg: '<rect x="130" y="662" width="760" height="114" fill="#FEFFFD"/>' +
+           text(512, 726, 66, '#000000', 'middle', 'IBM Plex Sans Arabic', 700, AR)
+    },
+    '6-bilingual-ligature': {
+      label: '6 · Bilingual ligature',
+      svg: '<rect x="270" y="703" width="484" height="101" fill="#F7F3E2"/>' +
+           text(512, 772, 56, '#073840', 'middle', 'IBM Plex Sans Arabic', 600, AR)
+    }
+  };
+  window.LOGOS = LOGOS;
+
+  function figure(name) {
+    var spec = LOGOS[name];
+    return '<div class="logo"><img src="concepts/' + name + '.png" alt="' + spec.label + '">' +
+           '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">' + spec.svg + '</svg></div>';
+  }
+
+  // Favicon-first marks: icon from make_icons.py, names set as SVG type beside it.
+  var MARKS = ['9b-qpsk-dot', '8a-pulse-screen', '7a-wave-h'];
+  function lockup(name) {
+    return '<svg viewBox="0 0 1600 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hisham Abuella, هشام أبو العلا">' +
+      '<rect width="1600" height="560" fill="#FFFFFF"/>' +
+      '<image href="icons/' + name + '/icon-512.png" x="40" y="40" width="480" height="480"/>' +
+      '<text x="590" y="262" font-family="Manrope" font-weight="800" font-size="118" fill="#0E1726" letter-spacing="-3">Hisham Abuella</text>' +
+      '<text x="590" y="420" text-anchor="end" direction="rtl" font-family="IBM Plex Sans Arabic" font-weight="600" font-size="96" fill="#0E1726">' + AR + '</text>' +
+      '</svg>';
+  }
+  function tiles(name) {
+    return [16, 32, 48, 180].map(function (px) {
+      var file = px === 180 ? 'apple-touch-icon.png' : 'favicon-' + px + '.png';
+      return ['', ' dark'].map(function (tone) {
+        return '<div class="tile' + tone + '"><div class="bg"><img src="icons/' + name + '/' + file + '" width="' + Math.min(px, 96) + '" height="' + Math.min(px, 96) + '" alt=""></div>' + px + 'px</div>';
+      }).join('');
+    }).join('');
+  }
+  function markCard(name) {
+    return '<section class="mark" data-mark="' + name + '"><div>' + lockup(name) + '</div><div><h3>' + name + '</h3>' +
+      '<div class="sizes">' + tiles(name) + '</div>' +
+      '<div class="tab"><img src="icons/' + name + '/favicon-32.png" alt="">Hisham Abuella — Journal</div></div></section>';
+  }
+  window.MARKS = MARKS;
+
+  var only = new URLSearchParams(location.search).get('logo');
+  if (only && LOGOS[only]) {
+    document.body.classList.add('single');
+    document.getElementById('app').innerHTML = figure(only);
+  } else {
+    document.getElementById('grid').innerHTML = Object.keys(LOGOS).map(function (n) {
+      return '<figure>' + figure(n) + '<figcaption>' + LOGOS[n].label + '</figcaption></figure>';
+    }).join('');
+    var marks = document.getElementById('marks');
+    marks.innerHTML = MARKS.map(markCard).join('');
+    // Hide marks that haven't been generated or converted yet.
+    marks.querySelectorAll('.mark').forEach(function (card) {
+      var probe = new Image();
+      probe.onerror = function () { card.hidden = true; };
+      probe.src = 'icons/' + card.dataset.mark + '/favicon-32.png';
+    });
+    document.querySelectorAll('.toggle button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.body.classList.toggle('original', b.dataset.view === 'original');
+        document.querySelectorAll('.toggle button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

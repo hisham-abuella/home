@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Journal skin — articles for readers who came in through the learner
+   track: green engineering computation pad, IBM Plex Sans, blue pen.
+
+   Active when <html data-skin="journal">. Tokens, plus the pad's grid on
+   the page background, for the two appearances a skin restyles; Contrast is
+   left alone so it always wins.
+   ========================================================================== */
+
+html[data-skin="journal"] {
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --card-radius: 0px;
+  --glow: none;
+  --field-opacity: 0;
+  --grain-opacity: 0;
+}
+
+html[data-skin="journal"][data-appearance="daylight"] {
+  --bg-primary:     #EEF3E6;
+  --bg-secondary:   #F5F8F0;
+  --bg-elevated:    #F7FAF3;
+  --text-primary:   #1F2A24;
+  --text-secondary: #3F4D44;
+  --text-tertiary:  #4E5D53;
+  --accent:         #1E4FA3;
+  --accent-hover:   #163D80;
+  --accent-subtle:  rgba(30, 79, 163, 0.08);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        rgba(255, 255, 255, 0.72);
+  --card-border:    #1F2A24;
+  --card-shadow:    5px 5px 0 #1F2A24;
+  --glass-blur:     none;
+  --nav-bg:         rgba(238, 243, 230, 0.94);
+  --nav-border:     #1F2A24;
+  --hairline:       rgba(64, 118, 84, 0.30);
+  --pad-grid:       rgba(64, 118, 84, 0.15);
+  --pad-grid-b:     rgba(64, 118, 84, 0.28);
+}
+
+html[data-skin="journal"][data-appearance="midnight"] {
+  --bg-primary:     #111A14;
+  --bg-secondary:   #16211A;
+  --bg-elevated:    #1A261E;
+  --text-primary:   #E3ECE1;
+  --text-secondary: #B7C5B9;
+  --text-tertiary:  #A7B6A9;
+  --accent:         #93B8FF;
+  --accent-hover:   #B0CBFF;
+  --accent-subtle:  rgba(147, 184, 255, 0.10);
+  --accent-ink:     #111A14;
+  --card-bg:        rgba(255, 255, 255, 0.05);
+  --card-border:    #E3ECE1;
+  --card-shadow:    5px 5px 0 #000000;
+  --glass-blur:     none;
+  --nav-bg:         rgba(17, 26, 20, 0.94);
+  --nav-border:     #E3ECE1;
+  --hairline:       rgba(140, 200, 160, 0.20);
+  --pad-grid:       rgba(140, 200, 160, 0.08);
+  --pad-grid-b:     rgba(140, 200, 160, 0.17);
+}
+
+/* The pad itself: a 20px grid with heavier lines every 100px. */
+html[data-skin="journal"][data-appearance="daylight"] body,
+html[data-skin="journal"][data-appearance="midnight"] body {
+  background-image:
+    linear-gradient(var(--pad-grid-b) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pad-grid-b) 1px, transparent 1px),
+    linear-gradient(var(--pad-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pad-grid) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}

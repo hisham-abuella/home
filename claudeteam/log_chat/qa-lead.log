@@ -1,0 +1,1 @@
+2026-10-13 [QA] Full review of gateway, home, cv, 4 tracks, 8 articles x skins (240-load matrix). Must-fix: F1 empty Listen player visible (.listen display:flex overrides [hidden]), F2 local-voice-generation table overflow at 390 (20px, 71px with terminal skin), F3 engineer light --star #9A6412 at 4.09:1 on sky-2. Report: claudeteam/reviews/qa-review-2026-10-13.md

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-appearance="midnight">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="brand/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
-<title>Hisham Abuella — Cellular Systems Engineer</title>
+<title>Hisham Abuella</title>
 <meta name="description" content="Hisham Abuella is a cellular systems engineer in California working on 5G baseband, RF digital front-end, signal processing and machine learning.">
 <meta property="og:title" content="Hisham Abuella — Cellular Systems Engineer">
 <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
@@ -15,341 +15,396 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:description" content="5G baseband, RF digital front-end, signal processing and machine learning.">
 <meta property="og:type" content="website">
-
+<script>
+// Theme before first paint: the visitor's choice, else the system setting.
+(function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
+  if (['light', 'dark'].indexOf(p) < 0) p = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', p); })();
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="tracks/assets/ident.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Gateway — "tune in". Each kind of reader is a 5G band on a tuner dial:
+   recruiters n71 (600 MHz, long reach), engineers n78 (3.5 GHz, the mid-band
+   workhorse), vibe coders n257 (28 GHz, mmWave: fast iteration), learners n260
+   (39 GHz, mmWave, high capacity). Station colours match the page each opens.
+   Laptop: a horizontal dial with a needle, four columns (2x2 on tablets).
+   Phone: big stacked buttons in thumb reach. */
+:root {
+  --night:   #0A0E17;
+  --panel:   #121A28;
+  --edge:    #243044;
+  --ink:     #ECEFF4;
+  --soft:    #A4AEBD;
+  --rec:     #FF7A45;   /* recruiter page: catalogue orange */
+  --eng:     #FFD58A;   /* engineer page: constellation gold */
+  --vibe:    #8AB0FF;   /* vibe page: terminal blue */
+  --learn:   #8FD19E;   /* learner page: pad green */
+  --dial-a:  #0E1520;
+  --dial-b:  #0B111A;
+  --tick:    rgba(236, 239, 244, 0.16);
+  --tick-b:  rgba(236, 239, 244, 0.45);
+  --trace:   rgba(255, 213, 138, 0.28);
+  --display: 'Barlow Condensed', sans-serif;
+  --body:    'Barlow', system-ui, sans-serif;
+  --id-bg: var(--panel); --id-bg-solid: var(--panel); --id-ink: var(--ink); --id-soft: var(--soft);
+  --id-line: var(--edge); --id-accent: var(--eng); --id-accent-ink: var(--night); --id-radius: 12px;
+}
+/* Light: the same tuner on paper, with each band darkened for contrast on white */
+:root[data-theme="light"] {
+  --night: #F3F5F8; --panel: #FFFFFF; --edge: #D3DAE4; --ink: #0E1726; --soft: #4A5568;
+  --rec: #C2410C; --eng: #8A570C; --vibe: #0040FF; --learn: #2F7D4A;
+  --dial-a: #FFFFFF; --dial-b: #EEF2F6;
+  --tick: rgba(14, 23, 38, 0.14); --tick-b: rgba(14, 23, 38, 0.4); --trace: rgba(138, 87, 12, 0.4);
+  --id-accent-ink: #FFFFFF;
+}
+:root[dir="rtl"] { --display: 'IBM Plex Sans Arabic', sans-serif; --body: 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--night); color: var(--ink); font: 400 17px/1.55 var(--body);
+  -webkit-font-smoothing: antialiased;
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+}
+[dir="rtl"] body { line-height: 1.8; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--c, var(--eng)); outline-offset: 3px; }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/themes/midnight.css">
-<link rel="stylesheet" href="css/themes/daylight.css">
-<link rel="stylesheet" href="css/themes/contrast.css">
+.page { min-height: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-direction: column; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0; font-size: 15px; color: var(--soft); }
+.top b { color: var(--ink); font-weight: 600; }
+.lang { font: 600 14px/1 'IBM Plex Sans Arabic', 'Barlow', sans-serif; color: var(--ink); background: var(--panel); border: 1px solid var(--edge); border-radius: 8px; padding: 10px 14px; cursor: pointer; min-height: 40px; }
 
-<script>
-    // Pre-paint: adopt the stored appearance before the first frame, so the
-    // page never flashes the default. Keep this inline on every page.
-    (function () {
-        try {
-            var saved = localStorage.getItem('appearance');
-            if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
-                document.documentElement.setAttribute('data-appearance', saved);
-            }
-        } catch (error) { /* storage unavailable */ }
-    })();
-</script>
+.back { display: none; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 8px; padding: 12px 16px; border: 1px solid var(--edge); border-radius: 12px; background: var(--panel); font-size: 15px; }
+.back.on { display: flex; }
+.back a { font-weight: 600; color: var(--c); text-decoration: none; }
+.back button { font: inherit; color: var(--soft); background: none; border: 0; cursor: pointer; text-decoration: underline; padding: 6px 0; }
+
+.intro { display: flex; align-items: center; gap: 22px; margin-top: clamp(28px, 8vh, 80px); }
+.intro img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 2px solid var(--edge); flex: none; }
+h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-spacing: -0.01em; }
+[dir="rtl"] h1 { line-height: 1.25; letter-spacing: 0; }
+.intro p { margin: 8px 0 0; color: var(--soft); max-width: 52ch; }
+.ask { margin: clamp(36px, 7vh, 64px) 0 0; font: 600 clamp(1.4rem, 3vw, 2rem)/1.2 var(--display); }
+
+/* The dial (laptop) */
+.dial { position: relative; margin-top: 22px; height: 64px; border-radius: 12px; background: linear-gradient(var(--dial-a), var(--dial-b)); border: 1px solid var(--edge); overflow: hidden; }
+.dial canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.needle { position: absolute; top: 6px; bottom: 6px; width: 3px; margin-left: -1.5px; border-radius: 2px; background: var(--c, var(--eng)); box-shadow: 0 0 14px var(--c, var(--eng)); left: 50%; transition: left .45s cubic-bezier(.3,1.3,.5,1), background .3s; }
+.stations { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+.st {
+  --c: var(--eng);
+  display: flex; flex-direction: column; gap: 6px; text-align: start; text-decoration: none;
+  padding: 20px; border-radius: 14px; background: var(--panel); border: 1px solid var(--edge);
+  transition: border-color .2s, transform .2s;
+}
+.st > div { display: flex; flex-direction: column; gap: 6px; }
+.st:hover, .st:focus-visible, .st.lit { border-color: var(--c); }
+.st:hover { transform: translateY(-2px); }
+.st .band { font: 600 14px/1 var(--display); color: var(--c); letter-spacing: .02em; direction: ltr; text-align: start; }
+[dir="rtl"] .st .band { text-align: end; }
+.st b { font: 700 28px/1.1 var(--display); }
+.st span { color: var(--soft); font-size: 15px; }
+.st ul { margin: 10px 0 0; padding: 0; list-style: none; font-size: 15px; }
+.st li { padding: 6px 0; border-top: 1px solid var(--edge); }
+.st li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--c); margin-inline-end: 10px; vertical-align: 2px; }
+.st .go { margin-top: auto; padding-top: 12px; font-weight: 600; color: var(--c); }
+.st.rec { --c: var(--rec); }
+.st.vibe { --c: var(--vibe); }
+.st.learn { --c: var(--learn); }
+
+.top-tools { display: inline-flex; gap: 8px; align-items: center; }
+.idline { margin: 6px 0 0; font: 600 17px/1.3 var(--body); color: var(--ink); }
+.all { margin-top: 26px; font-size: 15px; color: var(--soft); }
+.all a { color: var(--ink); }
+
+/* Tablet: two by two */
+@media (max-width: 999px) { .stations { grid-template-columns: repeat(2, 1fr); } }
+/* Phone: a different interface, not a squeezed one */
+@media (max-width: 720px), (pointer: coarse) and (max-width: 900px) {
+  .page { padding: 0 16px 20px; }
+  .intro { margin-top: 18px; gap: 14px; }
+  .intro img { width: 60px; height: 60px; }
+  .intro p { font-size: 15px; }
+  .dial { display: none; }
+  .ask { margin-top: auto; padding-top: 28px; font-size: 1.35rem; }
+  .stations { grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
+  .st { flex-direction: row; align-items: center; gap: 14px; padding: 16px; min-height: 76px; border-inline-start: 4px solid var(--c); }
+  .st:hover { transform: none; }
+  .st > div { flex: 1; min-width: 0; gap: 2px; }
+  .st b { font-size: 22px; }
+  .st ul { display: none; }
+  .st .go { margin: 0; padding: 0; font-size: 22px; }
+  [dir="rtl"] .st .go { transform: scaleX(-1); }
+  .all { text-align: center; }
+  .all a { display: inline-block; padding: 12px 8px; min-height: 44px; line-height: 20px; }
+}
+/* Auto-advance: after 30s with no choice, open the full site. Any interaction stops it. */
+.timer { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 14px; color: var(--soft); }
+.timer[hidden] { display: none; }
+.timer .track { flex: 0 0 120px; height: 3px; border-radius: 2px; background: var(--edge); overflow: hidden; }
+.timer .fill { display: block; height: 100%; width: 0; background: var(--soft); }
+.timer button { font: 600 14px/1 var(--body); color: var(--ink); background: none; border: 1px solid var(--edge); border-radius: 999px; padding: 8px 12px; cursor: pointer; min-height: 36px; }
+.timer button:hover { border-color: var(--soft); }
+.timer.stopped .track, .timer.stopped button { display: none; }
+.timer .secs { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .needle, .st { transition: none; } }
+</style>
 </head>
 <body>
-<div class="grain" aria-hidden="true"></div>
-<a class="skip-link" href="#main">Skip to content</a>
+<div class="page">
+  <header class="top">
+    <span><b data-i18n="name">Hisham Abuella</b></span>
+    <span class="top-tools"><span data-theme-switch></span> <button class="lang" type="button" data-lang-toggle>عربي</button></span>
+  </header>
 
-<nav class="nav">
-    <div class="nav-inner">
-        <a class="nav-name" href="#main">Hisham Abuella</a>
-        <div class="nav-links">
-            <a href="#work">Work</a>
-            <a href="#writing">Writing</a>
-            <a href="cv.html">CV</a>
-        </div>
+  <div class="back" id="back" role="status">
+    <span data-i18n="backT">Welcome back.</span>
+    <a id="backGo" href="#"></a>
+    <button type="button" id="backReset" data-i18n="backR">Choose again</button>
+  </div>
+
+  <div class="intro">
+    <img src="tracks/assets/bio.jpg" alt="">
+    <div>
+      <h1 data-i18n="name">Hisham Abuella</h1>
+      <p class="idline" data-i18n="idLine">Muslim | Cellular Systems Engineer</p>
+      <p data-i18n="lede">I love creating UIs with Claude, vibe coding with local AI models, and writing about what I learn along the way.</p>
     </div>
-</nav>
+  </div>
 
-<main id="main">
-    <div class="wrap">
+  <h2 class="ask" data-i18n="ask">Tune in. What brings you here?</h2>
+  <div class="timer" id="timer" hidden>
+    <span id="timerText"></span>
+    <span class="track" aria-hidden="true"><span class="fill" id="timerFill"></span></span>
+    <button type="button" id="timerStop" data-i18n="stay">Stay here</button>
+    <span class="sr" id="timerLive" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></span>
+  </div>
 
-        <header class="hero">
-            <div class="hero-avatar enter-scale delay-1">
-                <img src="Pictures/Bio_Color.JPG" alt="Hisham Abuella">
-            </div>
+  <div class="dial" aria-hidden="true"><canvas id="dial"></canvas><div class="needle" id="needle"></div></div>
 
-            <h1 class="enter delay-2">Hisham Abuella</h1>
-            <p class="hero-eyebrow enter delay-3" data-typed="Muslim | Cellular Systems Engineer">Muslim | Cellular Systems Engineer</p>
+  <nav class="stations" aria-label="Choose a page">
+    <a class="st rec" href="tracks/recruiter.html" data-path="recruiter" data-at="0.12">
+      <div>
+        <span class="band">n71 · 600 MHz</span>
+        <b data-i18n="r">I'm hiring</b>
+        <span data-i18n="rs">Experience, proof and my CV, fast.</span>
+        <ul><li data-i18n="r1">Experience at Apple and Qualcomm</li><li data-i18n="r2">My CV, ready to read or print</li><li data-i18n="r3">Copy-ready contact</li></ul>
+      </div>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+    <a class="st eng" href="tracks/engineer.html" data-path="engineer" data-at="0.37">
+      <div>
+        <span class="band">n78 · 3.5 GHz</span>
+        <b data-i18n="e">I'm an engineer</b>
+        <span data-i18n="es">My research, shown as a constellation.</span>
+        <ul><li data-i18n="e1">NR channel estimation, Rx digital front-end</li><li data-i18n="e2">AGC and visible light sensing</li><li data-i18n="e3">IEEE papers and the patent</li></ul>
+      </div>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+    <a class="st vibe" href="tracks/vibe.html" data-path="vibe" data-at="0.63">
+      <div>
+        <span class="band">n257 · 28 GHz</span>
+        <b data-i18n="v">I vibe code too</b>
+        <span data-i18n="vs">What I build with Claude, as a terminal.</span>
+        <ul><li data-i18n="v1">Things I build with Claude</li><li data-i18n="v2">My stack and workflow</li><li data-i18n="v3">Build logs</li></ul>
+      </div>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+    <a class="st learn" href="tracks/learner.html" data-path="learner" data-at="0.88">
+      <div>
+        <span class="band">n260 · 39 GHz</span>
+        <b data-i18n="l">I'm learning</b>
+        <span data-i18n="ls">My journal of what I learned.</span>
+        <ul><li data-i18n="l1">What I learned, entry by entry</li><li data-i18n="l2">Free resources to learn from</li><li data-i18n="l3">The latest entry first</li></ul>
+      </div>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+  </nav>
 
-            <div class="hero-actions enter delay-4">
-                <a class="btn btn-primary" href="#work">Discover my work</a>
-                <a class="btn btn-quiet" href="cv.html">View CV</a>
-            </div>
-
-            <div class="hero-contact enter delay-5">
-                <a href="mailto:hisham.abuella1@gmail.com">hisham.abuella1@gmail.com</a>
-                <span>California, USA</span>
-            </div>
-
-            <div class="hero-social enter delay-6">
-                <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/hisham-abuella" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-                <a href="https://www.instagram.com/hisham.abuella" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/hisham.abuella" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            </div>
-        </header>
-
-        <section class="section" id="background">
-            <div class="section-head reveal-up">
-                <h2>Background</h2>
-                <p>A decade of research followed by five years shipping cellular systems in industry.</p>
-            </div>
-            <div class="section-body">
-                <div class="grid-4 stagger">
-                    <div class="card">
-                        <div class="figure-value numeral" data-count-to="10" data-count-prefix="+">+10</div>
-                        <div class="figure-label">Years in wireless and signal processing research</div>
-                    </div>
-                    <div class="card">
-                        <div class="figure-value numeral" data-count-to="5" data-count-prefix="+">+5</div>
-                        <div class="figure-label">Years in industry</div>
-                    </div>
-                    <div class="card">
-                        <div class="figure-value numeral" data-count-to="10" data-count-suffix="+">10+</div>
-                        <div class="figure-label">Peer-reviewed publications</div>
-                    </div>
-                    <div class="card">
-                        <div class="figure-value numeral" data-count-to="1">1</div>
-                        <div class="figure-label">United States patent</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="expertise">
-            <div class="section-head reveal-up">
-                <h2>What I work on</h2>
-            </div>
-            <div class="section-body">
-                <div class="grid-3 stagger">
-                    <div class="card">
-                        <h3>Wireless and signal processing</h3>
-                        <ul>
-                            <li>5G baseband</li>
-                            <li>RF digital front-end</li>
-                            <li>Digital pre-distortion</li>
-                            <li>Channel parameter estimation</li>
-                            <li>Fixed-point implementation</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h3>Languages and tools</h3>
-                        <ul>
-                            <li>MATLAB</li>
-                            <li>C and C++</li>
-                            <li>Python</li>
-                            <li>LabVIEW</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h3>Machine learning</h3>
-                        <ul>
-                            <li>Machine learning for wireless systems</li>
-                            <li>Skills, plugins and tutorials for applying generative AI to wireless engineering work</li>
-                            <li>Model integration</li>
-                            <li>Local model deployment</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="work">
-            <div class="section-head reveal-up">
-                <h2>Selected work</h2>
-                <p>Research, teaching and tools built outside the day job.</p>
-            </div>
-            <div class="section-body">
-                <div class="grid-2 stagger">
-
-                    <article class="card">
-                        <p class="work-kind">For my son</p>
-                        <h3>Bedtime stories</h3>
-                        <p class="work-desc">
-                            Board books built for a three-month-old, matched to what a newborn's eyes
-                            can actually resolve. Hand-drawn in SVG, narrated page by page in English
-                            and Arabic. A high-contrast zoo, the true story of our cat, and four
-                            first books for a Muslim baby.
-                        </p>
-                        <p class="work-tools">Vanilla HTML and SVG, ElevenLabs narration, locally generated art</p>
-                        <p class="work-metric">Six books, 78 pages, 292 narrated clips in three languages</p>
-                        <p class="work-links">
-                            <a href="projects/bedtime-stories/">All six books</a>
-                            <a href="projects/bedtime-stories/books/black-white-zoo.html">The Black and White Zoo</a>
-                            <a href="projects/bedtime-stories/books/susu.html">Susu the Cat</a>
-                            <a href="Articles/bedtime-stories.html">Read how it was built</a>
-                            <a href="https://github.com/hisham-abuella/bedtime-stories" target="_blank" rel="noopener">Source and print PDFs</a>
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <p class="work-kind">Doctoral research</p>
-                        <h3>Visible light vitals measurement</h3>
-                        <p class="work-desc">
-                            A photodetector driven by a Raspberry Pi recovers heart rate and breathing rate
-                            from a person using visible light alone, with no contact and no wearable sensor.
-                            The work produced a United States patent and several publications.
-                        </p>
-                        <p class="work-tools">Raspberry Pi, photodetector hardware, signal processing</p>
-                    </article>
-
-                    <article class="card">
-                        <p class="work-kind">Educational platform</p>
-                        <h3>Wireless 101</h3>
-                        <p class="work-desc">
-                            A free bilingual platform teaching wireless communications, digital signal
-                            processing, statistics, machine learning, linear algebra and generative AI
-                            through interactive, story-style lessons.
-                        </p>
-                        <p class="work-tools">Seven courses, in English and Arabic</p>
-                        <p class="work-metric">580+ lessons, in each language</p>
-                        <p class="work-links">
-                            <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" rel="noopener">Visit the platform</a>
-                            <a href="Articles/building-wireless101.html">Read how it was built</a>
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <p class="work-kind">Developer tool</p>
-                        <h3>Claude presentation skill</h3>
-                        <p class="work-desc">
-                            A Claude Code skill that generates self-contained HTML presentations.
-                            Everything renders offline, with no external dependencies.
-                        </p>
-                        <p class="work-tools">Claude Code, HTML, CSS</p>
-                        <p class="work-metric">2,200+ downloads on Apple's internal Claude marketplace</p>
-                        <p class="work-links">
-                            <a href="projects/presentation-skill/template.html">View the template</a>
-                            <a href="projects/presentation-skill/claude101.html">View a deck</a>
-                        </p>
-                    </article>
-
-                    <article class="card">
-                        <p class="work-kind">Teaching</p>
-                        <h3>GenAI and Claude 101 crash course</h3>
-                        <p class="work-desc">
-                            A crash course written for Apple's internal audience on getting real work
-                            out of generative AI and Claude, from first prompt through building your
-                            own skills and tools.
-                        </p>
-                        <p class="work-tools">Written and delivered internally at Apple</p>
-                        <p class="work-metric">6,000+ visitors</p>
-                        <p class="work-links">
-                            <a href="projects/presentation-skill/claude101.html">View the deck</a>
-                        </p>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="writing">
-            <div class="section-head reveal-up">
-                <h2>Writing</h2>
-                <p>Notes on wireless engineering, and on building things with AI tooling.</p>
-            </div>
-            <div class="section-body">
-                <div class="writing stagger">
-
-                    <a class="writing-row" href="Articles/two-nails-two-assistants.html">
-                        <div>
-                            <div class="writing-title">Two nails, two assistants<span class="writing-flag">New</span></div>
-                            <div class="writing-sub">Two nails, a bubble, and a tire light I ignored. Claude vs. the AI I&rsquo;m building on my desk.</div>
-                        </div>
-                        <div class="writing-date numeral">October 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/bedtime-stories.html">
-                        <div>
-                            <div class="writing-title">Bedtime stories for a three-month-old</div>
-                            <div class="writing-sub">A high-contrast bilingual board book, narrated in my own voice.</div>
-                        </div>
-                        <div class="writing-date numeral">October 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/building-wireless101.html">
-                        <div>
-                            <div class="writing-title">Building Wireless 101</div>
-                            <div class="writing-sub">A free bilingual platform for wireless communications and DSP.</div>
-                        </div>
-                        <div class="writing-date numeral">March 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/local-voice-generation.html">
-                        <div>
-                            <div class="writing-title">Generating voice from text using local models</div>
-                            <div class="writing-sub">Local voices on a Mac Studio, measured against ElevenLabs v4 on real bedtime stories.</div>
-                        </div>
-                        <div class="writing-date numeral">Feb 2026 &middot; updated Oct 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/building-ai-server.html">
-                        <div>
-                            <div class="writing-title">Building a personal AI engine<span class="writing-flag">In progress</span></div>
-                            <div class="writing-sub">Local models, on-device images and voice, and a private notes vault on a Mac Studio.</div>
-                        </div>
-                        <div class="writing-date numeral">Feb 2026 &middot; updated Oct 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/building-islamic-kids.html">
-                        <div>
-                            <div class="writing-title">Building an interactive Islamic kids website</div>
-                            <div class="writing-sub">Stories, quizzes and bilingual narration for children.</div>
-                        </div>
-                        <div class="writing-date numeral">February 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/building-wirelesshub.html">
-                        <div>
-                            <div class="writing-title">Building WirelessHub with Claude</div>
-                            <div class="writing-sub">A wireless engineering blog written with an AI pair programmer.</div>
-                        </div>
-                        <div class="writing-date numeral">February 2026</div>
-                    </a>
-
-                    <a class="writing-row" href="Articles/journey.html">
-                        <div>
-                            <div class="writing-title">My journey, from Cairo to California</div>
-                            <div class="writing-sub">Wireless engineering, doctoral research, and the move into industry.</div>
-                        </div>
-                        <div class="writing-date numeral">August 2025</div>
-                    </a>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="section contact" id="contact">
-            <div class="section-head reveal-up">
-                <h2>Let's talk</h2>
-                <p>
-                    Open to collaborations, technical discussions and new opportunities
-                    in wireless systems and machine learning.
-                </p>
-            </div>
-            <div class="contact-actions reveal-up">
-                <a class="btn btn-primary" href="mailto:hisham.abuella1@gmail.com">Email me</a>
-                <a class="btn btn-quiet" href="https://www.linkedin.com/in/hisham-abuella-808b91171/" rel="noopener">LinkedIn</a>
-                <a class="btn btn-quiet" href="https://github.com/hisham-abuella" rel="noopener">GitHub</a>
-            </div>
-            <p class="contact-meta">California, United States</p>
-        </section>
-
-        <footer class="footer">
-            <span>&copy; 2026 Hisham Abuella</span>
-            <div class="appearance">
-                <span id="appearance-label">Appearance</span>
-                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
-                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
-                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
-                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
-                </div>
-            </div>
-        </footer>
-
+  <section class="ident" aria-label="Contact">
+    <div class="ident-who"><img src="tracks/assets/bio.jpg" alt="Hisham Abuella"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-actions">
+      <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
+      <a class="primary" href="cv.html" data-i18n="idCv">View CV</a>
     </div>
-</main>
+    <div class="ident-stats">
+      <div><b>10+</b><span data-i18n="idS1">years in wireless research</span></div>
+      <div><b>5+</b><span data-i18n="idS2">years in industry</span></div>
+      <div><b>10+</b><span data-i18n="idS3">technical publications</span></div>
+      <div><b>1</b><span data-i18n="idS4">US patent</span></div>
+    </div>
+    <nav class="ident-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+      <a href="https://github.com/hisham-abuella" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ" aria-label="Google Scholar"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
+      <a href="https://www.instagram.com/hisham.abuella" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href="https://www.facebook.com/hisham.abuella" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+    </nav>
+  </section>
 
-<script src="js/appearance.js" defer></script>
+  <p class="all"><span data-i18n="allT">Want everything on one page?</span> <a href="home.html" data-i18n="allL">Open the full site</a></p>
+</div>
 
-<script src="js/signal-field.js" defer></script>
-<script src="js/motion.js" defer></script>
+<script type="application/json" id="i18n-ar">
+{
+  "name": "هشام أبو العلا",
+  "lede": "بحب أعمل UIs مع Claude، وأعمل vibe coding بموديلات AI محلية، وأكتب عن اللي بتعلمه في السكة.",
+  "ask": "اختار الموجة بتاعتك. إيه اللي جابك هنا؟",
+  "backT": "أهلاً بيك تاني.", "backR": "اختار من الأول",
+  "r": "بدوّر على حد أعيّنه", "rs": "الخبرة والإنجازات والـ CV على السريع.",
+  "r1": "خبرة في Apple و Qualcomm", "r2": "الـ CV جاهز للقراءة أو الطباعة", "r3": "بيانات تواصل تتنسخ بضغطة",
+  "e": "بشتغل في الهندسة", "es": "أبحاثي، معروضة على شكل constellation.",
+  "e1": "NR channel estimation والـ Rx digital front‑end", "e2": "الـ AGC والـ visible light sensing", "e3": "أبحاث IEEE وبراءة الاختراع",
+  "v": "بعمل vibe coding كمان", "vs": "اللي ببنيه مع Claude، في شكل terminal.",
+  "v1": "حاجات ببنيها مع Claude", "v2": "الـ stack والـ workflow بتوعي", "v3": "يوميات البناء (build logs)",
+  "l": "بتعلّم", "ls": "يومياتي عن اللي اتعلمته.",
+  "l1": "اللي اتعلمته، يومية ورا يومية", "l2": "مصادر تتعلم منها ببلاش", "l3": "آخر يومية الأول",
+  "allT": "عايز كل حاجة في صفحة واحدة؟", "allL": "افتح الموقع كامل",
+  "stay": "خليني هنا",
+  "idName": "هشام أبو العلا", "idLine": "مسلم | مهندس أنظمة خلوية", "idLoc": "كاليفورنيا، أمريكا",
+  "idCopy": "انسخ الإيميل", "idCv": "اعرض الـ CV",
+  "idS1": "سنين في البحث اللاسلكي", "idS2": "سنين في الصناعة", "idS3": "ورقة تقنية منشورة", "idS4": "براءة اختراع أمريكية"
+}
+</script>
+<script src="tracks/assets/i18n.js"></script>
+<script src="tracks/assets/theme.js"></script>
+<script src="tracks/assets/ident.js"></script>
+<script>
+(function () {
+  var KEY = 'reader-path';
+  var names = {
+    recruiter: ['Continue as a recruiter', 'كمّل لصفحة التوظيف'],
+    engineer:  ['Continue as an engineer', 'كمّل لصفحة المهندسين'],
+    vibe:      ['Continue as a vibe coder', 'كمّل لصفحة الـ vibe coding'],
+    learner:   ['Continue learning', 'كمّل تعلّم']
+  };
+  var colours = { recruiter: 'var(--rec)', engineer: 'var(--eng)', vibe: 'var(--vibe)', learner: 'var(--learn)' };
+  function ar() { return document.documentElement.dir === 'rtl'; }
+  function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
 
-<script data-goatcounter="https://hisham.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  // Remember the choice, but never redirect on its own: offer it instead.
+  document.querySelectorAll('.st').forEach(function (st) {
+    st.addEventListener('click', function () { try { localStorage.setItem(KEY, st.dataset.path); } catch (e) { /* storage unavailable */ } });
+  });
+  var back = document.getElementById('back'), go = document.getElementById('backGo');
+  function renderBack() {
+    var p = stored();
+    if (!p || !names[p] || new URLSearchParams(location.search).has('choose')) { back.classList.remove('on'); return; }
+    go.textContent = names[p][ar() ? 1 : 0] + (ar() ? ' ←' : ' →');
+    go.href = 'tracks/' + p + '.html';
+    back.style.setProperty('--c', colours[p]);
+    back.classList.add('on');
+  }
+  document.getElementById('backReset').addEventListener('click', function () {
+    try { localStorage.removeItem(KEY); } catch (e) { /* storage unavailable */ }
+    back.classList.remove('on');
+  });
+  document.addEventListener('langchange', renderBack);
+  renderBack();
+
+  // The dial: frequency ticks, band markers, a faint noise floor. The needle tunes to whatever you point at.
+  var cv = document.getElementById('dial'), ctx = cv.getContext('2d'), needle = document.getElementById('needle');
+  function token(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function draw() {
+    var d = devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+    if (!W) return;
+    cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i <= 120; i++) {
+      var x = 12 + (W - 24) * i / 120, big = i % 10 === 0;
+      ctx.strokeStyle = big ? token('--tick-b') : token('--tick');
+      ctx.beginPath(); ctx.moveTo(x, H); ctx.lineTo(x, H - (big ? 20 : 10)); ctx.stroke();
+    }
+    ctx.strokeStyle = token('--trace'); ctx.beginPath();
+    for (var x2 = 0; x2 <= W; x2 += 3) {
+      var y = 22 + Math.sin(x2 * .05) * 3 + Math.sin(x2 * .31) * 2 + Math.sin(x2 * .013) * 4;
+      x2 ? ctx.lineTo(x2, y) : ctx.moveTo(x2, y);
+    }
+    ctx.stroke();
+  }
+  function tune(st) {
+    var at = parseFloat(st.dataset.at);
+    if (ar()) at = 1 - at;
+    needle.style.left = (at * 100) + '%';
+    needle.style.setProperty('--c', getComputedStyle(st).getPropertyValue('--c'));
+    document.querySelectorAll('.st').forEach(function (s) { s.classList.toggle('lit', s === st); });
+  }
+  document.querySelectorAll('.st').forEach(function (st) {
+    st.addEventListener('mouseenter', function () { tune(st); });
+    st.addEventListener('focus', function () { tune(st); });
+  });
+  addEventListener('resize', draw);
+  document.addEventListener('themechange', function () { draw(); var lit = document.querySelector('.st.lit'); if (lit) tune(lit); });
+  document.addEventListener('langchange', function () { var lit = document.querySelector('.st.lit'); if (lit) tune(lit); });
+  draw();
+  tune(document.querySelector('.st.eng'));
+
+  // Auto-advance to the full site after 30 seconds of no choice. Counts only while the
+  // tab is visible, pauses while a choice is hovered, and stops for good on any
+  // deliberate interaction (click, tap, key, real scrolling) or the "Stay here" button.
+  var FULL_SITE = 'home.html', TOTAL = 30000;
+  var timer = document.getElementById('timer'), text = document.getElementById('timerText');
+  var fill = document.getElementById('timerFill'), live = document.getElementById('timerLive');
+  var left = TOTAL, last = null, stopped = false, frame = null, slow = null, announced = {};
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Choosing the full site means "no track": articles then use the standard design.
+  function leaveForFullSite() { try { localStorage.removeItem('reader-path'); } catch (e) { /* storage unavailable */ } }
+  document.querySelectorAll('.all a').forEach(function (link) { link.addEventListener('click', leaveForFullSite); });
+  function secs() { return Math.ceil(left / 1000); }
+  // Egyptian Arabic number words: 1 ثانية واحدة, 2 ثانيتين, 3-10 ثواني, 11+ ثانية.
+  function arSecs(n) { return n === 1 ? 'ثانية واحدة' : n === 2 ? 'ثانيتين' : n + (n <= 10 ? ' ثواني' : ' ثانية'); }
+  function label() {
+    if (stopped) return ar() ? 'اتوقف العد. اختار براحتك.' : 'Timer stopped. Take your time.';
+    return ar() ? 'هفتح الموقع كامل بعد <span class="secs">' + arSecs(secs()) + '</span>'
+                : 'Opening the full site in <span class="secs">' + secs() + '</span>s';
+  }
+  function render() {
+    text.innerHTML = label();
+    fill.style.width = (100 * (1 - left / TOTAL)) + '%';
+    var s = secs();
+    if (!stopped && (s === 30 || s === 10) && !announced[s]) {
+      announced[s] = true;
+      live.textContent = ar() ? 'هفتح الموقع كامل بعد ' + arSecs(s) : 'Opening the full site in ' + s + ' seconds';
+    }
+  }
+  function tick(now) {
+    if (stopped) return;
+    var paused = document.hidden || !!document.querySelector('.st:hover');
+    if (last !== null && !paused) left -= now - last;
+    last = now;
+    if (left <= 0) { leaveForFullSite(); location.href = FULL_SITE; return; }
+    render();
+    next();
+  }
+  // Under reduced motion the countdown ticks once a second instead of every frame.
+  function next() {
+    if (reduced) slow = setTimeout(function () { tick(performance.now()); }, 1000);
+    else frame = requestAnimationFrame(tick);
+  }
+  function stop() {
+    if (stopped) return;
+    stopped = true;
+    cancelAnimationFrame(frame);
+    clearTimeout(slow);
+    timer.classList.add('stopped');
+    render();
+  }
+  document.getElementById('timerStop').addEventListener('click', stop);
+  // A wheel nudge on a page that can't scroll isn't a decision; real scrolling is caught below.
+  ['pointerdown', 'keydown', 'touchstart'].forEach(function (type) {
+    addEventListener(type, stop, { once: true, passive: true });
+  });
+  addEventListener('scroll', function () { if (scrollY > 40) stop(); }, { passive: true });
+  document.addEventListener('visibilitychange', function () { last = null; });
+  document.addEventListener('langchange', function () { live.textContent = ''; render(); });
+  timer.hidden = false;
+  render();
+  next();
+})();
+</script>
 </body>
 </html>

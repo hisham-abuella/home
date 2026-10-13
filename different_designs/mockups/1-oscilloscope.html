@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 1 — Oscilloscope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Mockup 1 — Oscilloscope.
+   Inspiration: Linear ("midnight precision instrument"), Aceternity wavy backgrounds.
+   The page is an instrument: the hero is a live two-channel scope, and the
+   audience buttons are channel selectors that change the trace.
+   Amber = I channel (engineering), cyan = Q channel (teaching and making). */
+:root {
+  --bezel:      #1B2027;
+  --bezel-edge: #2A313B;
+  --screen:     #061216;
+  --grat:       rgba(150, 205, 215, 0.13);
+  --ch-i:       #F2A33C;
+  --ch-q:       #5CC8D6;
+  --ink:        #E6EBEF;
+  --soft:       #C3CDD5;
+  --muted:      #8C99A6;
+  --rule:       rgba(255, 255, 255, 0.08);
+  --display:    'Barlow Condensed', sans-serif;
+  --body:       'Barlow', system-ui, sans-serif;
+}
+:root[dir="rtl"] {
+  --display: 'IBM Plex Sans Arabic', sans-serif;
+  --body:    'IBM Plex Sans Arabic', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bezel); color: var(--ink);
+  font: 400 17px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+[dir="rtl"] body { line-height: 1.8; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ch-q); outline-offset: 3px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* Faceplate */
+.face {
+  margin: 28px auto 0; padding: 22px;
+  background: linear-gradient(#222831, #1A1F26);
+  border: 1px solid var(--bezel-edge); border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 30px 60px rgba(0,0,0,.35);
+  display: grid; grid-template-columns: 1fr 300px; gap: 22px;
+}
+.brand { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--muted); font-size: 15px; }
+.brand b { color: var(--ink); font-weight: 600; }
+.lang {
+  font: 600 14px/1 'IBM Plex Sans Arabic', 'Barlow', sans-serif; color: var(--ink); cursor: pointer;
+  padding: 9px 14px; border-radius: 8px; background: #151A20; border: 1px solid var(--bezel-edge);
+}
+.lang:hover { border-color: var(--ch-q); }
+
+.screen {
+  position: relative; aspect-ratio: 10 / 6.2; border-radius: 10px; overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 40%, #0B1E24, var(--screen));
+  box-shadow: inset 0 0 0 1px rgba(92,200,214,.18), inset 0 0 60px rgba(0,0,0,.7);
+}
+.screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.screen-top { position: absolute; inset-inline: 22px; top: 18px; }
+.screen h1 {
+  margin: 0; font: 700 clamp(2.4rem, 6vw, 4.6rem)/1 var(--display);
+  text-shadow: 0 0 24px rgba(92,200,214,.25);
+}
+.screen p { margin: 10px 0 0; max-width: 46ch; color: #B9C6CF; font-size: 16px; }
+.readouts {
+  position: absolute; inset-inline: 0; bottom: 0; display: grid;
+  grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--grat);
+  background: rgba(6,18,22,.78);
+}
+.readouts div { padding: 10px 16px; border-inline-start: 1px solid var(--grat); font-size: 13px; color: var(--muted); line-height: 1.35; }
+.readouts div:first-child { border-inline-start: 0; }
+.readouts strong { display: block; font: 600 22px/1.15 var(--display); color: var(--ch-i); }
+
+/* Control panel */
+.panel { display: flex; flex-direction: column; gap: 14px; }
+.panel h2 { margin: 0; font: 600 15px/1.2 var(--display); color: var(--muted); }
+.channels { display: grid; gap: 10px; }
+.ch {
+  display: grid; grid-template-columns: 14px 1fr; gap: 12px; align-items: center;
+  text-align: start; padding: 12px 14px; border-radius: 10px; cursor: pointer;
+  background: #151A20; border: 1px solid var(--bezel-edge); color: var(--ink);
+  font: 500 16px/1.3 var(--body); min-height: 56px;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.35); transition: border-color .2s, background .2s;
+}
+.ch small { display: block; color: var(--muted); font-size: 13px; }
+.ch .led { width: 10px; height: 10px; border-radius: 50%; background: #333B45; }
+.ch[aria-pressed="true"] { border-color: var(--c); background: #10161B; }
+.ch[aria-pressed="true"] .led { background: var(--c); box-shadow: 0 0 10px var(--c); }
+.route { padding: 14px; border-radius: 10px; background: var(--screen); border: 1px solid var(--grat); min-height: 150px; }
+.route p { margin: 0 0 10px; font-size: 15px; color: #B9C6CF; }
+.route a { display: block; padding: 8px 0; border-top: 1px solid var(--grat); color: var(--c, var(--ch-i)); text-decoration: none; font-weight: 500; }
+.route a:hover { text-decoration: underline; }
+.who { display: flex; gap: 12px; align-items: center; margin-top: auto; color: var(--muted); font-size: 14px; }
+.who img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; flex: none; }
+
+/* Below the instrument */
+section { padding: 84px 0 0; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+.head h2 { margin: 0; font: 700 34px/1.1 var(--display); }
+.head span { color: var(--muted); font-size: 15px; }
+.key { display: inline-block; width: 22px; height: 2px; vertical-align: middle; margin-inline-end: 8px; }
+
+.measure { display: grid; grid-template-columns: 220px 1fr 220px; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+.measure h3 { margin: 0; font: 600 24px/1.15 var(--display); }
+.measure .kind { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.measure p { margin: 0; color: var(--soft); max-width: 60ch; }
+.measure .links { margin-top: 10px; display: flex; gap: 18px; flex-wrap: wrap; font-size: 15px; }
+.measure .links a { color: var(--c); }
+.value { font: 600 30px/1.1 var(--display); color: var(--c); }
+.value small { display: block; margin-top: 6px; font: 400 14px/1.4 var(--body); color: var(--muted); }
+
+.spec { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
+.spec dl { margin: 0; padding-inline-end: 22px; }
+.spec dt { font: 600 20px/1.2 var(--display); margin-bottom: 8px; }
+.spec dd { margin: 0; padding: 7px 0; border-top: 1px solid var(--rule); color: var(--soft); font-size: 15px; }
+
+.log a { display: grid; grid-template-columns: 110px 1fr auto; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.log a:hover h4 { color: var(--ch-i); }
+.log time { color: var(--muted); font-size: 14px; padding-top: 3px; }
+.log h4 { margin: 0; font-size: 18px; font-weight: 600; transition: color .15s; }
+.log p { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+.tag { font-size: 13px; color: var(--muted); white-space: nowrap; padding-top: 3px; }
+.tag i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-inline-end: 6px; }
+
+.contact { padding: 100px 0 60px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+.contact h2 { margin: 0; font: 700 clamp(2.4rem, 5vw, 3.6rem)/1.1 var(--display); }
+.contact p { color: var(--muted); margin: 10px 0 0; max-width: 52ch; }
+.btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { padding: 12px 22px; border-radius: 10px; border: 1px solid var(--bezel-edge); background: #151A20; text-decoration: none; font-weight: 600; }
+.btn.on { background: var(--ch-i); color: #1B1306; border-color: var(--ch-i); }
+footer { border-top: 1px solid var(--rule); padding: 20px 0 40px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 920px) {
+  .face { grid-template-columns: 1fr; }
+  .measure { grid-template-columns: 1fr; gap: 10px; }
+  .spec { grid-template-columns: 1fr; gap: 22px; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .face { padding: 14px; margin-top: 16px; }
+  .brand > span { font-size: 14px; }
+  .screen { aspect-ratio: 3 / 4; }
+  .readouts { grid-template-columns: repeat(2, 1fr); }
+  .readouts div:nth-child(3) { border-inline-start: 0; }
+  .readouts div:nth-child(n+3) { border-top: 1px solid var(--grat); }
+  .log a { grid-template-columns: 1fr; gap: 4px; }
+  .contact { grid-template-columns: 1fr; }
+}
+/* Numbers like 10+ keep their own direction inside Arabic text */
+.readouts strong, .value { unicode-bidi: plaintext; }
+/* Isolated numbers align to the Arabic side */
+[dir="rtl"] .readouts strong, [dir="rtl"] .value { text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="face">
+    <div class="brand"><span><b data-i18n="name">Hisham Abuella</b> &nbsp; <span data-i18n="role">cellular systems engineer, California</span></span><button class="lang" data-lang-toggle type="button">عربي</button></div>
+
+    <div class="screen">
+      <canvas id="scope" aria-hidden="true"></canvas>
+      <div class="screen-top">
+        <h1 data-i18n="name">Hisham Abuella</h1>
+        <p data-i18n="lede">I design 5G baseband and RF front-end systems. In my own time I love creating UIs with Claude: AI tools, courses and bedtime books.</p>
+      </div>
+      <div class="readouts">
+        <div><strong data-i18n="s1v">10 yr</strong><span data-i18n="s1">signal processing research</span></div>
+        <div><strong data-i18n="s2v">5 yr</strong><span data-i18n="s2">shipping cellular systems</span></div>
+        <div><strong>10+</strong><span data-i18n="s3">peer-reviewed papers</span></div>
+        <div><strong>1</strong><span data-i18n="s4">US patent</span></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 data-i18n="pick">What brings you here?</h2>
+      <div class="channels" role="group" aria-label="What brings you here">
+        <button class="ch" style="--c: var(--ch-i)" data-ch="hire" aria-pressed="true"><span class="led"></span><span><span data-i18n="c1">I'm hiring</span><small data-i18n="c1s">Experience, impact, CV</small></span></button>
+        <button class="ch" style="--c: #E6EBEF" data-ch="eng" aria-pressed="false"><span class="led"></span><span><span data-i18n="c2">I'm an engineer</span><small data-i18n="c2s">Research and technical writing</small></span></button>
+        <button class="ch" style="--c: var(--ch-q)" data-ch="learn" aria-pressed="false"><span class="led"></span><span><span data-i18n="c3">I'm learning</span><small data-i18n="c3s">Free courses and how-tos</small></span></button>
+      </div>
+      <div class="route" id="route" aria-live="polite"></div>
+      <div class="who"><img src="assets/bio.jpg" alt=""><span data-i18n="who">From Cairo to California. A doctorate in wireless, now in industry.</span></div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="head"><h2 data-i18n="workH">Measurements</h2><span><i class="key" style="background:var(--ch-i)"></i><span data-i18n="keyI">engineering</span> &nbsp; <i class="key" style="background:var(--ch-q)"></i><span data-i18n="keyQ">teaching and making</span></span></div>
+
+    <div class="measure" style="--c: var(--ch-i)">
+      <div><h3 data-i18n="w1">Visible light vitals</h3><div class="kind" data-i18n="w1k">Doctoral research</div></div>
+      <div><p data-i18n="w1d">A photodetector on a Raspberry Pi recovers heart rate and breathing from visible light alone, with no contact and no wearable.</p></div>
+      <div class="value"><span data-i18n="w1v">US patent</span><small data-i18n="w1m">and several publications</small></div>
+    </div>
+    <div class="measure" style="--c: var(--ch-i)">
+      <div><h3 data-i18n="w2">Claude presentation skill</h3><div class="kind" data-i18n="w2k">Developer tool</div></div>
+      <div><p data-i18n="w2d">A Claude Code skill that generates self-contained HTML decks that render fully offline.</p>
+        <div class="links"><a href="../../projects/presentation-skill/template.html" data-i18n="w2l1">Template</a><a href="../../projects/presentation-skill/claude101.html" data-i18n="w2l2">Example deck</a></div></div>
+      <div></div>
+    </div>
+    <div class="measure" style="--c: var(--ch-q)">
+      <div><h3>Wireless 101</h3><div class="kind" data-i18n="w3k">Free course platform</div></div>
+      <div><p data-i18n="w3d">Seven story-style courses on wireless, DSP, statistics, ML, linear algebra and generative AI, in English and Arabic.</p>
+        <div class="links"><a href="https://hisham-abuella.github.io/Wireless-101/" data-i18n="w3l1">Start learning</a><a href="../../Articles/building-wireless101.html" data-i18n="how">How I built it</a></div></div>
+      <div class="value">580+<small data-i18n="w3m">lessons in each language</small></div>
+    </div>
+    <div class="measure" style="--c: var(--ch-q)">
+      <div><h3 data-i18n="w4">GenAI and Claude 101</h3><div class="kind" data-i18n="w4k">Crash course</div></div>
+      <div><p data-i18n="w4d">From first prompt to building your own skills and tools, written for an internal Apple audience.</p>
+        <div class="links"><a href="../../projects/presentation-skill/claude101.html" data-i18n="w4l">View the deck</a></div></div>
+      <div></div>
+    </div>
+    <div class="measure" style="--c: var(--ch-q)">
+      <div><h3 data-i18n="w5">Bedtime stories</h3><div class="kind" data-i18n="w5k">For my son</div></div>
+      <div><p data-i18n="w5d">High-contrast board books drawn in SVG and narrated in English and Arabic, matched to what a newborn can see.</p>
+        <div class="links"><a href="../../projects/bedtime-stories/" data-i18n="w5l">Read the books</a><a href="../../Articles/bedtime-stories.html" data-i18n="how">How I built it</a></div></div>
+      <div class="value">292<small data-i18n="w5m">narrated clips across six books</small></div>
+    </div>
+  </section>
+
+  <section id="spec">
+    <div class="head"><h2 data-i18n="specH">Specifications</h2><span data-i18n="specS">What I work with</span></div>
+    <div class="spec">
+      <dl><dt data-i18n="sp1">Signal chain</dt><dd>5G NR baseband</dd><dd>RF digital front-end</dd><dd data-i18n="dpd">Digital pre-distortion</dd><dd data-i18n="chest">Channel parameter estimation</dd><dd data-i18n="fxp">Fixed-point implementation</dd></dl>
+      <dl><dt data-i18n="sp2">Implementation</dt><dd>MATLAB</dd><dd>C / C++</dd><dd>Python</dd><dd>LabVIEW</dd></dl>
+      <dl><dt data-i18n="sp3">Machine learning</dt><dd data-i18n="ml1">ML for wireless systems</dd><dd data-i18n="ml2">Claude skills and plugins</dd><dd data-i18n="ml3">Model integration</dd><dd data-i18n="ml4">Running models locally</dd></dl>
+    </div>
+  </section>
+
+  <section id="writing">
+    <div class="head"><h2 data-i18n="logH">Log</h2><span data-i18n="logS">Writing, newest first. Every post can be heard in my own voice.</span></div>
+    <div class="log">
+      <a href="../../Articles/two-nails-two-assistants.html"><time data-i18n="oct">Oct 2026</time><div><h4 data-i18n="a1">Two nails, two assistants</h4><p data-i18n="a1s">Claude against the AI I'm building on my desk.</p></div><span class="tag"><i style="background:var(--ch-i)"></i><span data-i18n="tAI">AI tools</span></span></a>
+      <a href="../../Articles/bedtime-stories.html"><time data-i18n="oct">Oct 2026</time><div><h4 data-i18n="a2">Bedtime stories for a three-month-old</h4><p data-i18n="a2s">A bilingual board book narrated in my own voice.</p></div><span class="tag"><i style="background:var(--ch-q)"></i><span data-i18n="tMake">Making</span></span></a>
+      <a href="../../Articles/building-wireless101.html"><time data-i18n="mar">Mar 2026</time><div><h4 data-i18n="a3">Building Wireless 101</h4><p data-i18n="a3s">A free bilingual platform for wireless and DSP.</p></div><span class="tag"><i style="background:var(--ch-q)"></i><span data-i18n="tTeach">Teaching</span></span></a>
+      <a href="../../Articles/local-voice-generation.html"><time data-i18n="feb">Feb 2026</time><div><h4 data-i18n="a4">Generating voice with local models</h4><p data-i18n="a4s">Mac Studio voices measured against ElevenLabs v4.</p></div><span class="tag"><i style="background:var(--ch-i)"></i><span data-i18n="tAI">AI tools</span></span></a>
+      <a href="../../Articles/journey.html"><time data-i18n="aug">Aug 2025</time><div><h4 data-i18n="a5">My journey, from Cairo to California</h4><p data-i18n="a5s">Wireless engineering, a doctorate, and the move to industry.</p></div><span class="tag"><i style="background:#E6EBEF"></i><span data-i18n="tCareer">Career</span></span></a>
+    </div>
+  </section>
+
+  <div class="contact">
+    <div><h2 data-i18n="cH">Open a channel</h2><p data-i18n="cS">Collaborations, technical discussions and roles in wireless systems and machine learning.</p></div>
+    <div class="btns"><a class="btn on" href="mailto:hisham.abuella1@gmail.com" data-i18n="email">Email me</a><a class="btn" href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a><a class="btn" href="https://scholar.google.com/citations?user=51HWj54AAAAJ">Google Scholar</a></div>
+  </div>
+  <footer data-i18n="foot">© 2026 Hisham Abuella</footer>
+</div>
+
+<script type="application/json" id="i18n-ar">
+{
+  "name": "هشام أبو العلا",
+  "role": "مهندس أنظمة اتصالات خلوية، كاليفورنيا",
+  "lede": "بصمم أنظمة الـ 5G baseband والـ RF front‑end. وفي وقتي الخاص بحب أعمل UIs مع Claude: أدوات ذكاء اصطناعي، وكورسات، وحواديت قبل النوم.",
+  "s1v": "10 سنين", "s1": "بحث في معالجة الإشارات",
+  "s2v": "5 سنين", "s2": "شغل في الصناعة على الأنظمة الخلوية",
+  "s3": "ورقة بحثية محكّمة", "s4": "براءة اختراع أمريكية",
+  "pick": "إيه اللي جابك هنا؟",
+  "c1": "بدوّر على حد أعيّنه", "c1s": "الخبرة، الإنجازات، والـ CV",
+  "c2": "شغلي هندسة", "c2s": "أبحاث ومقالات تقنية",
+  "c3": "عايز أتعلم", "c3s": "كورسات ببلاش وشروحات",
+  "who": "من القاهرة لكاليفورنيا. دكتوراه في الاتصالات اللاسلكية، ودلوقتي في الصناعة.",
+  "workH": "القياسات", "keyI": "هندسة", "keyQ": "تعليم وصناعة حاجات",
+  "w1": "قياس العلامات الحيوية بالضوء", "w1k": "بحث الدكتوراه",
+  "w1d": "حساس ضوئي على Raspberry Pi بيقيس نبض القلب والتنفس من الضوء العادي بس، من غير ما يلمس الشخص ومن غير أي جهاز يلبسه.",
+  "w1v": "براءة اختراع أمريكية", "w1m": "وكذا ورقة بحثية منشورة",
+  "w2": "مهارة Claude للعروض", "w2k": "أداة للمطورين",
+  "w2d": "مهارة لـ Claude Code بتطلّع عروض HTML كاملة في ملف واحد، وبتشتغل من غير إنترنت.",
+  "w2l1": "القالب", "w2l2": "عرض كمثال",
+  "w3k": "منصة كورسات ببلاش",
+  "w3d": "سبع كورسات بأسلوب الحكاية في الاتصالات اللاسلكية، والـ DSP، والإحصاء، وتعلّم الآلة، والجبر الخطي، والذكاء الاصطناعي التوليدي، بالعربي والإنجليزي.",
+  "w3l1": "ابدأ اتعلم", "how": "إزاي عملتها", "w3m": "درس في كل لغة",
+  "w4": "كورس GenAI و Claude 101", "w4k": "كورس سريع",
+  "w4d": "من أول prompt لحد ما تبني الـ skills والأدوات بتاعتك. اتكتب لجمهور داخلي في Apple.",
+  "w4l": "شوف العرض",
+  "w5": "حواديت قبل النوم", "w5k": "عشان ابني",
+  "w5d": "كتب بتباين عالي مرسومة بـ SVG ومتسجلة بالعربي والإنجليزي، على قد اللي عين الرضيع تقدر تشوفه.",
+  "w5l": "اقرا الكتب", "w5m": "مقطع صوتي في ست كتب",
+  "specH": "المواصفات", "specS": "الحاجات اللي بشتغل بيها",
+  "sp1": "سلسلة الإشارة", "sp2": "التنفيذ", "sp3": "تعلّم الآلة",
+  "dpd": "Digital pre-distortion", "chest": "تقدير معاملات القناة", "fxp": "تنفيذ بالـ fixed-point",
+  "ml1": "تعلّم الآلة للأنظمة اللاسلكية", "ml2": "Skills و plugins لـ Claude", "ml3": "دمج الموديلات", "ml4": "تشغيل الموديلات محلياً",
+  "logH": "السجل", "logS": "المقالات من الأحدث للأقدم، وكل مقال تقدر تسمعه بصوتي. (المقالات نفسها بالإنجليزي حالياً.)",
+  "oct": "أكتوبر 2026", "mar": "مارس 2026", "feb": "فبراير 2026", "aug": "أغسطس 2025",
+  "a1": "مسمارين ومساعدين", "a1s": "Claude قصاد الذكاء الاصطناعي اللي ببنيه على مكتبي.",
+  "a2": "حواديت قبل النوم لطفل عنده تلات شهور", "a2s": "كتاب بلغتين متسجل بصوتي.",
+  "a3": "إزاي بنيت Wireless 101", "a3s": "منصة ببلاش بلغتين للاتصالات اللاسلكية والـ DSP.",
+  "a4": "توليد الصوت بموديلات محلية", "a4s": "أصوات على Mac Studio قصاد ElevenLabs v4.",
+  "a5": "رحلتي من القاهرة لكاليفورنيا", "a5s": "هندسة لاسلكية، ودكتوراه، والنقلة للصناعة.",
+  "tAI": "أدوات AI", "tMake": "صناعة", "tTeach": "تعليم", "tCareer": "مشوار",
+  "cH": "افتح قناة", "cS": "تعاون، نقاش تقني، أو فرص شغل في الأنظمة اللاسلكية وتعلّم الآلة.",
+  "email": "ابعتلي إيميل", "foot": "© 2026 هشام أبو العلا"
+}
+</script>
+<script src="assets/i18n.js"></script>
+<script>
+(function () {
+  var routes = {
+    hire: {
+      c: 'var(--ch-i)',
+      en: ['Fifteen years in wireless: a doctorate and a decade of research, then five years shipping cellular systems.', [['Read my CV', '../../cv.html'], ['Patent and publications', 'https://scholar.google.com/citations?user=51HWj54AAAAJ'], ['LinkedIn', 'https://www.linkedin.com/in/hisham-abuella-808b91171/']]],
+      ar: ['خمستاشر سنة في الاتصالات اللاسلكية: دكتوراه وعشر سنين بحث، وبعدها خمس سنين بشحن أنظمة خلوية حقيقية.', [['اقرا الـ CV', '../../cv.html'], ['براءة الاختراع والأبحاث', 'https://scholar.google.com/citations?user=51HWj54AAAAJ'], ['LinkedIn', 'https://www.linkedin.com/in/hisham-abuella-808b91171/']]]
+    },
+    eng: {
+      c: '#E6EBEF',
+      en: ['Baseband, DPD and fixed-point work, plus notes on running models locally.', [['Visible light vitals research', '#work'], ['Building a personal AI engine', '../../Articles/building-ai-server.html'], ['GitHub', 'https://github.com/hisham-abuella']]],
+      ar: ['شغل baseband و DPD و fixed-point، ومعاه ملاحظات عن تشغيل الموديلات محلياً.', [['بحث العلامات الحيوية بالضوء', '#work'], ['بناء محرك AI شخصي', '../../Articles/building-ai-server.html'], ['GitHub', 'https://github.com/hisham-abuella']]]
+    },
+    learn: {
+      c: 'var(--ch-q)',
+      en: ['Free, bilingual and story-style. Start with wireless basics or with generative AI.', [['Wireless 101 courses', 'https://hisham-abuella.github.io/Wireless-101/'], ['GenAI and Claude 101 deck', '../../projects/presentation-skill/claude101.html'], ['All writing', '#writing']]],
+      ar: ['ببلاش، بلغتين، وبأسلوب الحكاية. ابدأ بأساسيات اللاسلكي أو بالذكاء الاصطناعي التوليدي.', [['كورسات Wireless 101', 'https://hisham-abuella.github.io/Wireless-101/'], ['عرض GenAI و Claude 101', '../../projects/presentation-skill/claude101.html'], ['كل المقالات', '#writing']]]
+    }
+  };
+  var mode = 'hire';
+  var route = document.getElementById('route');
+  function show(key) {
+    mode = key;
+    var r = routes[key], copy = r[document.documentElement.dir === 'rtl' ? 'ar' : 'en'];
+    route.style.setProperty('--c', r.c);
+    route.innerHTML = '<p>' + copy[0] + '</p>' + copy[1].map(function (l) { return '<a href="' + l[1] + '">' + l[0] + '</a>'; }).join('');
+    document.querySelectorAll('.ch').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.ch === key); });
+    if (reduced) requestAnimationFrame(draw);
+  }
+  document.querySelectorAll('.ch').forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.ch); }); });
+  document.addEventListener('langchange', function () { show(mode); });
+
+  // Two-channel scope: amber I and cyan Q. Each audience selects a different modulation.
+  var cv = document.getElementById('scope'), ctx = cv.getContext('2d'), W, H;
+  function size() { var d = devicePixelRatio || 1; W = cv.clientWidth; H = cv.clientHeight; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); }
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var symbols = [1, -1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1];
+  function wave(x, t, q) {
+    var ph = q ? Math.PI / 2 : 0, u = x / W;
+    if (mode === 'hire') return Math.cos(2 * Math.PI * (3 * u - t * .25) + ph);
+    if (mode === 'eng') return symbols[Math.floor(u * 6 + t * .4) % symbols.length] * Math.cos(2 * Math.PI * (6 * u - t * .25) + ph) * .9;
+    return (0.55 + 0.4 * Math.cos(2 * Math.PI * (u - t * .12))) * Math.cos(2 * Math.PI * (9 * u - t * .3) + ph);
+  }
+  function draw(ms) {
+    var t = (ms || 0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(150,205,215,.13)'; ctx.lineWidth = 1;
+    for (var i = 1; i < 10; i++) { ctx.beginPath(); ctx.moveTo(W * i / 10, 0); ctx.lineTo(W * i / 10, H); ctx.stroke(); }
+    for (var j = 1; j < 8; j++) { ctx.beginPath(); ctx.moveTo(0, H * j / 8); ctx.lineTo(W, H * j / 8); ctx.stroke(); }
+    var mid = H * 0.62, amp = H * 0.12;
+    [[false, '#F2A33C'], [true, '#5CC8D6']].forEach(function (c) {
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 2) {
+        var n = (Math.sin(x * 0.37 + t * 9) + Math.sin(x * 0.71 - t * 13)) * 0.03;
+        var y = mid - (wave(x, t, c[0]) + n) * amp;
+        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = c[1]; ctx.lineWidth = 1.6; ctx.shadowColor = c[1]; ctx.shadowBlur = 8; ctx.stroke(); ctx.shadowBlur = 0;
+    });
+    if (!reduced) requestAnimationFrame(draw);
+  }
+  size();
+  addEventListener('resize', function () { size(); if (reduced) draw(0); });
+  show('hire');
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Constellation skin — articles for readers who came in through the engineer
+   track: a deep blue sky with gold points and blue beams, Bricolage Grotesque.
+
+   Active when <html data-skin="constellation">. Tokens, plus a faint
+   starfield on the page background, for the two appearances a skin
+   restyles; Contrast is left alone so it always wins.
+   ========================================================================== */
+
+html[data-skin="constellation"] {
+  --font-body: 'Bricolage Grotesque', system-ui, sans-serif;
+  --card-radius: 16px;
+  --glow: none;
+  --field-opacity: 0;
+  --grain-opacity: 0;
+}
+
+html[data-skin="constellation"][data-appearance="daylight"] {
+  --bg-primary:     #F3F6FF;
+  --bg-secondary:   #EAEFFC;
+  --bg-elevated:    #FFFFFF;
+  --text-primary:   #0B1640;
+  --text-secondary: #33406B;
+  --text-tertiary:  #46527C;
+  --accent:         #2F55C4;
+  --accent-hover:   #213F9A;
+  --accent-subtle:  rgba(154, 100, 18, 0.12);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        rgba(255, 255, 255, 0.86);
+  --card-border:    rgba(47, 85, 196, 0.28);
+  --card-shadow:    0 1px 2px rgba(11, 22, 64, 0.06), 0 10px 28px rgba(47, 85, 196, 0.08);
+  --glass-blur:     blur(12px);
+  --nav-bg:         rgba(243, 246, 255, 0.88);
+  --nav-border:     rgba(47, 85, 196, 0.22);
+  --hairline:       rgba(47, 85, 196, 0.20);
+  --star:           rgba(154, 100, 18, 0.22);
+}
+
+html[data-skin="constellation"][data-appearance="midnight"] {
+  --bg-primary:     #091235;
+  --bg-secondary:   #0D1944;
+  --bg-elevated:    #101E4F;
+  --text-primary:   #EEF2FF;
+  --text-secondary: #C6D2F0;
+  --text-tertiary:  #A5B4DC;
+  --accent:         #FFD58A;
+  --accent-hover:   #FFE3B0;
+  --accent-subtle:  rgba(255, 213, 138, 0.14);
+  --accent-ink:     #091235;
+  --card-bg:        rgba(16, 30, 79, 0.72);
+  --card-border:    rgba(143, 184, 255, 0.30);
+  --card-shadow:    0 10px 30px rgba(0, 0, 0, 0.35);
+  --glass-blur:     blur(12px);
+  --nav-bg:         rgba(9, 18, 53, 0.88);
+  --nav-border:     rgba(143, 184, 255, 0.24);
+  --hairline:       rgba(143, 184, 255, 0.22);
+  --star:           rgba(255, 213, 138, 0.55);
+}
+
+/* A few scattered points, fixed behind the text. */
+html[data-skin="constellation"][data-appearance="daylight"] body,
+html[data-skin="constellation"][data-appearance="midnight"] body {
+  background-image:
+    radial-gradient(circle at 12% 18%, var(--star) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 78% 10%, var(--star) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 90% 62%, var(--star) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 25% 80%, var(--star) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 55% 45%, var(--star) 0 1px, transparent 1.5px);
+  background-attachment: fixed;
+}

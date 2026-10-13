@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Five Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Chooser for the five homepage directions. Neutral on purpose, so the mockups carry the colour. */
+:root { --bg: #F4F4F2; --card: #FFFFFF; --ink: #15171A; --muted: #5E636B; --line: #DDDDD8; --pick: #0B57D0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #141518; --card: #1C1E22; --ink: #ECEDEF; --muted: #A2A7AF; --line: #2E3137; --pick: #8AB4FF; }
+}
+:root[data-theme="dark"] { --bg: #141518; --card: #1C1E22; --ink: #ECEDEF; --muted: #A2A7AF; --line: #2E3137; --pick: #8AB4FF; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 'Manrope', system-ui, sans-serif; }
+a { color: var(--pick); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 40px 24px 80px; }
+h1 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.1; letter-spacing: -0.02em; }
+.intro { color: var(--muted); max-width: 70ch; margin: 12px 0 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 22px; margin-top: 34px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.frame { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--line); background: #fff; }
+.frame iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+.body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.body h2 { margin: 0; font-size: 20px; }
+.body p { margin: 0; color: var(--muted); font-size: 15px; }
+.best { font-size: 14px; }
+.best b { color: var(--ink); }
+.from { font-size: 13px; color: var(--muted); }
+.open { display: flex; gap: 10px; margin-top: auto; padding-top: 10px; flex-wrap: wrap; }
+.open a { text-decoration: none; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-weight: 600; font-size: 14px; }
+.open a:first-child { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.open a[lang="ar"] { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+.gateway { margin-top: 30px; display: grid; grid-template-columns: 1fr auto; gap: 18px 28px; align-items: end; padding: 22px 24px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.gateway h2 { margin: 0 0 6px; font-size: 22px; }
+.gateway p { margin: 0; color: var(--muted); max-width: 70ch; font-size: 15px; }
+.gateway .open { margin: 0; padding: 0; }
+@media (max-width: 760px) { .gateway { grid-template-columns: 1fr; } }
+.logos-h { margin: 56px 0 0; font-size: clamp(1.4rem, 3vw, 1.9rem); letter-spacing: -0.01em; }
+.logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; margin-top: 22px; }
+.logos figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.logos img { display: block; width: 100%; max-width: 100%; aspect-ratio: 1; object-fit: cover; }
+.logos.chosen { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.logos.chosen img { aspect-ratio: auto; object-fit: contain; background: #fff; }
+.logos figcaption { padding: 10px 14px; font-size: 14px; font-weight: 600; }
+.note { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--muted); font-size: 15px; }
+@media (max-width: 600px) { .wrap { padding: 28px 16px 60px; } .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Five directions for hishamabuella.com</h1>
+  <p class="intro">Each mockup is a working homepage with real content, in English and Egyptian Arabic (use the عربي button in each one). They all work on a phone and a laptop. Open one, try the interactive part, then tell me which to build, or which pieces to combine. The chosen directions now live in <code>tracks/</code> and the gateway is the site's <code>index.html</code>; these mockups are kept as explorations.</p>
+
+  <section class="gateway">
+    <div>
+      <h2>Reader gateway</h2>
+      <p>A landing page that asks who's visiting and sends each reader to a page built for them. Recruiters get a one-screen dossier, engineers get a terminal with research and papers, and learners get your journal of vibe coding and learning. On a phone each one switches to its own layout: big thumb buttons, a bottom tab bar, a docked action bar.</p>
+    </div>
+    <div class="open">
+      <a href="../../index.html">Open the gateway</a>
+      <a href="../../tracks/recruiter.html">Recruiter</a>
+      <a href="../../tracks/engineer.html">Engineer</a>
+      <a href="../../tracks/vibe.html">Vibe coder</a>
+      <a href="../../tracks/learner.html">Learner</a>
+      <a href="../../index.html?lang=ar" lang="ar">بالعربي</a>
+    </div>
+  </section>
+
+  <h2 class="logos-h">Five visual directions</h2>
+  <div class="grid">
+    <article class="card">
+      <div class="frame"><iframe src="1-oscilloscope.html" title="Oscilloscope preview" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="body">
+        <h2>1 · Oscilloscope</h2>
+        <p>A dark instrument faceplate. The hero is a live two-channel scope. Choosing "hiring", "engineer" or "learning" changes the modulation on screen and the links beside it.</p>
+        <p class="best"><b>Strongest for:</b> engineers and recruiters. It's the closest to the current site.</p>
+        <p class="from">From Linear's "precision instrument" and Aceternity's wave backgrounds.</p>
+        <div class="open"><a href="1-oscilloscope.html">Open</a><a href="1-oscilloscope.html?lang=ar" lang="ar">بالعربي</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="frame"><iframe src="2-computation-pad.html" title="Computation pad preview" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="body">
+        <h2>2 · Computation pad</h2>
+        <p>Green engineering paper. The page is a worked problem: Given, Find, Solution, with pencil notes in the margin and every result boxed.</p>
+        <p class="best"><b>Strongest for:</b> learners. It's warm and very readable.</p>
+        <p class="from">From OpenAI's "lab notebook" and Perplexity's "scholar's parchment", with minimal.gallery's whitespace.</p>
+        <div class="open"><a href="2-computation-pad.html">Open</a><a href="2-computation-pad.html?lang=ar" lang="ar">بالعربي</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="frame"><iframe src="3-catalogue.html" title="Hardware catalogue preview" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="body">
+        <h2>3 · Hardware catalogue</h2>
+        <p>Aluminium and one signal orange. You're a product, HA-26: projects get model numbers, and a rotary knob routes each visitor.</p>
+        <p class="best"><b>Strongest for:</b> standing out. It's the most memorable to a recruiter.</p>
+        <p class="from">From teenage engineering's catalogue and Brex's "single ember".</p>
+        <div class="open"><a href="3-catalogue.html">Open</a><a href="3-catalogue.html?lang=ar" lang="ar">بالعربي</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="frame"><iframe src="4-constellation.html" title="Constellation preview" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="body">
+        <h2>4 · Constellation</h2>
+        <p>A 16-QAM diagram where each point is a project. Drag the SNR slider and the noise locks onto clean symbols. Tap a point to see what it is.</p>
+        <p class="best"><b>Strongest for:</b> all three readers. It teaches a wireless idea while it shows your work.</p>
+        <p class="from">From Dala's "constellation on black" and Aceternity's stars and canvas reveal.</p>
+        <div class="open"><a href="4-constellation.html">Open</a><a href="4-constellation.html?lang=ar" lang="ar">بالعربي</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="frame"><iframe src="5-terminal.html" title="Terminal preview" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="body">
+        <h2>5 · Terminal on paper</h2>
+        <p>A shell you can type into, or tap commands on a phone, above a typeset README. One typeface, black on white, and blue for anything you can click.</p>
+        <p class="best"><b>Strongest for:</b> fellow vibe coders and engineers.</p>
+        <p class="from">From Vercel's "typeset terminal on white paper" and vibeindex.dev's CLI culture.</p>
+        <div class="open"><a href="5-terminal.html">Open</a><a href="5-terminal.html?lang=ar" lang="ar">بالعربي</a></div>
+      </div>
+    </article>
+  </div>
+
+  <h2 class="logos-h">Chosen logo: the bilingual ligature</h2>
+  <p class="intro">Now the site favicon and share image. The favicon puts the mark on a cream tile so it reads on light and dark tabs. The names are set in real type.</p>
+  <div class="logos chosen">
+    <figure><img src="../../brand/logo-horizontal-light.png" alt="Pulse logo with Hisham Abuella and هشام أبو العلا on white" loading="lazy"><figcaption>Lockup, light</figcaption></figure>
+    <figure><img src="../../brand/logo-horizontal-dark.png" alt="Pulse logo with the names on dark" loading="lazy"><figcaption>Lockup, dark</figcaption></figure>
+    <figure><img src="../../brand/og-image.png" alt="Share image for LinkedIn and Slack previews" loading="lazy"><figcaption>Share image (LinkedIn, Slack)</figcaption></figure>
+    <figure><img src="../../brand/favicon-48.png" alt="Favicon" loading="lazy" style="padding:30%;image-rendering:pixelated"><figcaption>Favicon (48 px, enlarged)</figcaption></figure>
+  </div>
+
+  <h2 class="logos-h">Logo concepts</h2>
+  <p class="intro">Six concepts generated on your Mac with Draw Things (Qwen-Image). The model garbled the Arabic in every one, so each keeps its generated mark and English wordmark, with هشام أبو العلا set on top in a real Arabic font as an SVG layer. <a href="../logo/overlay.html">Compare original and corrected</a>. Concepts 7–9 were made as icons first, so they work as a favicon; the overlay page shows each at 16, 32, 48 and 180 px with the full name lockup.</p>
+  <div class="logos">
+    <figure><img src="../logo/fixed/1-wave-monogram.png" alt="Logo concept 1: HA monogram with a sine-wave crossbar" loading="lazy"><figcaption>1 · Wave monogram</figcaption></figure>
+    <figure><img src="../logo/fixed/2-constellation-h.png" alt="Logo concept 2: constellation dots forming an H" loading="lazy"><figcaption>2 · Constellation H</figcaption></figure>
+    <figure><img src="../logo/fixed/3-square-kufic.png" alt="Logo concept 3: square Kufic Hisham" loading="lazy"><figcaption>3 · Square Kufic</figcaption></figure>
+    <figure><img src="../logo/fixed/5-signal-wordmark.png" alt="Logo concept 5: wordmark with oscilloscope trace" loading="lazy"><figcaption>5 · Signal wordmark</figcaption></figure>
+    <figure><img src="../logo/fixed/6-bilingual-ligature.png" alt="Logo concept 6: merged H and ه" loading="lazy"><figcaption>6 · Bilingual ligature</figcaption></figure>
+    <figure><img src="../logo/icons/9b-qpsk-dot/icon-512.png" alt="Favicon-ready mark: four constellation dots on amber" loading="lazy"><figcaption>9 · QPSK dots (favicon-ready)</figcaption></figure>
+    <figure><img src="../logo/icons/8a-pulse-screen/icon-512.png" alt="Favicon-ready mark: a pulse on a scope screen" loading="lazy"><figcaption>8 · Scope pulse (favicon-ready)</figcaption></figure>
+    <figure><img src="../logo/icons/7a-wave-h/icon-512.png" alt="Favicon-ready mark: an H with a wave crossbar" loading="lazy"><figcaption>7 · Wave H (favicon-ready)</figcaption></figure>
+  </div>
+
+  <p class="note">Every mockup follows the same plan: a one-line positioning statement, a route for each kind of reader (hiring, engineering, learning), work ordered for recruiters, and a narration note on the writing. Judge the five directions on look and feel: their content was written before we settled on a journal-first personal site, so whichever one you pick gets the journal-first content and less Wireless 101. Article links only work inside the full site. The Arabic copy is Egyptian colloquial, and the articles themselves are still English-only.</p>
+</div>
+<script>
+  // Scale each 1440px-wide preview to fit its card.
+  function fit() { document.querySelectorAll('.frame').forEach(function (f) { f.firstElementChild.style.transform = 'scale(' + f.clientWidth / 1440 + ')'; }); }
+  addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>

@@ -9,17 +9,25 @@
 
    Markup the switcher expects, anywhere on the page:
      <div class="appearance-set" role="radiogroup" aria-label="Appearance">
-       <button type="button" role="radio" data-appearance="midnight">Midnight</button>
-       ...
+       <button type="button" role="radio" data-appearance="auto">Auto</button>
+       <button type="button" role="radio" data-appearance="midnight">Dark</button>
+       <button type="button" role="radio" data-appearance="daylight">Light</button>
+       <button type="button" role="radio" data-appearance="contrast">Contrast</button>
      </div>
+
+   "auto" follows the system light/dark setting (Midnight or Daylight) and is the
+   default; the stored value is the visitor's preference, data-appearance the result.
    ========================================================================== */
 
 (function () {
     'use strict';
 
-    var APPEARANCES = ['midnight', 'daylight', 'contrast'];
+    // A visitor picks a preference; the page shows a resolved appearance.
+    // "auto" follows the system light/dark setting and is the default.
+    var PREFERENCES = ['auto', 'midnight', 'daylight', 'contrast'];
     var STORAGE_KEY = 'appearance';
     var root = document.documentElement;
+    var systemLight = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
 
     root.classList.add('js');
 
@@ -27,39 +35,58 @@
        Appearance
        ---------------------------------------------------------------------- */
 
-    function current() {
-        var value = root.getAttribute('data-appearance');
-        return APPEARANCES.indexOf(value) > -1 ? value : APPEARANCES[0];
+    function stored() {
+        try {
+            var value = localStorage.getItem(STORAGE_KEY);
+            return PREFERENCES.indexOf(value) > -1 ? value : 'auto';
+        } catch (error) {
+            return 'auto';
+        }
     }
+
+    function resolve(preference) {
+        if (preference !== 'auto') return preference;
+        return systemLight && systemLight.matches ? 'daylight' : 'midnight';
+    }
+
+    var preference = stored();
 
     var buttons = Array.prototype.slice.call(
         document.querySelectorAll('.appearance-set button[data-appearance]')
     );
 
-    function apply(name) {
-        if (APPEARANCES.indexOf(name) === -1) return;
+    function apply(choice, save) {
+        if (PREFERENCES.indexOf(choice) === -1) return;
+        preference = choice;
 
+        var name = resolve(choice);
         root.setAttribute('data-appearance', name);
+        root.setAttribute('data-appearance-preference', choice);
 
         buttons.forEach(function (button) {
-            var selected = button.dataset.appearance === name;
+            var selected = button.dataset.appearance === choice;
             button.setAttribute('aria-checked', String(selected));
             button.tabIndex = selected ? 0 : -1;
         });
 
-        try {
-            localStorage.setItem(STORAGE_KEY, name);
-        } catch (error) {
-            /* Storage is unavailable in private mode; the choice just won't persist. */
+        if (save) {
+            try {
+                localStorage.setItem(STORAGE_KEY, choice);
+                // Keep the reader tracks' Auto / Light / Dark switch in step.
+                var reader = { auto: 'auto', midnight: 'dark', daylight: 'light' }[choice];
+                if (reader) localStorage.setItem('reader-theme', reader);
+            } catch (error) {
+                /* Storage is unavailable in private mode; the choice just won't persist. */
+            }
         }
 
         // Let page-specific code (canvases, charts) repaint in the new palette.
-        document.dispatchEvent(new CustomEvent('appearancechange', { detail: { name: name } }));
+        document.dispatchEvent(new CustomEvent('appearancechange', { detail: { name: name, preference: choice } }));
     }
 
     buttons.forEach(function (button) {
         button.addEventListener('click', function () {
-            apply(button.dataset.appearance);
+            apply(button.dataset.appearance, true);
         });
 
         // A radiogroup is expected to move between options with the arrow keys.
@@ -70,16 +97,23 @@
             if (!step) return;
 
             event.preventDefault();
-            var index = APPEARANCES.indexOf(current());
-            var next = APPEARANCES[(index + step + APPEARANCES.length) % APPEARANCES.length];
-            apply(next);
+            var index = PREFERENCES.indexOf(preference);
+            var next = PREFERENCES[(index + step + PREFERENCES.length) % PREFERENCES.length];
+            apply(next, true);
 
             var target = buttons.filter(function (b) { return b.dataset.appearance === next; })[0];
             if (target) target.focus();
         });
     });
 
-    apply(current());
+    // In auto, follow the system when it switches (e.g. a phone going dark at sunset).
+    if (systemLight) {
+        var follow = function () { if (preference === 'auto') apply('auto', false); };
+        if (systemLight.addEventListener) systemLight.addEventListener('change', follow);
+        else if (systemLight.addListener) systemLight.addListener(follow);
+    }
+
+    apply(preference, false);
 
     /* ----------------------------------------------------------------------
        Reveals — one gentle entrance per section

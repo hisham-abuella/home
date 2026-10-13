@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 3 — Hardware Catalogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Mockup 3 — Hardware catalogue.
+   Inspiration: teenage engineering ("industrial catalogue under studio light"),
+   Brex ("white concrete, single ember"). Each project is a product with a model
+   number; the hero is a device faceplate whose rotary selector routes each audience. */
+:root {
+  --alu:    #D7D8D3;   /* brushed aluminium */
+  --panel:  #F1F1EC;
+  --ink:    #000000;
+  --grey:   #5D5F5B;
+  --line:   #B9BBB5;
+  --orange: #FF4F00;   /* the single ember */
+  --lcd:    #C9D3B4;
+  --lcd-ink:#26301C;
+  --font:   'Archivo', system-ui, sans-serif;
+}
+:root[dir="rtl"] { --font: 'Readex Pro', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--alu); color: var(--ink); font: 400 16px/1.55 var(--font); font-stretch: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.wide { font-stretch: 125%; }
+.narrow { font-stretch: 75%; }
+[dir="rtl"] .wide, [dir="rtl"] .narrow { font-stretch: 100%; }
+
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 14px; }
+header.top nav { display: flex; gap: 22px; }
+header.top nav a { text-decoration: none; }
+header.top nav a:hover { color: var(--orange); }
+.lang { font: 600 14px/1 'Readex Pro', sans-serif; padding: 8px 14px; background: var(--ink); color: var(--panel); border: 0; border-radius: 999px; cursor: pointer; }
+[dir="rtl"] .lang { font-family: 'Archivo', sans-serif; }
+
+/* The device */
+.device {
+  background: var(--panel); border-radius: 22px; padding: 28px;
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px;
+  box-shadow: 0 1px 0 #fff inset, 0 24px 40px rgba(0,0,0,.12);
+}
+.device h1 { margin: 0; font-size: clamp(2.6rem, 6.4vw, 5.4rem); line-height: .92; font-weight: 800; font-stretch: 125%; letter-spacing: -0.03em; }
+[dir="rtl"] .device h1 { font-stretch: 100%; line-height: 1.2; letter-spacing: 0; font-weight: 700; }
+.model { display: flex; gap: 10px; align-items: center; margin-bottom: 18px; font-size: 14px; color: var(--grey); }
+.model b { background: var(--ink); color: var(--panel); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+.device p.lede { margin: 20px 0 0; max-width: 46ch; font-size: 18px; }
+.screws { position: relative; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 30px; border-top: 2px solid var(--ink); }
+.facts div { padding: 10px 12px 0 0; font-size: 13px; color: var(--grey); line-height: 1.3; }
+[dir="rtl"] .facts div { padding: 10px 0 0 12px; }
+.facts b { display: block; color: var(--ink); font-size: 26px; font-weight: 700; font-stretch: 75%; }
+[dir="rtl"] .facts b { font-stretch: 100%; }
+
+.control { display: grid; grid-template-rows: auto 1fr; gap: 20px; }
+.lcd { background: var(--lcd); color: var(--lcd-ink); border-radius: 10px; padding: 16px 18px; min-height: 172px; box-shadow: inset 0 2px 6px rgba(0,0,0,.25); }
+.lcd small { display: block; font-size: 12px; opacity: .75; }
+.lcd p { margin: 6px 0 10px; font-size: 16px; }
+.lcd a { display: block; padding: 5px 0; border-top: 1px solid rgba(38,48,28,.25); text-decoration: none; font-weight: 600; }
+.lcd a:hover { text-decoration: underline; }
+.dial-row { display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: center; }
+.dial { position: relative; width: 150px; height: 150px; }
+.knob {
+  position: absolute; inset: 22px; border-radius: 50%; border: 0; cursor: pointer;
+  background: radial-gradient(circle at 35% 30%, #fff, #D9DAD5 60%, #BFC0BA);
+  box-shadow: 0 6px 14px rgba(0,0,0,.25), inset 0 -3px 6px rgba(0,0,0,.12);
+  transition: transform .45s cubic-bezier(.3,1.4,.5,1);
+}
+.knob::after { content: ''; position: absolute; left: 50%; top: 8px; width: 4px; height: 26px; margin-left: -2px; background: var(--orange); border-radius: 2px; }
+.ticks button { position: absolute; width: 10px; height: 10px; margin: -5px; border-radius: 50%; border: 0; background: var(--line); cursor: pointer; padding: 0; }
+.ticks button[aria-pressed="true"] { background: var(--orange); }
+.choices { display: grid; gap: 8px; }
+.choices button {
+  text-align: start; font: 600 15px/1.25 var(--font); padding: 10px 12px; border-radius: 10px; cursor: pointer;
+  background: transparent; border: 2px solid var(--line); color: var(--ink); min-height: 44px;
+}
+.choices button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--panel); }
+
+/* Catalogue */
+section { padding: 72px 0 0; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 18px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+.sec-head h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1; }
+[dir="rtl"] .sec-head h2 { font-stretch: 100%; letter-spacing: 0; line-height: 1.3; }
+.sec-head span { color: var(--grey); font-size: 14px; }
+
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-top: 18px; }
+.item { background: var(--panel); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; min-height: 260px; position: relative; }
+.item.big { grid-column: span 3; }
+.item.mid { grid-column: span 2; }
+.item .sku { font-size: 13px; color: var(--grey); display: flex; justify-content: space-between; }
+.item .sku i { font-style: normal; width: 9px; height: 9px; border-radius: 50%; background: var(--orange); align-self: center; }
+.item h3 { margin: 18px 0 8px; font-size: 24px; font-weight: 700; line-height: 1.1; }
+.item p { margin: 0; color: var(--grey); font-size: 15px; }
+.item .num { margin-top: auto; padding-top: 18px; font-size: 44px; font-weight: 800; font-stretch: 75%; line-height: 1; }
+[dir="rtl"] .item .num { font-stretch: 100%; }
+.item .num small { display: block; font-size: 13px; font-weight: 400; color: var(--grey); font-stretch: 100%; margin-top: 4px; }
+.item .go { margin-top: 12px; display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
+.item .go a { text-decoration: none; border-bottom: 2px solid var(--orange); }
+.item.dark { background: var(--ink); color: var(--panel); }
+.item.dark p, .item.dark .sku, .item.dark .num small { color: #A9AAA4; }
+
+.specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.specs table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 16px; overflow: hidden; font-size: 15px; }
+.specs th { text-align: start; padding: 14px 16px; font-size: 16px; border-bottom: 2px solid var(--ink); }
+.specs td { padding: 9px 16px; border-top: 1px solid var(--line); }
+
+.manuals a { display: grid; grid-template-columns: 90px 1fr auto; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--line); text-decoration: none; align-items: baseline; }
+.manuals a:hover b { color: var(--orange); }
+.manuals .no { font-size: 13px; color: var(--grey); }
+.manuals b { font-size: 18px; }
+.manuals span { display: block; color: var(--grey); font-size: 15px; }
+.manuals time { font-size: 13px; color: var(--grey); }
+
+.order { margin: 72px 0 0; background: var(--orange); color: var(--ink); border-radius: 22px; padding: 34px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+.order h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; font-stretch: 125%; line-height: 1; }
+[dir="rtl"] .order h2 { font-stretch: 100%; line-height: 1.3; }
+.order p { margin: 10px 0 0; max-width: 48ch; }
+.order .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.order .btns a { background: var(--ink); color: var(--panel); text-decoration: none; padding: 12px 18px; border-radius: 999px; font-weight: 600; }
+.order .btns a.ghost { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+footer { padding: 26px 0 40px; font-size: 13px; color: var(--grey); }
+
+@media (max-width: 940px) {
+  .device { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .item.big, .item.mid { grid-column: span 1; }
+  .item.big:first-child { grid-column: span 2; }
+  .specs { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  header.top nav { display: none; }
+  .device { padding: 20px; border-radius: 18px; }
+  .facts { grid-template-columns: repeat(2, 1fr); row-gap: 12px; }
+  .dial-row { grid-template-columns: 110px 1fr; gap: 14px; }
+  .dial { width: 110px; height: 110px; }
+  .knob { inset: 16px; }
+  .grid { grid-template-columns: 1fr; }
+  .item.big:first-child { grid-column: span 1; }
+  .manuals a { grid-template-columns: 1fr; gap: 2px; }
+  .order { grid-template-columns: 1fr; padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .knob { transition: none; } }
+/* Numbers like 10+ keep their own direction inside Arabic text */
+.facts b, .item .num { unicode-bidi: plaintext; }
+/* Isolated numbers align to the Arabic side */
+[dir="rtl"] .facts b, [dir="rtl"] .item .num { text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <strong data-i18n="name">Hisham Abuella</strong>
+    <nav><a href="#catalogue" data-i18n="nav1">Catalogue</a><a href="#specs" data-i18n="nav2">Specs</a><a href="#manuals" data-i18n="nav3">Manuals</a><a href="../../cv.html">CV</a></nav>
+    <button class="lang" type="button" data-lang-toggle>عربي</button>
+  </header>
+
+  <div class="device">
+    <div>
+      <div class="model"><b>HA-26</b><span data-i18n="model">cellular systems engineer, California edition</span></div>
+      <h1 data-i18n="name">Hisham Abuella</h1>
+      <p class="lede" data-i18n="lede">I design 5G baseband and RF front-end systems. In my own time I love creating UIs with Claude: AI tools, courses and bedtime books.</p>
+      <div class="facts">
+        <div><b>10</b><span data-i18n="f1">years of signal processing research</span></div>
+        <div><b>5</b><span data-i18n="f2">years shipping cellular systems</span></div>
+        <div><b>10+</b><span data-i18n="f3">peer-reviewed papers</span></div>
+        <div><b>1</b><span data-i18n="f4">US patent</span></div>
+      </div>
+    </div>
+    <div class="control">
+      <div class="lcd" aria-live="polite" id="lcd"></div>
+      <div class="dial-row">
+        <div class="dial">
+          <div class="ticks" id="ticks"></div>
+          <button class="knob" id="knob" type="button" aria-label="Turn the selector"></button>
+        </div>
+        <div class="choices" id="choices" role="group" aria-label="What brings you here">
+          <button type="button" data-k="0" data-i18n="c1">I'm hiring</button>
+          <button type="button" data-k="1" data-i18n="c2">I'm an engineer</button>
+          <button type="button" data-k="2" data-i18n="c3">I'm learning</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="catalogue">
+    <div class="sec-head"><h2 data-i18n="catH">Catalogue</h2><span data-i18n="catS">Five things I've built, with their numbers</span></div>
+    <div class="grid">
+      <article class="item big dark"><div class="sku">VL-01 <i></i></div><h3 data-i18n="w1">Visible light vitals</h3><p data-i18n="w1d">A photodetector on a Raspberry Pi recovers heart rate and breathing from visible light alone, with no contact and no wearable. Doctoral research.</p><div class="num"><span data-i18n="w1v">US patent</span><small data-i18n="w1m">and several publications</small></div></article>
+      <article class="item big"><div class="sku">W-101</div><h3>Wireless 101</h3><p data-i18n="w3d">Seven story-style courses on wireless, DSP, statistics, ML, linear algebra and generative AI, in English and Arabic.</p><div class="num">580+<small data-i18n="w3m">lessons in each language</small></div><div class="go"><a href="https://hisham-abuella.github.io/Wireless-101/" data-i18n="w3l1">Start learning</a><a href="../../Articles/building-wireless101.html" data-i18n="how">How I built it</a></div></article>
+      <article class="item mid"><div class="sku">CPS-1</div><h3 data-i18n="w2">Claude presentation skill</h3><p data-i18n="w2d">A Claude Code skill that generates self-contained HTML decks that render fully offline.</p><div class="go"><a href="../../projects/presentation-skill/template.html" data-i18n="w2l1">Template</a></div></article>
+      <article class="item mid"><div class="sku">GC-101</div><h3 data-i18n="w4">GenAI and Claude 101</h3><p data-i18n="w4d">From first prompt to building your own skills and tools, written for an internal Apple audience.</p><div class="go"><a href="../../projects/presentation-skill/claude101.html" data-i18n="w4l">View the deck</a></div></article>
+      <article class="item mid"><div class="sku">BS-6</div><h3 data-i18n="w5">Bedtime stories</h3><p data-i18n="w5d">High-contrast board books drawn in SVG and narrated in English and Arabic, matched to what a newborn can see.</p><div class="num">292<small data-i18n="w5m">narrated clips across six books</small></div><div class="go"><a href="../../projects/bedtime-stories/" data-i18n="w5l">Read the books</a></div></article>
+    </div>
+  </section>
+
+  <section id="specs">
+    <div class="sec-head"><h2 data-i18n="specH">Specifications</h2><span data-i18n="specS">What I work with</span></div>
+    <div class="specs">
+      <table><tr><th data-i18n="sp1">Signal chain</th></tr><tr><td>5G NR baseband</td></tr><tr><td>RF digital front-end</td></tr><tr><td data-i18n="dpd">Digital pre-distortion</td></tr><tr><td data-i18n="fxp">Fixed-point implementation</td></tr></table>
+      <table><tr><th data-i18n="sp2">Implementation</th></tr><tr><td>MATLAB</td></tr><tr><td>C / C++</td></tr><tr><td>Python</td></tr><tr><td>LabVIEW</td></tr></table>
+      <table><tr><th data-i18n="sp3">Machine learning</th></tr><tr><td data-i18n="ml1">ML for wireless systems</td></tr><tr><td data-i18n="ml2">Claude skills and plugins</td></tr><tr><td data-i18n="ml3">Model integration</td></tr><tr><td data-i18n="ml4">Running models locally</td></tr></table>
+    </div>
+  </section>
+
+  <section id="manuals">
+    <div class="sec-head"><h2 data-i18n="logH">Manuals</h2><span data-i18n="logS">Writing, with narration in my own voice</span></div>
+    <div class="manuals">
+      <a href="../../Articles/two-nails-two-assistants.html"><span class="no">M-08</span><div><b data-i18n="a1">Two nails, two assistants</b><span data-i18n="a1s">Claude against the AI I'm building on my desk.</span></div><time data-i18n="oct">Oct 2026</time></a>
+      <a href="../../Articles/bedtime-stories.html"><span class="no">M-07</span><div><b data-i18n="a2">Bedtime stories for a three-month-old</b><span data-i18n="a2s">A bilingual board book narrated in my own voice.</span></div><time data-i18n="oct">Oct 2026</time></a>
+      <a href="../../Articles/building-wireless101.html"><span class="no">M-06</span><div><b data-i18n="a3">Building Wireless 101</b><span data-i18n="a3s">A free bilingual platform for wireless and DSP.</span></div><time data-i18n="mar">Mar 2026</time></a>
+      <a href="../../Articles/local-voice-generation.html"><span class="no">M-05</span><div><b data-i18n="a4">Generating voice with local models</b><span data-i18n="a4s">Mac Studio voices measured against ElevenLabs v4.</span></div><time data-i18n="feb">Feb 2026</time></a>
+      <a href="../../Articles/journey.html"><span class="no">M-01</span><div><b data-i18n="a5">My journey, from Cairo to California</b><span data-i18n="a5s">Wireless engineering, a doctorate, and the move to industry.</span></div><time data-i18n="aug">Aug 2025</time></a>
+    </div>
+  </section>
+
+  <div class="order">
+    <div><h2 data-i18n="cH">Get in touch</h2><p data-i18n="cS">Collaborations, technical discussions and roles in wireless systems and machine learning.</p></div>
+    <div class="btns"><a href="mailto:hisham.abuella1@gmail.com" data-i18n="email">Email me</a><a class="ghost" href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a><a class="ghost" href="https://github.com/hisham-abuella">GitHub</a></div>
+  </div>
+  <footer data-i18n="foot">© 2026 Hisham Abuella. Designed and built in California.</footer>
+</div>
+
+<script type="application/json" id="i18n-ar">
+{
+  "name": "هشام أبو العلا", "nav1": "الكتالوج", "nav2": "المواصفات", "nav3": "الكتيّبات",
+  "model": "مهندس أنظمة خلوية، إصدار كاليفورنيا",
+  "lede": "بصمم أنظمة الـ 5G baseband والـ RF front‑end. وفي وقتي الخاص بحب أعمل UIs مع Claude: أدوات ذكاء اصطناعي، وكورسات، وحواديت قبل النوم.",
+  "f1": "سنين بحث في معالجة الإشارات", "f2": "سنين شغل على أنظمة خلوية", "f3": "ورقة بحثية محكّمة", "f4": "براءة اختراع أمريكية",
+  "c1": "بدوّر على حد أعيّنه", "c2": "شغلي هندسة", "c3": "عايز أتعلم",
+  "catH": "الكتالوج", "catS": "خمس حاجات عملتها، بالأرقام",
+  "w1": "قياس العلامات الحيوية بالضوء", "w1d": "حساس ضوئي على Raspberry Pi بيقيس نبض القلب والتنفس من الضوء العادي بس، من غير لمس ومن غير أي جهاز يتلبس. بحث الدكتوراه.",
+  "w1v": "براءة اختراع", "w1m": "أمريكية، وكذا ورقة بحثية",
+  "w3d": "سبع كورسات بأسلوب الحكاية في الاتصالات اللاسلكية، والـ DSP، والإحصاء، وتعلّم الآلة، والجبر الخطي، والذكاء الاصطناعي التوليدي، بالعربي والإنجليزي.",
+  "w3m": "درس في كل لغة", "w3l1": "ابدأ اتعلم", "how": "إزاي عملتها",
+  "w2": "مهارة Claude للعروض", "w2d": "مهارة لـ Claude Code بتطلّع عروض HTML كاملة في ملف واحد، وبتشتغل من غير إنترنت.", "w2m": "تحميل على الماركت بليس الداخلي في Apple", "w2l1": "القالب",
+  "w4": "كورس GenAI و Claude 101", "w4d": "من أول prompt لحد ما تبني الـ skills والأدوات بتاعتك. اتكتب لجمهور داخلي في Apple.", "w4m": "زائر", "w4l": "شوف العرض",
+  "w5": "حواديت قبل النوم", "w5d": "كتب بتباين عالي مرسومة بـ SVG ومتسجلة بالعربي والإنجليزي، على قد اللي عين الرضيع تقدر تشوفه.", "w5m": "مقطع صوتي في ست كتب", "w5l": "اقرا الكتب",
+  "specH": "المواصفات", "specS": "الحاجات اللي بشتغل بيها", "sp1": "سلسلة الإشارة", "sp2": "التنفيذ", "sp3": "تعلّم الآلة",
+  "dpd": "Digital pre-distortion", "fxp": "تنفيذ بالـ fixed-point",
+  "ml1": "تعلّم الآلة للأنظمة اللاسلكية", "ml2": "Skills و plugins لـ Claude", "ml3": "دمج الموديلات", "ml4": "تشغيل الموديلات محلياً",
+  "logH": "الكتيّبات", "logS": "مقالات تقدر تسمعها بصوتي (بالإنجليزي حالياً)",
+  "a1": "مسمارين ومساعدين", "a1s": "Claude قصاد الذكاء الاصطناعي اللي ببنيه على مكتبي.",
+  "a2": "حواديت قبل النوم لطفل عنده تلات شهور", "a2s": "كتاب بلغتين متسجل بصوتي.",
+  "a3": "إزاي بنيت Wireless 101", "a3s": "منصة ببلاش بلغتين للاتصالات اللاسلكية والـ DSP.",
+  "a4": "توليد الصوت بموديلات محلية", "a4s": "أصوات على Mac Studio قصاد ElevenLabs v4.",
+  "a5": "رحلتي من القاهرة لكاليفورنيا", "a5s": "هندسة لاسلكية، ودكتوراه، والنقلة للصناعة.",
+  "oct": "أكتوبر 2026", "mar": "مارس 2026", "feb": "فبراير 2026", "aug": "أغسطس 2025",
+  "cH": "كلّمني", "cS": "تعاون، نقاش تقني، أو فرص شغل في الأنظمة اللاسلكية وتعلّم الآلة.", "email": "ابعتلي إيميل",
+  "foot": "© 2026 هشام أبو العلا. متصمم ومتبني في كاليفورنيا."
+}
+</script>
+<script src="assets/i18n.js"></script>
+<script>
+(function () {
+  var screens = [
+    { en: ['Mode 1 · hiring', 'Fifteen years in wireless: a doctorate, a decade of research, five years shipping cellular systems.', [['Read my CV', '../../cv.html'], ['Patent and publications', 'https://scholar.google.com/citations?user=51HWj54AAAAJ'], ['LinkedIn', 'https://www.linkedin.com/in/hisham-abuella-808b91171/']]],
+      ar: ['وضع 1 · توظيف', 'خمستاشر سنة في الاتصالات اللاسلكية: دكتوراه، وعشر سنين بحث، وخمس سنين على أنظمة خلوية حقيقية.', [['اقرا الـ CV', '../../cv.html'], ['براءة الاختراع والأبحاث', 'https://scholar.google.com/citations?user=51HWj54AAAAJ'], ['LinkedIn', 'https://www.linkedin.com/in/hisham-abuella-808b91171/']]] },
+    { en: ['Mode 2 · engineering', 'Baseband, DPD and fixed-point work, plus notes on running models locally.', [['Visible light vitals', '#catalogue'], ['Building a personal AI engine', '../../Articles/building-ai-server.html'], ['GitHub', 'https://github.com/hisham-abuella']]],
+      ar: ['وضع 2 · هندسة', 'شغل baseband و DPD و fixed-point، ومعاه ملاحظات عن تشغيل الموديلات محلياً.', [['العلامات الحيوية بالضوء', '#catalogue'], ['بناء محرك AI شخصي', '../../Articles/building-ai-server.html'], ['GitHub', 'https://github.com/hisham-abuella']]] },
+    { en: ['Mode 3 · learning', 'Free, bilingual and story-style. Start with wireless basics or with generative AI.', [['Wireless 101 courses', 'https://hisham-abuella.github.io/Wireless-101/'], ['GenAI and Claude 101 deck', '../../projects/presentation-skill/claude101.html'], ['All writing', '#manuals']]],
+      ar: ['وضع 3 · تعلّم', 'ببلاش، بلغتين، وبأسلوب الحكاية. ابدأ بأساسيات اللاسلكي أو بالذكاء الاصطناعي التوليدي.', [['كورسات Wireless 101', 'https://hisham-abuella.github.io/Wireless-101/'], ['عرض GenAI و Claude 101', '../../projects/presentation-skill/claude101.html'], ['كل المقالات', '#manuals']]] }
+  ];
+  var angles = [-60, 0, 60], k = 0;
+  var lcd = document.getElementById('lcd'), knob = document.getElementById('knob'), ticks = document.getElementById('ticks');
+  angles.forEach(function (a, i) {
+    var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Mode ' + (i + 1));
+    var r = (a - 90) * Math.PI / 180; b.style.left = 50 + 47 * Math.cos(r) + '%'; b.style.top = 50 + 47 * Math.sin(r) + '%';
+    b.addEventListener('click', function () { set(i); }); ticks.appendChild(b);
+  });
+  function set(i) {
+    k = i;
+    var s = screens[i][document.documentElement.dir === 'rtl' ? 'ar' : 'en'];
+    lcd.innerHTML = '<small>' + s[0] + '</small><p>' + s[1] + '</p>' + s[2].map(function (l) { return '<a href="' + l[1] + '">' + l[0] + '</a>'; }).join('');
+    knob.style.transform = 'rotate(' + angles[i] + 'deg)';
+    document.querySelectorAll('#choices button, #ticks button').forEach(function (b, j) { b.setAttribute('aria-pressed', j % 3 === i); });
+  }
+  knob.addEventListener('click', function () { set((k + 1) % 3); });
+  document.querySelectorAll('#choices button').forEach(function (b) { b.addEventListener('click', function () { set(+b.dataset.k); }); });
+  document.addEventListener('langchange', function () { set(k); });
+  set(0);
+})();
+</script>
+</body>
+</html>
