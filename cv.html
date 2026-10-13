@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
     <title>Hisham Abuella - CV</title>
     <meta name="description" content="Curriculum vitae of Hisham Abuella, cellular systems engineer.">
     <meta property="og:title" content="Hisham Abuella — Curriculum Vitae">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <meta property="og:description" content="Cellular systems engineer: 5G baseband, RF digital front-end, signal processing and machine learning.">
     <meta property="og:type" content="profile">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,15 +40,23 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-        Back to Website
+        Back<span class="wide-only"> to Website</span>
     </a>
 
-    <button class="print-btn" onclick="window.print()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-        </svg>
-        Save as PDF
-    </button>
+    <div class="cv-actions">
+        <button class="copy-btn" type="button" id="copy-cv" aria-live="polite">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span class="copy-label">Copy<span class="wide-only"> CV text</span></span>
+        </button>
+        <button class="print-btn" onclick="window.print()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            Save as PDF
+        </button>
+    </div>
 
     <div class="container">
         <!-- Header -->
@@ -299,6 +313,68 @@
     </div>
 
     <script>
+        // Copy the CV as plain text, for pasting into application forms and emails.
+        (function () {
+            var button = document.getElementById('copy-cv');
+            var label = button.querySelector('.copy-label');
+            var original = label.innerHTML;
+            var blocks = '.header h1, .contact-info, .section-title, .job-title, .job-company, li, ' +
+                         '.publication, .degree, .school, .edu-details, .award-item, .footer span';
+
+            function cleanTitle(text) {
+                // "- S U M M A R Y  O F ... -" -> "SUMMARY OF ..."
+                return text.replace(/^[\s-]+|[\s-]+$/g, '')
+                           .split(/\s*\u00a0\s*/)
+                           .map(function (word) { return word.replace(/\s+/g, ''); })
+                           .join(' ');
+            }
+
+            function cvText() {
+                var lines = [];
+                document.querySelectorAll('.container').forEach(function (container) {
+                    container.querySelectorAll(blocks).forEach(function (el) {
+                        var text = el.innerText.replace(/[ \t]+\n/g, '\n').trim();
+                        if (!text) return;
+                        if (el.matches('.section-title')) lines.push('', cleanTitle(el.textContent), '');
+                        else if (el.matches('li')) lines.push('\u2022 ' + text);
+                        else if (el.matches('.job-title, .degree')) lines.push('', text);
+                        else lines.push(text);
+                    });
+                });
+                return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+            }
+
+            function fallbackCopy(text) {
+                var area = document.createElement('textarea');
+                area.value = text;
+                area.setAttribute('readonly', '');
+                area.style.position = 'fixed';
+                area.style.opacity = '0';
+                document.body.appendChild(area);
+                area.select();
+                var ok = false;
+                try { ok = document.execCommand('copy'); } catch (error) { /* unsupported */ }
+                document.body.removeChild(area);
+                return ok;
+            }
+
+            function done(message) {
+                label.textContent = message;
+                setTimeout(function () { label.innerHTML = original; }, 2000);
+            }
+
+            button.addEventListener('click', function () {
+                var text = cvText();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () { done('Copied'); }, function () {
+                        done(fallbackCopy(text) ? 'Copied' : 'Copy failed');
+                    });
+                } else {
+                    done(fallbackCopy(text) ? 'Copied' : 'Copy failed');
+                }
+            });
+        })();
+
         // Press 'P' to print/save as PDF
         document.addEventListener('keydown', function(e) {
             if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {

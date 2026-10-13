@@ -37,6 +37,27 @@ fight each other.
 The decks under `projects/presentation-skill/` are self-contained and keep their own
 copy of the palette, since they are exported and shared as single files.
 
+## Brand
+
+The logo is the bilingual ligature: a teal serif H crossed by one amber Arabic stroke, chosen
+2026-10-13 from a set of concepts generated locally with Draw Things. Colours: teal `#013C44`, amber `#B86803`, cream `#F6F2E0`.
+
+```
+brand/mark.png               the mark alone, cut from the concept, transparent background
+favicon.ico                  16/32/48 px, at the site root where browsers look by default
+brand/favicon-16/32/48.png   the mark on a cream rounded tile, so it reads on dark tabs too
+brand/apple-touch-icon.png   180 px home-screen icon
+brand/icon-512.png           512 px icon (upscaled from a ~330 px source; re-render the concept
+                             larger if a sharper big icon is ever needed)
+brand/logo-horizontal-*.png  mark + "Hisham Abuella" + هشام أبو العلا, light and dark
+brand/og-image.png           1200x630 share image, set as og:image on the site pages
+```
+
+Names are always set in real type (Manrope, IBM Plex Sans Arabic), never generated: image
+models garble Arabic. The amber stroke is drawn as a flourish; it reads closer to ح than ه.
+Every page links the favicon set; the decks and bedtime books under `projects/` keep their own
+icons because they are shared as standalone files.
+
 ## Articles
 
 Each article is a self-contained page in `Articles/`, built on `css/article.css`.
