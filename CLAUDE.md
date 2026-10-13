@@ -53,6 +53,8 @@ garble Arabic). See README "Brand".
 - Wireless 101 stays low-key.
 - The 2,200+ downloads and 6,000+ visitors are internal Apple versions: never next to a public
   link, never in a "Built" list.
+- One U.S. patent, and it is the ViLDAR work (vehicle speed estimation, detection and ranging
+  with visible light). The vital-signs work has publications but no patent.
 - No invented facts. Sources: `cv.html`, `home.html`, the articles.
 - English and Egyptian Arabic change together.
 - Every change is checked on phone (390px) and laptop (1440px), light and dark; contrast at
