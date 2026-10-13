@@ -191,7 +191,7 @@
 .quote::before { content: none; }
 
 code {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-family: var(--font-mono);
   font-size: 0.875em;
   padding: 2px 7px;
   border-radius: 5px;
@@ -281,6 +281,11 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
 
 .model-table tr:last-child td { border-bottom: none; }
 
+/* On a phone a wide table scrolls inside its own box instead of the page. */
+@media (max-width: 680px) {
+  .model-table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
 /* ==========================================================================
    Article navigation and footer
    ========================================================================== */
@@ -357,6 +362,8 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
   background: var(--card-bg);
 }
 
+.listen[hidden] { display: none; }
+
 .listen-label {
   display: flex;
   flex-direction: column;
@@ -380,6 +387,10 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
      width, so let the bar wrap and give it its own row. */
   .nav-container { padding: 12px 18px; gap: 10px 14px; flex-wrap: wrap; }
   .nav-container .appearance { margin-left: auto; }
+  /* Four choices (Auto, Dark, Light, Contrast) fit a phone once the label goes
+     and the buttons tighten; the buttons name themselves. */
+  .nav-container #appearance-label { display: none; }
+  .nav-container .appearance-set button { padding: 6px 10px; }
   .article-container { padding: 0 18px 32px; }
   .article-content { font-size: 1rem; }
   .article-nav-link.next { text-align: left; }

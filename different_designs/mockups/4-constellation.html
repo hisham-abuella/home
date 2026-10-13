@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 4 — Constellation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Alexandria:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Mockup 4 — Constellation.
+   Inspiration: Dala ("constellation floating on black"), Aceternity stars / canvas
+   reveal. The hero is a 16-QAM constellation diagram where every point is something
+   I made. An SNR slider is the one interactive moment: drag it up and the noisy
+   cloud locks onto clean symbols — a wireless idea a learner can feel. */
+:root {
+  --sky:    #091235;   /* clearly blue, not near-black */
+  --sky-2:  #10204F;
+  --star:   #FFD58A;   /* warm symbol points */
+  --beam:   #8FB8FF;   /* cool decision lines */
+  --ink:    #EEF1FF;
+  --soft:   #B4BDE0;
+  --muted:  #8590BC;
+  --line:   rgba(143, 184, 255, 0.16);
+  --font:   'Bricolage Grotesque', system-ui, sans-serif;
+}
+:root[dir="rtl"] { --font: 'Alexandria', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(140% 80% at 70% 0%, var(--sky-2), var(--sky) 60%); background-attachment: fixed; color: var(--ink); font: 400 17px/1.6 var(--font); }
+[dir="rtl"] body { line-height: 1.85; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--star); outline-offset: 3px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+.top { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; gap: 16px; }
+.top b { font-weight: 600; }
+.top nav { display: flex; gap: 22px; font-size: 15px; color: var(--soft); }
+.top nav a { text-decoration: none; }
+.top nav a:hover { color: var(--star); }
+.lang { font: 500 14px/1 'Alexandria', sans-serif; padding: 9px 14px; border-radius: 999px; background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; }
+[dir="rtl"] .lang { font-family: 'Bricolage Grotesque', sans-serif; }
+
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 40px; align-items: center; padding: 34px 0 20px; }
+.hero h1 { margin: 0; font-size: clamp(2.8rem, 6.4vw, 5.2rem); line-height: .95; font-weight: 800; letter-spacing: -0.035em; font-variation-settings: 'opsz' 96; }
+[dir="rtl"] .hero h1 { line-height: 1.25; letter-spacing: 0; font-weight: 700; }
+.hero p { margin: 22px 0 0; max-width: 44ch; color: var(--soft); font-size: 18px; }
+.hero .who { display: flex; align-items: center; gap: 14px; margin-top: 26px; color: var(--muted); font-size: 15px; }
+.hero .who img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--star); }
+.paths { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.paths a { text-decoration: none; padding: 11px 18px; border-radius: 999px; border: 1px solid var(--line); background: rgba(143,184,255,.06); font-weight: 500; }
+.paths a:hover { border-color: var(--star); color: var(--star); }
+.paths a.first { background: var(--star); color: var(--sky); border-color: var(--star); font-weight: 600; }
+
+.scope { position: relative; }
+.plane { position: relative; aspect-ratio: 1; width: 100%; border-radius: 24px; border: 1px solid var(--line); background: rgba(9,18,53,.55); overflow: hidden; }
+.plane canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: manipulation; }
+.axis { position: absolute; font-size: 12px; color: var(--muted); }
+.axis.i { bottom: 10px; right: 14px; }
+.axis.q { top: 12px; left: 14px; }
+.tip { position: absolute; pointer-events: none; min-width: 200px; max-width: 240px; padding: 12px 14px; border-radius: 12px; background: #F6F3EA; color: var(--sky); font-size: 14px; line-height: 1.4; box-shadow: 0 10px 30px rgba(0,0,0,.35); opacity: 0; transform: translateY(4px); transition: opacity .15s, transform .15s; }
+.tip.on { opacity: 1; transform: none; }
+.tip b { display: block; font-size: 15px; }
+.tip code { font-family: ui-monospace, monospace; font-size: 12px; color: #4A5A92; }
+.snr { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; margin-top: 14px; font-size: 14px; color: var(--soft); }
+.snr input { width: 100%; accent-color: var(--star); height: 28px; }
+.snr output { font-variant-numeric: tabular-nums; color: var(--star); min-width: 54px; text-align: end; }
+.hint { margin-top: 6px; font-size: 13px; color: var(--muted); }
+
+.figures { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 56px; }
+.figures div { padding: 20px 18px; border-inline-start: 1px solid var(--line); color: var(--soft); font-size: 14px; line-height: 1.35; }
+.figures div:first-child { border-inline-start: 0; }
+.figures b { display: block; font-size: 34px; color: var(--ink); font-weight: 600; line-height: 1.1; margin-bottom: 4px; }
+
+section { padding-top: 84px; }
+h2 { margin: 0; font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+[dir="rtl"] h2 { letter-spacing: 0; line-height: 1.4; font-weight: 700; }
+.sub { color: var(--soft); margin: 10px 0 0; max-width: 60ch; }
+
+.symbols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 30px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.sym { background: var(--sky); padding: 26px; display: grid; grid-template-columns: 54px 1fr; gap: 18px; }
+.sym .dot { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font: 500 12px/1 ui-monospace, monospace; color: var(--sky); background: var(--star); box-shadow: 0 0 22px rgba(255,213,138,.45); }
+.sym h3 { margin: 0; font-size: 21px; font-weight: 600; }
+.sym p { margin: 6px 0 0; color: var(--soft); font-size: 15px; }
+.sym .m { margin-top: 10px; font-size: 15px; color: var(--star); }
+.sym .go { margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 15px; }
+.sym .go a { color: var(--beam); }
+
+.skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 26px; }
+.skills h3 { margin: 0 0 10px; font-size: 18px; font-weight: 600; color: var(--star); }
+.skills li { padding: 7px 0; border-top: 1px solid var(--line); color: var(--soft); list-style: none; font-size: 15px; }
+.skills ul { margin: 0; padding: 0; }
+
+.posts { margin-top: 24px; }
+.posts a { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 18px 0; border-top: 1px solid var(--line); text-decoration: none; }
+.posts a:hover b { color: var(--star); }
+.posts b { font-size: 19px; font-weight: 600; }
+.posts span { display: block; color: var(--soft); font-size: 15px; }
+.posts time { color: var(--muted); font-size: 14px; white-space: nowrap; }
+
+.contact { margin: 90px 0 0; padding: 48px; border-radius: 28px; border: 1px solid var(--line); background: radial-gradient(90% 120% at 100% 100%, rgba(255,213,138,.14), transparent 60%), rgba(16,32,79,.6); }
+.contact p { color: var(--soft); max-width: 50ch; margin: 12px 0 0; }
+.contact .paths { margin-top: 22px; }
+footer { padding: 28px 0 44px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .symbols { grid-template-columns: 1fr; }
+  .skills { grid-template-columns: 1fr; gap: 22px; }
+  .figures { grid-template-columns: repeat(2, 1fr); }
+  .figures div:nth-child(3) { border-inline-start: 0; }
+  .figures div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .top nav { display: none; }
+  .sym { padding: 20px; grid-template-columns: 44px 1fr; gap: 14px; }
+  .sym .dot { width: 44px; height: 44px; font-size: 11px; }
+  .posts a { grid-template-columns: 1fr; gap: 2px; }
+  .contact { padding: 28px 22px; }
+}
+/* Numbers like 10+ keep their own direction inside Arabic text */
+.figures b { unicode-bidi: plaintext; }
+/* Isolated numbers align to the Arabic side */
+[dir="rtl"] .figures b { text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <b data-i18n="name">Hisham Abuella</b>
+    <nav><a href="#made" data-i18n="nav1">Made</a><a href="#writing" data-i18n="nav2">Writing</a><a href="../../cv.html">CV</a></nav>
+    <button class="lang" type="button" data-lang-toggle>عربي</button>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1 data-i18n="name">Hisham Abuella</h1>
+      <p data-i18n="lede">I design 5G baseband and RF front-end systems. In my own time I love creating UIs with Claude: AI tools, courses and bedtime books. Each point on the right is one of them.</p>
+      <div class="who"><img src="assets/bio.jpg" alt=""><span data-i18n="who">Cellular systems engineer, California. From Cairo.</span></div>
+      <div class="paths">
+        <a class="first" href="../../cv.html" data-i18n="p1">Hiring? Read my CV</a>
+        <a href="#made" data-i18n="p2">Engineering work</a>
+        <a href="https://hisham-abuella.github.io/Wireless-101/" data-i18n="p3">Learn for free</a>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="plane" id="plane">
+        <canvas id="iq" aria-label="16-QAM constellation diagram; each point is a project"></canvas>
+        <span class="axis i">I</span><span class="axis q">Q</span>
+        <div class="tip" id="tip" role="status"></div>
+      </div>
+      <label class="snr"><span data-i18n="snr">SNR</span><input id="snr" type="range" min="2" max="30" value="4" step="1"><output id="snrv" dir="ltr">4 dB</output></label>
+      <div class="hint" data-i18n="hint">Raise the signal-to-noise ratio, then tap a point.</div>
+    </div>
+  </div>
+
+  <div class="figures">
+    <div><b data-i18n="s1v">10 yrs</b><span data-i18n="s1">signal processing research</span></div>
+    <div><b data-i18n="s2v">5 yrs</b><span data-i18n="s2">shipping cellular systems</span></div>
+    <div><b>10+</b><span data-i18n="s3">peer-reviewed papers</span></div>
+    <div><b>1</b><span data-i18n="s4">US patent</span></div>
+  </div>
+
+  <section id="made">
+    <h2 data-i18n="madeH">Decoded symbols</h2>
+    <p class="sub" data-i18n="madeS">Six of the points, written out. The labels are their Gray codes in the diagram above.</p>
+    <div class="symbols">
+      <div class="sym"><span class="dot">0000</span><div><h3 data-i18n="w1">Visible light vitals</h3><p data-i18n="w1d">A photodetector on a Raspberry Pi recovers heart rate and breathing from visible light alone, with no contact and no wearable. Doctoral research.</p><div class="m" data-i18n="w1m">US patent and several publications</div></div></div>
+      <div class="sym"><span class="dot">0101</span><div><h3>Wireless 101</h3><p data-i18n="w3d">Seven story-style courses on wireless, DSP, statistics, ML, linear algebra and generative AI, in English and Arabic.</p><div class="m" data-i18n="w3m">580+ lessons in each language</div><div class="go"><a href="https://hisham-abuella.github.io/Wireless-101/" data-i18n="w3l1">Start learning</a><a href="../../Articles/building-wireless101.html" data-i18n="how">How I built it</a></div></div></div>
+      <div class="sym"><span class="dot">1111</span><div><h3 data-i18n="w2">Claude presentation skill</h3><p data-i18n="w2d">A Claude Code skill that generates self-contained HTML decks that render fully offline.</p><div class="go"><a href="../../projects/presentation-skill/template.html" data-i18n="w2l1">Template</a></div></div></div>
+      <div class="sym"><span class="dot">1010</span><div><h3 data-i18n="w4">GenAI and Claude 101</h3><p data-i18n="w4d">From first prompt to building your own skills and tools, written for an internal Apple audience.</p><div class="go"><a href="../../projects/presentation-skill/claude101.html" data-i18n="w4l">View the deck</a></div></div></div>
+      <div class="sym"><span class="dot">0011</span><div><h3 data-i18n="w5">Bedtime stories</h3><p data-i18n="w5d">High-contrast board books drawn in SVG and narrated in English and Arabic, matched to what a newborn can see.</p><div class="m" data-i18n="w5m">292 narrated clips across six books</div><div class="go"><a href="../../projects/bedtime-stories/" data-i18n="w5l">Read the books</a></div></div></div>
+      <div class="sym"><span class="dot">1100</span><div><h3 data-i18n="w6">Personal AI engine</h3><p data-i18n="w6d">Local models, on-device images and voice, and a private notes vault on a Mac Studio.</p><div class="m" data-i18n="w6m">In progress</div><div class="go"><a href="../../Articles/building-ai-server.html" data-i18n="w6l">Read the build log</a></div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-i18n="specH">What I work with</h2>
+    <div class="skills">
+      <div><h3 data-i18n="sp1">Signal chain</h3><ul><li>5G NR baseband</li><li>RF digital front-end</li><li data-i18n="dpd">Digital pre-distortion</li><li data-i18n="fxp">Fixed-point implementation</li></ul></div>
+      <div><h3 data-i18n="sp2">Implementation</h3><ul><li>MATLAB</li><li>C / C++</li><li>Python</li><li>LabVIEW</li></ul></div>
+      <div><h3 data-i18n="sp3">Machine learning</h3><ul><li data-i18n="ml1">ML for wireless systems</li><li data-i18n="ml2">Claude skills and plugins</li><li data-i18n="ml4">Running models locally</li></ul></div>
+    </div>
+  </section>
+
+  <section id="writing">
+    <h2 data-i18n="logH">Writing</h2>
+    <p class="sub" data-i18n="logS">Every post can be heard in my own voice.</p>
+    <div class="posts">
+      <a href="../../Articles/two-nails-two-assistants.html"><div><b data-i18n="a1">Two nails, two assistants</b><span data-i18n="a1s">Claude against the AI I'm building on my desk.</span></div><time data-i18n="oct">Oct 2026</time></a>
+      <a href="../../Articles/bedtime-stories.html"><div><b data-i18n="a2">Bedtime stories for a three-month-old</b><span data-i18n="a2s">A bilingual board book narrated in my own voice.</span></div><time data-i18n="oct">Oct 2026</time></a>
+      <a href="../../Articles/building-wireless101.html"><div><b data-i18n="a3">Building Wireless 101</b><span data-i18n="a3s">A free bilingual platform for wireless and DSP.</span></div><time data-i18n="mar">Mar 2026</time></a>
+      <a href="../../Articles/journey.html"><div><b data-i18n="a5">My journey, from Cairo to California</b><span data-i18n="a5s">Wireless engineering, a doctorate, and the move to industry.</span></div><time data-i18n="aug">Aug 2025</time></a>
+    </div>
+  </section>
+
+  <div class="contact">
+    <h2 data-i18n="cH">Send me a signal</h2>
+    <p data-i18n="cS">Collaborations, technical discussions and roles in wireless systems and machine learning.</p>
+    <div class="paths"><a class="first" href="mailto:hisham.abuella1@gmail.com" data-i18n="email">Email me</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a><a href="https://scholar.google.com/citations?user=51HWj54AAAAJ">Google Scholar</a><a href="https://github.com/hisham-abuella">GitHub</a></div>
+  </div>
+  <footer data-i18n="foot">© 2026 Hisham Abuella</footer>
+</div>
+
+<script type="application/json" id="i18n-ar">
+{
+  "name": "هشام أبو العلا", "nav1": "أعمالي", "nav2": "مقالات",
+  "lede": "بصمم أنظمة الـ 5G baseband والـ RF front‑end. وفي وقتي الخاص بحب أعمل UIs مع Claude: أدوات ذكاء اصطناعي، وكورسات، وحواديت قبل النوم. كل نقطة في الرسمة دي واحدة منهم.",
+  "who": "مهندس أنظمة خلوية في كاليفورنيا. من القاهرة.",
+  "p1": "بتعيّن؟ اقرا الـ CV", "p2": "الشغل الهندسي", "p3": "اتعلم ببلاش",
+  "snr": "SNR", "hint": "علّي نسبة الإشارة للضوضاء، وبعدين دوس على أي نقطة.",
+  "s1v": "10 سنين", "s1": "بحث في معالجة الإشارات", "s2v": "5 سنين", "s2": "شغل على أنظمة خلوية", "s3": "ورقة بحثية محكّمة", "s4": "براءة اختراع أمريكية",
+  "madeH": "الرموز بعد فك التشفير", "madeS": "ست من النقط دي مكتوبة بالتفصيل. الأرقام اللي جنبها هي الـ Gray code بتاعها في الرسمة.",
+  "w1": "قياس العلامات الحيوية بالضوء", "w1d": "حساس ضوئي على Raspberry Pi بيقيس نبض القلب والتنفس من الضوء العادي بس، من غير لمس ومن غير أي جهاز يتلبس. بحث الدكتوراه.", "w1m": "براءة اختراع أمريكية وكذا ورقة بحثية",
+  "w3d": "سبع كورسات بأسلوب الحكاية في الاتصالات اللاسلكية، والـ DSP، والإحصاء، وتعلّم الآلة، والجبر الخطي، والذكاء الاصطناعي التوليدي، بالعربي والإنجليزي.", "w3m": "أكتر من 580 درس في كل لغة", "w3l1": "ابدأ اتعلم", "how": "إزاي عملتها",
+  "w2": "مهارة Claude للعروض", "w2d": "مهارة لـ Claude Code بتطلّع عروض HTML كاملة في ملف واحد، وبتشتغل من غير إنترنت.", "w2l1": "القالب",
+  "w4": "كورس GenAI و Claude 101", "w4d": "من أول prompt لحد ما تبني الـ skills والأدوات بتاعتك. اتكتب لجمهور داخلي في Apple.", "w4l": "شوف العرض",
+  "w5": "حواديت قبل النوم", "w5d": "كتب بتباين عالي مرسومة بـ SVG ومتسجلة بالعربي والإنجليزي، على قد اللي عين الرضيع تقدر تشوفه.", "w5m": "292 مقطع صوتي في ست كتب", "w5l": "اقرا الكتب",
+  "w6": "محرك AI شخصي", "w6d": "موديلات محلية، وصور وصوت على الجهاز، وأرشيف ملاحظات خاص على Mac Studio.", "w6m": "لسه شغال عليه", "w6l": "اقرا يوميات البناء",
+  "specH": "الحاجات اللي بشتغل بيها", "sp1": "سلسلة الإشارة", "sp2": "التنفيذ", "sp3": "تعلّم الآلة",
+  "dpd": "Digital pre-distortion", "fxp": "تنفيذ بالـ fixed-point", "ml1": "تعلّم الآلة للأنظمة اللاسلكية", "ml2": "Skills و plugins لـ Claude", "ml4": "تشغيل الموديلات محلياً",
+  "logH": "مقالات", "logS": "كل مقال تقدر تسمعه بصوتي. (المقالات نفسها بالإنجليزي حالياً.)",
+  "a1": "مسمارين ومساعدين", "a1s": "Claude قصاد الذكاء الاصطناعي اللي ببنيه على مكتبي.",
+  "a2": "حواديت قبل النوم لطفل عنده تلات شهور", "a2s": "كتاب بلغتين متسجل بصوتي.",
+  "a3": "إزاي بنيت Wireless 101", "a3s": "منصة ببلاش بلغتين للاتصالات اللاسلكية والـ DSP.",
+  "a5": "رحلتي من القاهرة لكاليفورنيا", "a5s": "هندسة لاسلكية، ودكتوراه، والنقلة للصناعة.",
+  "oct": "أكتوبر 2026", "mar": "مارس 2026", "aug": "أغسطس 2025",
+  "cH": "ابعتلي إشارة", "cS": "تعاون، نقاش تقني، أو فرص شغل في الأنظمة اللاسلكية وتعلّم الآلة.", "email": "ابعتلي إيميل",
+  "foot": "© 2026 هشام أبو العلا"
+}
+</script>
+<script src="assets/i18n.js"></script>
+<script>
+(function () {
+  // 16-QAM, Gray-coded. Six symbols carry projects; the rest are plain points.
+  var gray = ['00', '01', '11', '10'];
+  var projects = {
+    '0000': ['Visible light vitals', 'قياس العلامات الحيوية بالضوء', 'US patent', 'براءة اختراع أمريكية'],
+    '0101': ['Wireless 101', 'Wireless 101', '580+ lessons, EN and AR', 'أكتر من 580 درس، عربي وإنجليزي'],
+    '1111': ['Claude presentation skill', 'مهارة Claude للعروض', 'Public template', 'قالب عام'],
+    '1010': ['GenAI and Claude 101', 'كورس GenAI و Claude 101', 'Public deck', 'عرض عام'],
+    '0011': ['Bedtime stories', 'حواديت قبل النوم', '292 narrated clips', '292 مقطع صوتي'],
+    '1100': ['Personal AI engine', 'محرك AI شخصي', 'In progress', 'لسه شغال عليه']
+  };
+  var pts = [];
+  for (var i = 0; i < 4; i++) for (var q = 0; q < 4; q++) pts.push({ x: -3 + 2 * i, y: 3 - 2 * q, code: gray[i] + gray[q] });
+
+  var cv = document.getElementById('iq'), ctx = cv.getContext('2d'), plane = document.getElementById('plane');
+  var tip = document.getElementById('tip'), snr = document.getElementById('snr'), out = document.getElementById('snrv');
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, S, samples = [], hover = null;
+
+  function size() { var d = devicePixelRatio || 1; W = cv.clientWidth; cv.width = W * d; cv.height = W * d; ctx.setTransform(d, 0, 0, d, 0, 0); S = W / 9; }
+  function px(v) { return W / 2 + v * S; }
+  function py(v) { return W / 2 - v * S; }
+  function gauss() { return Math.sqrt(-2 * Math.log(Math.random() + 1e-9)) * Math.cos(2 * Math.PI * Math.random()); }
+  function resample() {
+    var db = +snr.value, sigma = Math.sqrt(10 / Math.pow(10, db / 10) / 2);
+    out.textContent = db + ' dB';
+    samples = [];
+    pts.forEach(function (p) { for (var k = 0; k < 26; k++) samples.push([p.x + sigma * gauss(), p.y + sigma * gauss()]); });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, W);
+    ctx.strokeStyle = 'rgba(143,184,255,.16)'; ctx.lineWidth = 1;
+    [-2, 0, 2].forEach(function (v) {
+      ctx.beginPath(); ctx.moveTo(px(v), 0); ctx.lineTo(px(v), W); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, py(v)); ctx.lineTo(W, py(v)); ctx.stroke();
+    });
+    ctx.fillStyle = 'rgba(143,184,255,.55)';
+    samples.forEach(function (s) { ctx.beginPath(); ctx.arc(px(s[0]), py(s[1]), 1.4, 0, 7); ctx.fill(); });
+    var clean = Math.min(1, (+snr.value - 2) / 18);
+    pts.forEach(function (p) {
+      var isProj = !!projects[p.code], r = (isProj ? 7 : 4) * (0.5 + clean * 0.5);
+      ctx.beginPath(); ctx.arc(px(p.x), py(p.y), r + (hover === p ? 4 : 0), 0, 7);
+      ctx.fillStyle = isProj ? 'rgba(255,213,138,' + (0.35 + clean * 0.65) + ')' : 'rgba(238,241,255,' + (0.2 + clean * 0.4) + ')';
+      ctx.shadowColor = '#FFD58A'; ctx.shadowBlur = isProj ? 18 * clean : 0; ctx.fill(); ctx.shadowBlur = 0;
+    });
+  }
+  function nearest(e) {
+    var r = cv.getBoundingClientRect(), x = (e.clientX - r.left - W / 2) / S, y = -(e.clientY - r.top - W / 2) / S, best = null, bd = 0.8;
+    pts.forEach(function (p) { var d = Math.hypot(p.x - x, p.y - y); if (projects[p.code] && d < bd) { bd = d; best = p; } });
+    return best;
+  }
+  function showTip(p) {
+    hover = p; draw();
+    if (!p) { tip.classList.remove('on'); return; }
+    var ar = document.documentElement.dir === 'rtl', d = projects[p.code];
+    tip.innerHTML = '<code>' + p.code + '</code><b>' + d[ar ? 1 : 0] + '</b>' + d[ar ? 3 : 2];
+    var left = Math.min(Math.max(px(p.x) - 100, 8), W - 248);
+    tip.style.left = left + 'px'; tip.style.top = (p.y > 0 ? py(p.y) + 18 : py(p.y) - 92) + 'px';
+    tip.classList.add('on');
+  }
+  cv.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') showTip(nearest(e)); });
+  cv.addEventListener('pointerleave', function () { showTip(null); });
+  cv.addEventListener('click', function (e) { showTip(nearest(e)); });
+  snr.addEventListener('input', function () { resample(); draw(); });
+  addEventListener('resize', function () { size(); draw(); });
+  document.addEventListener('langchange', function () { if (hover) showTip(hover); });
+
+  size(); resample(); draw();
+  // The one orchestrated moment: on load the noisy cloud sweeps from 4 dB up to 22 dB and locks.
+  if (!reduced) {
+    var v = 4, timer = setInterval(function () { v += 1; snr.value = v; resample(); draw(); if (v >= 22) clearInterval(timer); }, 70);
+  } else { snr.value = 22; resample(); draw(); }
+})();
+</script>
+</body>
+</html>

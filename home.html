@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="brand/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<title>Hisham Abuella — Cellular Systems Engineer</title>
+<meta name="description" content="Hisham Abuella is a cellular systems engineer in California working on 5G baseband, RF digital front-end, signal processing and machine learning.">
+<meta property="og:title" content="Hisham Abuella — Cellular Systems Engineer">
+<meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="5G baseband, RF digital front-end, signal processing and machine learning.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/themes/midnight.css">
+<link rel="stylesheet" href="css/themes/daylight.css">
+<link rel="stylesheet" href="css/themes/contrast.css">
+
+<script>
+    // Pre-paint: adopt the stored appearance before the first frame, so the
+    // page never flashes the default. Keep this inline on every page.
+    (function () {
+        // Preference: auto (follow the system), midnight, daylight or contrast.
+        var saved = null;
+        try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+        var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+        var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+        document.documentElement.setAttribute('data-appearance', name);
+    })();
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a class="nav-name" href="#main">Hisham Abuella</a>
+        <div class="nav-links">
+            <a href="#work">Work</a>
+            <a href="#writing">Writing</a>
+            <a href="cv.html">CV</a>
+        </div>
+    </div>
+</nav>
+
+<main id="main">
+    <div class="wrap">
+
+        <header class="hero">
+            <div class="hero-avatar enter-scale delay-1">
+                <img src="Pictures/Bio_Color.JPG" alt="Hisham Abuella">
+            </div>
+
+            <h1 class="enter delay-2">Hisham Abuella</h1>
+            <p class="hero-eyebrow enter delay-3" data-typed="Muslim | Cellular Systems Engineer">Muslim | Cellular Systems Engineer</p>
+
+            <div class="hero-actions enter delay-4">
+                <a class="btn btn-primary" href="#work">Discover my work</a>
+                <a class="btn btn-quiet" href="cv.html">View CV</a>
+            </div>
+
+            <div class="hero-contact enter delay-5">
+                <a href="mailto:hisham.abuella1@gmail.com">hisham.abuella1@gmail.com</a>
+                <span>California, USA</span>
+            </div>
+
+            <div class="hero-social enter delay-6">
+                <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/hisham-abuella" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ&hl" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                <a href="https://www.instagram.com/hisham.abuella" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/hisham.abuella" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </header>
+
+        <section class="section" id="background">
+            <div class="section-head reveal-up">
+                <h2>Background</h2>
+                <p>A decade of research followed by five years shipping cellular systems in industry.</p>
+            </div>
+            <div class="section-body">
+                <div class="grid-4 stagger">
+                    <div class="card">
+                        <div class="figure-value numeral" data-count-to="10" data-count-prefix="+">+10</div>
+                        <div class="figure-label">Years in wireless and signal processing research</div>
+                    </div>
+                    <div class="card">
+                        <div class="figure-value numeral" data-count-to="5" data-count-prefix="+">+5</div>
+                        <div class="figure-label">Years in industry</div>
+                    </div>
+                    <div class="card">
+                        <div class="figure-value numeral" data-count-to="10" data-count-suffix="+">10+</div>
+                        <div class="figure-label">Peer-reviewed publications</div>
+                    </div>
+                    <div class="card">
+                        <div class="figure-value numeral" data-count-to="1">1</div>
+                        <div class="figure-label">United States patent</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="expertise">
+            <div class="section-head reveal-up">
+                <h2>What I work on</h2>
+            </div>
+            <div class="section-body">
+                <div class="grid-3 stagger">
+                    <div class="card">
+                        <h3>Wireless and signal processing</h3>
+                        <ul>
+                            <li>5G baseband</li>
+                            <li>RF digital front-end</li>
+                            <li>Digital pre-distortion</li>
+                            <li>Channel parameter estimation</li>
+                            <li>Fixed-point implementation</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Languages and tools</h3>
+                        <ul>
+                            <li>MATLAB</li>
+                            <li>C and C++</li>
+                            <li>Python</li>
+                            <li>LabVIEW</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Machine learning</h3>
+                        <ul>
+                            <li>Machine learning for wireless systems</li>
+                            <li>Skills, plugins and tutorials for applying generative AI to wireless engineering work</li>
+                            <li>Model integration</li>
+                            <li>Local model deployment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="work">
+            <div class="section-head reveal-up">
+                <h2>Selected work</h2>
+                <p>Research, teaching and tools built outside the day job.</p>
+            </div>
+            <div class="section-body">
+                <div class="grid-2 stagger">
+
+                    <article class="card">
+                        <p class="work-kind">For my son</p>
+                        <h3>Bedtime stories</h3>
+                        <p class="work-desc">
+                            Board books built for a three-month-old, matched to what a newborn's eyes
+                            can actually resolve. Hand-drawn in SVG, narrated page by page in English
+                            and Arabic. A high-contrast zoo, the true story of our cat, and four
+                            first books for a Muslim baby.
+                        </p>
+                        <p class="work-tools">Vanilla HTML and SVG, ElevenLabs narration, locally generated art</p>
+                        <p class="work-metric">Six books, 78 pages, 292 narrated clips in three languages</p>
+                        <p class="work-links">
+                            <a href="projects/bedtime-stories/">All six books</a>
+                            <a href="projects/bedtime-stories/books/black-white-zoo.html">The Black and White Zoo</a>
+                            <a href="projects/bedtime-stories/books/susu.html">Susu the Cat</a>
+                            <a href="Articles/bedtime-stories.html">Read how it was built</a>
+                            <a href="https://github.com/hisham-abuella/bedtime-stories" target="_blank" rel="noopener">Source and print PDFs</a>
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <p class="work-kind">Doctoral research</p>
+                        <h3>Visible light vitals measurement</h3>
+                        <p class="work-desc">
+                            A photodetector driven by a Raspberry Pi recovers heart rate and breathing rate
+                            from a person using visible light alone, with no contact and no wearable sensor.
+                            The work produced a United States patent and several publications.
+                        </p>
+                        <p class="work-tools">Raspberry Pi, photodetector hardware, signal processing</p>
+                    </article>
+
+                    <article class="card">
+                        <p class="work-kind">Educational platform</p>
+                        <h3>Wireless 101</h3>
+                        <p class="work-desc">
+                            A free bilingual platform teaching wireless communications, digital signal
+                            processing, statistics, machine learning, linear algebra and generative AI
+                            through interactive, story-style lessons.
+                        </p>
+                        <p class="work-tools">Seven courses, in English and Arabic</p>
+                        <p class="work-metric">580+ lessons, in each language</p>
+                        <p class="work-links">
+                            <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" rel="noopener">Visit the platform</a>
+                            <a href="Articles/building-wireless101.html">Read how it was built</a>
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <p class="work-kind">Developer tool</p>
+                        <h3>Claude presentation skill</h3>
+                        <p class="work-desc">
+                            A Claude Code skill that generates self-contained HTML presentations.
+                            Everything renders offline, with no external dependencies.
+                        </p>
+                        <p class="work-tools">Claude Code, HTML, CSS</p>
+                        <p class="work-metric">2,200+ downloads on Apple's internal Claude marketplace</p>
+                        <p class="work-links">
+                            <a href="projects/presentation-skill/template.html">View the template</a>
+                            <a href="projects/presentation-skill/claude101.html">View a deck</a>
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <p class="work-kind">Teaching</p>
+                        <h3>GenAI and Claude 101 crash course</h3>
+                        <p class="work-desc">
+                            A crash course written for Apple's internal audience on getting real work
+                            out of generative AI and Claude, from first prompt through building your
+                            own skills and tools.
+                        </p>
+                        <p class="work-tools">Written and delivered internally at Apple</p>
+                        <p class="work-metric">6,000+ visitors</p>
+                        <p class="work-links">
+                            <a href="projects/presentation-skill/claude101.html">View the deck</a>
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="writing">
+            <div class="section-head reveal-up">
+                <h2>Writing</h2>
+                <p>Notes on wireless engineering, and on building things with AI tooling.</p>
+            </div>
+            <div class="section-body">
+                <div class="writing stagger">
+
+                    <a class="writing-row" href="Articles/two-nails-two-assistants.html">
+                        <div>
+                            <div class="writing-title">Two nails, two assistants<span class="writing-flag">New</span></div>
+                            <div class="writing-sub">Two nails, a bubble, and a tire light I ignored. Claude vs. the AI I&rsquo;m building on my desk.</div>
+                        </div>
+                        <div class="writing-date numeral">October 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/bedtime-stories.html">
+                        <div>
+                            <div class="writing-title">Bedtime stories for a three-month-old</div>
+                            <div class="writing-sub">A high-contrast bilingual board book, narrated in my own voice.</div>
+                        </div>
+                        <div class="writing-date numeral">October 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/building-wireless101.html">
+                        <div>
+                            <div class="writing-title">Building Wireless 101</div>
+                            <div class="writing-sub">A free bilingual platform for wireless communications and DSP.</div>
+                        </div>
+                        <div class="writing-date numeral">March 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/local-voice-generation.html">
+                        <div>
+                            <div class="writing-title">Generating voice from text using local models</div>
+                            <div class="writing-sub">Local voices on a Mac Studio, measured against ElevenLabs v4 on real bedtime stories.</div>
+                        </div>
+                        <div class="writing-date numeral">Feb 2026 &middot; updated Oct 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/building-ai-server.html">
+                        <div>
+                            <div class="writing-title">Building a personal AI engine<span class="writing-flag">In progress</span></div>
+                            <div class="writing-sub">Local models, on-device images and voice, and a private notes vault on a Mac Studio.</div>
+                        </div>
+                        <div class="writing-date numeral">Feb 2026 &middot; updated Oct 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/building-islamic-kids.html">
+                        <div>
+                            <div class="writing-title">Building an interactive Islamic kids website</div>
+                            <div class="writing-sub">Stories, quizzes and bilingual narration for children.</div>
+                        </div>
+                        <div class="writing-date numeral">February 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/building-wirelesshub.html">
+                        <div>
+                            <div class="writing-title">Building WirelessHub with Claude</div>
+                            <div class="writing-sub">A wireless engineering blog written with an AI pair programmer.</div>
+                        </div>
+                        <div class="writing-date numeral">February 2026</div>
+                    </a>
+
+                    <a class="writing-row" href="Articles/journey.html">
+                        <div>
+                            <div class="writing-title">My journey, from Cairo to California</div>
+                            <div class="writing-sub">Wireless engineering, doctoral research, and the move into industry.</div>
+                        </div>
+                        <div class="writing-date numeral">August 2025</div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact" id="contact">
+            <div class="section-head reveal-up">
+                <h2>Let's talk</h2>
+                <p>
+                    Open to collaborations, technical discussions and new opportunities
+                    in wireless systems and machine learning.
+                </p>
+            </div>
+            <div class="contact-actions reveal-up">
+                <a class="btn btn-primary" href="mailto:hisham.abuella1@gmail.com">Email me</a>
+                <a class="btn btn-quiet" href="https://www.linkedin.com/in/hisham-abuella-808b91171/" rel="noopener">LinkedIn</a>
+                <a class="btn btn-quiet" href="https://github.com/hisham-abuella" rel="noopener">GitHub</a>
+            </div>
+            <p class="contact-meta">California, United States</p>
+        </section>
+
+        <footer class="footer">
+            <span>&copy; 2026 Hisham Abuella</span>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</main>
+
+<script src="js/appearance.js" defer></script>
+
+<script src="js/signal-field.js" defer></script>
+<script src="js/motion.js" defer></script>
+
+<script data-goatcounter="https://hisham.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

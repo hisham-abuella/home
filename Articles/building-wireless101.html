@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="../css/themes/midnight.css">
     <link rel="stylesheet" href="../css/themes/daylight.css">
     <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../css/skins/constellation.css">
+    <link rel="stylesheet" href="../css/skins/terminal.css">
+    <link rel="stylesheet" href="../css/skins/journal.css">
+    <link rel="stylesheet" href="../css/skins/reader-bar.css">
     <link rel="stylesheet" href="../css/article.css">
     <style>
         .course-grid {
@@ -107,12 +112,34 @@
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
         (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
             try {
-                var saved = localStorage.getItem('appearance');
-                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
-                    document.documentElement.setAttribute('data-appearance', saved);
-                }
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
             } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
         })();
     </script>
 </head>
@@ -121,12 +148,13 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">H</div>
-            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+            <a href="../home.html" class="back-btn">&larr; Back to Portfolio</a>
             <div class="appearance">
                 <span id="appearance-label">Appearance</span>
                 <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
-                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
-                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
                     <button type="button" role="radio" data-appearance="contrast">Contrast</button>
                 </div>
             </div>
@@ -290,6 +318,7 @@
 
     <script src="../js/listen.js" defer></script>
     <script src="../js/appearance.js" defer></script>
+    <script src="../js/reader-bar.js" defer></script>
     <script src="../js/signal-field.js" defer></script>
     <script src="../js/motion.js" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"

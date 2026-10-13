@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Identity block — the same key details on every reader page: photo, name,
+   "Muslim | Cellular Systems Engineer", location, email (copy), CV, the five
+   social links, and optionally the four headline numbers.
+
+   Each page maps its own tokens onto these, for both themes:
+     --id-bg, --id-ink, --id-soft, --id-line, --id-accent, --id-accent-ink, --id-radius
+   Layout uses logical properties, so it mirrors itself in Arabic.
+   ========================================================================== */
+
+.ident {
+  margin-top: 56px;
+  padding: 22px;
+  border: 1.5px solid var(--id-line);
+  border-radius: var(--id-radius, 14px);
+  background: var(--id-bg);
+  color: var(--id-ink);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px 28px;
+  align-items: center;
+}
+.ident-who { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.ident-who img { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--id-line); }
+.ident-who b { display: block; font-size: 20px; line-height: 1.25; }
+.ident-who span { display: block; font-size: 15px; color: var(--id-soft); }
+.ident-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: flex-end; }
+.ident-actions a, .ident-actions button {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px;
+  border-radius: var(--id-radius, 999px); border: 1.5px solid var(--id-line); background: transparent;
+  color: var(--id-ink); font-family: inherit; font-size: 14px; font-weight: 600; line-height: 1; text-decoration: none; cursor: pointer;
+}
+.ident-actions .primary { background: var(--id-accent); border-color: var(--id-accent); color: var(--id-accent-ink); }
+.ident-actions .mail code { font: 400 13px/1 ui-monospace, monospace; direction: ltr; }
+.ident-social { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px; }
+.ident-social a {
+  display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%;
+  border: 1.5px solid var(--id-line); color: var(--id-ink); text-decoration: none; font-size: 16px;
+}
+.ident-social a:hover, .ident-actions a:hover, .ident-actions button:hover { border-color: var(--id-accent); }
+.ident-stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; border-top: 1.5px solid var(--id-line); padding-top: 16px; }
+.ident-stats b { display: block; font-size: 26px; line-height: 1.1; unicode-bidi: plaintext; }
+/* plaintext keeps 10+ reading correctly but also flips alignment; pin it to the Arabic side */
+[dir="rtl"] .ident-stats b { text-align: right; }
+.ident-stats span { font-size: 13px; color: var(--id-soft); }
+
+@media (max-width: 680px) {
+  .ident { grid-template-columns: 1fr; padding: 18px; }
+  .ident-actions { justify-content: flex-start; }
+  .ident-actions .mail code { display: none; }
+  .ident-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* The theme switch, shared by every reader page */
+[data-theme-switch] { display: inline-flex; border: 1.5px solid var(--id-line); border-radius: 999px; overflow: hidden; }
+[data-theme-switch] button {
+  font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1; padding: 9px 12px; min-height: 36px; border: 0;
+  background: transparent; color: var(--id-soft); cursor: pointer;
+}
+[data-theme-switch] button[aria-pressed="true"] { background: var(--id-ink); color: var(--id-bg-solid, var(--id-bg)); }

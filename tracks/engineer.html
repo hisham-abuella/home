@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hisham Abuella — For Engineers</title>
+<meta name="description" content="Rx digital front-end, channel estimation and AGC for cellular modems, and visible light sensing research, shown as a 16-QAM constellation.">
+<meta property="og:title" content="Hisham Abuella — For Engineers">
+<meta property="og:description" content="Rx digital front-end, channel estimation and AGC for cellular modems, and visible light sensing research, shown as a 16-QAM constellation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+<script>
+// Theme before first paint: the visitor's choice, else the system setting.
+(function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
+  if (['light', 'dark'].indexOf(p) < 0) p = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', p); })();
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="assets/ident.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Alexandria:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Engineer page — the constellation direction (mockup 4).
+   The hero is a 16-QAM constellation where each bright point is a research area, a
+   paper or the patent; the SNR slider is the one interactive moment. Laptop: diagram
+   beside the introduction, sections below. Phone: diagram full width and a docked bar
+   that jumps between Research, Papers, Stack and Contact. Dark is native; light is a
+   pale sky. */
+:root {
+  --sky:     #091235;
+  --sky-2:   #10204F;
+  --star:    #FFD58A;   /* research points and highlights */
+  --beam:    #8FB8FF;   /* decision lines, noise and links */
+  --ink:     #EEF1FF;
+  --soft:    #B4BDE0;
+  --muted:   #9AA4D0;
+  --line:    rgba(143, 184, 255, 0.18);
+  --plane:   rgba(9, 18, 53, 0.55);
+  --dot-ink: #091235;
+  --dock:    rgba(9, 18, 53, 0.94);
+  --font:    'Bricolage Grotesque', system-ui, sans-serif;
+  --id-bg: var(--plane); --id-bg-solid: var(--sky); --id-ink: var(--ink); --id-soft: var(--soft);
+  --id-line: var(--line); --id-accent: var(--star); --id-accent-ink: var(--dot-ink); --id-radius: 16px;
+}
+/* Light: the same diagram on a pale sky, gold and blue deepened for contrast */
+:root[data-theme="light"] {
+  --sky: #F3F6FF; --sky-2: #E1E8FF; --star: #8A570C; --beam: #2F55C4;
+  --ink: #0B1640; --soft: #3B4673; --muted: #4F5B8A; --line: rgba(47, 85, 196, 0.20);
+  --plane: rgba(255, 255, 255, 0.72); --dot-ink: #FFFFFF; --dock: rgba(243, 246, 255, 0.95);
+}
+:root[dir="rtl"] { --font: 'Alexandria', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); font: 400 17px/1.6 var(--font);
+  background: radial-gradient(140% 80% at 70% 0%, var(--sky-2), var(--sky) 60%) fixed var(--sky); }
+[dir="rtl"] body { line-height: 1.85; }
+a { color: var(--beam); }
+:focus-visible { outline: 2px solid var(--star); outline-offset: 3px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px 70px; }
+
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 0; font-size: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--plane); }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--star); box-shadow: 0 0 8px var(--star); }
+.top-tools { display: inline-flex; gap: 8px; align-items: center; }
+.lang { font: 500 14px/1 'Alexandria', sans-serif; padding: 10px 14px; border-radius: 999px; background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; min-height: 38px; }
+[dir="rtl"] .lang { font-family: 'Bricolage Grotesque', sans-serif; }
+
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 40px; align-items: center; padding: 26px 0 10px; }
+.hero h1 { margin: 0; font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: .95; font-weight: 800; letter-spacing: -0.035em; }
+[dir="rtl"] .hero h1 { line-height: 1.25; letter-spacing: 0; font-weight: 700; }
+.idline { margin: 10px 0 0; font-weight: 600; font-size: 18px; }
+.hero p.lede { margin: 16px 0 0; max-width: 46ch; color: var(--soft); font-size: 18px; }
+.who { display: flex; align-items: center; gap: 14px; margin-top: 22px; color: var(--muted); font-size: 15px; }
+.who img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--star); }
+.jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.jump a { text-decoration: none; padding: 11px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--plane); color: var(--ink); font-weight: 500; }
+.jump a:hover { border-color: var(--star); }
+.jump a.first { background: var(--star); color: var(--dot-ink); border-color: var(--star); font-weight: 600; }
+
+.scope { position: relative; }
+.plane { position: relative; aspect-ratio: 1; width: 100%; max-width: 100%; border-radius: 24px; border: 1px solid var(--line); background: var(--plane); overflow: hidden; }
+.plane canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: manipulation; cursor: pointer; }
+.axis { position: absolute; font-size: 12px; color: var(--muted); }
+.axis.i { bottom: 10px; right: 14px; }
+.axis.q { top: 12px; left: 14px; }
+.tip { position: absolute; pointer-events: none; width: 230px; padding: 12px 14px; border-radius: 12px; background: var(--ink); color: var(--sky); font-size: 14px; line-height: 1.4; box-shadow: 0 10px 30px rgba(0,0,0,.35); opacity: 0; transform: translateY(4px); transition: opacity .15s, transform .15s; }
+.tip.on { opacity: 1; transform: none; }
+.tip b { display: block; font-size: 15px; }
+.tip code { font-family: ui-monospace, monospace; font-size: 12px; opacity: .75; }
+.snr { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; margin-top: 14px; font-size: 14px; color: var(--soft); }
+.snr input { width: 100%; accent-color: var(--star); height: 28px; }
+.snr output { font-variant-numeric: tabular-nums; color: var(--star); min-width: 54px; text-align: end; }
+.hint { margin-top: 6px; font-size: 13px; color: var(--muted); }
+
+.figures { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 48px; }
+.figures div { padding: 18px; border-inline-start: 1px solid var(--line); color: var(--soft); font-size: 14px; line-height: 1.35; }
+.figures div:first-child { border-inline-start: 0; }
+.figures b { display: block; font-size: 32px; color: var(--ink); font-weight: 600; line-height: 1.1; margin-bottom: 4px; unicode-bidi: plaintext; }
+[dir="rtl"] .figures b { text-align: right; }
+
+section { padding-top: 76px; scroll-margin-top: 12px; }
+h2 { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+[dir="rtl"] h2 { letter-spacing: 0; line-height: 1.4; font-weight: 700; }
+.sub { color: var(--soft); margin: 10px 0 0; max-width: 62ch; }
+
+.symbols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 26px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.sym { background: var(--sky); padding: 24px; display: grid; grid-template-columns: 54px 1fr; gap: 18px; scroll-margin-top: 16px; transition: background .2s; }
+.sym.lit { background: var(--sky-2); }
+.sym .dot { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font: 500 12px/1 ui-monospace, monospace; color: var(--dot-ink); background: var(--star); }
+.sym h3 { margin: 0; font-size: 21px; font-weight: 600; }
+.sym .where { font-size: 14px; color: var(--muted); }
+.sym p { margin: 6px 0 0; color: var(--soft); font-size: 15px; }
+
+.papers { margin: 22px 0 0; padding: 0; list-style: none; counter-reset: p; }
+.papers li { counter-increment: p; display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; padding: 16px 0; border-top: 1px solid var(--line); direction: ltr; text-align: left; align-items: baseline; }
+.papers li::before { content: '[' counter(p) ']'; color: var(--muted); font-family: ui-monospace, monospace; font-size: 14px; }
+.papers a { color: var(--ink); font-weight: 600; text-decoration: none; }
+.papers strong { color: var(--ink); font-weight: 600; }
+.papers a:hover { color: var(--star); text-decoration: underline; }
+.papers span { display: block; color: var(--muted); font-size: 14px; }
+.papers .code { font: 500 12px/1 ui-monospace, monospace; color: var(--star); white-space: nowrap; }
+
+.stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 22px; }
+.stack h3 { margin: 0 0 10px; font-size: 18px; font-weight: 600; color: var(--star); }
+.stack ul { margin: 0; padding: 0; list-style: none; }
+.stack li { padding: 7px 0; border-top: 1px solid var(--line); color: var(--soft); font-size: 15px; }
+
+.posts { margin-top: 20px; }
+.posts a { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.posts a:hover b { color: var(--star); }
+.posts b { font-size: 19px; font-weight: 600; }
+.posts span { display: block; color: var(--soft); font-size: 15px; }
+.posts time { color: var(--muted); font-size: 14px; white-space: nowrap; }
+
+.dock { display: none; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .symbols, .stack { grid-template-columns: 1fr; }
+  .figures { grid-template-columns: repeat(2, 1fr); }
+  .figures div:nth-child(3) { border-inline-start: 0; }
+  .figures div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+/* Phone: diagram full width, sections one tap away in a docked bar */
+@media (max-width: 680px) {
+  .wrap { padding: 0 16px 104px; }
+  .hero { padding-top: 8px; gap: 24px; }
+  .jump { display: none; }
+  .sym { padding: 18px; grid-template-columns: 44px 1fr; gap: 14px; }
+  .sym .dot { width: 44px; height: 44px; font-size: 11px; }
+  .papers li { grid-template-columns: 34px 1fr; }
+  .papers .code { display: none; }
+  .posts a { grid-template-columns: 1fr; gap: 2px; }
+  .dock {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; position: fixed; inset-inline: 0; bottom: 0; z-index: 10;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px)); background: var(--dock);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line);
+  }
+  .dock a { display: grid; place-items: center; min-height: 48px; border-radius: 12px; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600; border: 1px solid var(--line); }
+  .dock a:first-child { background: var(--star); color: var(--dot-ink); border-color: var(--star); }
+}
+@media (prefers-reduced-motion: reduce) { .tip, .sym { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <a class="chip" href="../index.html?choose"><i></i><span data-i18n="viewing">Viewing as an engineer · change</span></a>
+    <span class="top-tools"><span data-theme-switch></span> <button class="lang" type="button" data-lang-toggle>عربي</button></span>
+  </div>
+
+  <header class="hero">
+    <div>
+      <h1 data-i18n="name">Hisham Abuella</h1>
+      <p class="idline" data-i18n="idLine">Muslim | Cellular Systems Engineer</p>
+      <p class="lede" data-i18n="lede">Rx digital front-end, channel estimation and AGC for cellular modems, after a doctorate in visible light sensing. Each bright point in the diagram is one piece of that work. Outside work, I love creating UIs with Claude.</p>
+      <div class="who"><img src="assets/bio.jpg" alt=""><span data-i18n="who">Apple, San Diego. Previously Qualcomm.</span></div>
+      <div class="jump">
+        <a class="first" href="#research" data-i18n="j1">Research</a>
+        <a href="#papers" data-i18n="j2">Papers</a>
+        <a href="../cv.html" data-i18n="j3">CV</a>
+      </div>
+    </div>
+    <div class="scope">
+      <div class="plane">
+        <canvas id="iq" aria-label="16-QAM constellation diagram; each bright point is a research area, paper or the patent"></canvas>
+        <span class="axis i">I</span><span class="axis q">Q</span>
+        <div class="tip" id="tip" role="status"></div>
+      </div>
+      <label class="snr"><span>SNR</span><input id="snr" type="range" min="2" max="30" value="4" step="1"><output id="snrv" dir="ltr">4 dB</output></label>
+      <div class="hint" data-i18n="hint">Raise the signal-to-noise ratio, then tap a point.</div>
+    </div>
+  </header>
+
+  <div class="figures">
+    <div><b>10+</b><span data-i18n="f1">years in wireless research and engineering</span></div>
+    <div><b>5+</b><span data-i18n="f2">years in industry</span></div>
+    <div><b>10+</b><span data-i18n="f3">technical publications</span></div>
+    <div><b>1</b><span data-i18n="f4">US patent</span></div>
+  </div>
+
+  <section id="research">
+    <h2 data-i18n="resH">Decoded symbols</h2>
+    <p class="sub" data-i18n="resS">The research behind the bright points. Each label is the point's Gray code in the diagram.</p>
+    <div class="symbols">
+      <div class="sym" id="s-0000"><span class="dot">0000</span><div><h3 data-i18n="r1">NR channel estimation</h3><div class="where">Qualcomm · 2021–25</div><p data-i18n="r1d">Brought Rel-18 DMRS (etype1/etype2) into the system simulator, cut MMSE tap memory with online downsampling, and reduced signal leakage in noise estimation.</p></div></div>
+      <div class="sym" id="s-0001"><span class="dot">0001</span><div><h3 data-i18n="r2">Rx digital front-end</h3><div class="where">Qualcomm · 2021–25</div><p data-i18n="r2d">mmWave and Sub6 RxFE: lab debugging tools, system documentation, and support for FW, RF and SW teams through chip bring-up.</p></div></div>
+      <div class="sym" id="s-0011"><span class="dot">0011</span><div><h3 data-i18n="r3">Automatic gain control</h3><div class="where">Apple · 2025–</div><p data-i18n="r3d">AGC for cellular modem systems, with lab bring-up and debugging.</p></div></div>
+      <div class="sym" id="s-0101"><span class="dot">0101</span><div><h3 data-i18n="r4">Visible light sensing</h3><div class="where">Oklahoma State · 2017–21</div><p data-i18n="r4d">Non-contact vital signs and vehicle speed estimation (ViLDAR) from visible light, prototyped on Raspberry Pi and software-defined radio.</p></div></div>
+      <div class="sym" id="s-0100"><span class="dot">0100</span><div><h3 data-i18n="r5">Modulation classification</h3><div class="where">Istanbul Sehir · 2014–16</div><p data-i18n="r5d">Automatic modulation classification with kernel density estimation.</p></div></div>
+      <div class="sym" id="s-1111"><span class="dot">1111</span><div><h3 data-i18n="r6">US patent</h3><div class="where">Oklahoma State</div><p data-i18n="r6d">Speed estimation, detection and ranging using visible light in vehicles.</p></div></div>
+    </div>
+  </section>
+
+  <section id="papers">
+    <h2 data-i18n="papH">Papers</h2>
+    <p class="sub" data-i18n="papS">Selected publications, titles as published. The full list is on Google Scholar.</p>
+    <ol class="papers">
+      <li><div><a href="https://ieeexplore.ieee.org/document/8935383/">Non-Contact Vital Signs Monitoring Through Visible Light Sensing</a><span>IEEE Sensors Journal, vol. 20, no. 7, 2020</span></div><span class="code">0101</span></li>
+      <li><div><a href="https://ieeexplore.ieee.org/document/8839857/">ViLDAR — Visible Light Sensing Based Speed Estimation using Vehicle's Headlamps</a><span>IEEE Transactions on Vehicular Technology, vol. 68, no. 11, 2019</span></div><span class="code">0101</span></li>
+      <li><div><a href="https://ieeexplore.ieee.org/document/9618923/">Hybrid RF/VLC Systems: A Comprehensive Survey on Network Topologies, Performance Analyses, Applications, and Future Directions</a><span>IEEE Access, vol. 9, 2021</span></div><span class="code">0101</span></li>
+      <li><div><a href="https://ieeexplore.ieee.org/document/7517452/">Automatic Modulation Classification Based on Kernel Density Estimation</a><span>IEEE Canadian Journal of Electrical and Computer Engineering, vol. 39, no. 3, 2016</span></div><span class="code">0100</span></li>
+      <li><div><strong>System and Method for Speed Estimation, Detection and Ranging using Visible Light in Vehicles</strong><span>U.S. Provisional Patent Application No. 62/541,913</span></div><span class="code">1111</span></li>
+    </ol>
+  </section>
+
+  <section id="stack">
+    <h2 data-i18n="stackH">What I work with</h2>
+    <div class="stack">
+      <div><h3 data-i18n="sp1">Signal chain</h3><ul><li>5G NR baseband</li><li>RF digital front-end</li><li data-i18n="dpd">Digital pre-distortion</li><li data-i18n="ce">Channel and noise estimation</li><li>OFDM</li></ul></div>
+      <div><h3 data-i18n="sp2">Implementation</h3><ul><li>MATLAB</li><li>C / C++</li><li>Python</li><li>LabVIEW</li><li data-i18n="fx">Fixed-point models</li></ul></div>
+      <div><h3 data-i18n="sp3">Lab and ML</h3><ul><li data-i18n="l1">Chip bring-up and debugging</li><li data-i18n="l2">Software-defined radio</li><li data-i18n="l3">ML for wireless systems</li></ul></div>
+    </div>
+  </section>
+
+  <section id="writing">
+    <h2 data-i18n="logH">Engineering notes</h2>
+    <p class="sub" data-i18n="logS">Articles are in English.</p>
+    <div class="posts">
+      <a href="../Articles/journey.html?via=engineer"><div><b data-i18n="a1">My journey, from Cairo to California</b><span data-i18n="a1s">Wireless engineering, doctoral research, and the move into industry.</span></div><time data-i18n="d1">Aug 2025</time></a>
+      <a href="../Articles/building-wirelesshub.html?via=engineer"><div><b data-i18n="a2">Building WirelessHub with Claude</b><span data-i18n="a2s">A wireless engineering blog written with an AI pair programmer.</span></div><time data-i18n="d2">Feb 2026</time></a>
+      <a href="../Articles/building-ai-server.html?via=engineer"><div><b data-i18n="a3">Building a personal AI engine</b><span data-i18n="a3s">The systems side: local models, services and storage on a Mac Studio.</span></div><time data-i18n="d2">Feb 2026</time></a>
+    </div>
+  </section>
+
+  <section class="ident" id="contact" aria-label="Contact">
+    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-actions">
+      <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
+      <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
+    </div>
+    <nav class="ident-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+      <a href="https://github.com/hisham-abuella" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ" aria-label="Google Scholar"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
+      <a href="https://www.instagram.com/hisham.abuella" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href="https://www.facebook.com/hisham.abuella" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+    </nav>
+  </section>
+</div>
+
+<nav class="dock" aria-label="Sections">
+  <a href="#research" data-i18n="j1">Research</a>
+  <a href="#papers" data-i18n="j2">Papers</a>
+  <a href="#stack" data-i18n="dStack">Stack</a>
+  <a href="#contact" data-i18n="dContact">Contact</a>
+</nav>
+
+<script type="application/json" id="i18n-ar">
+{
+  "viewing": "بتتفرج كمهندس · غيّر", "name": "هشام أبو العلا",
+  "lede": "الـ Rx digital front‑end، وتقدير القناة، والـ AGC للمودمات الخلوية، بعد دكتوراه في الاستشعار بالضوء المرئي. كل نقطة منوّرة في الرسمة حتة من الشغل ده. وبرّه الشغل بحب أعمل UIs مع Claude.",
+  "who": "Apple، سان دييجو. وقبلها Qualcomm.",
+  "j1": "الأبحاث", "j2": "الـ papers", "j3": "الـ CV", "dStack": "الأدوات", "dContact": "تواصل",
+  "hint": "علّي نسبة الإشارة للضوضاء، وبعدين دوس على أي نقطة.",
+  "f1": "سنين في البحث والهندسة اللاسلكية", "f2": "سنين في الصناعة", "f3": "ورقة تقنية منشورة", "f4": "براءة اختراع أمريكية",
+  "resH": "الرموز بعد الـ decoding", "resS": "الأبحاث اللي ورا النقط المنوّرة. الرقم جنب كل واحدة هو الـ Gray code بتاعها في الرسمة.",
+  "r1": "تقدير القناة في الـ NR", "r1d": "دخّلت الـ Rel‑18 DMRS (etype1/etype2) في الـ system simulator، ووفّرت ذاكرة الـ MMSE taps بالـ online downsampling، وقللت تسريب الإشارة في تقدير الضوضاء.",
+  "r2": "الـ Rx digital front‑end", "r2d": "الـ RxFE للـ mmWave والـ Sub6: أدوات debugging للمعمل، وتوثيق الأنظمة، ودعم فرق الـ FW والـ RF والـ SW وقت الـ chip bring‑up.",
+  "r3": "الـ AGC (automatic gain control)", "r3d": "الـ AGC لأنظمة المودم الخلوي، مع الـ bring‑up والـ debugging في المعمل.",
+  "r4": "الاستشعار بالضوء المرئي", "r4d": "قياس العلامات الحيوية من غير لمس، وتقدير سرعة العربيات (ViLDAR) من الضوء المرئي، ببروتوتايب على Raspberry Pi و SDR.",
+  "r5": "تصنيف نوع الـ modulation", "r5d": "تصنيف الـ modulation أوتوماتيك بالـ kernel density estimation.",
+  "r6": "براءة اختراع أمريكية", "r6d": "تقدير السرعة والرصد وقياس المسافة بالضوء المرئي في العربيات.",
+  "papH": "الـ papers", "papS": "أوراق مختارة، والعناوين زي ما اتنشرت. القايمة كاملة على Google Scholar.",
+  "stackH": "الحاجات اللي بشتغل بيها", "sp1": "سلسلة الإشارة", "sp2": "التنفيذ", "sp3": "المعمل والـ ML",
+  "dpd": "الـ DPD (digital pre‑distortion)", "ce": "تقدير القناة والضوضاء", "fx": "موديلات fixed‑point",
+  "l1": "الـ chip bring‑up والـ debugging", "l2": "الـ SDR", "l3": "الـ ML للأنظمة اللاسلكية",
+  "logH": "ملاحظات هندسية", "logS": "المقالات بالإنجليزي حالياً.",
+  "a1": "رحلتي من القاهرة لكاليفورنيا", "a1s": "هندسة لاسلكية، وبحث دكتوراه، والنقلة للصناعة.", "d1": "أغسطس 2025",
+  "a2": "بناء WirelessHub مع Claude", "a2s": "بلوج هندسة لاسلكية اتكتب مع AI بيبرمج معايا.", "d2": "فبراير 2026",
+  "a3": "بناء محرك AI شخصي", "a3s": "الجانب الهندسي: موديلات محلية، وخدمات، وتخزين على Mac Studio.",
+  "idName": "هشام أبو العلا", "idLine": "مسلم | مهندس أنظمة خلوية", "idLoc": "كاليفورنيا، أمريكا",
+  "idCopy": "انسخ الإيميل", "idCv": "اعرض الـ CV"
+}
+</script>
+<script src="assets/i18n.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/ident.js"></script>
+<script>
+(function () {
+  try { localStorage.setItem('reader-path', 'engineer'); } catch (e) { /* storage unavailable */ }
+
+  // 16-QAM, Gray-coded. Bright symbols carry the research; the rest are plain points.
+  var gray = ['00', '01', '11', '10'];
+  var WORK = {
+    '0000': ['NR channel estimation', 'تقدير القناة في الـ NR', 'Qualcomm · 2021–25', 'Qualcomm · 2021–25'],
+    '0001': ['Rx digital front-end', 'الـ Rx digital front‑end', 'Qualcomm · 2021–25', 'Qualcomm · 2021–25'],
+    '0011': ['Automatic gain control', 'الـ AGC (automatic gain control)', 'Apple · 2025–', 'Apple · 2025–'],
+    '0101': ['Visible light sensing', 'الاستشعار بالضوء المرئي', '3 IEEE papers · Oklahoma State', '3 أوراق IEEE · أوكلاهوما'],
+    '0100': ['Modulation classification', 'تصنيف نوع الـ modulation', 'IEEE CJECE 2016', 'IEEE CJECE 2016'],
+    '1111': ['US patent', 'براءة اختراع أمريكية', 'Visible light ranging', 'قياس المسافة بالضوء']
+  };
+  var pts = [];
+  for (var i = 0; i < 4; i++) for (var q = 0; q < 4; q++) pts.push({ x: -3 + 2 * i, y: 3 - 2 * q, code: gray[i] + gray[q] });
+
+  var cv = document.getElementById('iq'), ctx = cv.getContext('2d');
+  var tip = document.getElementById('tip'), snr = document.getElementById('snr'), out = document.getElementById('snrv');
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, S, samples = [], hover = null;
+  function token(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function size() { var d = devicePixelRatio || 1; W = cv.clientWidth; cv.width = W * d; cv.height = W * d; ctx.setTransform(d, 0, 0, d, 0, 0); S = W / 9; }
+  function px(v) { return W / 2 + v * S; }
+  function py(v) { return W / 2 - v * S; }
+  function gauss() { return Math.sqrt(-2 * Math.log(Math.random() + 1e-9)) * Math.cos(2 * Math.PI * Math.random()); }
+  function resample() {
+    var db = +snr.value, sigma = Math.sqrt(10 / Math.pow(10, db / 10) / 2);
+    out.textContent = db + ' dB';
+    samples = [];
+    pts.forEach(function (p) { for (var k = 0; k < 26; k++) samples.push([p.x + sigma * gauss(), p.y + sigma * gauss()]); });
+  }
+  function draw() {
+    var line = token('--line'), beam = token('--beam'), star = token('--star'), ink = token('--ink');
+    ctx.clearRect(0, 0, W, W);
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    [-2, 0, 2].forEach(function (v) {
+      ctx.beginPath(); ctx.moveTo(px(v), 0); ctx.lineTo(px(v), W); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, py(v)); ctx.lineTo(W, py(v)); ctx.stroke();
+    });
+    ctx.fillStyle = beam; ctx.globalAlpha = 0.5;
+    samples.forEach(function (s) { ctx.beginPath(); ctx.arc(px(s[0]), py(s[1]), 1.4, 0, 7); ctx.fill(); });
+    var clean = Math.min(1, (+snr.value - 2) / 18);
+    pts.forEach(function (p) {
+      var isWork = !!WORK[p.code], r = (isWork ? 7 : 4) * (0.5 + clean * 0.5);
+      ctx.beginPath(); ctx.arc(px(p.x), py(p.y), r + (hover === p ? 4 : 0), 0, 7);
+      ctx.fillStyle = isWork ? star : ink;
+      ctx.globalAlpha = isWork ? 0.35 + clean * 0.65 : 0.2 + clean * 0.35;
+      ctx.shadowColor = star; ctx.shadowBlur = isWork ? 16 * clean : 0; ctx.fill(); ctx.shadowBlur = 0;
+    });
+    ctx.globalAlpha = 1;
+  }
+  function nearest(e) {
+    var r = cv.getBoundingClientRect(), x = (e.clientX - r.left - W / 2) / S, y = -(e.clientY - r.top - W / 2) / S, best = null, bd = 0.85;
+    pts.forEach(function (p) { var d = Math.hypot(p.x - x, p.y - y); if (WORK[p.code] && d < bd) { bd = d; best = p; } });
+    return best;
+  }
+  function showTip(p) {
+    hover = p; draw();
+    document.querySelectorAll('.sym.lit').forEach(function (s) { s.classList.remove('lit'); });
+    if (!p) { tip.classList.remove('on'); return; }
+    var ar = document.documentElement.dir === 'rtl', d = WORK[p.code];
+    tip.innerHTML = '<code>' + p.code + '</code><b>' + d[ar ? 1 : 0] + '</b>' + d[ar ? 3 : 2];
+    tip.style.left = Math.min(Math.max(px(p.x) - 115, 8), W - 238) + 'px';
+    tip.style.top = (p.y > 0 ? py(p.y) + 18 : py(p.y) - 96) + 'px';
+    tip.classList.add('on');
+    var card = document.getElementById('s-' + p.code); if (card) card.classList.add('lit');
+  }
+  cv.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') showTip(nearest(e)); });
+  cv.addEventListener('pointerleave', function () { showTip(null); });
+  cv.addEventListener('click', function (e) { showTip(nearest(e)); });
+  snr.addEventListener('input', function () { resample(); draw(); });
+  addEventListener('resize', function () { size(); draw(); });
+  document.addEventListener('langchange', function () { if (hover) showTip(hover); });
+  document.addEventListener('themechange', draw);
+
+  size(); resample(); draw();
+  // The one orchestrated moment: the noisy cloud sweeps from 4 dB up to 22 dB and locks.
+  if (!reduced) {
+    var v = 4, timer = setInterval(function () { v += 1; snr.value = v; resample(); draw(); if (v >= 22) clearInterval(timer); }, 70);
+  } else { snr.value = 22; resample(); draw(); }
+})();
+</script>
+</body>
+</html>

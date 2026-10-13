@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Terminal skin — articles for readers who came in through the vibe coder
+   track: typeset terminal on paper, IBM Plex Mono, one blue for links.
+
+   Active when <html data-skin="terminal">. Tokens only, for the two
+   appearances a skin restyles; Contrast is left alone so it always wins.
+   ========================================================================== */
+
+html[data-skin="terminal"] {
+  --font-body: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --card-radius: 0px;
+  --glow: none;
+  --field-opacity: 0;
+  --grain-opacity: 0;
+}
+
+html[data-skin="terminal"][data-appearance="daylight"] {
+  --bg-primary:     #FFFFFF;
+  --bg-secondary:   #FFFFFF;
+  --bg-elevated:    #FFFFFF;
+  --text-primary:   #000000;
+  --text-secondary: #3D3D3D;
+  --text-tertiary:  #5E5E5E;
+  --accent:         #0040FF;
+  --accent-hover:   #0030C0;
+  --accent-subtle:  rgba(255, 242, 168, 0.9);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        #FFFFFF;
+  --card-border:    #000000;
+  --card-shadow:    none;
+  --glass-blur:     none;
+  --nav-bg:         rgba(255, 255, 255, 0.96);
+  --nav-border:     #000000;
+  --hairline:       #E4E4E4;
+}
+
+html[data-skin="terminal"][data-appearance="midnight"] {
+  --bg-primary:     #0F1114;
+  --bg-secondary:   #0F1114;
+  --bg-elevated:    #15181C;
+  --text-primary:   #ECECEC;
+  --text-secondary: #C2C2C2;
+  --text-tertiary:  #A3A3A3;
+  --accent:         #8AB0FF;
+  --accent-hover:   #A9C4FF;
+  --accent-subtle:  rgba(74, 65, 0, 0.9);
+  --accent-ink:     #0F1114;
+  --card-bg:        #0F1114;
+  --card-border:    #ECECEC;
+  --card-shadow:    none;
+  --glass-blur:     none;
+  --nav-bg:         rgba(15, 17, 20, 0.96);
+  --nav-border:     #ECECEC;
+  --hairline:       #2A2D32;
+}

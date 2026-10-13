@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Catalogue skin — articles for readers who came in through the recruiter
+   track: brushed aluminium, one signal orange, Archivo.
+
+   Active when <html data-skin="catalogue">. Tokens only, for the two
+   appearances a skin restyles; Contrast is left alone so it always wins.
+   ========================================================================== */
+
+html[data-skin="catalogue"] {
+  --font-body: 'Archivo', system-ui, sans-serif;
+  --card-radius: 18px;
+  --glow: none;
+  --field-opacity: 0;
+  --grain-opacity: 0;
+}
+
+html[data-skin="catalogue"][data-appearance="daylight"] {
+  --bg-primary:     #E4E5E0;
+  --bg-secondary:   #F7F7F4;
+  --bg-elevated:    #F7F7F4;
+  --text-primary:   #000000;
+  --text-secondary: #46483F;
+  --text-tertiary:  #55574F;
+  --accent:         #B23A0C;
+  --accent-hover:   #8F2E09;
+  --accent-subtle:  rgba(255, 90, 31, 0.12);
+  --accent-ink:     #FFFFFF;
+  --card-bg:        #F7F7F4;
+  --card-border:    rgba(0, 0, 0, 0.12);
+  --card-shadow:    0 18px 40px rgba(0, 0, 0, 0.08);
+  --glass-blur:     saturate(140%) blur(12px);
+  --nav-bg:         rgba(228, 229, 224, 0.86);
+  --nav-border:     rgba(0, 0, 0, 0.10);
+  --hairline:       #C4C6BF;
+}
+
+html[data-skin="catalogue"][data-appearance="midnight"] {
+  --bg-primary:     #17191C;
+  --bg-secondary:   #222529;
+  --bg-elevated:    #222529;
+  --text-primary:   #F1F1EC;
+  --text-secondary: #B9BCB4;
+  --text-tertiary:  #A9ACA4;
+  --accent:         #FF7A47;
+  --accent-hover:   #FF9468;
+  --accent-subtle:  rgba(255, 106, 51, 0.14);
+  --accent-ink:     #17191C;
+  --card-bg:        #222529;
+  --card-border:    #3A3E44;
+  --card-shadow:    none;
+  --glass-blur:     saturate(140%) blur(12px);
+  --nav-bg:         rgba(23, 25, 28, 0.86);
+  --nav-border:     #2C3035;
+  --hairline:       #3A3E44;
+}

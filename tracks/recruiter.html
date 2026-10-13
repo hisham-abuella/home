@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hisham Abuella — For Recruiters</title>
+<meta name="description" content="Cellular systems engineer at Apple, previously Qualcomm. Experience, CV and contact in one page.">
+<meta property="og:title" content="Hisham Abuella — For Recruiters">
+<meta property="og:description" content="Cellular systems engineer at Apple, previously Qualcomm. Experience, CV and contact in one page.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+<script>
+// Theme before first paint: the visitor's choice, else the system setting.
+(function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
+  if (['light', 'dark'].indexOf(p) < 0) p = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', p); })();
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="assets/ident.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Recruiter page — a one-screen dossier in the hardware-catalogue style.
+   Laptop: sticky ID card on the left (identity, authorization, actions), the record on
+   the right. Phone: compact header, swipeable facts, and a fixed action bar in thumb reach. */
+:root {
+  --alu:    #E4E5E0;
+  --panel:  #F7F7F4;
+  --ink:    #000000;
+  --grey:   #55574F;
+  --line:   #C4C6BF;
+  --orange: #FF5A1F;   /* fills and marks only; too light for small text on --panel */
+  --dock:   rgba(247, 247, 244, 0.94);
+  --font:   'Archivo', system-ui, sans-serif;
+  --id-bg: var(--panel); --id-bg-solid: var(--panel); --id-ink: var(--ink); --id-soft: var(--grey);
+  --id-line: var(--line); --id-accent: var(--ink); --id-accent-ink: var(--panel); --id-radius: 14px;
+}
+/* Dark: graphite catalogue under studio light, the same single orange */
+:root[data-theme="dark"] {
+  --alu: #17191C; --panel: #222529; --ink: #F1F1EC; --grey: #A9ACA4; --line: #3A3E44;
+  --orange: #FF6A33; --dock: rgba(34, 37, 41, 0.94);
+}
+:root[dir="rtl"] { --font: 'Readex Pro', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--alu); color: var(--ink); font: 400 16px/1.55 var(--font); }
+[dir="rtl"] body { line-height: 1.8; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px 60px; }
+
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 0; font-size: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 8px 12px; border-radius: 999px; background: var(--panel); }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+.lang { font: 600 14px/1 'Readex Pro', sans-serif; padding: 10px 14px; background: var(--ink); color: var(--panel); border: 0; border-radius: 999px; cursor: pointer; }
+[dir="rtl"] .lang { font-family: 'Archivo', sans-serif; }
+
+.top-tools { display: inline-flex; gap: 8px; align-items: center; }
+.layout { display: grid; grid-template-columns: 340px 1fr; gap: 22px; align-items: start; }
+
+/* ID card */
+.id { position: sticky; top: 16px; background: var(--panel); border-radius: 22px; padding: 24px; box-shadow: 0 18px 40px rgba(0,0,0,.08); }
+.id img { width: 96px; height: 96px; border-radius: 18px; object-fit: cover; }
+.id h1 { margin: 16px 0 4px; font-size: 34px; line-height: 1; font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; }
+[dir="rtl"] .id h1 { font-stretch: 100%; line-height: 1.3; letter-spacing: 0; }
+.id .role { font-size: 17px; font-weight: 600; }
+.id dl { margin: 18px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px; }
+.id dt { color: var(--grey); }
+.id dd { margin: 0; font-weight: 600; }
+.actions { display: grid; gap: 8px; margin-top: 20px; }
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 16px; border-radius: 12px; font: 600 15px/1 var(--font); text-decoration: none; cursor: pointer; border: 2px solid var(--ink); background: transparent; color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--panel); }
+.btn.copy { justify-content: space-between; }
+.btn.copy code { font: 400 13px/1 ui-monospace, monospace; color: var(--grey); direction: ltr; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn.copy .done { color: var(--ink); }
+.row { display: flex; gap: 8px; }
+.row .btn { flex: 1; }
+
+/* Record */
+.card { background: var(--panel); border-radius: 22px; padding: 26px; }
+.card + .card { margin-top: 14px; }
+h2 { margin: 0 0 14px; font-size: 22px; font-weight: 800; font-stretch: 112%; letter-spacing: -0.01em; }
+[dir="rtl"] h2 { font-stretch: 100%; letter-spacing: 0; }
+.summary { margin: 0; padding: 0; list-style: none; font-size: 18px; }
+.summary li { padding: 10px 0; border-top: 1px solid var(--line); }
+.summary li:first-child { border-top: 0; padding-top: 0; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.fact { border-top: 3px solid var(--ink); padding-top: 10px; }
+.fact b { display: block; font-size: 38px; line-height: 1; font-weight: 800; font-stretch: 75%; }
+[dir="rtl"] .fact b { font-stretch: 100%; }
+.fact span { font-size: 13px; color: var(--grey); }
+.timeline { margin: 0; padding: 0; list-style: none; }
+.timeline li { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 12px 0; border-top: 1px solid var(--line); }
+.timeline li:first-child { border-top: 0; }
+.timeline time { font-size: 14px; color: var(--grey); font-variant-numeric: tabular-nums; }
+.timeline b { display: block; font-size: 16px; }
+.timeline span { font-size: 14px; color: var(--grey); }
+.timeline .now b::after { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); margin-inline-start: 8px; vertical-align: 2px; }
+.proof { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.proof div { background: var(--alu); border-radius: 14px; padding: 16px; }
+.proof b { display: block; font-size: 26px; font-weight: 800; font-stretch: 75%; line-height: 1.05; }
+[dir="rtl"] .proof b { font-stretch: 100%; }
+.proof span { font-size: 14px; color: var(--grey); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags a, .tags span { padding: 7px 12px; border-radius: 999px; border: 1.5px solid var(--line); font-size: 14px; }
+.tags a { text-decoration: none; }
+.tags a:hover { border-color: var(--ink); }
+.wrnote { margin: 10px 0 0; font-size: 13px; color: var(--grey); }
+.edu { margin: 0; padding: 0; list-style: none; font-size: 15px; }
+.edu li { padding: 8px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 14px; }
+.edu li:first-child { border-top: 0; }
+.edu span { color: var(--grey); white-space: nowrap; }
+
+.dock { display: none; }
+
+/* Phone: compact header, swipe the facts, actions docked at the bottom */
+@media (max-width: 760px) {
+  .wrap { padding: 0 16px 110px; }
+  .layout { grid-template-columns: 1fr; gap: 12px; }
+  .id { position: static; padding: 18px; border-radius: 18px; display: grid; grid-template-columns: 64px 1fr; gap: 0 14px; align-items: center; }
+  .id img { width: 64px; height: 64px; border-radius: 14px; grid-row: span 2; }
+  .id h1 { margin: 0; font-size: 26px; }
+  .id .role { font-size: 15px; }
+  .id dl { grid-column: 1 / -1; margin-top: 14px; }
+  .id .actions { display: none; }
+  .card { padding: 20px; border-radius: 18px; }
+  .card + .card { margin-top: 12px; }
+  .facts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin-inline: -20px; padding-inline: 20px; scrollbar-width: none; }
+  .facts::-webkit-scrollbar { display: none; }
+  .fact { flex: 0 0 40%; scroll-snap-align: start; }
+  .timeline li { grid-template-columns: 1fr; gap: 2px; }
+  .proof { grid-template-columns: 1fr; }
+  .summary { font-size: 16px; }
+  .dock {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; position: fixed; inset-inline: 0; bottom: 0; z-index: 10;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--dock);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line);
+  }
+  .dock .btn { min-height: 48px; padding: 0 8px; font-size: 14px; }
+}
+/* Numbers like 10+ keep their own direction inside Arabic text */
+.fact b, .proof b { unicode-bidi: plaintext; }
+/* Isolated numbers align to the Arabic side */
+[dir="rtl"] .fact b, [dir="rtl"] .proof b { text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <a class="chip" href="../index.html?choose"><i></i><span data-i18n="viewing">Viewing as a recruiter · change</span></a>
+    <span class="top-tools"><span data-theme-switch></span> <button class="lang" type="button" data-lang-toggle>عربي</button></span>
+  </div>
+
+  <div class="layout">
+    <aside class="id">
+      <img src="assets/bio.jpg" alt="Hisham Abuella">
+      <h1 data-i18n="name">Hisham Abuella</h1>
+      <div class="role" data-i18n="idLine">Muslim | Cellular Systems Engineer</div>
+      <dl>
+        <dt data-i18n="nowK">Now</dt><dd data-i18n="now">Apple, since June 2025</dd>
+        <dt data-i18n="locK">Location</dt><dd data-i18n="loc">San Diego, California</dd>
+        <dt data-i18n="authK">Work status</dt><dd data-i18n="auth">US permanent resident</dd>
+        <dt data-i18n="eduK">Education</dt><dd data-i18n="edu">Ph.D., Electrical and Computer Engineering</dd>
+        <dt data-i18n="langK">Languages</dt><dd data-i18n="langs">Arabic, English</dd>
+      </dl>
+      <div class="actions">
+        <a class="btn primary" href="../cv.html" data-i18n="cv">View CV</a>
+        <button class="btn copy" type="button" data-copy="hisham.abuella1@gmail.com"><span data-i18n="copyE">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
+        <div class="row"><a class="btn" href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a><a class="btn" href="https://scholar.google.com/citations?user=51HWj54AAAAJ">Scholar</a></div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="card">
+        <h2 data-i18n="s30">In 30 seconds</h2>
+        <ul class="summary">
+          <li data-i18n="sum1">Cellular systems engineer at Apple since June 2025, after four years as a Senior Modem System Engineer at Qualcomm.</li>
+          <li data-i18n="sum2">I work across 5G baseband, RF digital front-end, digital pre-distortion, channel estimation and fixed-point implementation, through to lab bring-up.</li>
+          <li data-i18n="sum3">GenAI champion at Apple. Inside Apple, my Claude presentation skill passed 2,200+ downloads and my GenAI crash course 6,000+ visitors. I love creating UIs with Claude.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="facts">
+          <div class="fact"><b>10+</b><span data-i18n="f1">years in wireless research and engineering</span></div>
+          <div class="fact"><b>5+</b><span data-i18n="f2">years in industry</span></div>
+          <div class="fact"><b>10+</b><span data-i18n="f3">technical publications</span></div>
+          <div class="fact"><b>1</b><span data-i18n="f4">US patent</span></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="expH">Experience</h2>
+        <ol class="timeline">
+          <li class="now"><time data-i18n="t1d">Jun 2025 – now</time><div><b data-i18n="t1">Cellular System Engineer · Apple</b><span data-i18n="t1s">AGC (automatic gain control) for cellular modems; lab bring-up and debugging. San Diego.</span></div></li>
+          <li><time data-i18n="t2d">Jun 2021 – Jun 2025</time><div><b data-i18n="t2">Senior Modem System Engineer · Qualcomm</b><span data-i18n="t2s">mmWave and Sub6 Rx digital front-end; NR channel estimation (Rel-18 DMRS, MMSE memory optimization, noise estimation); chip bring-up. San Diego.</span></div></li>
+          <li><time data-i18n="t3d">2019 and 2020</time><div><b data-i18n="t3">Modem System Engineer intern · Qualcomm</b><span data-i18n="t3s">Two summer internships.</span></div></li>
+          <li><time data-i18n="t4d">Jan 2017 – May 2021</time><div><b data-i18n="t4">Graduate Research and Teaching Assistant · Oklahoma State University</b><span data-i18n="t4s">Visible light sensing research; Ph.D.</span></div></li>
+          <li><time data-i18n="t5d">Sep 2014 – Dec 2016</time><div><b data-i18n="t5">Research and Teaching Assistant · Istanbul Sehir University</b><span data-i18n="t5s">M.Sc. research.</span></div></li>
+          <li><time data-i18n="t6d">Oct 2013 – Jul 2014</time><div><b data-i18n="t6">System Design (DSP) Engineer · Wasiela</b><span data-i18n="t6s">Egypt.</span></div></li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="proofH">Proof</h2>
+        <div class="proof">
+          <div><b data-i18n="p1">US patent</b><span data-i18n="p1s">Visible light sensing</span></div>
+          <div><b>2,200+</b><span data-i18n="p2s">downloads of my Claude presentation skill inside Apple</span></div>
+          <div><b>6,000+</b><span data-i18n="p3s">internal visitors to the GenAI crash course I wrote</span></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="skillH">Skills</h2>
+        <div class="tags"><span>5G NR baseband</span><span>RF DFE</span><span>DPD</span><span data-i18n="k1">Channel estimation</span><span>Fixed-point</span><span>OFDM</span><span>MATLAB</span><span>C / C++</span><span>Python</span><span>LabVIEW</span><span>GenAI</span><span>Claude Code</span></div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="wrH">Writing</h2>
+        <div class="tags"><a href="../Articles/journey.html?via=recruiter" data-i18n="wr1">My journey, from Cairo to California</a><a href="../Articles/building-ai-server.html?via=recruiter" data-i18n="wr2">Building a personal AI engine</a><a href="../Articles/building-wirelesshub.html?via=recruiter" data-i18n="wr3">Building WirelessHub with Claude</a></div>
+        <p class="wrnote" data-i18n="wrN">Articles are in English.</p>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="eduH">Education</h2>
+        <ul class="edu">
+          <li><b data-i18n="d1">Ph.D., Oklahoma State University</b><span>2021</span></li>
+          <li><b data-i18n="d2">M.Sc., Istanbul Sehir University</b><span>2016</span></li>
+          <li><b data-i18n="d3">B.Sc., Ain Shams University, Cairo</b><span>2013</span></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <section class="ident" aria-label="Contact">
+    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-actions">
+      <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
+      <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
+    </div>
+    <nav class="ident-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+      <a href="https://github.com/hisham-abuella" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ" aria-label="Google Scholar"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
+      <a href="https://www.instagram.com/hisham.abuella" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href="https://www.facebook.com/hisham.abuella" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+    </nav>
+  </section>
+</div>
+
+<nav class="dock" aria-label="Actions">
+  <a class="btn primary" href="../cv.html" data-i18n="cvShort">CV</a>
+  <button class="btn" type="button" data-copy="hisham.abuella1@gmail.com"><span data-i18n="copyE">Copy email</span></button>
+  <a class="btn" href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a>
+</nav>
+
+<script type="application/json" id="i18n-ar">
+{
+  "viewing": "بتتفرج كـ recruiter · غيّر", "name": "هشام أبو العلا",
+  "nowK": "دلوقتي", "now": "Apple، من يونيو 2025", "locK": "المكان", "loc": "سان دييجو، كاليفورنيا", "authK": "الإقامة", "auth": "مقيم دائم في أمريكا",
+  "eduK": "التعليم", "edu": "دكتوراه في الهندسة الكهربية والحاسبات", "langK": "اللغات", "langs": "العربي، الإنجليزي",
+  "cv": "اعرض الـ CV", "cvShort": "الـ CV", "copyE": "انسخ الإيميل",
+  "s30": "في 30 ثانية",
+  "sum1": "مهندس أنظمة خلوية في Apple من يونيو 2025، وقبلها أربع سنين Senior Modem System Engineer في Qualcomm.",
+  "sum2": "بشتغل على الـ 5G baseband، والـ RF digital front‑end، والـ DPD، وتقدير القناة، والتنفيذ بالـ fixed‑point، لحد الـ bring‑up في المعمل.",
+  "sum3": "GenAI champion في Apple، وبحب أعمل UIs مع Claude. جوه Apple: Claude skill للعروض اتحملت أكتر من 2,200 مرة، وكورس سريع في الـ GenAI زاره أكتر من 6,000 شخص.",
+  "f1": "سنين في البحث والهندسة اللاسلكية", "f2": "سنين في الصناعة", "f3": "ورقة تقنية منشورة", "f4": "براءة اختراع أمريكية",
+  "expH": "الخبرة",
+  "t1d": "يونيو 2025 – دلوقتي", "t1": "مهندس أنظمة خلوية · Apple", "t1s": "الـ AGC للمودمات الخلوية، والـ bring‑up والـ debugging في المعمل. سان دييجو.",
+  "t2d": "يونيو 2021 – يونيو 2025", "t2": "Senior Modem System Engineer · Qualcomm", "t2s": "الـ Rx digital front‑end للـ mmWave والـ Sub6، وتقدير القناة في الـ NR (Rel‑18 DMRS، وتقليل استهلاك الذاكرة في الـ MMSE، وتقدير الضوضاء)، والـ chip bring‑up. سان دييجو.",
+  "t3d": "2019 و 2020", "t3": "متدرب Modem System Engineer · Qualcomm", "t3s": "تدريبين صيفيين.",
+  "t4d": "يناير 2017 – مايو 2021", "t4": "مساعد بحث وتدريس · جامعة ولاية أوكلاهوما", "t4s": "أبحاث الاستشعار بالضوء المرئي، والدكتوراه.",
+  "t5d": "سبتمبر 2014 – ديسمبر 2016", "t5": "مساعد بحث وتدريس · جامعة إسطنبول شهير", "t5s": "أبحاث الماجستير.",
+  "t6d": "أكتوبر 2013 – يوليو 2014", "t6": "مهندس تصميم أنظمة (DSP) · Wasiela", "t6s": "مصر.",
+  "proofH": "أرقام تثبت الكلام", "p1": "براءة اختراع أمريكية", "p1s": "الاستشعار بالضوء المرئي",
+  "p2s": "تحميل للـ Claude skill بتاعتي للعروض جوه Apple", "p3s": "زائر داخلي للكورس السريع في الـ GenAI اللي كتبته",
+  "skillH": "المهارات", "k1": "تقدير القناة",
+  "wrH": "مقالات", "wr1": "رحلتي من القاهرة لكاليفورنيا", "wr2": "بناء محرك AI شخصي", "wr3": "بناء WirelessHub مع Claude", "wrN": "المقالات بالإنجليزي حالياً.",
+  "eduH": "التعليم", "d1": "دكتوراه، جامعة ولاية أوكلاهوما", "d2": "ماجستير، جامعة إسطنبول شهير", "d3": "بكالوريوس، جامعة عين شمس، القاهرة",
+  "idName": "هشام أبو العلا", "idLine": "مسلم | مهندس أنظمة خلوية", "idLoc": "كاليفورنيا، أمريكا",
+  "idCopy": "انسخ الإيميل", "idCv": "اعرض الـ CV"
+}
+</script>
+<script src="assets/i18n.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/ident.js"></script>
+<script>
+(function () {
+  try { localStorage.setItem('reader-path', 'recruiter'); } catch (e) { /* storage unavailable */ }
+  function copy(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+    return new Promise(function (ok, fail) {
+      var a = document.createElement('textarea'); a.value = text; a.style.position = 'fixed'; a.style.opacity = '0';
+      document.body.appendChild(a); a.select();
+      try { document.execCommand('copy') ? ok() : fail(); } catch (e) { fail(); }
+      document.body.removeChild(a);
+    });
+  }
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    var label = b.querySelector('[data-i18n]');
+    b.addEventListener('click', function () {
+      var ar = document.documentElement.dir === 'rtl', before = label.innerHTML;
+      copy(b.dataset.copy).then(function () { label.textContent = ar ? 'اتنسخ' : 'Copied'; },
+                                function () { label.textContent = b.dataset.copy; })
+        .then(function () { setTimeout(function () { label.innerHTML = before; }, 2000); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

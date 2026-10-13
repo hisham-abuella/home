@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hisham Abuella — Journal</title>
+<meta name="description" content="What I learned building with Claude and local AI models, and where you can learn too.">
+<meta property="og:title" content="Hisham Abuella — Journal">
+<meta property="og:description" content="What I learned building with Claude and local AI models, and where you can learn too.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+<script>
+// Theme before first paint: the visitor's choice, else the system setting.
+(function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
+  if (['light', 'dark'].indexOf(p) < 0) p = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', p); })();
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="assets/ident.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+<style>
+/* Learner page — the journal. A personal notebook of my vibe coding and learning
+   journey, on engineering-pad paper with dates pencilled in the margin.
+   Laptop: featured latest entry, then every entry with its date in the margin.
+   Phone: swipeable topic chips, compact entries, and "read the latest" in thumb reach. */
+:root {
+  --paper:  #EEF3E6;
+  --grid:   rgba(64, 118, 84, 0.15);
+  --grid-b: rgba(64, 118, 84, 0.28);
+  --ink:    #1F2A24;
+  --soft:   #46554C;
+  --pencil: #B8382A;
+  --pen:    #1E4FA3;
+  --card:   rgba(255, 255, 255, 0.72);
+  --body:   'IBM Plex Sans', system-ui, sans-serif;
+  --hand:   'Caveat', cursive;
+  --card-hover: #FFFFFF;
+  --dock:   rgba(238, 243, 230, 0.95);
+  --shadow: var(--ink);
+  --id-bg: var(--card); --id-bg-solid: var(--paper); --id-ink: var(--ink); --id-soft: var(--soft);
+  --id-line: var(--ink); --id-accent: var(--ink); --id-accent-ink: var(--paper); --id-radius: 0px;
+}
+/* Dark: the same pad under a desk lamp at night */
+:root[data-theme="dark"] {
+  --paper: #111A14; --grid: rgba(140, 200, 160, 0.08); --grid-b: rgba(140, 200, 160, 0.17);
+  --ink: #E3ECE1; --soft: #A7B6A9; --pencil: #F08A75; --pen: #93B8FF;
+  --card: rgba(255, 255, 255, 0.05); --card-hover: rgba(255, 255, 255, 0.09);
+  --dock: rgba(17, 26, 20, 0.95); --shadow: #000000;
+}
+:root[dir="rtl"] { --body: 'Noto Naskh Arabic', serif; --hand: 'Aref Ruqaa', serif; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; color: var(--ink); font: 400 17px/1.65 var(--body);
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid-b) 1px, transparent 1px), linear-gradient(90deg, var(--grid-b) 1px, transparent 1px),
+                    linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+[dir="rtl"] body { font-size: 18px; line-height: 1.95; }
+a { color: var(--pen); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px 70px; }
+
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 0; font-size: 14px; }
+.chip-link { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; padding: 7px 12px; border: 1.5px solid var(--ink); background: var(--card); }
+.chip-link i { width: 8px; height: 8px; border-radius: 50%; background: #3E9A5C; }
+.lang { font: 600 15px/1 'Noto Naskh Arabic', serif; padding: 10px 16px; background: var(--ink); color: var(--paper); border: 0; cursor: pointer; }
+[dir="rtl"] .lang { font-family: 'IBM Plex Sans', sans-serif; }
+
+.top-tools { display: inline-flex; gap: 8px; align-items: center; }
+.byline { margin: 0 0 10px; font-size: 15px; color: var(--soft); }
+.byline b { color: var(--ink); }
+.hero { display: grid; grid-template-columns: 1fr 120px; gap: 30px; align-items: start; padding: 36px 0 8px; }
+.hero h1 { margin: 0; font-size: clamp(2.2rem, 5.2vw, 3.7rem); line-height: 1.06; font-weight: 600; letter-spacing: -0.02em; max-width: 18ch; }
+[dir="rtl"] .hero h1 { letter-spacing: 0; line-height: 1.4; }
+.hero p { margin: 16px 0 0; max-width: 58ch; color: var(--soft); font-size: 18px; }
+.portrait { margin: 0; background: #fff; padding: 6px 6px 24px; box-shadow: 0 6px 18px rgba(31,42,36,.18); transform: rotate(3deg); position: relative; }
+[dir="rtl"] .portrait { transform: rotate(-3deg); }
+.portrait img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.portrait span { position: absolute; bottom: 3px; inset-inline: 0; text-align: center; font: 700 16px/1 var(--hand); color: #46554C; }
+
+.latest { margin-top: 34px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; padding: 24px; background: var(--card); border: 1.5px solid var(--ink); box-shadow: 6px 6px 0 var(--shadow); text-decoration: none; color: var(--ink); }
+.latest:hover { background: var(--card-hover); }
+.latest .tag { font: 700 22px/1 var(--hand); color: var(--pencil); }
+.latest h2 { margin: 8px 0 6px; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.15; font-weight: 600; }
+.latest p { margin: 0; color: var(--soft); max-width: 60ch; }
+.latest .go { font-weight: 600; color: var(--pen); white-space: nowrap; }
+
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 48px 0 6px; align-items: center; }
+.filters h2 { margin: 0; margin-inline-end: 10px; font-size: 24px; font-weight: 600; }
+.filters button { font: 500 14px/1 var(--body); padding: 9px 13px; min-height: 38px; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+.entries { margin: 0; padding: 0; list-style: none; }
+.entry { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1.5px dashed var(--grid-b); }
+.entry[hidden] { display: none; }
+.entry time { font: 700 21px/1.2 var(--hand); color: var(--pencil); text-align: end; padding-top: 2px; }
+.entry a { color: var(--ink); text-decoration: none; }
+.entry a:hover h3 { color: var(--pen); text-decoration: underline; }
+.entry h3 { margin: 0; font-size: 20px; font-weight: 600; line-height: 1.3; }
+.entry p { margin: 4px 0 0; color: var(--soft); font-size: 16px; max-width: 62ch; }
+.entry .tags { margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--soft); }
+.entry .tags span::before { content: '#'; color: var(--pencil); margin-inline-end: 2px; }
+.lang-note { font-size: 14px; color: var(--soft); margin: 8px 0 0; }
+
+.learn { margin-top: 34px; padding: 18px 20px; border: 1.5px solid var(--ink); background: var(--card); }
+.learn h2 { margin: 0 0 8px; font-size: 22px; font-weight: 600; }
+.learn ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; }
+.learn li a { font-weight: 600; }
+.learn li span { display: block; color: var(--soft); font-size: 15px; }
+.learn .quiet { margin: 12px 0 0; font-size: 15px; color: var(--soft); }
+
+.sticky { display: none; }
+
+@media (max-width: 760px) {
+  .wrap { padding: 0 16px 100px; }
+  .hero { grid-template-columns: 1fr 76px; gap: 16px; padding-top: 16px; }
+  .hero p { font-size: 16px; }
+  .latest { grid-template-columns: 1fr; padding: 18px; box-shadow: 4px 4px 0 var(--ink); }
+  .filters { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 4px 16px 8px; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters h2 { flex: none; font-size: 20px; }
+  .filters button { flex: none; }
+  .learn ul { grid-template-columns: 1fr; }
+  .entry { grid-template-columns: 1fr; gap: 0; padding: 14px 0; }
+  .entry time { text-align: start; font-size: 18px; }
+  .entry h3 { font-size: 18px; }
+  .sticky {
+    display: flex; gap: 8px; position: fixed; inset-inline: 0; bottom: 0; z-index: 10;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--dock);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1.5px solid var(--ink);
+  }
+  .sticky a { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 50px; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 600; }
+  .sticky button { min-width: 64px; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); font: 600 15px/1 'Noto Naskh Arabic', serif; cursor: pointer; }
+  [dir="rtl"] .sticky button { font-family: 'IBM Plex Sans', sans-serif; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <a class="chip-link" href="../index.html?choose"><i></i><span data-i18n="viewing">Viewing as a learner · change</span></a>
+    <span class="top-tools"><span data-theme-switch></span> <button class="lang" type="button" data-lang-toggle>عربي</button></span>
+  </div>
+
+  <header class="hero">
+    <div>
+      <p class="byline"><b data-i18n="idName">Hisham Abuella</b> · <span data-i18n="idLine">Muslim | Cellular Systems Engineer</span></p>
+      <h1 data-i18n="h1">What I learned building with Claude, and where you can learn too.</h1>
+      <p data-i18n="lede">I'm Hisham, a cellular systems engineer who loves creating UIs with Claude. In my own time I build things with Claude and local AI models, and I write down what I learned, including what went wrong. Below are those lessons, and a few free things to learn from.</p>
+    </div>
+    <figure class="portrait"><img src="assets/bio.jpg" alt=""><span data-i18n="me">me</span></figure>
+  </header>
+
+  <a class="latest" href="../Articles/two-nails-two-assistants.html?via=learner">
+    <div>
+      <span class="tag" data-i18n="latestT">latest entry · Oct 2026</span>
+      <h2 data-i18n="a1">Two nails, two assistants</h2>
+      <p data-i18n="a1s">Two nails, a bubble, and a tire light I ignored. Claude against the AI I'm building on my desk.</p>
+    </div>
+    <span class="go" data-i18n="readL">Read</span>
+  </a>
+
+  <section class="learn" aria-labelledby="learnH">
+    <h2 id="learnH" data-i18n="learnH">Learn with me</h2>
+    <ul>
+      <li><a href="../projects/presentation-skill/claude101.html" data-i18n="m1">GenAI and Claude 101</a><span data-i18n="m1s">A public deck: an introduction to Claude.</span></li>
+      <li><a href="../projects/presentation-skill/template.html" data-i18n="m2">Claude presentation template</a><span data-i18n="m2s">A public template for creating presentations with Claude Code.</span></li>
+    </ul>
+    <p class="quiet"><span data-i18n="w101">Want wireless and DSP? Free lessons in English and Arabic:</span> <a href="https://hisham-abuella.github.io/Wireless-101/" data-i18n="w101l">Wireless 101</a></p>
+  </section>
+
+  <div class="filters" role="group" aria-label="Filter entries by topic">
+    <h2 data-i18n="allH">What I learned, entry by entry</h2>
+    <button type="button" data-f="all" aria-pressed="true" data-i18n="fAll">All</button>
+    <button type="button" data-f="vibe" aria-pressed="false" data-i18n="fVibe">Vibe coding</button>
+    <button type="button" data-f="local" aria-pressed="false" data-i18n="fLocal">Local AI</button>
+    <button type="button" data-f="family" aria-pressed="false" data-i18n="fFam">Family</button>
+    <button type="button" data-f="journey" aria-pressed="false" data-i18n="fJour">Journey</button>
+  </div>
+  <p class="lang-note" data-i18n="langNote">Entries are written in English.</p>
+
+  <ol class="entries">
+    <li class="entry" data-t="local vibe"><time data-i18n="oct26">Oct 2026</time><a href="../Articles/two-nails-two-assistants.html?via=learner"><h3 data-i18n="a1">Two nails, two assistants</h3><p data-i18n="a1s2">Lesson: the real takeaway had nothing to do with AI. When the tire light comes on, go look at your tires.</p><div class="tags"><span data-i18n="fLocal">Local AI</span><span data-i18n="fVibe">Vibe coding</span></div></a></li>
+    <li class="entry" data-t="family vibe"><time data-i18n="oct26">Oct 2026</time><a href="../Articles/bedtime-stories.html?via=learner"><h3 data-i18n="a2">Bedtime stories for a three-month-old</h3><p data-i18n="a2s">Lesson: design from what a three-month-old can actually see, not from what looks lovely to adults.</p><div class="tags"><span data-i18n="fFam">Family</span><span data-i18n="fVibe">Vibe coding</span></div></a></li>
+    <li class="entry" data-t="vibe"><time data-i18n="mar26">Mar 2026</time><a href="../Articles/building-wireless101.html?via=learner"><h3 data-i18n="a3">Building Wireless 101</h3><p data-i18n="a3s">Lesson: AI writes clear lessons fast, but an engineer has to review every module for accuracy.</p><div class="tags"><span data-i18n="fVibe">Vibe coding</span></div></a></li>
+    <li class="entry" data-t="local"><time data-i18n="feb26">Feb 2026</time><a href="../Articles/local-voice-generation.html?via=learner"><h3 data-i18n="a4">Generating voice from text using local models</h3><p data-i18n="a4s">Lesson: write for the ear, and check the words, not just the file. Local voices now draft a whole book for free.</p><div class="tags"><span data-i18n="fLocal">Local AI</span></div></a></li>
+    <li class="entry" data-t="local vibe"><time data-i18n="feb26">Feb 2026</time><a href="../Articles/building-ai-server.html?via=learner"><h3 data-i18n="a5">Building a personal AI engine</h3><p data-i18n="a5s">Lesson: failures here announce themselves as successes, so fixes should make failure visible. Still in progress.</p><div class="tags"><span data-i18n="fLocal">Local AI</span><span data-i18n="fVibe">Vibe coding</span></div></a></li>
+    <li class="entry" data-t="family vibe"><time data-i18n="feb26">Feb 2026</time><a href="../Articles/building-islamic-kids.html?via=learner"><h3 data-i18n="a6">Building an interactive Islamic kids website</h3><p data-i18n="a6s">Lessons: kids' content demands higher quality, and bilingual is hard but worth it.</p><div class="tags"><span data-i18n="fFam">Family</span><span data-i18n="fVibe">Vibe coding</span></div></a></li>
+    <li class="entry" data-t="vibe"><time data-i18n="feb26">Feb 2026</time><a href="../Articles/building-wirelesshub.html?via=learner"><h3 data-i18n="a7">Building WirelessHub with Claude</h3><p data-i18n="a7s">Lesson: a detailed CLAUDE.md file makes every new session with Claude productive from the first minute.</p><div class="tags"><span data-i18n="fVibe">Vibe coding</span></div></a></li>
+    <li class="entry" data-t="journey"><time data-i18n="aug25">Aug 2025</time><a href="../Articles/journey.html?via=learner"><h3 data-i18n="a8">My journey, from Cairo to California</h3><p data-i18n="a8s">Where it started: wireless engineering, doctoral research, and the move into industry.</p><div class="tags"><span data-i18n="fJour">Journey</span></div></a></li>
+  </ol>
+
+  <section class="ident" aria-label="Contact">
+    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-actions">
+      <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
+      <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
+    </div>
+    <div class="ident-stats">
+      <div><b>10+</b><span data-i18n="idS1">years in wireless research</span></div>
+      <div><b>5+</b><span data-i18n="idS2">years in industry</span></div>
+      <div><b>10+</b><span data-i18n="idS3">technical publications</span></div>
+      <div><b>1</b><span data-i18n="idS4">US patent</span></div>
+    </div>
+    <nav class="ident-social" aria-label="Social links">
+      <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+      <a href="https://github.com/hisham-abuella" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+      <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ" aria-label="Google Scholar"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
+      <a href="https://www.instagram.com/hisham.abuella" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href="https://www.facebook.com/hisham.abuella" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+    </nav>
+  </section>
+</div>
+
+<div class="sticky">
+  <a href="../Articles/two-nails-two-assistants.html?via=learner" data-i18n="stick">Read the latest entry</a>
+  <button type="button" data-lang-toggle>عربي</button>
+</div>
+
+<script type="application/json" id="i18n-ar">
+{
+  "viewing": "بتتفرج كمتعلّم · غيّر", "me": "أنا",
+  "h1": "اللي اتعلمته وأنا ببني مع Claude، وفين تقدر تتعلم إنت كمان.",
+  "lede": "أنا هشام، مهندس أنظمة خلوية وبحب أعمل UIs مع Claude. في وقتي الخاص ببني حاجات مع Claude وموديلات AI محلية، وبكتب اللي اتعلمته، حتى اللي غلطت فيه. تحت هتلاقي الدروس دي، وحاجات ببلاش تتعلم منها.",
+  "latestT": "آخر يومية · أكتوبر 2026", "readL": "اقرا",
+  "allH": "اللي اتعلمته، يومية يومية", "fAll": "الكل", "fVibe": "Vibe coding", "fLocal": "AI محلي", "fFam": "العيلة", "fJour": "المشوار",
+  "langNote": "اليوميات مكتوبة بالإنجليزي حالياً.",
+  "oct26": "أكتوبر 2026", "mar26": "مارس 2026", "feb26": "فبراير 2026", "aug25": "أغسطس 2025",
+  "a1": "مسمارين ومساعدين", "a1s": "مسمارين، وفقاعة، ولمبة كاوتش طنّشتها. Claude قصاد الـ AI اللي ببنيه على مكتبي.", "a1s2": "الدرس الحقيقي مالوش علاقة بالـ AI. لما لمبة الكاوتش تنوّر، روح بص على الكاوتشات.",
+  "a2": "حواديت قبل النوم لطفل عنده تلات شهور", "a2s": "الدرس: صمّم على اللي طفل عنده تلات شهور يقدر يشوفه فعلاً، مش على اللي شكله حلو للكبار.",
+  "a3": "إزاي بنيت Wireless 101", "a3s": "الدرس: الـ AI بيكتب دروس واضحة بسرعة، بس لازم مهندس يراجع كل موديول عشان يطلع صح.",
+  "a4": "توليد الصوت من النص بموديلات محلية", "a4s": "الدرس: اكتب للودن، وراجع الكلام نفسه مش الملف بس. الأصوات المحلية دلوقتي بتسجّل مسودة صوتية لكتاب كامل ببلاش.",
+  "a5": "بناء محرك AI شخصي", "a5s": "الدرس: الأعطال هنا بتيجي متنكرة في شكل نجاح، فالإصلاح لازم يخلّي العطل باين. لسه شغال عليه.",
+  "a6": "بناء موقع إسلامي تفاعلي للأطفال", "a6s": "الدروس: محتوى الأطفال محتاج جودة أعلى، وإن الموقع يبقى بلغتين صعب بس يستاهل.",
+  "a7": "بناء WirelessHub مع Claude", "a7s": "الدرس: ملف CLAUDE.md مفصّل بيخلّي كل جلسة جديدة مع Claude مفيدة من أول دقيقة.",
+  "a8": "رحلتي من القاهرة لكاليفورنيا", "a8s": "البداية: هندسة لاسلكية، وبحث دكتوراه، والنقلة للصناعة.",
+  "learnH": "اتعلّم معايا", "m1": "GenAI و Claude 101", "m1s": "عرض عام: مقدمة عن Claude.", "m2": "قالب عروض Claude", "m2s": "قالب عام تعمل بيه presentations بـ Claude Code.",
+  "w101": "عايز لاسلكي و DSP؟ دروس ببلاش بالعربي والإنجليزي:", "w101l": "Wireless 101",
+  "stick": "اقرا آخر يومية",
+  "idName": "هشام أبو العلا", "idLine": "مسلم | مهندس أنظمة خلوية", "idLoc": "كاليفورنيا، أمريكا",
+  "idCopy": "انسخ الإيميل", "idCv": "اعرض الـ CV",
+  "idS1": "سنين في البحث اللاسلكي", "idS2": "سنين في الصناعة", "idS3": "ورقة تقنية منشورة", "idS4": "براءة اختراع أمريكية"
+}
+</script>
+<script src="assets/i18n.js"></script>
+<script src="assets/theme.js"></script>
+<script src="assets/ident.js"></script>
+<script>
+(function () {
+  try { localStorage.setItem('reader-path', 'learner'); } catch (e) { /* storage unavailable */ }
+  var buttons = document.querySelectorAll('.filters button'), entries = document.querySelectorAll('.entry');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.dataset.f;
+      buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      entries.forEach(function (e) { e.hidden = f !== 'all' && e.dataset.t.split(' ').indexOf(f) < 0; });
+    });
+  });
+})();
+</script>
+</body>
+</html>

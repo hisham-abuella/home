@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 2 — Computation Pad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Mockup 2 — Computation pad.
+   Inspiration: OpenAI ("research lab notebook at noon"), Perplexity ("scholar's parchment"),
+   minimal.gallery whitespace. Built on the green engineering computation pad every
+   EE student did homework on: the page is a worked problem — Given, Find, Solution —
+   with pencil annotations in the margin. Calm, readable, made for learners. */
+:root {
+  --paper:  #EEF3E6;   /* engineering pad green */
+  --grid:   rgba(64, 118, 84, 0.16);
+  --grid-b: rgba(64, 118, 84, 0.30);
+  --ink:    #1F2A24;   /* graphite */
+  --soft:   #46554C;
+  --pencil: #C0392B;   /* red margin pencil */
+  --pen:    #1E4FA3;   /* blue ballpoint, for links */
+  --body:   'IBM Plex Sans', system-ui, sans-serif;
+  --hand:   'Caveat', cursive;
+}
+:root[dir="rtl"] {
+  --body: 'Noto Naskh Arabic', serif;
+  --hand: 'Aref Ruqaa', serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; color: var(--ink); font: 400 17px/1.65 var(--body);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-b) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-b) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+[dir="rtl"] body { font-size: 18px; line-height: 1.95; }
+a { color: var(--pen); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; }
+
+/* The sheet: a pad header strip, a margin line, and the work */
+.sheet { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; position: relative; }
+.strip {
+  display: grid; grid-template-columns: 1fr auto auto auto; gap: 0; margin-top: 24px;
+  border: 1.5px solid var(--ink); background: rgba(255,255,255,.45); font-size: 14px;
+}
+.strip > * { padding: 8px 14px; border-inline-start: 1.5px solid var(--ink); }
+.strip > *:first-child { border-inline-start: 0; }
+.strip b { font-weight: 600; }
+.lang { font: 600 14px/1 var(--body); background: var(--ink); color: var(--paper); border: 0; cursor: pointer; padding: 8px 16px; }
+[dir="ltr"] .lang { font-family: 'Noto Naskh Arabic', serif; }
+
+.work { position: relative; padding-inline-start: 132px; }
+.work::before { content: ''; position: absolute; inset-block: 0; inset-inline-start: 110px; width: 2px; background: var(--pencil); opacity: .55; }
+.margin {
+  position: absolute; inset-inline-start: 0; width: 98px; text-align: end;
+  font: 700 22px/1.1 var(--hand); color: var(--pencil);
+}
+
+.problem { padding-top: 64px; padding-inline-end: 190px; }
+h1 { margin: 0; font-size: clamp(2.5rem, 6vw, 4.2rem); line-height: 1.05; font-weight: 600; letter-spacing: -0.02em; }
+[dir="rtl"] h1 { letter-spacing: 0; line-height: 1.3; }
+.given { display: grid; grid-template-columns: 90px 1fr; gap: 10px 18px; margin-top: 30px; max-width: 66ch; }
+.given dt { font: 700 24px/1.3 var(--hand); color: var(--soft); }
+.given dd { margin: 0; }
+.portrait { position: absolute; inset-inline-end: 0; top: 64px; width: 150px; transform: rotate(3deg); background: #fff; padding: 8px 8px 30px; box-shadow: 0 6px 18px rgba(31,42,36,.18); }
+[dir="rtl"] .portrait { transform: rotate(-3deg); }
+.portrait img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.portrait span { position: absolute; bottom: 4px; inset-inline: 0; text-align: center; font: 700 18px/1 var(--hand); color: var(--soft); }
+
+.paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 34px; border: 1.5px solid var(--ink); background: rgba(255,255,255,.55); }
+.paths a { display: block; padding: 16px 18px; color: var(--ink); text-decoration: none; border-inline-start: 1.5px solid var(--ink); }
+.paths a:first-child { border-inline-start: 0; }
+.paths a:hover { background: #fff; }
+.paths b { display: block; font-size: 18px; }
+.paths span { color: var(--soft); font-size: 15px; }
+.paths em { font: 700 20px/1 var(--hand); color: var(--pencil); font-style: normal; }
+
+section { padding-top: 76px; }
+h2 { margin: 0 0 6px; font-size: 26px; font-weight: 600; }
+.note { color: var(--soft); max-width: 62ch; margin: 0; }
+
+.result { margin-top: 26px; display: grid; gap: 22px; }
+.step { display: grid; grid-template-columns: 1fr 190px; gap: 24px; padding-bottom: 22px; border-bottom: 1.5px dashed var(--grid-b); }
+.step h3 { margin: 0; font-size: 20px; font-weight: 600; }
+.step p { margin: 4px 0 0; color: var(--soft); max-width: 60ch; }
+.step .links { margin-top: 8px; display: flex; gap: 18px; flex-wrap: wrap; font-size: 15px; }
+.answer { align-self: start; text-align: center; border: 2px solid var(--ink); padding: 8px 10px; background: rgba(255,255,255,.6); }
+.answer b { display: block; font-size: 24px; line-height: 1.2; }
+.answer span { font-size: 13px; color: var(--soft); line-height: 1.35; display: block; }
+.answer.boxed { box-shadow: 4px 4px 0 var(--ink); }
+
+.tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 22px; }
+.tools h3 { margin: 0 0 6px; font-size: 17px; font-weight: 600; }
+.tools ul { margin: 0; padding-inline-start: 18px; color: var(--soft); font-size: 15px; }
+
+.reading { margin-top: 18px; }
+.reading a { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 12px 0; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--grid-b); }
+.reading a:hover b { color: var(--pen); text-decoration: underline; }
+.reading b { font-weight: 600; }
+.reading span { display: block; color: var(--soft); font-size: 15px; }
+.reading time { color: var(--soft); font-size: 14px; white-space: nowrap; }
+
+.qed { padding-top: 80px; }
+.qed h2 { font-size: clamp(2rem, 4vw, 2.8rem); }
+.qed .btns { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+.btn { padding: 12px 20px; border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-weight: 600; background: rgba(255,255,255,.6); }
+.btn.on { background: var(--ink); color: var(--paper); }
+.box { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--ink); vertical-align: -3px; margin-inline-start: 10px; }
+
+@media (max-width: 820px) {
+  .work { padding-inline-start: 0; }
+  .work::before { display: none; }
+  .margin { position: static; width: auto; text-align: start; display: block; margin-bottom: 4px; }
+  .problem { padding-inline-end: 0; }
+  .portrait { position: static; width: 120px; margin: 0 0 18px; }
+  .paths, .tools { grid-template-columns: 1fr; }
+  .paths a { border-inline-start: 0; border-top: 1.5px solid var(--ink); }
+  .paths a:first-child { border-top: 0; }
+  .step { grid-template-columns: 1fr; gap: 10px; }
+  .answer { justify-self: start; }
+  .strip { grid-template-columns: 1fr auto; }
+  .strip > .hide-sm { display: none; }
+}
+@media (max-width: 600px) { .sheet { padding: 0 16px 60px; } .problem { padding-top: 36px; } }
+/* Numbers like 10+ keep their own direction inside Arabic text */
+.answer b { unicode-bidi: plaintext; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="strip">
+    <span><b data-i18n="name">Hisham Abuella</b></span>
+    <span class="hide-sm" data-i18n="date">Date: Oct 2026</span>
+    <span class="hide-sm" data-i18n="page">Sheet 1 of 1</span>
+    <button class="lang" type="button" data-lang-toggle>عربي</button>
+  </div>
+
+  <div class="work">
+    <div class="problem">
+      <figure class="portrait"><img src="assets/bio.jpg" alt=""><span data-i18n="me">me, 2026</span></figure>
+      <span class="margin" data-i18n="m1">Problem</span>
+      <h1 data-i18n="h1">Who am I, and what do I build?</h1>
+      <dl class="given">
+        <dt data-i18n="giv">Given</dt>
+        <dd data-i18n="givd">A cellular systems engineer in California. Ten years of signal processing research, a doctorate, five years shipping 5G systems. Loves creating UIs with Claude.</dd>
+        <dt data-i18n="find">Find</dt>
+        <dd data-i18n="findd">The part that's useful to you. Pick the line that fits:</dd>
+      </dl>
+      <div class="paths">
+        <a href="../../cv.html"><em data-i18n="pa">(a)</em> <b data-i18n="p1">You're hiring</b><span data-i18n="p1s">CV, patent, publications</span></a>
+        <a href="#solution"><em data-i18n="pb">(b)</em> <b data-i18n="p2">You're an engineer</b><span data-i18n="p2s">Research and technical notes</span></a>
+        <a href="https://hisham-abuella.github.io/Wireless-101/"><em data-i18n="pc">(c)</em> <b data-i18n="p3">You're learning</b><span data-i18n="p3s">580+ free lessons, EN and AR</span></a>
+      </div>
+    </div>
+
+    <section id="solution">
+      <span class="margin" data-i18n="m2">Solution</span>
+      <h2 data-i18n="solH">Things I've built</h2>
+      <p class="note" data-i18n="solS">Each one with its result boxed, the way a worked answer should be.</p>
+      <div class="result">
+        <div class="step"><div><h3 data-i18n="w1">Visible light vitals</h3><p data-i18n="w1d">A photodetector on a Raspberry Pi recovers heart rate and breathing from visible light alone, with no contact and no wearable. Doctoral research.</p></div><div class="answer boxed"><b data-i18n="w1v">US patent</b><span data-i18n="w1m">+ several publications</span></div></div>
+        <div class="step"><div><h3>Wireless 101</h3><p data-i18n="w3d">Seven story-style courses on wireless, DSP, statistics, ML, linear algebra and generative AI, in English and Arabic.</p><div class="links"><a href="https://hisham-abuella.github.io/Wireless-101/" data-i18n="w3l1">Start learning</a><a href="../../Articles/building-wireless101.html" data-i18n="how">How I built it</a></div></div><div class="answer"><b>580+</b><span data-i18n="w3m">lessons in each language</span></div></div>
+        <div class="step"><div><h3 data-i18n="w2">Claude presentation skill</h3><p data-i18n="w2d">A Claude Code skill that generates self-contained HTML decks that render fully offline.</p><div class="links"><a href="../../projects/presentation-skill/template.html" data-i18n="w2l1">Template</a><a href="../../projects/presentation-skill/claude101.html" data-i18n="w2l2">Example deck</a></div></div></div>
+        <div class="step"><div><h3 data-i18n="w4">GenAI and Claude 101</h3><p data-i18n="w4d">From first prompt to building your own skills and tools, written for an internal Apple audience.</p></div></div>
+        <div class="step"><div><h3 data-i18n="w5">Bedtime stories</h3><p data-i18n="w5d">High-contrast board books drawn in SVG and narrated in English and Arabic, matched to what a newborn can see.</p><div class="links"><a href="../../projects/bedtime-stories/" data-i18n="w5l">Read the books</a></div></div><div class="answer"><b>292</b><span data-i18n="w5m">narrated clips across six books</span></div></div>
+      </div>
+    </section>
+
+    <section>
+      <span class="margin" data-i18n="m3">Tools used</span>
+      <div class="tools">
+        <div><h3 data-i18n="sp1">Signal chain</h3><ul><li>5G NR baseband</li><li>RF digital front-end</li><li data-i18n="dpd">Digital pre-distortion</li><li data-i18n="fxp">Fixed-point implementation</li></ul></div>
+        <div><h3 data-i18n="sp2">Implementation</h3><ul><li>MATLAB</li><li>C / C++</li><li>Python</li><li>LabVIEW</li></ul></div>
+        <div><h3 data-i18n="sp3">Machine learning</h3><ul><li data-i18n="ml1">ML for wireless systems</li><li data-i18n="ml2">Claude skills and plugins</li><li data-i18n="ml4">Running models locally</li></ul></div>
+      </div>
+    </section>
+
+    <section>
+      <span class="margin" data-i18n="m4">See also</span>
+      <h2 data-i18n="logH">Writing</h2>
+      <p class="note" data-i18n="logS">Every post can be heard in my own voice.</p>
+      <div class="reading">
+        <a href="../../Articles/two-nails-two-assistants.html"><div><b data-i18n="a1">Two nails, two assistants</b><span data-i18n="a1s">Claude against the AI I'm building on my desk.</span></div><time data-i18n="oct">Oct 2026</time></a>
+        <a href="../../Articles/building-wireless101.html"><div><b data-i18n="a3">Building Wireless 101</b><span data-i18n="a3s">A free bilingual platform for wireless and DSP.</span></div><time data-i18n="mar">Mar 2026</time></a>
+        <a href="../../Articles/local-voice-generation.html"><div><b data-i18n="a4">Generating voice with local models</b><span data-i18n="a4s">Mac Studio voices measured against ElevenLabs v4.</span></div><time data-i18n="feb">Feb 2026</time></a>
+        <a href="../../Articles/journey.html"><div><b data-i18n="a5">My journey, from Cairo to California</b><span data-i18n="a5s">Wireless engineering, a doctorate, and the move to industry.</span></div><time data-i18n="aug">Aug 2025</time></a>
+      </div>
+    </section>
+
+    <section class="qed">
+      <span class="margin">∎</span>
+      <h2 data-i18n="cH">Let's work on the next problem together</h2>
+      <p class="note" data-i18n="cS">Collaborations, technical discussions and roles in wireless systems and machine learning.</p>
+      <div class="btns"><a class="btn on" href="mailto:hisham.abuella1@gmail.com" data-i18n="email">Email me</a><a class="btn" href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a><a class="btn" href="https://scholar.google.com/citations?user=51HWj54AAAAJ">Google Scholar</a><a class="btn" href="https://github.com/hisham-abuella">GitHub</a></div>
+    </section>
+  </div>
+</div>
+
+<script type="application/json" id="i18n-ar">
+{
+  "name": "هشام أبو العلا", "date": "التاريخ: أكتوبر 2026", "page": "ورقة 1 من 1", "me": "أنا، 2026",
+  "m1": "المسألة", "h1": "أنا مين، وبعمل إيه؟",
+  "giv": "المعطيات", "givd": "مهندس أنظمة خلوية في كاليفورنيا. عشر سنين بحث في معالجة الإشارات، ودكتوراه، وخمس سنين شغل على أنظمة 5G بتتشحن فعلاً. وبحب أعمل UIs مع Claude.",
+  "find": "المطلوب", "findd": "الجزء اللي يفيدك. اختار السطر اللي يناسبك:",
+  "pa": "(أ)", "pb": "(ب)", "pc": "(ج)", "p1": "بتعيّن حد", "p1s": "الـ CV، براءة الاختراع، والأبحاث",
+  "p2": "شغلك هندسة", "p2s": "أبحاث وملاحظات تقنية",
+  "p3": "عايز تتعلم", "p3s": "أكتر من 580 درس ببلاش، عربي وإنجليزي",
+  "m2": "الحل", "solH": "حاجات عملتها", "solS": "وكل واحدة نتيجتها في بوكس، زي ما الحل المظبوط بيتكتب.",
+  "w1": "قياس العلامات الحيوية بالضوء", "w1d": "حساس ضوئي على Raspberry Pi بيقيس نبض القلب والتنفس من الضوء العادي بس، من غير ما يلمس الشخص ومن غير أي جهاز يلبسه. ده كان بحث الدكتوراه.",
+  "w1v": "براءة اختراع أمريكية", "w1m": "+ كذا ورقة بحثية",
+  "w3d": "سبع كورسات بأسلوب الحكاية في الاتصالات اللاسلكية، والـ DSP، والإحصاء، وتعلّم الآلة، والجبر الخطي، والذكاء الاصطناعي التوليدي، بالعربي والإنجليزي.",
+  "w3l1": "ابدأ اتعلم", "how": "إزاي عملتها", "w3m": "درس في كل لغة",
+  "w2": "مهارة Claude للعروض", "w2d": "مهارة لـ Claude Code بتطلّع عروض HTML كاملة في ملف واحد، وبتشتغل من غير إنترنت.",
+  "w2l1": "القالب", "w2l2": "عرض كمثال", "w2m": "تحميل على الماركت بليس الداخلي في Apple",
+  "w4": "كورس GenAI و Claude 101", "w4d": "من أول prompt لحد ما تبني الـ skills والأدوات بتاعتك. اتكتب لجمهور داخلي في Apple.", "w4m": "زائر",
+  "w5": "حواديت قبل النوم", "w5d": "كتب بتباين عالي مرسومة بـ SVG ومتسجلة بالعربي والإنجليزي، على قد اللي عين الرضيع تقدر تشوفه.", "w5l": "اقرا الكتب", "w5m": "مقطع صوتي في ست كتب",
+  "m3": "الأدوات", "sp1": "سلسلة الإشارة", "sp2": "التنفيذ", "sp3": "تعلّم الآلة",
+  "dpd": "Digital pre-distortion", "fxp": "تنفيذ بالـ fixed-point",
+  "ml1": "تعلّم الآلة للأنظمة اللاسلكية", "ml2": "Skills و plugins لـ Claude", "ml4": "تشغيل الموديلات محلياً",
+  "m4": "اقرا كمان", "logH": "مقالات", "logS": "كل مقال تقدر تسمعه بصوتي. (المقالات نفسها بالإنجليزي حالياً.)",
+  "a1": "مسمارين ومساعدين", "a1s": "Claude قصاد الذكاء الاصطناعي اللي ببنيه على مكتبي.",
+  "a3": "إزاي بنيت Wireless 101", "a3s": "منصة ببلاش بلغتين للاتصالات اللاسلكية والـ DSP.",
+  "a4": "توليد الصوت بموديلات محلية", "a4s": "أصوات على Mac Studio قصاد ElevenLabs v4.",
+  "a5": "رحلتي من القاهرة لكاليفورنيا", "a5s": "هندسة لاسلكية، ودكتوراه، والنقلة للصناعة.",
+  "oct": "أكتوبر 2026", "mar": "مارس 2026", "feb": "فبراير 2026", "aug": "أغسطس 2025",
+  "cH": "يلا نحل المسألة الجاية سوا", "cS": "تعاون، نقاش تقني، أو فرص شغل في الأنظمة اللاسلكية وتعلّم الآلة.", "email": "ابعتلي إيميل"
+}
+</script>
+<script src="assets/i18n.js"></script>
+</body>
+</html>

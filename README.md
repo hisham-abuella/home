@@ -7,11 +7,19 @@ Live at **https://www.hishamabuella.com** (GitHub Pages, deployed from `main`).
 
 ## Pages
 
-- `index.html` — home: background, expertise, selected work, writing, contact
+- `index.html` — the reader gateway ("Tune in"): a radio-tuner front page where each reader
+  type is a 5G band. Four tracks plus "Open the full site"; with no choice in 30 seconds it
+  opens the full site (any click, tap, key or real scroll stops the countdown). It remembers
+  the last track and offers "continue" without redirecting.
+- `home.html` — the full site: background, expertise, selected work, writing, contact
+- `tracks/` — the four reader tracks, each English + Egyptian Arabic (`?lang=ar`) with its own
+  phone layout: `recruiter.html` (catalogue, n71), `engineer.html` (constellation, n78),
+  `vibe.html` (terminal, n257), `learner.html` (journal, n260). Shared assets in
+  `tracks/assets/` (`i18n.js`, `theme.js`, `ident.css`, `ident.js`, `bio.jpg`)
 - `cv.html` — CV, deliberately a plain white document and print-ready
 - `Articles/` — eight long-form posts, each with an optional narrated version
 - `projects/presentation-skill/` — slide-deck demos (`template.html`, `claude101.html`)
-- `different_designs/` — earlier explorations, not linked from the live site
+- `different_designs/` — explorations only (mockups, logo concepts, older pages), not linked from the live site
 - `Pictures/`, `audio/` — media; `audio/articles/` holds the article narration
 
 ## Design system
@@ -23,16 +31,36 @@ css/base.css          layout and components; holds no colour values
 css/themes/*.css      midnight (default), daylight, contrast — tokens only
 css/article.css       article pages, built on those tokens
 css/cv.css            CV; overrides the tokens to stay white in any appearance
+css/skins/*.css       catalogue, constellation, terminal, journal: article skins matching the four tracks
+css/skins/reader-bar.css   the track chip + Auto/Light/Dark pill on skinned articles
 js/appearance.js      appearance switcher + scroll reveals, shared by all pages
+js/reader-bar.js      builds the reader bar on articles that have a skin
 js/signal-field.js    the animated noise-and-signal backdrop
 js/listen.js          shows an article's "Listen" player once its narration exists
 ```
 
 To theme a new page: link `base.css`, the three theme files and any page stylesheet,
-copy the inline pre-paint snippet from `index.html` (it applies the stored appearance
+copy the inline pre-paint snippet from `home.html` (it applies the stored appearance
 before first paint so nothing flashes), then add `appearance.js` and `signal-field.js`.
 Themes must only define tokens — putting layout in a theme is what makes these systems
 fight each other.
+
+**Auto is the default appearance.** The switch offers Auto, Dark (Midnight), Light (Daylight)
+and Contrast; the stored value is the visitor's preference and `data-appearance` the resolved
+theme. Auto follows the system light/dark setting and keeps following it.
+
+The preference is shared with the tracks: tracks store `reader-theme` (auto/light/dark), the
+site stores `appearance` (auto/midnight/daylight/contrast), and each writes both. Tracks have
+their own palettes and styles (`tracks/assets/`); they do not use `base.css`. The "Back to
+Portfolio" link on articles and the CV back button go to `home.html`.
+
+**Typefaces are tokens** (`--font-body`, `--font-mono` in `base.css`), so a skin can swap them.
+
+**Article skins.** An article takes the look of the reader track the visitor came from:
+`?via=recruiter|engineer|vibe|learner` (or the track remembered in `reader-path`) sets
+`data-skin="catalogue|constellation|terminal|journal"`, loads only that skin's fonts, and adds the reader
+bar. `?via=site` clears it. Skins restyle Midnight and Daylight; Contrast always wins. With no
+track, articles look exactly as before.
 
 The decks under `projects/presentation-skill/` are self-contained and keep their own
 copy of the palette, since they are exported and shared as single files.
@@ -63,7 +91,7 @@ icons because they are shared as standalone files.
 Each article is a self-contained page in `Articles/`, built on `css/article.css`.
 Copy the newest one as a starting point, then:
 
-1. Add a row to the Writing list in `index.html` (move the `New` flag to it).
+1. Add a row to the Writing list in `home.html` (move the `New` flag to it).
 2. Link it from the previous article's `article-nav` "Next" slot, and point its own
    "Previous" back.
 3. Keep personal details out of text and photos: no policy or account numbers, no
