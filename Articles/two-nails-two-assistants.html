@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3EH%3C/text%3E%3C/svg%3E">
+    <title>Two Nails, Two Assistants: Claude vs. My Local Model - Hisham Abuella</title>
+    <meta name="description" content="Two nails, one bubble, and a tire light I ignored for two weeks. I asked Claude and my homegrown local AI the same eight questions.">
+    <meta property="og:title" content="Two Nails, Two Assistants - Hisham Abuella">
+    <meta property="og:description" content="Two nails, one bubble, and a tire light I ignored for two weeks. Claude vs. the AI running on my desk.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Photos */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin: 30px 0 34px;
+        }
+
+        .photo-grid figure { margin: 0; }
+        .photo-grid figure.wide { grid-column: 1 / -1; }
+
+        .photo-grid img {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            border-radius: var(--card-radius);
+            border: 1px solid var(--card-border);
+        }
+
+        .photo-grid figcaption {
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Round header */
+        .round-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: 40px;
+        }
+
+        .article-content .round-tag + h2 { margin-top: 4px; }
+
+        /* Same question, two short answers */
+        .face-off {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 20px 0 18px;
+        }
+
+        .side {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            padding: 16px 18px;
+            font-size: 0.9375rem;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .side-who {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .side-who i { color: var(--accent); }
+        .side.win { border-top: 3px solid var(--accent); }
+
+        /* Tap to read more */
+        details.more {
+            margin: 0 0 30px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            background: var(--bg-secondary);
+        }
+
+        details.more summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 12px 18px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        details.more summary::-webkit-details-marker { display: none; }
+        details.more summary::before {
+            content: '+';
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 1rem;
+            width: 1rem;
+            transition: transform 0.2s ease;
+        }
+        details.more[open] summary::before { content: '\2212'; }
+
+        details.more .more-body {
+            padding: 4px 20px 6px;
+            border-top: 1px solid var(--hairline);
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        details.more .more-body p { font-size: 0.9375rem; margin: 14px 0; }
+
+        .search-dump {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.7;
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            overflow-x: auto;
+        }
+
+        .search-dump .q { color: var(--accent); }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+        }
+
+        .table-wrap .model-table { margin: 0; min-width: 520px; }
+        .model-table td.yes { color: var(--accent); font-weight: 600; }
+        .model-table td.soon { color: var(--text-tertiary); }
+
+        @media (max-width: 768px) {
+            .face-off, .photo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            try {
+                var saved = localStorage.getItem('appearance');
+                if (['midnight', 'daylight', 'contrast'].indexOf(saved) > -1) {
+                    document.documentElement.setAttribute('data-appearance', saved);
+                }
+            } catch (error) { /* storage unavailable */ }
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="midnight">Midnight</button>
+                    <button type="button" role="radio" data-appearance="daylight">Daylight</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">Two Nails, Two Assistants</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> October 12, 2026</span>
+                <span><i class="fas fa-clock"></i> 5 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+            </div>
+            <p class="article-subtitle enter delay-3">Two nails, one bubble, and a tire light I ignored for two weeks. I asked Claude and the AI I&rsquo;m building on my desk the same eight questions.</p>
+        </div>
+
+        <div class="article-content">
+            <p>Confession first: my tire pressure light had been on for <span class="highlight">two weeks</span>. I kept telling myself I&rsquo;d check it tomorrow. Then on Monday I finally looked, and found two nails in one tire and a bubble on the sidewall of another.</p>
+
+            <p>A bubble means the tire&rsquo;s internal cords are broken and it can blow out at any moment. I had been driving on it for two weeks. Nothing happened, and I was lucky. If your tire light is on, go look at your tires today.</p>
+
+            <div class="photo-grid">
+                <figure>
+                    <img src="../Pictures/tire-nails.jpg?v=2" alt="Tire tread with two nails circled in white, one in the main tread and one near the outer shoulder" loading="lazy">
+                    <figcaption>Exhibit A: two nails. Remember the one on the left; it decides the whole story.</figcaption>
+                </figure>
+                <figure>
+                    <img src="../Pictures/tire-bubble.jpg?v=2" alt="Bulge on the sidewall of a second tire" loading="lazy">
+                    <figcaption>Exhibit B: the bubble. I drove on this for two weeks. Please don&rsquo;t.</figcaption>
+                </figure>
+            </div>
+
+            <p>So I did what I do now with every problem: I asked AI. Twice, actually.</p>
+
+            <p>In one corner was <span class="highlight">Claude</span>, with web search, maps, email access and full vision. In the other was <span class="highlight">H_AI</span>, the <a href="building-ai-server.html" class="site-link">personal AI engine</a> I&rsquo;m building on my Mac Studio, running Qwen 3.8 27B. It&rsquo;s free and private, and it&rsquo;s very much a work in progress. I asked both the same eight questions, typos included (&ldquo;contenintal pro contact&rdquo;).</p>
+
+            <span class="round-tag">Round 1</span>
+            <h2>&ldquo;I got 2 nails in my tire, what do I do?&rdquo;</h2>
+            <p>A tie. Both said the same sensible things: leave the nails in because they plug the holes, drive gently to a shop, and ask for a proper patch from the inside. On general knowledge, a model running on my desk is just as good as the cloud.</p>
+
+            <span class="round-tag">Round 2</span>
+            <h2>The Photo</h2>
+
+            <div class="face-off">
+                <div class="side win">
+                    <div class="side-who"><i class="fas fa-cloud"></i> Claude</div>
+                    &ldquo;The left nail is in the shoulder. That can&rsquo;t be repaired. You need a new tire.&rdquo;
+                </div>
+                <div class="side">
+                    <div class="side-who"><i class="fas fa-desktop"></i> H_AI</div>
+                    &ldquo;I don&rsquo;t have vision.&rdquo; &hellip;then, once the image tool ran: &ldquo;I can see it now! Both in the tread. Repairable.&rdquo;
+                </div>
+            </div>
+
+            <p>This was the round that mattered, and Claude got it right. My local model had a small identity crisis. It said it couldn&rsquo;t see images, then looked at them and read the exact tire model off the sidewall, which is pretty impressive. It even used the word &ldquo;shoulder.&rdquo; It just didn&rsquo;t conclude that a shoulder puncture can&rsquo;t be fixed.</p>
+
+            <details class="more">
+                <summary>Read more: why the shoulder matters</summary>
+                <div class="more-body">
+                    <p>Shops patch punctures in the main tread, but not in the shoulder (where the tread curves down toward the sidewall) or in the sidewall itself. The rubber there flexes too much for a patch to hold. On a low-profile tire like mine, the shoulder is very close to where most nails land.</p>
+                    <p>A turn later H_AI did add a caveat: &ldquo;if either nail is in the outer shoulder, some shops will decline the repair.&rdquo; By then, though, its headline was still &ldquo;repair, ~$20&ndash;50.&rdquo; A good shop would have caught it, so no harm done, but I&rsquo;d have walked in expecting a $30 bill instead of buying a tire.</p>
+                    <p>The &ldquo;I don&rsquo;t have vision&rdquo; moment is a plumbing issue. H_AI&rsquo;s system prompt lists an image tool, but the photo arrived as a pasted file path, and the model answered from habit before the tool ran. Making image handling automatic is an easy fix.</p>
+                </div>
+            </details>
+
+            <span class="round-tag">Round 3</span>
+            <h2>&ldquo;235/40 R18 91W&rdquo;</h2>
+            <p>This round went to H_AI. It produced a neat table decoding every character of the tire size (235&nbsp;mm wide, a 40% sidewall, an 18-inch rim, rated for 168&nbsp;mph) and explained why a short sidewall leaves less room for a repair. Claude was more practical: it found Continental&rsquo;s free-replacement plan and noticed the fine print that it doesn&rsquo;t cover the tires the car came with.</p>
+
+            <details class="more">
+                <summary>Read more: the size decode and a calculator mishap</summary>
+                <div class="more-body">
+                    <p>H_AI&rsquo;s decode: <strong>235</strong>&nbsp;mm tread width; <strong>40</strong>&nbsp;means the sidewall height is 40% of the width (about 94&nbsp;mm); <strong>R18</strong> is a radial for an 18-inch rim; <strong>91</strong> is a load index of 615&nbsp;kg per tire; <strong>W</strong> is a speed rating of 168&nbsp;mph.</p>
+                    <p>Claude added the shopping details: two Continental models are sold in this size, they cost about $123&ndash;225 online, and I should match the other tires and have the shop check tread depth on all four.</p>
+                    <p>Behind the scenes, H_AI saw &ldquo;235/40&rdquo;, decided it was a math problem and called the calculator tool, which promptly failed with <code>invalid syntax</code>. The model shrugged and carried on.</p>
+                </div>
+            </details>
+
+            <span class="round-tag">Round 4</span>
+            <h2>&ldquo;Search the price and best place to fix&rdquo;</h2>
+            <p>This was my favorite moment of the day. Claude found the tire shops on my street and noted that one closed at 6 and the one next door was open until 7. It was 5:48&nbsp;PM, so that was exactly what I needed.</p>
+
+            <p>H_AI&rsquo;s search returned&hellip; Priceline hotel deals and the Merriam-Webster definition of the word &ldquo;price.&rdquo;</p>
+
+            <details class="more">
+                <summary>Read more: what H_AI actually searched for</summary>
+                <div class="more-body">
+                    <p>The query builder took my question, kept everything after the word &ldquo;on&rdquo;, and dropped everything before it, including the part that gave context. The word &ldquo;tire&rdquo; never made it into the search:</p>
+                    <div class="search-dump">
+                        [web_search: <span class="q">on the price and best place to fix</span>]<br>
+                        - Priceline.com &ndash; Deals on Hotels, Flights and Rental Cars<br>
+                        - TOP 10 BEST Auto Repair in San Diego &ndash; Yelp<br>
+                        - Price.com: Cash Back &amp; Coupons<br>
+                        - PRICE Definition &amp; Meaning &ndash; Merriam-Webster
+                    </div>
+                    <p>The model handled it well. It said <em>&ldquo;I&rsquo;ll be honest about the limits of the search,&rdquo;</em> gave sensible price ranges and compared types of shops. Then it threw out the Yelp results as &ldquo;San Diego, not your location&rdquo; and asked for my zip code. I was in San Diego. It didn&rsquo;t know where I was, so it rejected the one useful result.</p>
+                </div>
+            </details>
+
+            <span class="round-tag">Round 5</span>
+            <h2>&ldquo;What if one tire has a bubble?&rdquo;</h2>
+            <p>Both were great here, and H_AI was arguably the more careful one. Both said: it can&rsquo;t be repaired, it can blow out, put the spare on. H_AI added two things Claude didn&rsquo;t say: <strong>check all four tires</strong>, because whatever caused one bubble may have damaged another, and it asked whether the bubble was on the same tire as the nails. That&rsquo;s the advice you&rsquo;d want from a friend who knows cars.</p>
+
+            <span class="round-tag">Round 6</span>
+            <h2>&ldquo;Does my insurance cover this?&rdquo;</h2>
+
+            <div class="face-off">
+                <div class="side win">
+                    <div class="side-who"><i class="fas fa-cloud"></i> Claude</div>
+                    Read the policy PDF and quoted the exclusions: &ldquo;Tires aren&rsquo;t covered. Roadside service can put your spare on or tow you 15 miles.&rdquo;
+                </div>
+                <div class="side">
+                    <div class="side-who"><i class="fas fa-desktop"></i> H_AI</div>
+                    Got 27 blank pages from its PDF reader, and said: &ldquo;The document doesn&rsquo;t tell me. <strong>I won&rsquo;t guess.</strong>&rdquo;
+                </div>
+            </div>
+
+            <p>Claude got me the answer, which wasn&rsquo;t the one I was hoping for. H_AI didn&rsquo;t get an answer, but I like how it handled it. Its PDF reader handed it 27 empty pages, and instead of making something up, it said so and suggested three other ways to find out. When an AI doesn&rsquo;t have the information, that&rsquo;s exactly how I want it to behave.</p>
+
+            <details class="more">
+                <summary>Read more: the policy details and the privacy angle</summary>
+                <div class="more-body">
+                    <p>Claude also searched my email first, but found only messages with links to documents. From the PDF it found that tires damaged on their own are excluded, nails count as wear and tear, and Emergency Road Service (if it&rsquo;s on my policy) covers a spare change or a 15-mile tow, but not the tire.</p>
+                    <p>One stumble from H_AI before I sent the PDF: it suggested I might have a &ldquo;road hazard&rdquo; add-on that covers the tire minus a deductible. That was a reasonable general answer, but not true for my policy.</p>
+                    <p>The blank pages were scanned images, and H_AI&rsquo;s PDF reader only extracts text. Sending those pages to the vision model would likely have solved it.</p>
+                    <p>The privacy side matters too. In the H_AI chat, my policy never left the Mac Studio. In the Claude chat, my photos, my policy and a search of my email all went to the cloud. Claude&rsquo;s answer was right and I chose to share that data, but it&rsquo;s a real trade-off.</p>
+                </div>
+            </details>
+
+            <h2>The Scoreboard</h2>
+
+            <div class="table-wrap">
+                <table class="model-table">
+                    <thead>
+                        <tr><th>Round</th><th>Claude</th><th>H_AI (today)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>General advice</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td></tr>
+                        <tr><td>Reading the photo</td><td class="yes">&#10003;</td><td class="soon">read it, wrong call</td></tr>
+                        <tr><td>Tire size &amp; warranty</td><td class="yes">&#10003; fine print</td><td class="yes">&#10003; best decode</td></tr>
+                        <tr><td>Local shops</td><td class="yes">&#10003;</td><td class="soon">searched for &ldquo;price&rdquo;</td></tr>
+                        <tr><td>Bubble safety</td><td class="yes">&#10003;</td><td class="yes">&#10003; check all four</td></tr>
+                        <tr><td>Insurance PDF</td><td class="yes">&#10003;</td><td class="soon">blank pages, didn&rsquo;t guess</td></tr>
+                        <tr><td>Cost of the chat</td><td>~$2&ndash;3 API, or part of a subscription</td><td class="yes">$0</td></tr>
+                        <tr><td>Data that left my house</td><td>photos, policy, email</td><td class="yes">one web search</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Why I&rsquo;m Not Disappointed</h2>
+            <p>Look at H_AI&rsquo;s misses again. A search query that dropped half the question. A PDF reader that can&rsquo;t read scans. No idea what city I&rsquo;m in. Photos that didn&rsquo;t go to the image tool automatically. <strong>Those are all things I built</strong>, and I can fix all of them. The model was mostly let down by the tools around it.</p>
+
+            <p>Only one miss was really the model&rsquo;s: noticing &ldquo;shoulder&rdquo; and still saying &ldquo;repair.&rdquo; That&rsquo;s the gap between a 27B model on a desk and a frontier model in a datacenter, and it&rsquo;s smaller than I expected. Meanwhile H_AI won the tire-size round, gave the more careful bubble advice, refused to guess about my insurance, and did all of it for free without anything leaving my house.</p>
+
+            <div class="quote">
+                Claude is the friend who knows a mechanic. H_AI is the friend who is still learning, and since I&rsquo;m the one building it, I know exactly what to fix.
+            </div>
+
+            <details class="more">
+                <summary>Read more: H_AI&rsquo;s to-do list and a fairness note</summary>
+                <div class="more-body">
+                    <p><strong>Fixes coming to H_AI:</strong> keep the whole question when building search queries; send scanned PDF pages to the vision model; give the model a rough location; send attached photos to the image tool automatically; stop sending tire sizes to the calculator. Then I&rsquo;ll run the same eight questions again and post the rematch.</p>
+                    <p><strong>A fairness note:</strong> the Claude side here comes from a summary Claude wrote at the end of the chat, while the H_AI side is the full transcript, mistakes and all. And the &ldquo;right answers&rdquo; I judged against came partly from the Claude chat itself. So the comparison is honest, but not perfectly neutral.</p>
+                </div>
+            </details>
+
+            <h2>How It Ended</h2>
+            <p>Both tires get replaced, insurance pays nothing, and I&rsquo;m buying two Continentals. The real lesson has nothing to do with AI: <strong>when the tire light comes on, go look at your tires.</strong> I had two weeks of luck, and I don&rsquo;t plan to count on that again.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article was written with the assistance of <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>, which, yes, is one of the two contestants. It promised to be nice to H_AI.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="bedtime-stories.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">Bedtime Stories for a Three-Month-Old</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/appearance.js" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
