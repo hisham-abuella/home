@@ -1,0 +1,56 @@
+{
+ "title": "Bedtime Stories for a Three-Month-Old",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Bedtime Stories for a Three Month Old. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> My wife wanted to start reading to Yusuf. He's three months old. [laughs] The books on our shelf were lovely, and completely wrong for him. Soft pastel pictures, long sentences, and details he can't make out yet. So I built him one that fits. [gently] The Black and White Zoo."
+  },
+  {
+   "id": "s01",
+   "title": "What He Can See",
+   "transcript": "What a three month old can actually see. <break time=\"0.5s\" /> [curious] This changed every design decision. A newborn's eyes are still wiring themselves up, and what they see best is high contrast edges. Pure black against pure white. Colour arrives slowly over the first year, and in order. Red first, then yellow and green, and blue last of all. And a baby focuses at about thirty centimetres, roughly the distance from a parent's arms to their face. <break time=\"0.4s\" /> So this isn't a book with pictures in it. It's a sequence of the boldest shapes I could draw, one per page, at the size his eyes can hold. <break time=\"0.4s\" /> [gently] Every choice came from one question. What can he see today, and what is he about to see next month?"
+  },
+  {
+   "id": "s02",
+   "title": "Two Chapters",
+   "transcript": "Two chapters. <break time=\"0.5s\" /> The first chapter is pure black and white. Zebra, panda, cow, penguin, owl, orca, sheep, puppy, cat, and a goodnight moon. Animals whose real markings are already as bold as it gets. <break time=\"0.4s\" /> The second chapter brings in one colour per page, in the order his eyes will find them. A red ladybug, a yellow duckling, a blue whale, a green frog, an orange tiger, and more, all with heavy black outlines so the contrast still carries. <break time=\"0.4s\" /> [playfully] And there's a little red bird hiding on every page, in a different corner each time. Red is the one colour he can already find."
+  },
+  {
+   "id": "s03",
+   "title": "Narrated in My Own Voice",
+   "transcript": "Narrated in my own voice. <break time=\"0.5s\" /> Every page has audio. The English is read in my own cloned voice, the same one you're hearing now, and the Arabic uses the voice from my Arabic lessons. Yusuf won't understand a word of either for a long time. [softly] But he already knows the sound of his parents, and at three months, that's what matters. <break time=\"0.4s\" /> The narration says his name, on the cover and again at goodnight, in both languages. And there's a field on the cover to change the name, for anyone who wants to read it to their own baby. <break time=\"0.4s\" /> There are eighty audio clips in all, every page and every animal sound, in English and Arabic. The layout flips for Arabic, the artwork fills the screen, and each page has a short note for grown ups on what the baby's eyes are doing."
+  },
+  {
+   "id": "s04",
+   "title": "How It Was Built",
+   "transcript": "How it was built. <break time=\"0.5s\" /> The whole thing is one web page and a folder of audio. No framework, no build step. The same rule I keep everywhere else here, [laughs] and the reason it will still open in ten years, when he's old enough to find it embarrassing. <break time=\"0.4s\" /> The artwork is hand written vector drawing. Each animal is a handful of circles, ellipses, and curves, and that turned out to be just right. The shapes a newborn can see are exactly the shapes that are simple to draw by hand. [playfully] A zebra is a white head, five black wedges, and two eyes. <break time=\"0.5s\" /> The audio came from ElevenLabs, version four, [surprised] and one lesson surprised me. Text to speech falls apart on bare sound words. My first try fed it long strings like moo with ten o's, with the expression turned up, and it came back warbling and garbled. Wrapping each sound in a short sentence, like the cow says moo, and turning the expression down fixed it completely. <break time=\"0.4s\" /> The illustrations were made locally, on the Mac Studio running my personal AI engine, with no cloud service. There's a switch to flip between the drawn set and the illustrated set. It opens on the drawings on purpose. For a three month old, flat, hard edged shapes really are the better book."
+  },
+  {
+   "id": "s05",
+   "title": "Susu",
+   "transcript": "The second story. Susu. <break time=\"0.5s\" /> The second book is a true one. Susu the Cat is the story of our cat, told as Yusuf's story too, because she was here long before he was. <break time=\"0.4s\" /> [warmly] She was adopted in Oklahoma, during my doctorate, in a winter far from anyone. For a while it was just the two of us and a desk covered in papers. Then the books went into boxes, and she rode across the country to California. Then Mama came, and the house grew fuller. [softly] Then Yusuf came, and Susu crept up to the crib and appointed herself to watch over him. <break time=\"0.4s\" /> There are no dates anywhere in it. A baby has no use for years. The shape of the story, then, and then, and then, is the part he can follow."
+  },
+  {
+   "id": "s06",
+   "title": "The Page About Mercy",
+   "transcript": "The page about mercy. <break time=\"0.5s\" /> One page steps outside the family story. In words a small child can hold, it tells the hadith of the woman punished over a cat she shut away without food or water. The note for grown ups tells it in full, with its sources, beside the hadith of the man forgiven for drawing water from a well for a thirsty dog. <break time=\"0.4s\" /> [gently] It belongs in this book, not in a book of lessons. The child hearing it has a cat at home, whose bowl he'll one day be old enough to fill. Mercy to animals is easiest to teach where it's already happening, in the ordinary business of feeding the cat every day."
+  },
+  {
+   "id": "s07",
+   "title": "Four Books for a Muslim Baby",
+   "transcript": "Four books for a Muslim baby. <break time=\"0.5s\" /> Four more followed, and they're the first written to teach something, not just to show something. Bismillah puts one ordinary moment on every page, waking, washing, eating, going out, coming home, and opens each with the same word. Alhamdulillah, Little One names eight simple things he already has. Two hands, two eyes, Mama's voice, warm bread, cool water, the rain, the cat, and a warm bed. Allah Made It asks the same question of the sky, the sea, the date palm, the bee, and more, and gives the same answer every time. And The Prophet Loved is eight gentle things, peace be upon him. <break time=\"0.4s\" /> The repetition is the whole design. A baby doesn't learn a word by meeting it once. He learns it by hearing it land in the same place, in the same voice, page after page. <break time=\"0.5s\" /> There's no depiction of the Prophet, peace be upon him, anywhere in that fourth book, and there never will be. The pages show what he loved instead. Children playing, a cat drinking from a bowl, dates and a cup of milk, bread held out in two hands. [gently] He's known by what he did, which is the better likeness anyway. <break time=\"0.4s\" /> The artwork was made locally, with prompts that rule out anything that doesn't belong, including Arabic script, because image models write nonsense Arabic. Every one of the forty images was checked by eye, and three were redone."
+  },
+  {
+   "id": "s08",
+   "title": "Board Books",
+   "transcript": "Printing them as board books. <break time=\"0.5s\" /> A three month old reads with his hands and his mouth, so paper is the wrong material. Every book now has a board edition, square, printed on thick card, laminated, and glued back to back so each page is a real board, with rounded corners so nothing is sharp. <break time=\"0.4s\" /> Each cover has a Q R code that opens the narrated version on a phone, so whoever holds the printed book can play the same voice reading it. <break time=\"0.4s\" /> One lesson is worth sharing. Text that runs past the bottom of a page is cut off silently, and the file still looks fine. [sighs] I nearly printed a Susu page with its last line of Arabic missing. Counting characters didn't help, because line wrapping is what decides. The fix was to stop guessing, and ask a browser exactly where the last line of text really sits."
+  },
+  {
+   "id": "s09",
+   "title": "A Series",
+   "transcript": "A series, not a book. <break time=\"0.5s\" /> Six so far. The plan is to keep adding them as he grows, each matched to what he's working on. Shapes and faces next, then first words, then counting, then stories with a real beginning and end. <break time=\"0.4s\" /> [warmly] If you have a baby around the same age, open them and put your own child's name on the cover. They're free, they work offline, and there's nothing to sign up for. Everything is public, the books, the narration, the artwork, and the print files, and the links are in the article."
+  }
+ ]
+}

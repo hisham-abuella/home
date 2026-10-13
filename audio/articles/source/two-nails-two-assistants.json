@@ -1,0 +1,56 @@
+{
+ "title": "Two Nails, Two Assistants",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Two Nails, Two Assistants. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> [sighs] Confession first. My tire pressure light had been on for two weeks. I kept telling myself I'd check it tomorrow. Then on Monday I finally looked, and found two nails in one tire, and a bubble on the side of another. <break time=\"0.4s\" /> [serious] A bubble means the tire's inner cords are broken, and it can blow out at any moment. I had been driving on it for two weeks. Nothing happened, and I was lucky. If your tire light is on, go look at your tires today. <break time=\"0.5s\" /> So I did what I do now with every problem. I asked AI. [playfully] Twice, actually. In one corner, Claude, with web search, maps, email, and full vision. In the other, aitch ay eye, the personal AI engine I'm building on my Mac Studio, running a twenty seven billion parameter Kwen model. Free, private, and very much a work in progress. Same eight questions, typos included."
+  },
+  {
+   "id": "s01",
+   "title": "Round 1",
+   "transcript": "Round one. I got two nails in my tire, what do I do? <break time=\"0.5s\" /> [cheerful] A tie. Both said the same sensible things. Leave the nails in, because they plug the holes. Drive gently to a shop. And ask for a proper patch from the inside. On general knowledge, a model running on my desk is just as good as the cloud."
+  },
+  {
+   "id": "s02",
+   "title": "Round 2",
+   "transcript": "Round two. The photo. <break time=\"0.5s\" /> Claude looked and said, the left nail is in the shoulder. That can't be repaired. You need a new tire. <break time=\"0.4s\" /> [playfully] My local model had a small identity crisis. First it said, I don't have vision. Then, once the image tool ran, I can see it now! Both in the tread. Repairable. <break time=\"0.4s\" /> This was the round that mattered, and Claude got it right. To be fair to aitch ay eye, it read the exact tire model off the sidewall, which is impressive. It even used the word shoulder. It just didn't conclude that a shoulder puncture can't be fixed. Shops patch the main tread, but not the shoulder, where the rubber flexes too much for a patch to hold. A good shop would have caught it, so no harm done. I'd just have walked in expecting a thirty dollar bill instead of buying a tire."
+  },
+  {
+   "id": "s03",
+   "title": "Round 3",
+   "transcript": "Round three. The tire size. <break time=\"0.5s\" /> [excited] This one went to aitch ay eye. It decoded every character of the size. The width, the low sidewall, the eighteen inch rim, the load rating, and a speed rating of a hundred and sixty eight miles an hour. And it explained why a short sidewall leaves less room for a repair. <break time=\"0.4s\" /> Claude was more practical. It found Continental's free replacement plan, and spotted the fine print. It doesn't cover the tires a car comes with. <break time=\"0.4s\" /> [playfully] Behind the scenes, aitch ay eye saw two hundred thirty five slash forty, decided it was a math problem, and called the calculator, which promptly failed. The model shrugged and carried on."
+  },
+  {
+   "id": "s04",
+   "title": "Round 4",
+   "transcript": "Round four. Search the price and best place to fix. <break time=\"0.5s\" /> [excited] My favorite moment of the day. Claude found the tire shops on my street, and noted that one closed at six and the one next door was open until seven. It was five forty eight in the evening, so that was exactly what I needed. <break time=\"0.4s\" /> [playfully] Aitch ay eye's search returned Priceline hotel deals, and the dictionary definition of the word price. <break time=\"0.4s\" /> Its search tool had kept only the end of my question, and the word tire never made it in. The model handled it well, though. It said, I'll be honest about the limits of the search, and gave sensible price ranges. Then it threw out some San Diego results as not my location, and asked for my zip code. [laughs] I was in San Diego."
+  },
+  {
+   "id": "s05",
+   "title": "Round 5",
+   "transcript": "Round five. What if one tire has a bubble? <break time=\"0.5s\" /> Both were great here, and aitch ay eye was arguably the more careful one. Both said it can't be repaired, it can blow out, put the spare on. But aitch ay eye added two things Claude didn't. Check all four tires, because whatever caused one bubble may have damaged another. And it asked whether the bubble was on the same tire as the nails. [warmly] That's the advice you'd want from a friend who knows cars."
+  },
+  {
+   "id": "s06",
+   "title": "Round 6",
+   "transcript": "Round six. Does my insurance cover this? <break time=\"0.5s\" /> Claude read my policy and quoted the exclusions. Tires aren't covered. Roadside service can put the spare on, or tow you fifteen miles. [sighs] Not the answer I was hoping for, but the right one. <break time=\"0.4s\" /> Aitch ay eye's document reader handed it twenty seven blank pages, because the policy was scanned images. And instead of making something up, it said, the document doesn't tell me. [gently] I won't guess. Then it suggested three other ways to find out. When an AI doesn't have the information, that's exactly how I want it to behave. <break time=\"0.4s\" /> There's a privacy side too. In the local chat, my policy never left the Mac Studio. In the Claude chat, my photos, my policy, and a search of my email all went to the cloud. I chose to share that, but it's a real trade off."
+  },
+  {
+   "id": "s07",
+   "title": "Scoreboard",
+   "transcript": "The scoreboard. <break time=\"0.5s\" /> [cheerful] General advice, a tie. The photo, Claude. The tire size, a split, with aitch ay eye's decode and Claude's fine print. Local shops, Claude. Bubble safety, both, with a bonus for aitch ay eye. The insurance document, Claude, though aitch ay eye earns credit for not guessing. <break time=\"0.4s\" /> The chat cost a couple of dollars with Claude, or a slice of a subscription, and nothing at all locally. And the only thing that left my house in the local chat was one web search."
+  },
+  {
+   "id": "s08",
+   "title": "Why I'm Not Disappointed",
+   "transcript": "Why I'm not disappointed. <break time=\"0.5s\" /> Look at aitch ay eye's misses again. A search that dropped half the question. A document reader that can't read scans. No idea what city I'm in. Photos that didn't go to the image tool automatically. [warmly] Those are all things I built, and I can fix all of them. The model was mostly let down by the tools around it. <break time=\"0.4s\" /> Only one miss was really the model's. Noticing the shoulder, and still saying repair. That's the gap between a model on a desk and a frontier model in a datacenter, and it's smaller than I expected. Meanwhile, aitch ay eye won the tire size round, gave the more careful bubble advice, refused to guess about my insurance, and did it all for free, without anything leaving my house. <break time=\"0.5s\" /> [warmly] Claude is the friend who knows a mechanic. Aitch ay eye is the friend who's still learning. And since I'm the one building it, I know exactly what to fix. Next I'll fix the plumbing, run the same eight questions again, and post the rematch."
+  },
+  {
+   "id": "s09",
+   "title": "How It Ended",
+   "transcript": "How it ended. <break time=\"0.5s\" /> Both tires get replaced, insurance pays nothing, and I'm buying two Continentals. The real lesson has nothing to do with AI. [serious] When the tire light comes on, go look at your tires. <break time=\"0.4s\" /> [warmly] I had two weeks of luck, and I don't plan to count on that again."
+  }
+ ]
+}

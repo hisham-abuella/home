@@ -1,0 +1,36 @@
+{
+ "title": "Building WirelessHub with Claude",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Building WirelessHub with Claude. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> A few months ago, my friend Ahmed El shafie wanted a place to share what he knows about wireless communications, signal processing, and mathematics. He's a wireless systems engineer at Apple, and a senior member of the I triple E. He had the expertise and the articles. What he needed was a home for them on the web. That's where I came in, and that's where Claude Code became my co builder."
+  },
+  {
+   "id": "s01",
+   "title": "The Vision",
+   "transcript": "The vision. <break time=\"0.5s\" /> [cheerful] The goal was simple. Build a clean, fast, content focused blog called WirelessHub that would make Ahmed's technical writing shine. No heavy frameworks. No build tools. Just plain H T M L, C S S, and JavaScript. A static site that loads instantly and works everywhere. <break time=\"0.4s\" /> Ahmed already had more than twenty five articles, on everything from the Fourier transform in everyday life, to my mo beamforming, to quantum wireless communication. The site had to organize all of it, with search, filtering, categories, dark mode, and even podcast episodes."
+  },
+  {
+   "id": "s02",
+   "title": "Working with Claude Code",
+   "transcript": "Working with Claude Code. <break time=\"0.5s\" /> [excited] Claude Code wasn't just autocomplete on this project. It was a genuine pair programmer. It helped design the tab based layout, the search database, and the sidebar. It wrote the dark mode toggle and a podcast player with a progress bar you can scrub. It built a live keyword search across titles, tags, and categories. And it polished the design, with hover animations, card shadows, and one consistent color system across light and dark themes. <break time=\"0.4s\" /> I would describe what I wanted, sometimes precisely, sometimes loosely, and Claude would explore the code, understand the patterns already there, and make changes that fit. When I asked it to add analytics to every page, it updated twenty seven files, created an article template, and updated the documentation, all in one pass. <break time=\"0.5s\" /> [gently] The best part is that it reads before it writes."
+  },
+  {
+   "id": "s03",
+   "title": "What We Built",
+   "transcript": "What we built. <break time=\"0.5s\" /> The finished site is entirely static, hosted for free on GitHub Pages, yet it feels like a full content platform. Tabs for home, articles, podcasts, and about. Category filters and sorting. A featured article on the home page. Podcast players in the sidebar and in their own tab. Dark mode that remembers your choice. Live search across articles and podcasts. And privacy friendly analytics. <break time=\"0.4s\" /> [happy] All of it in plain H T M L, C S S, and JavaScript. No build step. No dependencies. Just clean, readable code."
+  },
+  {
+   "id": "s04",
+   "title": "Lessons Learned",
+   "transcript": "Lessons learned. <break time=\"0.5s\" /> First, AI pair programming is real. Claude Code didn't just generate snippets. It read the existing files, matched the coding style, and made consistent changes across many files. It caught things I missed, and suggested approaches I hadn't considered. <break time=\"0.5s\" /> [playfully] Second, static sites still win. No framework fatigue, no dependency updates, no build failures. The site loads fast, and it will keep working for years without maintenance. <break time=\"0.5s\" /> Third, documentation is a force multiplier. We kept a detailed file describing every convention in the project, so every new session with Claude could pick up right where the last one stopped. [gently] Good documentation doesn't just help people. It makes working with AI dramatically more effective."
+  },
+  {
+   "id": "s05",
+   "title": "Check It Out",
+   "transcript": "Check it out. <break time=\"0.5s\" /> WirelessHub is live, and the link is in the article. If you're interested in wireless communications, signal processing, or the math behind modern connectivity, Ahmed's articles are worth your time. <break time=\"0.4s\" /> [warmly] And if you're a developer curious about building with AI, I can say from experience. Claude Code is the real deal. It's not perfect, but it's a remarkably capable partner that makes ambitious projects feel achievable."
+  }
+ ]
+}

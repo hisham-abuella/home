@@ -9,10 +9,10 @@ Live at **https://www.hishamabuella.com** (GitHub Pages, deployed from `main`).
 
 - `index.html` — home: background, expertise, selected work, writing, contact
 - `cv.html` — CV, deliberately a plain white document and print-ready
-- `Articles/` — six long-form posts
+- `Articles/` — eight long-form posts, each with an optional narrated version
 - `projects/presentation-skill/` — slide-deck demos (`template.html`, `claude101.html`)
 - `different_designs/` — earlier explorations, not linked from the live site
-- `Pictures/`, `audio/` — media
+- `Pictures/`, `audio/` — media; `audio/articles/` holds the article narration
 
 ## Design system
 
@@ -25,6 +25,7 @@ css/article.css       article pages, built on those tokens
 css/cv.css            CV; overrides the tokens to stay white in any appearance
 js/appearance.js      appearance switcher + scroll reveals, shared by all pages
 js/signal-field.js    the animated noise-and-signal backdrop
+js/listen.js          shows an article's "Listen" player once its narration exists
 ```
 
 To theme a new page: link `base.css`, the three theme files and any page stylesheet,
@@ -35,6 +36,62 @@ fight each other.
 
 The decks under `projects/presentation-skill/` are self-contained and keep their own
 copy of the palette, since they are exported and shared as single files.
+
+## Articles
+
+Each article is a self-contained page in `Articles/`, built on `css/article.css`.
+Copy the newest one as a starting point, then:
+
+1. Add a row to the Writing list in `index.html` (move the `New` flag to it).
+2. Link it from the previous article's `article-nav` "Next" slot, and point its own
+   "Previous" back.
+3. Keep personal details out of text and photos: no policy or account numbers, no
+   email addresses, no GPS metadata in images (re-encode them; `sips` alone keeps EXIF).
+4. Write a narration transcript (below). The page already has the player markup if it
+   was copied from an existing article.
+
+## Article narration
+
+Every article can be listened to in my own cloned voice, generated with ElevenLabs.
+
+```
+audio/articles/source/<slug>.json   spoken transcript, one entry per section (source of truth)
+audio/articles/<slug>.mp3           the joined narration the page plays
+audio/articles/build.sh             lint, generate, QA and join, one article at a time
+../article-audio/<slug>/            per-section clips, kept outside the repo
+```
+
+The player is a `.listen` block under the article header with
+`data-src="../audio/articles/<slug>.mp3"`. `js/listen.js` checks for the file and keeps
+the player hidden until it exists, so an article can ship before its audio does.
+
+```sh
+./audio/articles/build.sh <slug>   # one article
+./audio/articles/build.sh next     # the newest article without audio
+./audio/articles/build.sh all      # every missing one, newest first; stops at the first failure
+```
+
+The script uses voice `pusofH2Ro5Ny4RH6qBEO` (Hisham, cloned) on `eleven_v4` with
+stability 0.5 and similarity 0.8, the recipe used for the bedtime books, and prints the
+quota before and after. It needs `ELEVENLABS_API_KEY` in `~/.zshrc` and the tools in
+`~/Work/Elevenlabs-voice/` (`generate.js`, `lint-transcript.js`, `qa-audio.py`).
+
+Transcripts are written for the ear, not copied from the page:
+
+- numbers, units and symbols spelled out; tables and lists turned into sentences
+- no URLs, code or markup; say "the link is in the article" instead
+- names respelled where needed: `Abu ella`, `aitch ay eye` for H_AI, `Kwen` for Qwen
+- one to two emotion tags per section (`[warmly]`, `[curious]`, `[sighs]`, `[laughs]`…),
+  placed where a person would naturally change tone; more than that sounds performed
+- sentences under about 200 characters; `<break time="0.5s" />` after section titles
+
+Run `node ~/Work/Elevenlabs-voice/lint-transcript.js audio/articles/source/<slug>.json`
+after any edit. Warnings for `AI` and `PC` are expected; the model reads them correctly.
+
+Cost: ElevenLabs bills `eleven_v4` at roughly an eighth of the script length on this
+account (the Two Nails article, 6,881 characters, needed 840 credits). All eight
+articles come to about 6,200 credits. After editing a transcript, regenerate only the
+changed section: delete its clip in `../article-audio/<slug>/` and rerun the script.
 
 ## Development
 
