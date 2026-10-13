@@ -51,7 +51,8 @@ html[data-appearance] {
    ========================================================================== */
 
 .back-btn,
-.print-btn {
+.print-btn,
+.copy-btn {
   position: fixed;
   top: 22px;
   z-index: 20;
@@ -73,17 +74,30 @@ html[data-appearance] {
 }
 
 .back-btn { left: 22px; }
-.print-btn { right: 22px; }
+
+/* Copy and Save as PDF sit together on the right */
+.cv-actions {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+.cv-actions .print-btn,
+.cv-actions .copy-btn { position: static; }
 
 .back-btn:hover,
-.print-btn:hover {
+.print-btn:hover,
+.copy-btn:hover {
   color: var(--accent);
   border-color: var(--accent);
   transform: translateY(-1px);
 }
 
 .back-btn svg,
-.print-btn svg { width: 16px; height: 16px; }
+.print-btn svg,
+.copy-btn svg { width: 16px; height: 16px; }
 
 /* ==========================================================================
    Header
@@ -254,9 +268,10 @@ li::before {
 
 @media (max-width: 660px) {
   .container { padding: 0 18px 40px; }
-  .back-btn, .print-btn { top: 14px; padding: 8px 14px; font-size: 0.8125rem; }
+  .back-btn, .print-btn, .copy-btn { top: 14px; padding: 8px 14px; font-size: 0.8125rem; }
   .back-btn { left: 14px; }
-  .print-btn { right: 14px; }
+  .cv-actions { top: 14px; right: 14px; gap: 6px; }
+  .wide-only { display: none; }
   .header { padding-top: 84px; }
   .footer { flex-direction: column; align-items: flex-start; }
   .footer .appearance { margin-left: 0; }
@@ -267,7 +282,7 @@ li::before {
    ========================================================================== */
 
 @media print {
-  .back-btn, .print-btn, .appearance, .signal-field, .grain { display: none !important; }
+  .back-btn, .cv-actions, .appearance, .signal-field, .grain { display: none !important; }
 
   body {
     background: #FFFFFF !important;
