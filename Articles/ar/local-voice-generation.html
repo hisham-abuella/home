@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>توليد الصوت من النص بموديلات محلية - هشام أبو العلا</title>
+    <meta name="description" content="تحويل النص لصوت محليًا على Mac Studio M4 Max باستخدام Voicebox وVibeVoice، ومقارنته بـ ElevenLabs Eleven v4 &mdash; مع أمثلة من حواديت قبل النوم بلغتين.">
+    <meta property="og:title" content="توليد الصوت من النص بموديلات محلية - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="أصوات محلية بـ Voicebox وVibeVoice قصاد ElevenLabs Eleven v4، مع أمثلة من حواديت قبل النوم.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/local-voice-generation.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/local-voice-generation.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/local-voice-generation.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/local-voice-generation.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/local-voice-generation.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .audio-player-wrap {
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .audio-player-wrap h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .audio-player-wrap p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .audio-player-wrap audio {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .comparison-card h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card ul li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .comparison-card ul li::before {
+            margin-right: 0.5rem;
+        }
+
+        .pro-list li::before { content: '\2705'; }
+        .con-list li::before { content: '\26A0\FE0F'; }
+
+        .update-note {
+            border-left: 3px solid var(--accent);
+            background: var(--bg-elevated);
+            border-radius: 0 12px 12px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0 2rem;
+            color: var(--text-secondary);
+        }
+
+        .update-note strong {
+            color: var(--text-primary);
+        }
+
+        .script-preview {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .script-preview p {
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">توليد الصوت من النص بموديلات محلية</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 17 فبراير 2026</span>
+                <span><i class="fas fa-sync-alt"></i> اتحدّث 2 أكتوبر 2026</span>
+                <span><i class="fas fa-clock"></i> 11 دقيقة قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../local-voice-generation.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">بشغّل text‑to‑speech مفتوح المصدر محليًا على Mac Studio M4 Max &mdash; ودلوقتي مدمج في محرك الـ AI بتاعي &mdash; وبقارنه بـ ElevenLabs Eleven v4 على حواديت قبل النوم حقيقية</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/local-voice-generation.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>أنا ببني <a href="building-ai-server.html" class="site-link">محرك AI شخصي</a> بيشتغل بالكامل على الـ Mac Studio M4 Max بتاعي. توليد النص كان أول خطوة. والسؤال الطبيعي بعده: أقدر أولّد <span class="highlight">صوت</span> محليًا كمان؟ طلع آه &mdash; والنتايج حلوة بشكل مكنتش متوقعه.</p>
+
+            <div class="update-note">
+                <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، الصوت المحلي كان معناه موديل واحد هو VibeVoice وتجربة واحدة. من ساعتها بقى الصوت جزء من مشاريعي اليومية: <a href="bedtime-stories.html" class="site-link">حواديت قبل النوم لابني</a> بصوتي أنا، ومجموعة محركات صوت محلية موصّلة بـ H_AI عن طريق <strong>Voicebox</strong>، وأداة batch بتطلّع قصة كاملة محليًا أو عن طريق ElevenLabs من نفس السكريبت. وElevenLabs كمان اتطوّر &mdash; الـ default عندي دلوقتي <strong>Eleven v4</strong>. فيه أمثلة ودروس جديدة تحت، ومقارنة فبراير الأصلية لسه موجودة.
+            </div>
+
+            <h2>نفس صفحة النوم، بتلات أصوات</h2>
+            <p>أحدث مثال هو صفحة تصبح على خير من <a href="../../projects/bedtime-stories/books/susu.html" class="site-link">Susu the Cat</a>، تاني كتاب من كتب النوم بتاعة ابني. نفس السكريبت، تلات أصوات &mdash; واحد في الـ cloud واتنين على الـ Mac Studio:</p>
+
+            <div class="script-preview">
+                <p lang="en" dir="ltr"><em>[softly]</em> Goodnight, Susu. <em>&lt;pause&gt;</em> Goodnight Baba. Goodnight Mama. Goodnight Susu, curled up at the end of the bed. <em>&lt;pause&gt;</em> <em>[whispers]</em> Goodnight, Yusuf.</p>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>ElevenLabs Eleven v4 &mdash; صوتي المستنسخ</h3>
+                <p>في الـ cloud &mdash; audio tags للأداء &mdash; النسخة اللي في الكتاب &mdash; 8.6 ثانية</p>
+                <audio controls preload="metadata">
+                    <source src="../../projects/bedtime-stories/audio-susu/en/p9.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Kokoro عن طريق Voicebox &mdash; محلي</h3>
+                <p>Mac Studio &mdash; صوت جاهز &laquo;&#8294;George&#8297;&raquo; &mdash; اتولّد في حوالي 5 ثواني &mdash; 13.6 ثانية</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/susu-goodnight-kokoro.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Qwen Custom Voice عن طريق Voicebox &mdash; محلي</h3>
+                <p>Mac Studio &mdash; صوت جاهز &laquo;&#8294;Ryan&#8297;&raquo; &mdash; اتولّد في حوالي 20 ثانية &mdash; 15.0 ثانية</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/susu-goodnight-qwen.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <p>فيه حاجتين بيلفتوا النظر. الواضحة إن الأول بس هو اللي صوته شبهي &mdash; النسخ المحلية بتستخدم أصوات جاهزة، لأني لسه ما استنسختش صوتي محليًا. والأقل وضوحًا هي التوقيت: المحركات المحلية بتقرا نفس الصفحة <strong>أبطأ بأكتر من 50%</strong>. وده مهم في كتاب مصوّر، لأن الصفحة اللي بعدها مينفعش تتقلب قبل ما الجملة تخلص.</p>
+
+            <h2>إيه اللي اتغيّر في ElevenLabs: Eleven v4</h2>
+            <p>الحكي في كتب النوم معمول بـ <span class="highlight">Eleven v4</span>، اللي بقى الـ default عندي. الفرق الكبير عن Multilingual v2 القديم هو طريقة التحكم فيه. v2 كان فيه زراير &mdash; stability وstyle &mdash; وكنت بظبط الأداء بإني ألفّها. v3 وv4 بيتجاهلوا زرار الـ style خالص، وبياخدوا بدله <strong>audio tags</strong> مكتوبة جوه السكريبت: <code>[warmly]</code>، <code>[softly]</code>، <code>[whispers]</code>، وكمان <code>&lt;break time="0.5s" /&gt;</code> للوقفات.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🏷️</div>
+                    <div>
+                        <strong>Tags مش زراير</strong>
+                        <span>التعبير بيتكتب في السكريبت. الإعدادات اللي كانت شغالة على v2 مبتعملش حاجة على v4 ومن غير أي تنبيه</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <div>
+                        <strong>وصفة واحدة، 106 مقطع</strong>
+                        <span>Stability 0.5 وsimilarity 0.8 مع الـ tags &mdash; كتابين بلغتين، من أول محاولة، ومن غير ما أعيد قص أي حاجة</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <div>
+                        <strong>85 لغة</strong>
+                        <span>حكي بالعربي وفيه أصوات كتير تختار منها، وده لسه مهم جدًا لمشاريعي</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎲</div>
+                    <div>
+                        <strong>النتيجة مش بتتكرر</strong>
+                        <span>نفس الـ seed ونفس النص إدّوا صوت مختلف مرتين. احتفظ بالملف اللي عجبك &mdash; مش هتقدر تولّده تاني</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>مفاجأة حلوة: على حسابي، v4 استهلك تقريبًا <strong>عُشر</strong> الكوتا اللي كان طول السكريبت بيوحي بيها &mdash; حوالي 740 credit لكتاب فيه 80 مقطع و4,700 حرف &mdash; والـ tags والـ breaks باين إنها مش بتتحسب أصلًا. خطتك ممكن تبقى مختلفة، فقِس الأول قبل ما تحسب ميزانيتك.</p>
+
+            <h2>الأصوات المحلية جوه H_AI: Voicebox</h2>
+            <p>في فبراير قلت إن الخطوة الجاية هي إني أدمج الصوت في محرك الـ AI بتاعي. وده حصل، عن طريق <span class="highlight">Voicebox</span>، وهو استوديو صوت محلي مفتوح المصدر بيشتغل على Apple Silicon من خلال MLX. H_AI بيكلّمه عن طريق local API في الاتجاهين: <strong>speech‑to‑text</strong> (Whisper) لما أسجّل سؤال على موبايلي، و<strong>text‑to‑speech</strong> لما أطلب إن الإجابة تتقرا بصوت عالي.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>المحرك</th>
+                    <th>النوع</th>
+                    <th>اللغات</th>
+                    <th>أنسب لـ</th>
+                </tr>
+                <tr>
+                    <td><strong>Kokoro</strong></td>
+                    <td>54 صوت جاهز</td>
+                    <td>8، منها الإنجليزي</td>
+                    <td>drafts وتجربة أصوات بسرعة &mdash; موديل حجمه 327 MB</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen Custom Voice</strong></td>
+                    <td>9 أصوات جاهزة</td>
+                    <td>10</td>
+                    <td>توجيهات الأداء بتتكتب بكلام عادي</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen, LuxTTS</strong></td>
+                    <td>استنساخ صوت</td>
+                    <td>10 / إنجليزي</td>
+                    <td>صوت من تسجيل مرجعي قصير</td>
+                </tr>
+                <tr>
+                    <td><strong>Chatterbox</strong></td>
+                    <td>استنساخ صوت</td>
+                    <td>23، منها العربي</td>
+                    <td>العربي &mdash; بصوت مرجعي</td>
+                </tr>
+                <tr>
+                    <td><strong>TADA 3B</strong></td>
+                    <td>استنساخ صوت</td>
+                    <td>10، منها العربي</td>
+                    <td>استنساخ متعدد اللغات، وهو الأتقل بحجم 8 GB</td>
+                </tr>
+            </table>
+
+            <p>المشكلة في مشاريعي هي <strong>العربي</strong>. ولا محرك محلي جاي بصوت عربي جاهز؛ محركات الاستنساخ بس هي اللي بتتكلم عربي، فالسرد بالعربي محتاج تسجيل نضيف مدته من 15 لـ 30 ثانية أستنسخ منه &mdash; ويفضّل يكون لحد بيتكلم عربي. في الـ cloud بختار صوت عربي وخلاص.</p>
+
+            <h2>سكريبت واحد، backend اتنين</h2>
+            <p>أحدث حتة هي أداة batch للتعليق الصوتي جوه H_AI. بتاخد نفس ملف السكريبت اللي بستخدمه مع ElevenLabs &mdash; entry لكل صفحة &mdash; وبتولّد كل صفحة محليًا عن طريق Voicebox، بنفس أسماء الملفات. مشغّل القصص اللي بيشغّل <code>audio/en/p1.mp3</code> مش فارق معاه مين عمله.</p>
+
+            <p>المحركات المحلية عمرها ما سمعت عن <code>[warmly]</code> وهتقراها بصوت عالي، فالأداة بتشيل الـ tags، وتقسم السكريبت عند كل <code>&lt;break&gt;</code>، وتولّد كل حتة، وبعدين تلصقهم تاني بصمت حقيقي بالمدة المطلوبة. زي ما بتقول ملاحظات الأداة: <em>الإيقاع بيعدّي في النقلة، والإحساس لأ.</em></p>
+
+            <p>بعد كل batch بتفحص النتايج بنفس طريقة الـ pipeline بتاع ElevenLabs عندي &mdash; وبتعلّم المقاطع اللي <strong>صامتة</strong> أو <strong>قصيرة قوي</strong> أو <strong>ممطوطة</strong>. الممطوط هو الفكرة الشاطرة: الكلام المتلخبط بيطلع برضه ملف سليم 100% وبيتفتح عادي، بس بياخد وقت أطول بكتير لكل حرف من المقاطع اللي جنبه، فبيبان إنه outlier.</p>
+
+            <div class="quote">
+                اعمل الـ drafts وجرّب وعدّل محليًا ببلاش، وبعدين اصرف credits الـ cloud على النسخة النهائية. نفس السكريبت، وأمر واحد تبدّل بيه.
+            </div>
+
+            <h2>دروس من حواديت النوم</h2>
+            <p><strong>الـ text‑to‑speech بيبوظ مع كلمات الأصوات لوحدها.</strong> أول محاولة لأصوات الحيوانات، إدّيت للموديل نصوص زي <em>Mooooooo</em> والـ expressiveness عالي، والصوت طلع مهزوز. الكلام اللي ملوش معنى مش بيدّي الموديل أي سياق. لما حطيت كل واحدة جوه جملة قصيرة &mdash; &laquo;&#8294;the cow says moo&#8297;&raquo; &mdash; ونزّلت الـ expressiveness، المشكلة اتحلت خالص.</p>
+
+            <p><strong>اكتب للودن.</strong> الأرقام تتكتب حروف، من غير اختصارات، والجمل أقل من 200 حرف تقريبًا، وفكرة واحدة في الصفحة. كل سكريبت بيعدّي على linter صغير قبل ما أي صوت يتولّد.</p>
+
+            <p><strong>راجع الكلمات، مش الملف بس.</strong> لما عملت النسخ المحلية لصفحات Susu للمقال ده، عدّيت كل مقطع تاني على speech‑to‑text عشان أتأكد إنه قال اللي في السكريبت. صفحة تصبح على خير رجعت كلمة بكلمة من الأصوات التلاتة &mdash; وعشان كده هي المثال اللي فوق.</p>
+
+            <h2>البودكاست، زمان ودلوقتي</h2>
+            <p>من هنا بدأ المشروع. في فبراير كتبت سكريبت بودكاست مدته خمس دقايق عن مشروع <a href="building-ai-server.html" class="site-link">محرك الـ AI الشخصي</a> وولّدته مرتين &mdash; مرة محليًا بـ VibeVoice، ومرة بـ ElevenLabs بـ clone من صوتي. في أكتوبر مرّرت <strong>نفس السكريبت بالظبط</strong>، كلمة بكلمة، على المحركين المحليين الجداد، عشان تقدر تقارن الأربعة ببعض على طول.</p>
+
+            <h3>فبراير 2026</h3>
+
+            <div class="audio-player-wrap">
+                <h3>النسخة 1: VibeVoice (محلي)</h3>
+                <p>اتولّدت على Mac Studio M4 Max &mdash; VibeVoice 7B &mdash; offline خالص وببلاش</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/building-ai-server-podcast.wav" type="audio/wav">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>النسخة 2: ElevenLabs (Cloud)</h3>
+                <p>اتولّدت عن طريق ElevenLabs API &mdash; صوت مستنسخ &mdash; خدمة cloud مدفوعة</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/building-ai-server-podcast-elevenlabs.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <h3>أكتوبر 2026 &mdash; المحركات المحلية الجديدة</h3>
+
+            <div class="audio-player-wrap">
+                <h3>النسخة 3: Kokoro عن طريق Voicebox (محلي)</h3>
+                <p>Mac Studio &mdash; صوت جاهز &laquo;&#8294;George&#8297;&raquo; &mdash; الحلقة كلها اتولّدت في <strong>26 ثانية</strong> &mdash; 5:10</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/building-ai-server-podcast-kokoro.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>النسخة 4: Qwen Custom Voice عن طريق Voicebox (محلي)</h3>
+                <p>Mac Studio &mdash; صوت جاهز &laquo;&#8294;Ryan&#8297;&raquo; &mdash; اتولّدت في حوالي 9 دقايق &mdash; 5:34</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/building-ai-server-podcast-qwen.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <table class="model-table">
+                <tr>
+                    <th>النسخة</th>
+                    <th>بتشتغل</th>
+                    <th>المدة</th>
+                    <th>وقت التوليد</th>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 7B</strong></td>
+                    <td>محلي</td>
+                    <td>4:31</td>
+                    <td>كام دقيقة</td>
+                </tr>
+                <tr>
+                    <td><strong>Kokoro</strong></td>
+                    <td>محلي</td>
+                    <td>5:10</td>
+                    <td>26 ثانية</td>
+                </tr>
+                <tr>
+                    <td><strong>ElevenLabs (صوتي)</strong></td>
+                    <td>Cloud</td>
+                    <td>5:24</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen Custom Voice</strong></td>
+                    <td>محلي</td>
+                    <td>5:34</td>
+                    <td>حوالي 9 دقايق</td>
+                </tr>
+            </table>
+
+            <p>النسخ الجديدة اتعملت بأداة الـ batch للتعليق الصوتي اللي اتكلمت عنها فوق: السكريبت دخل عشر فقرات، وكل فقرة اتولّدت لوحدها، والحتت اتوصّلت بوقفة قصيرة بينها. Kokoro هو المفاجأة &mdash; حلقة مدتها خمس دقايق في وقت أقل من اللي بياخده سماع الفقرة الأولى. لما عدّيت كل فقرة تاني على speech‑to‑text، النسختين الجداد طابقوا السكريبت بنسبة حوالي 98% كلمة بكلمة؛ وتقريبًا كل الفروق كانت في الإملا (&laquo;&#8294;Fast API&#8297;&raquo; بدل FastAPI)، مش غلط في القراية.</p>
+
+            <p>حاجة تحطها في بالك وإنت بتسمع: السكريبت من فبراير، فهو بيوصف المشروع زي ما كان وقتها &mdash; DeepSeek وLlama و22 skill. وسبته زي ما هو وأنا قاصد، عشان كل النسخ تقرا نفس الكلمات.</p>
+
+            <h2>إيه هو VibeVoice؟</h2>
+            <p>VibeVoice هو <span class="highlight">موديل TTS من الأحدث في الحوارات الطويلة</span>، Microsoft هي اللي عملته في الأول ودلوقتي مجتمع الـ open source هو اللي ماسكه. بيطلّع من نص عادي صوت فيه إحساس ولأكتر من متكلم &mdash; زي حوارات البودكاست والسرد، وحتى محتوى فيه موسيقى في الخلفية بيألّفها لوحده حسب السياق. ولسه هو اللي برجعله لما السكريبت يبقى فيه أكتر من متكلم.</p>
+
+            <p>الجديد فيه هو الـ architecture: continuous speech tokenizers بتشتغل على 7.5 Hz مع next‑token diffusion framework. الـ LLM بيمسك سياق النص، والـ diffusion head بيطلّع التفاصيل الصوتية. والنتيجة كلام طبيعي، بإيقاع ونغمة مظبوطين، وصوت كل متكلم ثابت.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>الموديل</th>
+                    <th>أقصى مدة</th>
+                    <th>المتكلمين</th>
+                    <th>أنسب لـ</th>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 0.5B</strong></td>
+                    <td>Real‑time</td>
+                    <td>1</td>
+                    <td>TTS لايف بـ latency قليلة</td>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 1.5B</strong></td>
+                    <td>~90 دقيقة</td>
+                    <td>لحد 4</td>
+                    <td>بودكاست طويل</td>
+                </tr>
+                <tr>
+                    <td><strong>VibeVoice 7B</strong></td>
+                    <td>~45 دقيقة</td>
+                    <td>لحد 4</td>
+                    <td>أكتر صوت واقعي</td>
+                </tr>
+            </table>
+
+            <h2>تشغيله محليًا</h2>
+            <p>بـ 64 GB unified memory على الـ M4 Max، أقدر أشغّل موديل الـ 7B براحتي &mdash; أكبر اختيار وأكتره واقعية. اعمل clone لـ <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">الـ repo بتاع VibeVoice</a>، وثبّت الـ dependencies بـ <code>uv pip install -e .</code>، ونزّل الـ weights بتاعة الموديل، وشغّل الـ inference من ملف نصي فيه أسماء المتكلمين زي <code>Speaker 1: Hello, welcome to the show.</code></p>
+
+            <p>التوليد بياخد كام دقيقة لحلقة بودكاست كاملة. مش real time، بس مقبول جدًا لو بتعمل محتوى. وكل ده بيحصل على جهازي &mdash; مفيش داتا بتطلع من شبكتي، ولا API calls، ولا رسوم بالدقيقة.</p>
+
+            <div class="script-preview">
+                <p lang="en" dir="ltr"><strong>Speaker 1:</strong> Welcome to The Build Log, where we break down real engineering projects from the ground up. Today, we're looking at something really cool. A developer named Hisham got fed up with cloud AI services, the latency, the costs, the privacy headaches, and decided to build his own personal AI engine that runs entirely on local hardware. Let's dive in.</p>
+                <p style="text-align:center;color:var(--text-secondary);font-style:italic;">[ السكريبت الكامل بيكمّل في حوالي 19 فقرة عن الهاردوير، والـ webapp، ونظام الـ skills، والأمان، والـ roadmap ]</p>
+            </div>
+
+            <h2>محلي ولا cloud، بعد تمن شهور</h2>
+            <p>بستخدم <span class="highlight">ElevenLabs</span> لأي حاجة بتتنشر &mdash; السرد بلغتين في <a href="building-islamic-kids.html" class="site-link">موقع الأطفال الإسلامي</a>، وبودكاست Wireless 101، وكتب النوم. والمحلي بيغطي كل اللي قبل كده. ودي المقارنة بصراحة دلوقتي:</p>
+
+            <div class="comparison-grid stagger">
+                <div class="comparison-card">
+                    <h3>محلي (Voicebox + VibeVoice)</h3>
+                    <ul class="pro-list">
+                        <li>ببلاش ومن غير حدود &mdash; مثالي للـ drafts وتجربة الأصوات</li>
+                        <li>خصوصية كاملة &mdash; مفيش حاجة بتطلع من الجهاز</li>
+                        <li>Kokoro بيولّد صفحة في ثواني</li>
+                        <li>بودكاست بأكتر من متحدث مع VibeVoice</li>
+                        <li>متركّب جوه H_AI للصوت الداخل والطالع</li>
+                    </ul>
+                    <ul class="con-list">
+                        <li>مفيش audio tags &mdash; الإيقاع بيعدّي، والإحساس لأ</li>
+                        <li>العربي عن طريق استنساخ الصوت بس</li>
+                        <li>بيقرا أبطأ بشكل ملحوظ من ElevenLabs</li>
+                        <li>صوتي أنا لسه مش مستنسخ محليًا</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>ElevenLabs Eleven v4 (Cloud)</h3>
+                    <ul class="pro-list">
+                        <li>أحسن جودة، والصوت المستنسخ شبهي</li>
+                        <li>Audio tags للهمس والدفا والوقفات</li>
+                        <li>85 لغة، مع أصوات عربي جاهزة</li>
+                        <li>وصفة واحدة نفعت في كتابين كاملين</li>
+                    </ul>
+                    <ul class="con-list">
+                        <li>بياخد credits &mdash; بس أقل من المتوقع</li>
+                        <li>النص بيتبعت لطرف تالت</li>
+                        <li>نفس الـ seed مش بيطلّع نفس الصوت</li>
+                        <li>بيعتمد على اتصال بالإنترنت</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quote">
+                المسافة بين الـ TTS المحلي والـ cloud بتقل باستمرار. المحلي دلوقتي كويس كفاية إني أعمل مسودة كتاب كامل ببلاش؛ والـ cloud لسه بيستاهل مكانه في النسخة النهائية &mdash; خصوصًا لما الصوت لازم يبقى صوتي.
+            </div>
+
+            <h2>الخطوة الجاية</h2>
+            <p>في فبراير كانت الخطوة الجاية هي إدخال الصوت. وده خلص &mdash; أقدر أسجّل سؤال على موبايلي وH_AI يحوّله لنص محليًا. والجاي دلوقتي:</p>
+
+            <p><strong>استنساخ صوتي أنا محليًا</strong>، عشان المسودات المحلية تطلع شبه النسخة النهائية. <strong>سرد بالعربي محليًا</strong>، عن طريق Chatterbox أو TADA مع تسجيل مرجعي عربي كويس. و<strong>كتب نوم أكتر</strong> &mdash; السلسلة بتكبر مع ابني، وكل كتاب جديد فرصة تانية أشوف بيها الأصوات المحلية وصلت لفين.</p>
+
+            <p>الأدوات موجودة. والهاردوير يقدر. ومجتمع الـ open source ماشي بالموديلات لقدام. إنك تشغّل pipeline صوت AI بتاعك مبقاش مشروع بحثي &mdash; بقى مشروع ويك إند.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>المقال ده اتكتب بمساعدة <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="building-ai-server.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">بناء محرك AI شخصي</span>
+            </a>
+            <a href="building-wireless101.html" class="article-nav-link next">
+                <span class="nav-label">المقال الجاي &larr;</span>
+                <span class="nav-title">بناء Wireless 101</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/appearance.js?v=2" defer></script>
+    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

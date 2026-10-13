@@ -64,9 +64,9 @@ a { color: inherit; text-decoration: none; }
   border-radius: 4px;
 }
 
-.skip-link { position: absolute; left: -9999px; }
+.skip-link { position: absolute; inset-inline-start: -9999px; }
 .skip-link:focus {
-  left: 20px; top: 14px; z-index: 30;
+  inset-inline-start: 20px; top: 14px; z-index: 30;
   background: var(--bg-elevated); color: var(--text-primary);
   padding: 10px 16px; border-radius: 8px; border: 1px solid var(--card-border);
 }
@@ -106,7 +106,7 @@ a { color: inherit; text-decoration: none; }
 
 .nav-name { font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.01em; }
 
-.nav-links { display: flex; gap: 26px; margin-left: auto; }
+.nav-links { display: flex; gap: 26px; margin-inline-start: auto; }
 
 .nav-links a {
   font-size: 0.9375rem;
@@ -479,7 +479,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--text-tertiary);
 }
 
-.appearance { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.appearance { margin-inline-start: auto; display: flex; align-items: center; gap: 12px; }
 
 .appearance-set {
   display: flex;
@@ -632,7 +632,7 @@ html.js .stagger.in > *:nth-child(6) { transition-delay: 0.40s; }
   .card { padding: 24px; }
   .writing-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .footer { flex-direction: column; align-items: flex-start; }
-  .appearance { margin-left: 0; }
+  .appearance { margin-inline-start: 0; }
   .appearance-set button { padding: 6px 12px; font-size: 0.75rem; }
 }
 

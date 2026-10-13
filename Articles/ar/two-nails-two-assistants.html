@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>مسمارين ومساعدين: Claude ضد موديلي المحلي - هشام أبو العلا</title>
+    <meta name="description" content="مسمارين، وفقاعة في الكاوتش، ولمبة ضغط الهوا فضلت منورة أسبوعين وأنا مطنش. سألت Claude والـ AI المحلي اللي ببنيه بنفسي نفس التمن أسئلة.">
+    <meta property="og:title" content="مسمارين ومساعدين - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="مسمارين، وفقاعة في الكاوتش، ولمبة ضغط الهوا فضلت منورة أسبوعين وأنا مطنش. Claude ضد الـ AI اللي شغال على مكتبي.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/two-nails-two-assistants.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/two-nails-two-assistants.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/two-nails-two-assistants.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/two-nails-two-assistants.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/two-nails-two-assistants.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Photos */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin: 30px 0 34px;
+        }
+
+        .photo-grid figure { margin: 0; }
+        .photo-grid figure.wide { grid-column: 1 / -1; }
+
+        .photo-grid img {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            border-radius: var(--card-radius);
+            border: 1px solid var(--card-border);
+        }
+
+        .photo-grid figcaption {
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Round header */
+        .round-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: 40px;
+        }
+
+        .article-content .round-tag + h2 { margin-top: 4px; }
+
+        /* Same question, two short answers */
+        .face-off {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 20px 0 18px;
+        }
+
+        .side {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            padding: 16px 18px;
+            font-size: 0.9375rem;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .side-who {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .side-who i { color: var(--accent); }
+        .side.win { border-top: 3px solid var(--accent); }
+
+        /* Tap to read more */
+        details.more {
+            margin: 0 0 30px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            background: var(--bg-secondary);
+        }
+
+        details.more summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 12px 18px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        details.more summary::-webkit-details-marker { display: none; }
+        details.more summary::before {
+            content: '+';
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 1rem;
+            width: 1rem;
+            transition: transform 0.2s ease;
+        }
+        details.more[open] summary::before { content: '\2212'; }
+
+        details.more .more-body {
+            padding: 4px 20px 6px;
+            border-top: 1px solid var(--hairline);
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        details.more .more-body p { font-size: 0.9375rem; margin: 14px 0; }
+
+        .search-dump {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.7;
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            overflow-x: auto;
+        }
+
+        .search-dump .q { color: var(--accent); }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+        }
+
+        .table-wrap .model-table { margin: 0; min-width: 520px; }
+        .model-table td.yes { color: var(--accent); font-weight: 600; }
+        .model-table td.soon { color: var(--text-tertiary); }
+
+        @media (max-width: 768px) {
+            .face-off, .photo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">مسمارين ومساعدين</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 12 أكتوبر 2026</span>
+                <span><i class="fas fa-clock"></i> 5 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../two-nails-two-assistants.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">مسمارين، وفقاعة في الكاوتش، ولمبة ضغط الهوا فضلت منورة أسبوعين وأنا مطنش. سألت Claude والـ&nbsp;AI اللي ببنيه على مكتبي نفس التمن أسئلة.</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/two-nails-two-assistants.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>أعترف الأول: لمبة ضغط الكاوتش كانت منورة بقالها <span class="highlight">أسبوعين</span>. وكل يوم أقول لنفسي هشوفها بكرة. لحد ما يوم الاتنين بصيت أخيراً، لقيت مسمارين في كاوتش، وفقاعة في جنب كاوتش تاني.</p>
+
+            <p>الفقاعة معناها إن الأسلاك اللي جوه الكاوتش اتقطعت، وإنه ممكن ينفجر في أي لحظة. وأنا كنت ماشي بيه أسبوعين. ما حصلش حاجة، وكنت محظوظ. لو لمبة الكاوتش عندك منورة، روح بص على كاوتشاتك النهارده.</p>
+
+            <div class="photo-grid">
+                <figure>
+                    <img src="../../Pictures/tire-nails.jpg?v=2" alt="سطح كاوتش فيه مسمارين متحوطين بدايرة بيضا، واحد في الوش الأساسي وواحد قريب من الكتف الخارجي" loading="lazy">
+                    <figcaption>حرز رقم 1: مسمارين. افتكر اللي على الشمال، ده اللي هيحسم الحدوتة كلها.</figcaption>
+                </figure>
+                <figure>
+                    <img src="../../Pictures/tire-bubble.jpg?v=2" alt="انتفاخ في جنب كاوتش تاني" loading="lazy">
+                    <figcaption>حرز رقم 2: الفقاعة. مشيت بالكاوتش ده أسبوعين. أبوس إيدك ما تعملهاش.</figcaption>
+                </figure>
+            </div>
+
+            <p>فعملت اللي بعمله دلوقتي مع أي مشكلة: سألت الـ&nbsp;AI. ومرتين كمان.</p>
+
+            <p>في ركن كان <span class="highlight">Claude</span>، معاه بحث على النت وخرايط ودخول على الإيميل ورؤية كاملة للصور. وفي الركن التاني <span class="highlight">H_AI</span>، الـ&nbsp;<a href="building-ai-server.html" class="site-link">محرك AI الشخصي</a> اللي ببنيه على الـ&nbsp;Mac Studio بتاعي، شغال بـ Qwen 3.8 27B. ببلاش وخاص، ولسه تحت الإنشاء خالص. سألت الاتنين نفس التمن أسئلة، بغلطات الكتابة وكله (&ldquo;contenintal pro contact&rdquo;).</p>
+
+            <span class="round-tag">الجولة 1</span>
+            <h2 lang="en" translate="no">&#8294;&ldquo;I got 2 nails in my tire, what do I do?&rdquo;&#8297;</h2>
+            <p>تعادل. الاتنين قالوا نفس الكلام العاقل: سيب المسامير مكانها لأنها بتسد الخرمين، وامشي بالراحة لحد ورشة، واطلب ترقيع صح من جوه. في المعلومات العامة، موديل شغال على مكتبي زي اللي في السحابة بالظبط.</p>
+
+            <span class="round-tag">الجولة 2</span>
+            <h2>الصورة</h2>
+
+            <div class="face-off">
+                <div class="side win">
+                    <div class="side-who"><i class="fas fa-cloud"></i> Claude</div>
+                    &ldquo;المسمار الشمال في الكتف. ده مش بيتصلح. محتاج كاوتش جديد.&rdquo;
+                </div>
+                <div class="side">
+                    <div class="side-who"><i class="fas fa-desktop"></i> H_AI</div>
+                    &ldquo;أنا معنديش رؤية.&rdquo; &hellip;وبعدين لما أداة الصور اشتغلت: &ldquo;أنا شايفها دلوقتي! الاتنين في الوش. ينفع يتصلح.&rdquo;
+                </div>
+            </div>
+
+            <p>دي كانت الجولة المهمة، وClaude جاوب صح. موديلي المحلي عدّى بأزمة هوية صغيرة. قال إنه مش بيشوف صور، وبعدين بص عليها وقرا موديل الكاوتش بالظبط من على الجنب، وده مبهر بصراحة. حتى استخدم كلمة &ldquo;الكتف&rdquo;. بس ما استنتجش إن الخرم اللي في الكتف ما بيتصلحش.</p>
+
+            <details class="more">
+                <summary>اقرا أكتر: ليه الكتف مهم</summary>
+                <div class="more-body">
+                    <p>الورش بترقّع الخروم في الوش الأساسي للكاوتش، لكن مش في الكتف (المكان اللي الوش بينحني فيه ناحية الجنب) ولا في الجنب نفسه. المطاط هناك بيتثني أكتر من اللازم والرقعة مش بتثبت. وفي كاوتش واطي الجنب زي بتاعي، الكتف قريب جداً من المكان اللي أغلب المسامير بتدخل فيه.</p>
+                    <p>بعدها برسالة، H_AI ضاف تحفظ: &ldquo;لو أي مسمار في الكتف الخارجي، بعض الورش هترفض الإصلاح.&rdquo; بس خلاصة كلامه وقتها كانت لسه &ldquo;إصلاح، حوالي 20&#8288;&ndash;&#8288;50 دولار.&rdquo; ورشة كويسة كانت هتلاحظ، فمفيش ضرر، بس كنت هدخل متوقع فاتورة 30 دولار بدل ما أشتري كاوتش.</p>
+                    <p>لحظة &ldquo;أنا معنديش رؤية&rdquo; دي مشكلة توصيلات. الـ&nbsp;system prompt بتاع H_AI فيه أداة للصور، بس الصورة وصلت كمسار ملف متلصق، والموديل جاوب من باب العادة قبل ما الأداة تشتغل. إن التعامل مع الصور يبقى أوتوماتيك حاجة سهل إصلاحها.</p>
+                </div>
+            </details>
+
+            <span class="round-tag">الجولة 3</span>
+            <h2>&#8294;&ldquo;235/40 R18 91W&rdquo;&#8297;</h2>
+            <p>الجولة دي راحت لـ H_AI. عمل جدول شيك بيفك كل رمز في مقاس الكاوتش (عرض 235&nbsp;mm، وجنب 40%، وجنط 18 بوصة، ومتصنف لسرعة 168&nbsp;mph) وشرح ليه الجنب القصير بيسيب مساحة أقل للإصلاح. Claude كان عملي أكتر: لقى برنامج الاستبدال المجاني بتاع Continental وانتبه للشروط المكتوبة بخط صغير اللي بتقول إنه مش بيغطي الكاوتشات اللي العربية جت بيها.</p>
+
+            <details class="more">
+                <summary>اقرا أكتر: فك المقاس وحادثة الآلة الحاسبة</summary>
+                <div class="more-body">
+                    <p>فك H_AI للمقاس: <strong>235</strong>&nbsp;mm عرض الوش؛ <strong>40</strong>&nbsp;معناها إن ارتفاع الجنب 40% من العرض (حوالي 94&nbsp;mm)؛ <strong>R18</strong> يعني راديال لجنط 18 بوصة؛ <strong>91</strong> مؤشر حمولة 615&nbsp;kg للكاوتش الواحد؛ <strong>W</strong> تصنيف سرعة 168&nbsp;mph.</p>
+                    <p>Claude ضاف تفاصيل الشراء: فيه موديلين من Continental بيتباعوا بالمقاس ده، سعرهم حوالي 123&#8288;&ndash;&#8288;225 دولار أونلاين، ولازم أطابق الكاوتشات التانية وأخلي الورشة تقيس عمق الوش في الأربعة.</p>
+                    <p>ورا الكواليس، H_AI شاف &ldquo;235/40&rdquo;، وقرر إنها مسألة حساب، ونده على أداة الآلة الحاسبة، اللي فشلت فوراً بـ <code>invalid syntax</code>. والموديل كبّر دماغه وكمّل.</p>
+                </div>
+            </details>
+
+            <span class="round-tag">الجولة 4</span>
+            <h2 lang="en" translate="no">&#8294;&ldquo;Search the price and best place to fix&rdquo;&#8297;</h2>
+            <p>دي كانت لحظتي المفضلة في اليوم. Claude لقى ورش الكاوتش في شارعي ولاحظ إن واحدة بتقفل الساعة 6 والتانية اللي جنبها مفتوحة لحد 7. كانت الساعة 5:48&nbsp;PM، يعني ده بالظبط اللي كنت محتاجه.</p>
+
+            <p>أما بحث H_AI فرجّع&hellip; عروض فنادق من Priceline وتعريف كلمة &ldquo;price&rdquo; من قاموس Merriam&#8209;Webster.</p>
+
+            <details class="more">
+                <summary>اقرا أكتر: H_AI دوّر على إيه بالظبط</summary>
+                <div class="more-body">
+                    <p>الجزء اللي بيبني جملة البحث خد سؤالي، وساب كل اللي بعد كلمة &ldquo;on&rdquo;، ورمى كل اللي قبلها، بما فيه الجزء اللي كان بيدي السياق. كلمة &ldquo;tire&rdquo; ما وصلتش لجملة البحث أصلاً:</p>
+                    <div class="search-dump">
+                        [web_search: <span class="q">on the price and best place to fix</span>]<br>
+                        - Priceline.com &ndash; Deals on Hotels, Flights and Rental Cars<br>
+                        - TOP 10 BEST Auto Repair in San Diego &ndash; Yelp<br>
+                        - Price.com: Cash Back &amp; Coupons<br>
+                        - PRICE Definition &amp; Meaning &ndash; Merriam-Webster
+                    </div>
+                    <p>الموديل اتصرف كويس. قال <em>&ldquo;هكون صريح بخصوص حدود البحث،&rdquo;</em> وادّى نطاقات أسعار منطقية وقارن بين أنواع الورش. وبعدين رمى نتايج Yelp بحجة &ldquo;San Diego، مش مكانك&rdquo; وطلب الـ&nbsp;zip code بتاعي. وأنا كنت في San Diego. هو ما كانش عارف أنا فين، فرفض النتيجة المفيدة الوحيدة.</p>
+                </div>
+            </details>
+
+            <span class="round-tag">الجولة 5</span>
+            <h2 lang="en" translate="no">&#8294;&ldquo;What if one tire has a bubble?&rdquo;&#8297;</h2>
+            <p>الاتنين كانوا ممتازين هنا، وH_AI يمكن كان الأحرص. الاتنين قالوا: مش بيتصلح، وممكن ينفجر، ركّب الاستبن. H_AI ضاف حاجتين Claude ما قالهمش: <strong>افحص الأربع كاوتشات</strong>، لأن أي حاجة عملت فقاعة في واحد ممكن تكون بوّظت واحد تاني، وسأل إذا كانت الفقاعة في نفس الكاوتش اللي فيه المسامير. دي النصيحة اللي تستناها من صاحبك اللي بيفهم في العربيات.</p>
+
+            <span class="round-tag">الجولة 6</span>
+            <h2 lang="en" translate="no">&#8294;&ldquo;Does my insurance cover this?&rdquo;&#8297;</h2>
+
+            <div class="face-off">
+                <div class="side win">
+                    <div class="side-who"><i class="fas fa-cloud"></i> Claude</div>
+                    قرا الـ&nbsp;PDF بتاع الوثيقة واقتبس الاستثناءات: &ldquo;الكاوتشات مش مغطاة. خدمة الطريق ممكن تركّب الاستبن أو تسحبك 15 ميل.&rdquo;
+                </div>
+                <div class="side">
+                    <div class="side-who"><i class="fas fa-desktop"></i> H_AI</div>
+                    قارئ الـ&nbsp;PDF بتاعه رجّعله 27 صفحة فاضية، وقال: &ldquo;المستند مش بيقولي. <strong>مش هخمّن.</strong>&rdquo;
+                </div>
+            </div>
+
+            <p>Claude جابلي الإجابة، بس ما كانتش الإجابة اللي كنت بتمناها. H_AI ما جابش إجابة، بس عجبتني طريقة تصرفه. قارئ الـ&nbsp;PDF سلّمه 27 صفحة فاضية، وبدل ما يألف حاجة، قال كده واقترح تلات طرق تانية يعرف بيها. لما الـ&nbsp;AI ما يكونش عنده المعلومة، ده بالظبط اللي عايزه يعمله.</p>
+
+            <details class="more">
+                <summary>اقرا أكتر: تفاصيل الوثيقة وموضوع الخصوصية</summary>
+                <div class="more-body">
+                    <p>Claude دوّر في إيميلي الأول كمان، بس ما لقاش غير رسايل فيها لينكات لمستندات. ومن الـ&nbsp;PDF عرف إن الكاوتشات اللي بتتلف لوحدها مستثناة، والمسامير بتتحسب استهلاك عادي، وإن Emergency Road Service (لو مضافة على وثيقتي) بتغطي تغيير الاستبن أو سحب 15 ميل، لكن مش الكاوتش نفسه.</p>
+                    <p>H_AI تعثر مرة قبل ما أبعتله الـ&nbsp;PDF: اقترح إن ممكن يكون عندي إضافة &ldquo;road hazard&rdquo; بتغطي الكاوتش ناقص قيمة التحمّل. كانت إجابة عامة معقولة، بس مش صح على وثيقتي.</p>
+                    <p>الصفحات الفاضية كانت صور ممسوحة ضوئياً، وقارئ الـ&nbsp;PDF بتاع H_AI بيستخرج النص بس. لو كنت بعت الصفحات دي لموديل الرؤية غالباً كانت المشكلة اتحلت.</p>
+                    <p>الخصوصية مهمة كمان. في شات H_AI، وثيقتي ما سابتش الـ&nbsp;Mac Studio أبداً. وفي شات Claude، صوري ووثيقتي والبحث في إيميلي كلها راحت للسحابة. إجابة Claude كانت صح وأنا اللي اخترت أشارك البيانات دي، بس ده برضه ليه تمن.</p>
+                </div>
+            </details>
+
+            <h2>لوحة النتايج</h2>
+
+            <div class="table-wrap">
+                <table class="model-table">
+                    <thead>
+                        <tr><th>الجولة</th><th>Claude</th><th>H_AI (النهارده)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>نصيحة عامة</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td></tr>
+                        <tr><td>قراية الصورة</td><td class="yes">&#10003;</td><td class="soon">قراها، وحكم غلط</td></tr>
+                        <tr><td>مقاس الكاوتش والضمان</td><td class="yes">&#10003; الخط الصغير</td><td class="yes">&#10003; أحسن فك</td></tr>
+                        <tr><td>الورش القريبة</td><td class="yes">&#10003;</td><td class="soon">دوّر على &ldquo;price&rdquo;</td></tr>
+                        <tr><td>خطورة الفقاعة</td><td class="yes">&#10003;</td><td class="yes">&#10003; افحص الأربعة</td></tr>
+                        <tr><td>PDF التأمين</td><td class="yes">&#10003;</td><td class="soon">صفحات فاضية، وما خمّنش</td></tr>
+                        <tr><td>تكلفة الشات</td><td>حوالي 2&#8288;&ndash;&#8288;3 دولار على الـ&nbsp;API، أو جزء من اشتراك</td><td class="yes">$0</td></tr>
+                        <tr><td>البيانات اللي خرجت من بيتي</td><td>صور، وثيقة، إيميل</td><td class="yes">بحث واحد على النت</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>ليه مش زعلان</h2>
+            <p>بص تاني على غلطات H_AI. جملة بحث رمت نص السؤال. قارئ PDF مش بيقرا الصور الممسوحة. مش عارف أنا في أنهي مدينة. صور ما راحتش لأداة الصور أوتوماتيك. <strong>دي كلها حاجات أنا اللي عملتها</strong>، وأقدر أصلحها كلها. اللي خذل الموديل في الغالب هي الأدوات اللي حواليه.</p>
+
+            <p>غلطة واحدة بس كانت فعلاً غلطة الموديل: إنه لاحظ &ldquo;الكتف&rdquo; ولسه قال &ldquo;إصلاح&rdquo;. دي الفجوة بين موديل 27B على مكتب وموديل frontier في داتا سنتر، وطلعت أصغر من اللي كنت متوقعه. وفي نفس الوقت H_AI كسب جولة مقاس الكاوتش، وادّى نصيحة الفقاعة الأحرص، ورفض يخمّن في موضوع التأمين، وعمل ده كله ببلاش من غير ما حاجة تخرج من بيتي.</p>
+
+            <div class="quote">
+                Claude هو الصاحب اللي يعرف ميكانيكي. H_AI هو الصاحب اللي لسه بيتعلم، وبما إني أنا اللي ببنيه، عارف بالظبط أصلح إيه.
+            </div>
+
+            <details class="more">
+                <summary>اقرا أكتر: قايمة تصليحات H_AI وملحوظة للإنصاف</summary>
+                <div class="more-body">
+                    <p><strong>تصليحات جاية لـ H_AI:</strong> يحتفظ بالسؤال كله وهو بيبني جمل البحث؛ يبعت صفحات الـ&nbsp;PDF الممسوحة لموديل الرؤية؛ يعرف مكاني بالتقريب؛ يبعت الصور المرفقة لأداة الصور أوتوماتيك؛ ويبطّل يبعت مقاسات الكاوتش للآلة الحاسبة. وبعدين هعيد نفس التمن أسئلة تاني وأنشر ماتش العودة.</p>
+                    <p><strong>ملحوظة للإنصاف:</strong> جانب Claude هنا جاي من ملخص Claude كتبه في آخر الشات، بينما جانب H_AI هو النص الكامل، بغلطاته وكله. و&ldquo;الإجابات الصح&rdquo; اللي حكمت بيها جت جزئياً من شات Claude نفسه. فالمقارنة صادقة، بس مش محايدة تماماً.</p>
+                </div>
+            </details>
+
+            <h2>الحدوتة خلصت إزاي</h2>
+            <p>الكاوتشين هيتغيروا، والتأمين مش هيدفع حاجة، وأنا هشتري اتنين Continental. الدرس الحقيقي مالوش علاقة بالـ&nbsp;AI: <strong>لما لمبة الكاوتش تنوّر، روح بص على كاوتشاتك.</strong> الحظ وقف جنبي أسبوعين، ومش ناوي أراهن عليه تاني.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>المقال ده اتكتب بمساعدة <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>، اللي هو، أيوه، واحد من المتسابقين الاتنين. وعدني إنه هيبقى لطيف مع H_AI.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="bedtime-stories.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">حواديت قبل النوم لطفل عنده تلات شهور</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/appearance.js?v=2" defer></script>
+    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

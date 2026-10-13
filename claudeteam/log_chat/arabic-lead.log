@@ -1,0 +1,6 @@
+2026-10-13 arabic-lead: translated Articles/ar/local-voice-generation.html and building-wirelesshub.html; parity OK
+2026-10-13 09:38:21 arabic-lead: translated Articles/ar/bedtime-stories.html and building-wireless101.html; parity OK
+2026-10-13 arabic-lead: translated two-nails-two-assistants and journey (ar); parity OK except search-dump verbatim English in two-nails
+2026-10-13 arabic-lead: translated Articles/ar/building-ai-server.html and building-islamic-kids.html; ar_parity OK for both
+2026-10-13 senior review of Articles/ar/{journey,two-nails-two-assistants,bedtime-stories,building-wireless101}: register and meaning fixes, Two Nails prompt headings and the 'the cow says moo' model input restored to English (isolated, lang=en translate=no on the h2s), book links use the books' own Arabic cover titles (الله خلقها، نبينا، سوسو القطة), 'كتاب كرتوني' -> 'كتاب مقوّى', dropped the added 'نصف قطر', U+2011 in Wi‑Fi/text‑to‑speech/Qwen‑Image/Merriam‑Webster, word joiners on numeric ranges, C/C++ isolated, nbsp after الـ; ar_parity OK; 390px checked, no horizontal scroll.
+2026-10-13 10:38:31 arabic-lead: senior review of ar/local-voice-generation, building-wirelesshub, building-ai-server, building-islamic-kids (register, restored quoted English, bidi isolates on inline quotes); parity FAIL only on restored quotes (7 runs), reported to coordinator

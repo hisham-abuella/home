@@ -17,7 +17,8 @@ Live at **https://www.hishamabuella.com** (GitHub Pages, deployed from `main`).
   `vibe.html` (terminal, n257), `learner.html` (journal, n260). Shared assets in
   `tracks/assets/` (`i18n.js`, `theme.js`, `ident.css`, `ident.js`, `bio.jpg`)
 - `cv.html` — CV, deliberately a plain white document and print-ready
-- `Articles/` — eight long-form posts, each with an optional narrated version
+- `Articles/` — eight long-form posts, each with an optional narrated version;
+  `Articles/ar/` holds their Egyptian Arabic pages
 - `projects/presentation-skill/` — slide-deck demos (`template.html`, `claude101.html`)
 - `different_designs/` — explorations only (mockups, logo concepts, older pages), not linked from the live site
 - `Pictures/`, `audio/` — media; `audio/articles/` holds the article narration
@@ -98,6 +99,13 @@ Copy the newest one as a starting point, then:
    email addresses, no GPS metadata in images (re-encode them; `sips` alone keeps EXIF).
 4. Write a narration transcript (below). The page already has the player markup if it
    was copied from an existing article.
+5. Add its Egyptian Arabic page, `Articles/ar/<slug>.html`: copy the English page, add one
+   `../` to every relative path, set `<html lang="ar-EG" dir="rtl">`, point canonical/og:url
+   at the `ar/` address, add the IBM Plex Sans Arabic font, swap the `.lang-switch` link to
+   "Read in English", and translate the text only (brief and fixed strings:
+   `claudeteam/briefs/article-translation-2026-10-13.md`). Both pages carry `hreflang` en/ar/
+   x-default. `python3 claudeteam/tools/ar_parity.py <slug>` must print OK. When an English
+   article changes, change its Arabic page in the same commit.
 
 ## Article narration
 

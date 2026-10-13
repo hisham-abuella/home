@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>بناء موقع إسلامي تفاعلي للأطفال - هشام أبو العلا</title>
+    <meta name="description" content="إزاي هشام أبو العلا بنى منصة إسلامية تفاعلية لتعليم الأطفال باستخدام Claude Code، فيها قصص الأنبياء واختبارات وصوت بلغتين.">
+    <meta property="og:title" content="بناء موقع إسلامي تفاعلي للأطفال - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="بناء منصة إسلامية تفاعلية لتعليم الأطفال باستخدام Claude Code.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/building-islamic-kids.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/building-islamic-kids.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/building-islamic-kids.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/building-islamic-kids.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/building-islamic-kids.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .story-list {
+            margin: 1.5rem 0;
+        }
+
+        .story-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-item .story-emoji {
+            font-size: 1.8rem;
+        }
+
+        .story-item strong {
+            display: block;
+        }
+
+        .story-item span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">بناء موقع إسلامي تفاعلي للأطفال</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 16 فبراير 2026</span>
+                <span><i class="fas fa-clock"></i> 7 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../building-islamic-kids.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">إزاي بنيت منصة إسلامية تفاعلية لتعليم الأطفال باستخدام Claude Code، فيها قصص الأنبياء واختبارات وسرد صوتي بلغتين</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/building-islamic-kids.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>كأب ومهندس، كنت عايز أعمل حاجة ليها قيمة للأطفال المسلمين &mdash; مكان يتعلموا فيه عن الأنبياء والقرآن والقيم الإسلامية من خلال <span class="highlight">حكي تفاعلي</span> بدل نص جامد. الفكرة دي بقت <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">Islamic Kids Stories</a>، وClaude Code ساعدني أطلّعها للنور.</p>
+
+            <h2>الفكرة</h2>
+            <p>أغلب المحتوى الإسلامي التعليمي للأطفال يا إما ملفات PDF ناشفة يا إما فيديوهات YouTube من غير أي تفاعل. أنا كنت عايز حاجة مختلفة: موقع الأطفال يقلّبوا فيه شرايح قصص مرسومة بشكل جميل، ويجاوبوا على أسئلة اختبار، ويكسبوا نجوم، ويسمعوا السرد بـ<span class="highlight">الإنجليزي والعربي</span>. من غير app store. ومن غير تحميل. بس افتح لينك وابدأ اتعلم.</p>
+
+            <div class="quote">
+                الهدف كان بسيط: أخلّي التعلّم الإسلامي ممتع زي أحسن تطبيقات الأطفال، بس ببلاش تماماً ومتاح على أي جهاز.
+            </div>
+
+            <h2>اللي بنيناه</h2>
+            <p>الموقع منصة تعليم إسلامي تفاعلية بالكامل وبلغتين. دي اللي جواه:</p>
+
+            <div class="story-list stagger">
+                <div class="story-item">
+                    <div class="story-emoji">🌍</div>
+                    <div>
+                        <strong>سيدنا آدم &mdash; أول إنسان</strong>
+                        <span>18 شريحة تفاعلية فيها أنشطة drag&#8209;and&#8209;drop واختبار</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🔥</div>
+                    <div>
+                        <strong>ثقة سيدنا إبراهيم</strong>
+                        <span>16 شريحة عن الإيمان والتضحية، وفيها أسئلة جوه القصة</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🚢</div>
+                    <div>
+                        <strong>سيدنا نوح والسفينة الكبيرة</strong>
+                        <span>قصة الصبر والمثابرة، مع اختبار ونجوم مكافأة</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">🌙</div>
+                    <div>
+                        <strong>حلم سيدنا يوسف الجميل</strong>
+                        <span>رحلة ثقة في ربنا وسط الصعاب، مع عناصر تفاعلية</span>
+                    </div>
+                </div>
+                <div class="story-item">
+                    <div class="story-emoji">📖</div>
+                    <div>
+                        <strong>سورة الفاتحة</strong>
+                        <span>اتعلم أول سورة في القرآن آية آية</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>أهم المميزات</h2>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🎙️</div>
+                    <div>
+                        <strong>صوت بلغتين</strong>
+                        <span>كل قصة ليها سرد بالإنجليزي والعربي، متولّد بـ ElevenLabs TTS</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <div>
+                        <strong>مكافآت النجوم</strong>
+                        <span>الأطفال بيكسبوا نجوم لما يخلصوا القصص والاختبارات، والنجوم بتتحفظ في المتصفح بتاعهم</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <div>
+                        <strong>أنشطة تفاعلية</strong>
+                        <span>Drag&#8209;and&#8209;drop، واختبارات بترد عليك على طول، وعناصر تدوس عليها وتكتشفها</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <div>
+                        <strong>متصمم للموبايل من الأول</strong>
+                        <span>تنقّل بالسحب، ووضع الشاشة الكاملة، وتصميم responsive للموبايل والتابلت</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <div>
+                        <strong>إنجليزي وعربي</strong>
+                        <span>تبديل كامل بين اللغتين مع دعم RTL للنص العربي</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div>
+                        <strong>من غير حسابات</strong>
+                        <span>التقدّم بيتحفظ محلي. من غير تسجيل، ومن غير جمع بيانات، وخصوصية كاملة</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>البناء مع Claude Code</h2>
+            <p>المشروع ده كان أكبر من مدونة عادية. كل صفحة قصة تجربة تفاعلية قايمة على شرايح، فيها animations واختبارات وأنشطة drag&#8209;and&#8209;drop وتشغيل صوت ومحتوى بلغتين. وClaude Code شال ده كله كـ pair programmer.</p>
+
+            <p>الشغل كان كله دردشة. كنت بوصف اللي عايزه &mdash; &laquo;&#8294;make a story about Prophet Nuh with slides, a quiz at the end, and audio narration&#8297;&raquo; &mdash; وClaude يولّد صفحة HTML كاملة بالـ inline styles، ونظام الشرايح، والـ logic بتاع الاختبار، وتوصيل الصوت. ولما كنت عايز تعديلات &mdash; &laquo;&#8294;add a drag-and-drop activity to slide 5&#8297;&raquo; &mdash; كان Claude يقرا الملف الموجود، ويفهم الـ structure، ويحط الـ feature في مكانه الصح.</p>
+
+            <p>اللي أبهرني أكتر هو إزاي Claude اتعامل مع <span class="highlight">تعقيد اللغتين</span>. النص العربي محتاج layout من اليمين للشمال، وخطوط مختلفة، وحرص في التعامل مع الكلام اللي فيه الاتجاهين مع بعض. Claude كان بيعملها صح كل مرة، وبدّل بين Poppins للإنجليزي وAmiri/Noto Sans Arabic للنص العربي، مع ستايل RTL مظبوط.</p>
+
+            <div class="quote">
+                Claude Code مكتبش كود وبس &mdash; فهم الهدف التعليمي. رتّب القصص بلغة مناسبة للسن، وحط العناصر التفاعلية في اللحظات الصح، وعمل اختبارات بتثبّت الدروس الأساسية.
+            </div>
+
+            <h2>الـ Tech Stack</h2>
+            <p>زي مشاريعي التانية، خليت الـ stack بسيط عن قصد:</p>
+
+            <p><strong>HTML وCSS وJavaScript خالص</strong> &mdash; من غير React ومن غير build tools ومن غير npm. كل صفحة قصة فيها كل اللي محتاجاه لوحدها. الموقع بيفتح فوراً، وبيشتغل أوفلاين بعد أول تحميل، وهيفضل شغّال سنين من غير صيانة.</p>
+
+            <p><strong>ElevenLabs TTS</strong> لتوليد سرد صوتي عالي الجودة. كتبت سكريبت Node.js بيقرا محتوى القصة من ملف JSON ويولّد ملفات صوت إنجليزي وعربي لكل شريحة. الصوت طالع طبيعي ودافي &mdash; بالظبط اللي محتاجه في محتوى الأطفال.</p>
+
+            <p><strong>LocalStorage</strong> لتتبّع التقدّم. من غير backend ومن غير database. اسم الطفل وعدد النجوم والقصص اللي خلّصها بيفضلوا محفوظين في المتصفح بتاعه. بسيط وخاص ومضمون.</p>
+
+            <h2>الدروس اللي اتعلمتها</h2>
+
+            <h3>محتوى الأطفال محتاج جودة أعلى</h3>
+            <p>لما بتبني للأطفال، كل حاجة بتفرق أكتر. اللغة لازم تبقى بسيطة من غير ما تكلّمهم من فوق. والتفاعل لازم يبقى مفهوم لوحده من غير تعليمات. والـ feedback لازم يبقى فوري ويشجّع. Claude ساعدني أحافظ على المستوى ده في كل صفحة.</p>
+
+            <h3>إن الموقع يبقى بلغتين صعب، بس يستاهل</h3>
+            <p>دعم الإنجليزي والعربي مكانش مجرد ترجمة نص. معناه layouts من اليمين للشمال، وخطوط مختلفة، وtracks صوت منفصلة، وتبديل سلس بين اللغتين. والتعب ده بيجيب نتيجة &mdash; بيفتح الموقع لعائلات من كل حتة في العالم.</p>
+
+            <h3>المواقع الـ static تستحمل أي تعقيد</h3>
+            <p>المشروع ده فيه شرايح تفاعلية وتشغيل صوت وdrag&#8209;and&#8209;drop واختبارات وتتبّع تقدّم ودعم للغتين &mdash; كله من غير framework ومن غير build step. وإني ألزم نفسي بالبساطة طلّع في الآخر كود أنضف وأسهل في الصيانة.</p>
+
+            <h2>شوفه بنفسك</h2>
+            <p>الموقع live على <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">hisham-abuella.github.io/Interactive-Islamic-kids-website</a>. لو عندك أطفال صغيرين أو تعرف أسرة مسلمة، شاركه معاهم. ببلاش تماماً، من غير إعلانات، ومن غير تتبّع، ومعمول بحب.</p>
+
+            <p>قصص وسور قرآن أكتر جاية في الطريق. والحلم إني أبني أكتر منصة إسلامية ممتعة ومجانية للأطفال على الويب &mdash; قصة ورا قصة.</p>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="building-wirelesshub.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">بناء WirelessHub مع Claude</span>
+            </a>
+            <a href="building-ai-server.html" class="article-nav-link next">
+                <span class="nav-label">المقال الجاي &larr;</span>
+                <span class="nav-title">بناء محرك AI شخصي</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/appearance.js?v=2" defer></script>
+    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

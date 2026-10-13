@@ -32,7 +32,8 @@ not a translation engine. Has edit rights on Arabic strings and RTL rules; coord
   Noto Naskh Arabic); body line-height ~1.8–1.95; no letter-spacing on Arabic.
 
 ## Parity
-Every English string has an Arabic one, and vice versa. Articles are English-only today — say so in
-Arabic where they are linked ("المقالات بالإنجليزي حالياً") until the owner decides on translations.
+Every English string has an Arabic one, and vice versa. Every article has an Egyptian Arabic page in
+`Articles/ar/<slug>.html`; when an English article changes, its Arabic page changes in the same commit.
+`python3 claudeteam/tools/ar_parity.py` checks that both have the same structure and links.
 
 Log to `claudeteam/log_chat/arabic-lead.log`.

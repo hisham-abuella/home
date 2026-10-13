@@ -198,7 +198,7 @@ ul.log .add { color: var(--add); }
     </table></div>
 
     <h2 id="log" data-i18n="logH">Changelog</h2>
-    <p class="sub" data-i18n="logS">Build logs, newest first. Articles are in English.</p>
+    <p class="sub" data-i18n="logS">Build logs, newest first, in English and Arabic.</p>
     <ul class="log">
       <li><span><span class="add">+</span> <a href="../Articles/two-nails-two-assistants.html?via=vibe" data-i18n="a1">Two nails, two assistants</a></span><time>2026-10</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/bedtime-stories.html?via=vibe" data-i18n="a2">Bedtime stories for a three-month-old</a></span><time>2026-10</time></li>
@@ -277,7 +277,7 @@ ul.log .add { color: var(--add); }
  "s4": "الموقع",
  "s4x": "HTML و CSS و JavaScript عادي، من غير build step، على GitHub Pages",
  "logH": "سجل التغييرات",
- "logS": "سجلات البناء من الأحدث للأقدم. المقالات بالإنجليزي حالياً.",
+ "logS": "سجلات البناء من الأحدث للأقدم، بالإنجليزي والعربي.",
  "a1": "مسمارين ومساعدين",
  "a2": "حواديت قبل النوم لطفل عمره 3 شهور",
  "a3": "بناء Wireless 101",
@@ -315,7 +315,7 @@ ul.log .add { color: var(--add); }
       ? 'هشام أبو العلا. مهندس أنظمة خلوية في Apple، وقبلها Qualcomm.\nبحب أعمل UIs مع Claude. بعمل أدوات ومواقع وكتب في وقتي الخاص، وبكتب عنها في السكة.\nجرّب: ls ~/built أو log'
       : 'Hisham Abuella — cellular systems engineer at Apple, previously Qualcomm.\nLoves creating UIs with Claude. Builds tools, sites and books in his own time and writes build logs along the way.\n<span class="dim">Try: ls ~/built, log</span>'; },
     built: function () { return ar()
-      ? a('../projects/presentation-skill/template.html', 'الـ Claude skill للعروض') + ' · نسخة عامة\n' + a('../projects/presentation-skill/claude101.html', 'GenAI و Claude 101') + ' · نسخة عامة\n' + a('../Articles/building-ai-server.html' + V, 'محرك AI شخصي') + ' · شغال عليه\n' + a('../Articles/local-voice-generation.html' + V, 'مقارنة أصوات محلية') + '\n' + a('../projects/bedtime-stories/', 'حواديت قبل النوم') + ' · ست كتب\n' + a('../Articles/building-islamic-kids.html' + V, 'موقع أطفال إسلامي') + '\n' + a('../Articles/building-wirelesshub.html' + V, 'WirelessHub') + '\n' + more('built')
+      ? a('../projects/presentation-skill/template.html', 'الـ Claude skill للعروض') + ' · نسخة عامة\n' + a('../projects/presentation-skill/claude101.html', 'GenAI و Claude 101') + ' · نسخة عامة\n' + a('../Articles/ar/building-ai-server.html' + V, 'محرك AI شخصي') + ' · شغال عليه\n' + a('../Articles/ar/local-voice-generation.html' + V, 'مقارنة أصوات محلية') + '\n' + a('../projects/bedtime-stories/', 'حواديت قبل النوم') + ' · ست كتب\n' + a('../Articles/ar/building-islamic-kids.html' + V, 'موقع أطفال إسلامي') + '\n' + a('../Articles/ar/building-wirelesshub.html' + V, 'WirelessHub') + '\n' + more('built')
       : 'claude-presentation-skill/  ' + a('../projects/presentation-skill/template.html', 'template') + '  <span class="dim">public version</span>\ngenai-claude-101/           ' + a('../projects/presentation-skill/claude101.html', 'deck') + '  <span class="dim">public version</span>\nai-engine/                  ' + a('../Articles/building-ai-server.html' + V, 'build log') + '  <span class="dim">in progress</span>\nlocal-tts-bench/            ' + a('../Articles/local-voice-generation.html' + V, 'results') + '\nbedtime-stories/            ' + a('../projects/bedtime-stories/', 'six books') + '\nislamic-kids/               ' + a('../Articles/building-islamic-kids.html' + V, 'build log') + '\nwirelesshub/                ' + a('../Articles/building-wirelesshub.html' + V, 'build log') + '\n' + more('built'); },
     stack: function () { return ar()
       ? 'الـ agent: Claude Code، ومعاه skills للشغل اللي بكرره\nمحلي: Mac Studio M4 Max، و Ollama، و Draw Things، و Voicebox\nالتعليق الصوتي: ElevenLabs Eleven v4، وبقارنه بمحركات محلية\nالموقع: HTML و CSS و JavaScript عادي، من غير build step، على GitHub Pages\n' + more('stack')
@@ -328,7 +328,7 @@ ul.log .add { color: var(--add); }
                ['building-ai-server', 'Personal AI engine', 'محرك AI شخصي', '2026-02'],
                ['building-islamic-kids', 'Islamic kids website', 'موقع أطفال إسلامي', '2026-02'],
                ['building-wirelesshub', 'WirelessHub', 'WirelessHub', '2026-02']];
-      return e.map(function (x) { return '<span class="dim">' + x[3] + '</span>  ' + a('../Articles/' + x[0] + '.html' + V, ar() ? x[2] : x[1]); }).join('\n') + '\n' + more('log'); },
+      return e.map(function (x) { return '<span class="dim">' + x[3] + '</span>  ' + a('../Articles/' + (ar() ? 'ar/' : '') + x[0] + '.html' + V, ar() ? x[2] : x[1]); }).join('\n') + '\n' + more('log'); },
     contact: function () { return ar()
       ? a('mailto:hisham.abuella1@gmail.com', 'ابعتلي إيميل') + '   ' + a('https://github.com/hisham-abuella', 'GitHub') + '   ' + a('https://www.linkedin.com/in/hisham-abuella-808b91171/', 'LinkedIn')
       : 'mail      ' + a('mailto:hisham.abuella1@gmail.com', 'hisham.abuella1@gmail.com') + '\ngithub    ' + a('https://github.com/hisham-abuella', 'hisham-abuella') + '\nlinkedin  ' + a('https://www.linkedin.com/in/hisham-abuella-808b91171/', 'hisham-abuella'); }

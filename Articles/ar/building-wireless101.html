@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>بناء Wireless 101 - هشام أبو العلا</title>
+    <meta name="description" content="إزاي ببني Wireless 101، منصة مجانية بلغتين بتعلّم الاتصالات اللاسلكية والـ DSP وأكتر، بالإنجليزي والعربي.">
+    <meta property="og:title" content="بناء Wireless 101 - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="منصة تعليمية مجانية بلغتين للاتصالات اللاسلكية ومعالجة الإشارات.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/building-wireless101.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/building-wireless101.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/building-wireless101.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/building-wireless101.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/building-wireless101.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <style>
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .course-card i {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-top: 0.2rem;
+        }
+
+        .course-card strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .course-card span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .principle-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .principle-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--hairline);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .principle-list li:last-child {
+            border-bottom: none;
+        }
+
+        .principle-list li i {
+            color: var(--accent);
+            margin-top: 0.3rem;
+        }
+
+        .course-cta {
+            margin: 1.8rem 0 0;
+            text-align: center;
+        }
+
+        .course-cta a {
+            display: inline-block;
+            padding: 13px 28px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: var(--accent-ink);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-bottom: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .course-cta a:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+            border-bottom: none;
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">بناء Wireless 101</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 28 مارس 2026</span>
+                <span><i class="fas fa-clock"></i> 6 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../building-wireless101.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">منصة تعليمية مجانية بلغتين للاتصالات اللاسلكية ومعالجة الإشارات والرياضة اللي بتشغّلهم</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/building-wireless101.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>بعد سنين من الشغل في هندسة الاتصالات اللاسلكية &mdash; من الدكتوراه في اتصالات الضوء المرئي لحد وظايف في شركات بتبني أنظمة cellular &mdash; فيه حاجة كانت دايماً مضايقاني: <span class="highlight">فجوة المعرفة</span>. مصادر ممتازة كتير في المجال ده إما ورا paywall، أو مدفونة في كتب تقيلة، أو موجودة بالإنجليزي بس. وأنا كنت عايز أغيّر ده.</p>
+
+            <p><a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">Wireless 101</a> منصة تعليمية مفتوحة بتعلّم الاتصالات اللاسلكية، ومعالجة الإشارات الرقمية، والإحصاء، والـ&nbsp;machine learning، والجبر الخطي، والـ&nbsp;generative AI &mdash; كله ببلاش، بـ<strong>الإنجليزي والعربي</strong>.</p>
+
+            <h2>ليه بعمل ده</h2>
+
+            <p>الدافع جه من حتتين:</p>
+
+            <h3>المعرفة لازم تبقى مجانية</h3>
+            <p>لما كنت بدرس الاتصالات اللاسلكية، كنت بقعد ساعات أدوّر على شرح واضح لمفاهيم زي الـ&nbsp;OFDM أو الـ&nbsp;MIMO beamforming أو تحويلات فورييه. وأحسن المصادر كانت غالباً مبعترة بين كتب غالية، وأبحاث أكاديمية مقفولة، وكورسات جامعية بتكلف آلاف الدولارات. وفي نفس الوقت أساسيات هندسة الاتصالات اللاسلكية ماتغيرتش &mdash; هي مبنية على فيزيا ورياضة ثابتة ومعروفة. مفيش سبب إن المعرفة دي تتقفل.</p>
+
+            <p>أنا مؤمن إن أي حد عنده فضول واتصال بالنت لازم يقدر يتعلم إزاي موبايله بيتوصل ببرج الشبكة، وإزاي الـ&nbsp;Wi&#8209;Fi بيشتغل، وإزاي الـ&nbsp;5G بيوصل لسرعاته. دي الأنظمة اللي بتوصّل مليارات الناس &mdash; وفهمها مينفعش يبقى امتياز.</p>
+
+            <h3>الناطقين بالعربي يستاهلوا محتوى تقني كويس</h3>
+            <p>في أكتر من 400 مليون ناطق بالعربي في العالم، وعدد ضخم من طلبة الهندسة في الشرق الأوسط وشمال أفريقيا بيتعلموا بالعربي. ومع كده أغلب المحتوى التقني الكويس في الاتصالات اللاسلكية موجود بالإنجليزي بس. ده مش مجرد إزعاج &mdash; ده عائق حقيقي قدام التعلّم.</p>
+
+            <p>في Wireless 101، كل كورس متاح بالعربي بالكامل بتنسيق <strong>من اليمين للشمال (RTL)</strong> صح. ومش ترجمة آلية اتعملت في الآخر &mdash; المحتوى العربي متعمل عشان يتقرا بشكل طبيعي، والمصطلحات التقنية بتتعرض بالعربي ومعاها مقابلها الإنجليزي المتداول عشان الطلبة يشتغلوا باللغتين.</p>
+
+            <h2>فيه إيه جوه</h2>
+
+            <p>المنصة دلوقتي فيها سبع كورسات مترابطة، وكل واحد متصمم يبني على التانيين:</p>
+
+            <div class="course-grid stagger">
+                <div class="course-card">
+                    <i class="fas fa-wifi"></i>
+                    <div>
+                        <strong>Wireless Communications 101</strong>
+                        <span>إرسال الإشارات، والـ&nbsp;modulation، والهوائيات، وموديلات القنوات، والبروتوكولات الحديثة من الـ&nbsp;Wi&#8209;Fi للـ 5G</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-wave-square"></i>
+                    <div>
+                        <strong>Digital Signal Processing 101</strong>
+                        <span>الـ&nbsp;sampling، وتحويلات فورييه، وتصميم الفلاتر، والتحليل الطيفي &mdash; الرياضة اللي بتخلّي اللاسلكي يشتغل</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <div>
+                        <strong>Statistics 101</strong>
+                        <span>الاحتمالات، والتوزيعات، واختبار الفرضيات، وتحليل بيانات حقيقية للمهندسين</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <strong>Machine Learning 101</strong>
+                        <span>الـ&nbsp;classification، والشبكات العصبية، والـ&nbsp;clustering، وتقييم الموديلات &mdash; الـ&nbsp;ML بعين المهندس</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-vector-square"></i>
+                    <div>
+                        <strong>Linear Algebra 101</strong>
+                        <span>المتجهات، والمصفوفات، والقيم الذاتية، وتطبيقاتها في معالجة الإشارات والـ&nbsp;ML</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <div>
+                        <strong>GenAI 101</strong>
+                        <span>أساسيات الـ&nbsp;generative AI &mdash; الـ&nbsp;transformers، والـ&nbsp;LLMs، والـ&nbsp;prompt engineering، والبناء بموديلات AI</span>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                    <div>
+                        <strong>GenAI Engineering 102</strong>
+                        <span>ما بعد الأساسيات &mdash; بناء أدوات حقيقية وإطلاقها بالـ&nbsp;agents وClaude Code وworkflows الإنتاج</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="course-cta">
+                <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" rel="noopener">شوف الكورسات السبعة كلها</a>
+            </p>
+
+            <h2>الأسلوب: التعلّم بالحدوتة</h2>
+
+            <p>الكتب التقليدية بتقدّم المعلومة في بلوكات نص كثيفة مليانة معادلات. ده بيمشي مع ناس، بس مع متعلمين كتير &mdash; خصوصاً اللي بيقابلوا المفاهيم دي لأول مرة &mdash; ممكن يحسّسهم إن الموضوع تقيل أوي.</p>
+
+            <p>Wireless 101 بيستخدم <strong>أسلوب الحدوتة</strong> بمحتوى مقسّم لقطع صغيرة تسحبها بإصبعك. كل درس بيتفرد زي حكاية: دي المشكلة، ودي أهميتها، ودي الـ&nbsp;intuition، ودي الرياضة اللي بتصيغها. والرسوم التفاعلية والأنيميشن موجودة في كل حتة عشان تشوف إيه اللي بيحصل لما تغيّر parameter، مش بس تقرا عنه.</p>
+
+            <p>وفيه كمان <strong>تسجيل صوتي</strong> تقدر تشغّله لكل درس. فيه ناس بتتعلم أحسن بالسمع، والتسجيل معناه إنك تقدر تستوعب المادة حتى لو مش قاعد قدام شاشة.</p>
+
+            <h2>مبادئ التصميم</h2>
+
+            <ul class="principle-list stagger">
+                <li>
+                    <i class="fas fa-lock-open"></i>
+                    <div><strong>مفيش paywall، أبداً.</strong> المنهج كله مجاني. المعرفة اللي بتوصّل العالم لازم تبقى متاحة لكل اللي فيه.</div>
+                </li>
+                <li>
+                    <i class="fas fa-language"></i>
+                    <div><strong>بلغتين من الأساس.</strong> مش مترجم في الآخر &mdash; العربي والإنجليزي الاتنين في المقدمة، بتنسيق أصلي وصياغة طبيعية.</div>
+                </li>
+                <li>
+                    <i class="fas fa-eye"></i>
+                    <div><strong>الصورة الأول.</strong> أي مفهوم ينفع يتعرض بصرياً، بيتعرض. الأنيميشن بيبني الحدس أسرع من المعادلات لوحدها.</div>
+                </li>
+                <li>
+                    <i class="fas fa-hands"></i>
+                    <div><strong>اتعلم بالعمل.</strong> المعامل التفاعلية بتخليك تجرّب parameters حقيقية وتشوف النتيجة على طول.</div>
+                </li>
+                <li>
+                    <i class="fas fa-road"></i>
+                    <div><strong>اربط النظرية بالتطبيق.</strong> كل موديول بيوصّل الرياضة بأنظمة حقيقية &mdash; من النوع اللي هتقابله في الشغل.</div>
+                </li>
+            </ul>
+
+            <h2>بناء بالـ&nbsp;AI، ومراجعة من مهندسين</h2>
+
+            <p>المحتوى بيتعمل باستخدام <span class="highlight">Claude</span> في التوليد، بس كل موديول بيعدّي على مراجعة هندسية للدقة التقنية. الـ&nbsp;AI ممتاز في كتابة شروحات واضحة وترتيب المناهج، بس هندسة الاتصالات اللاسلكية محتاجة دقة &mdash; علامة +/− غلط في معادلة beamforming أو وصف غلط لموديل قناة ممكن يضلل الطلبة. وخطوة المراجعة البشرية بتتأكد إن المحتوى مش بس مكتوب كويس، لكن صح كمان.</p>
+
+            <h2>الجاي إيه</h2>
+
+            <p>Wireless 101 مشروع حي. الكورسات السبعة متنظمة وبتكبر، والهدف إني أفضل أوسّع المحتوى، وأضيف معامل تفاعلية أكتر، وأعمّق التغطية العربية. لو انت مهندس اتصالات، أو طالب، أو حد عنده فضول يعرف إزاي الإشارات اللي مش بتتشاف حواليك بتشتغل فعلاً &mdash; <a href="https://hisham-abuella.github.io/Wireless-101/" target="_blank" class="site-link">تعالى اتعلم معانا</a>.</p>
+
+            <p>ولو بتتكلم عربي، ابعته لحد ممكن يستفيد منه. ده الهدف كله &mdash; معرفة توصل للناس اللي محتاجاها، باللغة اللي بيفكروا بيها.</p>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="local-voice-generation.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">توليد الصوت من النص بموديلات محلية</span>
+            </a>
+            <a href="bedtime-stories.html" class="article-nav-link next">
+                <span class="nav-label">المقال الجاي &larr;</span>
+                <span class="nav-title">حواديت قبل النوم لطفل عنده تلات شهور</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/appearance.js?v=2" defer></script>
+    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
