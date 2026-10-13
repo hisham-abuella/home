@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the source of truth. If anything else in the repo disagrees, this wins.
 
-**Repository.** Personal site of Hisham Abuella, https://hisham-abuella.github.io/home/ (GitHub
-Pages). Vanilla HTML, CSS and JS, no build step. Always maintain the existing style.
+**Repository.** Personal site of Hisham Abuella, https://www.hishamabuella.com/ (GitHub Pages,
+custom domain in `CNAME`). Vanilla HTML, CSS and JS, no build step. Always maintain the existing style.
 
 **Front page.** `index.html` is the reader gateway ("Tune in"): a radio-tuner metaphor, each
 reader type a 5G band. Four tracks plus "Open the full site". If nothing is chosen in 30 seconds
@@ -57,6 +57,11 @@ garble Arabic). See README "Brand".
   with visible light). The vital-signs work has publications but no patent.
 - No invented facts. Sources: `cv.html`, `home.html`, the articles.
 - English and Egyptian Arabic change together.
+- Every page carries a canonical link and `og:url` on www.hishamabuella.com; the gateway and the
+  tracks also carry `hreflang` en / ar (`?lang=ar`) / x-default. Screen-reader labels change
+  language too (`data-i18n-aria`, `data-i18n-alt`).
+- When a shared script's behaviour changes, bump its `?v=` tag in every page that loads it, so
+  no browser pairs new HTML with an old cached script.
 - Every change is checked on phone (390px) and laptop (1440px), light and dark; contrast at
   least 4.5:1 for body text; no horizontal scroll; reduced motion respected.
 

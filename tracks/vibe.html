@@ -8,6 +8,11 @@
 <meta property="og:title" content="Hisham Abuella — For Vibe Coders">
 <meta property="og:description" content="Things I build with Claude, how I work, and build logs, as a terminal.">
 <meta property="og:type" content="website">
+<link rel="canonical" href="https://www.hishamabuella.com/tracks/vibe.html">
+<meta property="og:url" content="https://www.hishamabuella.com/tracks/vibe.html">
+<link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/tracks/vibe.html">
+<link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/tracks/vibe.html?lang=ar">
+<link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/tracks/vibe.html">
 <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -148,9 +153,9 @@ ul.log .add { color: var(--add); }
     <div class="screen" id="screen" aria-live="polite"></div>
     <form class="prompt" id="form" autocomplete="off">
       <label for="cmd">hisham@ca ~ %</label>
-      <input id="cmd" type="text" spellcheck="false" autocapitalize="off" aria-label="Type a command, for example help" placeholder="type help">
+      <input id="cmd" type="text" spellcheck="false" autocapitalize="off" aria-label="Type a command, for example help" data-i18n-aria="ariaCmd" placeholder="type help">
     </form>
-    <div class="cmds" aria-label="Commands">
+    <div class="cmds" aria-label="Commands" data-i18n-aria="ariaCmds">
       <button type="button" data-run="whoami">whoami</button>
       <button type="button" data-run="ls ~/built">ls ~/built</button>
       <button type="button" data-run="stack">stack</button>
@@ -208,13 +213,13 @@ ul.log .add { color: var(--add); }
       <p data-i18n="cS">Building something with Claude, or running models locally? Come say hi.</p>
       <a href="mailto:hisham.abuella1@gmail.com" data-i18n="email">Email me</a><a href="https://github.com/hisham-abuella">GitHub</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a>
     </div>
-  <section class="ident" aria-label="Contact">
-    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+  <section class="ident" aria-label="Contact" data-i18n-aria="ariaContact">
+    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella" data-i18n-alt="idName"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
     <div class="ident-actions">
       <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
       <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
     </div>
-    <nav class="ident-social" aria-label="Social links">
+    <nav class="ident-social" aria-label="Social links" data-i18n-aria="ariaSocial">
       <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
       <a href="https://github.com/hisham-abuella" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
       <a href="https://scholar.google.com/citations?user=51HWj54AAAAJ" aria-label="Google Scholar"><i class="fas fa-graduation-cap" aria-hidden="true"></i></a>
@@ -225,7 +230,7 @@ ul.log .add { color: var(--add); }
   </div>
 </div>
 
-<nav class="dock" aria-label="Commands">
+<nav class="dock" aria-label="Commands" data-i18n-aria="ariaCmds">
   <button type="button" data-run="whoami">whoami</button>
   <button type="button" data-run="ls ~/built">ls ~/built</button>
   <button type="button" data-run="stack">stack</button>
@@ -286,7 +291,7 @@ ul.log .add { color: var(--add); }
  "idLine": "مسلم | مهندس أنظمة خلوية",
  "idLoc": "كاليفورنيا، أمريكا",
  "idCopy": "انسخ الإيميل",
- "idCv": "اعرض الـ CV"
+ "idCv": "اعرض الـ CV", "ariaCmd": "اكتب أمر، مثلاً help", "ariaCmds": "الأوامر", "ariaContact": "التواصل", "ariaSocial": "حساباتي على السوشيال ميديا"
 }
 </script>
 <script src="assets/i18n.js"></script>
