@@ -58,7 +58,7 @@
    which base.css styles. Anything left over stays hidden. */
 .theme-toggle { display: none; }
 
-.nav-container .appearance { margin-left: auto; }
+.nav-container .appearance { margin-inline-start: auto; }
 
 /* ==========================================================================
    Article shell
@@ -151,7 +151,7 @@
 .article-content a:hover { border-bottom-color: var(--accent); }
 
 .article-content ul,
-.article-content ol { margin: 0 0 20px 22px; }
+.article-content ol { margin: 0 0 20px; margin-inline-start: 22px; }
 
 .article-content li { margin-bottom: 8px; }
 
@@ -178,10 +178,13 @@
 .quote {
   position: relative;
   margin: 32px 0;
-  padding: 24px 28px 24px 30px;
+  padding: 24px 28px;
+  padding-inline-start: 30px;
   border: 1px solid var(--card-border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  border-inline-start: 3px solid var(--accent);
+  border-radius: var(--card-radius);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
   background: var(--card-bg);
   color: var(--text-primary);
   font-size: 1.0625rem;
@@ -264,7 +267,7 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
 }
 
 .model-table th {
-  text-align: left;
+  text-align: start;
   padding: 12px 14px;
   font-weight: 600;
   font-size: 0.8125rem;
@@ -325,7 +328,7 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
   letter-spacing: -0.01em;
 }
 
-.article-nav-link.next { text-align: right; }
+.article-nav-link.next { text-align: end; }
 
 .article-footer {
   margin-top: 48px;
@@ -374,7 +377,7 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
 }
 
 .listen-label strong { font-weight: 600; }
-.listen-label i { color: var(--accent); margin-right: 8px; }
+.listen-label i { color: var(--accent); margin-inline-end: 8px; }
 .listen-label span { font-size: 0.8125rem; font-weight: 400; color: var(--text-tertiary); }
 .listen audio { flex: 1 1 260px; min-width: 0; height: 40px; }
 
@@ -386,12 +389,115 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
   /* The appearance control cannot sit beside the logo and back link at this
      width, so let the bar wrap and give it its own row. */
   .nav-container { padding: 12px 18px; gap: 10px 14px; flex-wrap: wrap; }
-  .nav-container .appearance { margin-left: auto; }
+  .nav-container .appearance { margin-inline-start: auto; }
   /* Four choices (Auto, Dark, Light, Contrast) fit a phone once the label goes
      and the buttons tighten; the buttons name themselves. */
   .nav-container #appearance-label { display: none; }
   .nav-container .appearance-set button { padding: 6px 10px; }
   .article-container { padding: 0 18px 32px; }
   .article-content { font-size: 1rem; }
-  .article-nav-link.next { text-align: left; }
+  .article-nav-link.next { text-align: start; }
+}
+
+/* ==========================================================================
+   Language link (last item in .article-meta): "Read in English" on Arabic
+   pages, "اقرا بالعربي" on English ones. A quiet accent text link.
+   ========================================================================== */
+
+.article-meta .lang-switch {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 2px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.article-meta .lang-switch:hover { border-bottom-color: var(--accent); }
+.article-meta .lang-switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Arabic text on an English page, Latin text on an Arabic page */
+.lang-switch:lang(ar) { font-family: 'IBM Plex Sans Arabic', var(--font-body); letter-spacing: 0; }
+.lang-switch:lang(en) { font-family: var(--font-body); }
+
+/* ==========================================================================
+   Arabic (html[dir="rtl"], lang ar-EG)
+
+   One stylesheet serves both directions: layout above is logical. Below are
+   typography for Arabic and fixes for physical left/right that the articles'
+   own inline <style> blocks use. Selectors start with html[dir="rtl"] so they
+   outrank those inline rules without !important.
+
+   Font order: the Latin face first, IBM Plex Sans Arabic second. The Latin
+   faces have no Arabic glyphs, so Arabic falls through to Plex Arabic and
+   Latin runs keep the page's (or skin's) own face.
+   ========================================================================== */
+
+html[dir="rtl"] {
+  --font-body: 'Manrope', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+html[dir="rtl"][data-skin="catalogue"]     { --font-body: 'Archivo', 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+html[dir="rtl"][data-skin="constellation"] { --font-body: 'Bricolage Grotesque', 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+html[dir="rtl"][data-skin="terminal"]      { --font-body: 'IBM Plex Mono', 'IBM Plex Sans Arabic', ui-monospace, monospace; }
+html[dir="rtl"][data-skin="journal"]       { --font-body: 'IBM Plex Sans', 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+
+/* Arabic joins letters: no tracking, no case transforms, roomier lines.
+   :not(#_) lifts the specificity above single-class inline rules. */
+html[dir="rtl"] body *:not(#_) { letter-spacing: 0; text-transform: none; }
+
+html[dir="rtl"] .article-content { line-height: 1.9; }
+html[dir="rtl"] .article-subtitle { line-height: 1.8; }
+html[dir="rtl"] .quote { line-height: 1.85; }
+html[dir="rtl"] .article-title,
+html[dir="rtl"] .article-content h2,
+html[dir="rtl"] .article-content h3,
+html[dir="rtl"] .hero-title { line-height: 1.4; }
+html[dir="rtl"] .article-content li { line-height: 1.85; }
+html[dir="rtl"] .article-meta { line-height: 1.6; }
+
+/* Code stays left to right and does not scramble the sentence around it */
+html[dir="rtl"] pre,
+html[dir="rtl"] kbd,
+html[dir="rtl"] samp,
+html[dir="rtl"] .search-dump,
+html[dir="rtl"] [dir="ltr"] { direction: ltr; text-align: left; }
+html[dir="rtl"] code { direction: ltr; unicode-bidi: isolate; }
+html[dir="rtl"] pre code { unicode-bidi: normal; }
+html[dir="rtl"] kbd,
+html[dir="rtl"] samp { unicode-bidi: isolate; }
+html[dir="rtl"] bdi { unicode-bidi: isolate; }
+
+/* Quote bar and call-outs sit on the right; rounded corners on the left */
+html[dir="rtl"] .update-note {
+  border-left: 0;
+  border-right: 3px solid var(--accent);
+  border-radius: 12px 0 0 12px;
+}
+
+/* Timeline (journey) */
+html[dir="rtl"] .timeline::before { left: auto; right: 20px; }
+html[dir="rtl"] .timeline-item { padding-left: 0; padding-right: 60px; }
+html[dir="rtl"] .timeline-item::before { left: auto; right: 11px; }
+
+/* Icon before text in comparison lists */
+html[dir="rtl"] .comparison-card ul li::before { margin-right: 0; margin-left: 0.5rem; }
+
+/* Prev/next: the English "next" card is right-aligned, so in Arabic it is left-aligned (end) */
+html[dir="rtl"] .article-nav-link { text-align: start; }
+html[dir="rtl"] .article-nav-link.next { text-align: end; }
+
+/* Tables read right to left; the header cell follows */
+html[dir="rtl"] .model-table th { text-align: start; }
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .timeline-item { padding-left: 0; padding-right: 40px; }
+  html[dir="rtl"] .timeline::before { left: auto; right: 10px; }
+  html[dir="rtl"] .timeline-item::before { left: auto; right: 1px; }
+}
+
+@media (max-width: 660px) {
+  html[dir="rtl"] .article-nav-link.next { text-align: start; }
 }

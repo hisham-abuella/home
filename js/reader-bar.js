@@ -3,7 +3,8 @@
    snippet from the visitor's reader track), add the track's own controls:
    a chip back to the track page (catalogue = recruiter, constellation = engineer,
    terminal = vibe coder, journal = learner), "change" to the gateway (index.html?choose), and the same
-   Auto / Light / Dark pill. The pill drives the page's appearance switch, so
+   Auto / Light / Dark pill. On Arabic pages (dir="rtl") the labels are Egyptian Arabic and the
+   links open the Arabic track and gateway. The pill drives the page's appearance switch, so
    there is one preference, shared with the footer and with the tracks.
 
    Load after js/appearance.js:  <script src="../js/reader-bar.js" defer></script>
@@ -16,39 +17,44 @@
     var skin = root.getAttribute('data-skin');
     if (!skin) return;
 
-    // Where the reader tracks live (tracks/ at the site root).
-    var TRACKS = '../tracks/';
+    // Links are built from the site root, found from this script's own address, so the bar
+    // works from Articles/ and from the Arabic pages in Articles/ar/.
+    var script = document.currentScript || document.querySelector('script[src*="reader-bar.js"]');
+    var SITE = new URL('../', script.src).href;
+    var ar = root.dir === 'rtl';
     var TRACK = {
-        catalogue: { page: 'recruiter.html', label: 'Recruiter track' },
-        constellation: { page: 'engineer.html', label: 'Engineer track' },
-        terminal:  { page: 'vibe.html',      label: 'Vibe coder track' },
-        journal:   { page: 'learner.html',   label: 'Learner track' }
+        catalogue: { page: 'recruiter.html', label: ['Recruiter track', 'مسار التوظيف'] },
+        constellation: { page: 'engineer.html', label: ['Engineer track', 'مسار المهندسين'] },
+        terminal:  { page: 'vibe.html',      label: ['Vibe coder track', 'مسار الـ vibe coding'] },
+        journal:   { page: 'learner.html',   label: ['Learner track', 'مسار التعلّم'] }
     }[skin];
     if (!TRACK) return;
+    var T = function (en, arabic) { return ar ? arabic : en; };
 
-    var CHOICES = [['auto', 'Auto'], ['daylight', 'Light'], ['midnight', 'Dark'], ['contrast', 'Contrast']];
+    var CHOICES = [['auto', T('Auto', 'تلقائي')], ['daylight', T('Light', 'فاتح')],
+                   ['midnight', T('Dark', 'غامق')], ['contrast', T('Contrast', 'تباين عالي')]];
 
     var bar = document.createElement('div');
     bar.className = 'reader-bar';
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Reader controls');
+    bar.setAttribute('aria-label', T('Reader controls', 'إعدادات القراية'));
 
     var track = document.createElement('div');
     track.className = 'reader-track';
     var back = document.createElement('a');
-    back.href = TRACKS + TRACK.page;
-    back.textContent = TRACK.label;
+    back.href = SITE + 'tracks/' + TRACK.page + (ar ? '?lang=ar' : '');
+    back.textContent = TRACK.label[ar ? 1 : 0];
     var change = document.createElement('a');
     change.className = 'reader-change';
-    change.href = '../index.html?choose';
-    change.textContent = 'change';
+    change.href = SITE + 'index.html?choose' + (ar ? '&lang=ar' : '');
+    change.textContent = T('change', 'غيّر');
     track.appendChild(back);
     track.appendChild(change);
 
     var pill = document.createElement('div');
     pill.className = 'reader-theme';
     pill.setAttribute('role', 'group');
-    pill.setAttribute('aria-label', 'Theme');
+    pill.setAttribute('aria-label', T('Theme', 'المظهر'));
     CHOICES.forEach(function (c) {
         var b = document.createElement('button');
         b.type = 'button';

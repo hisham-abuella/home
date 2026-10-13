@@ -40,6 +40,13 @@ sets a skin (catalogue, constellation, terminal, journal in `css/skins/`) plus t
 (`js/reader-bar.js`, `css/skins/reader-bar.css`): track chip and the same Auto/Light/Dark pill.
 `?via=site` clears it. No track means articles look exactly as before. Contrast is never skinned.
 
+**Articles are bilingual.** Every article has an Egyptian Arabic page at `Articles/ar/<slug>.html`
+(RTL, same structure, links and images; text translated only). Each page links the other
+(`.lang-switch`) and both carry `hreflang`. A track in Arabic opens the Arabic articles, and the
+reader bar speaks Arabic there. An English article change and its Arabic change ship together;
+`python3 claudeteam/tools/ar_parity.py` checks structure and leftover English. Arabic narration
+goes in `audio/articles/ar/<slug>.mp3` (the player stays hidden until it exists).
+
 **Theme preference is shared.** Tracks store `reader-theme` (auto/light/dark); the site stores
 `appearance` (auto/midnight/daylight/contrast). Each writes both.
 
@@ -73,7 +80,8 @@ garble Arabic). See README "Brand".
 - `home.html` - the full site (the former homepage), with the Auto/Dark/Light/Contrast appearances
 - `tracks/` - the four reader tracks (`recruiter`, `engineer`, `vibe`, `learner`) and `tracks/assets/`
 - `cv.html` - plain white print-ready CV
-- `Articles/` - long-form posts; `audio/articles/` holds their narration
+- `Articles/` - long-form posts; `Articles/ar/` their Egyptian Arabic pages; `audio/articles/` holds
+  their narration
 - `css/` - `base.css` (layout, no colour), `themes/*.css` (tokens), `article.css`, `cv.css`,
   `skins/` (catalogue, constellation, terminal, journal, reader-bar)
 - `js/` - `appearance.js`, `reader-bar.js`, `listen.js`, `signal-field.js`, `motion.js`

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>بناء WirelessHub مع Claude - هشام أبو العلا</title>
+    <meta name="description" content="إزاي هشام أبو العلا ساعد في بناء مدونة عن هندسة الـ wireless من الصفر، وClaude Code معاه كـ AI pair programmer.">
+    <meta property="og:title" content="بناء WirelessHub مع Claude - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="إزاي ساعدت في بناء مدونة عن هندسة الـ wireless من الصفر بـ Claude Code.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/building-wirelesshub.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/building-wirelesshub.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/building-wirelesshub.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/building-wirelesshub.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/building-wirelesshub.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <style>
+        .tech-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .tech-item i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .tech-item strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .tech-item span {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">بناء WirelessHub مع Claude</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 16 فبراير 2026</span>
+                <span><i class="fas fa-clock"></i> 6 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../building-wirelesshub.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">إزاي ساعدت في بناء مدونة عن هندسة الـ wireless من الصفر، وClaude Code معايا كـ AI pair programmer</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/building-wirelesshub.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>من كام شهر، صاحبي <span class="highlight">Ahmed Elshafie</span> &mdash; Wireless Systems Engineer في Apple وIEEE Senior Member &mdash; كان عايز مكان يشارك فيه علمه الكبير في الاتصالات اللاسلكية ومعالجة الإشارات والرياضيات. كان عنده الخبرة والمقالات. اللي كان ناقصه مكان ليها على النت. وهنا جه دوري، وهنا <span class="highlight">Claude Code</span> بقى شريكي في البنا.</p>
+
+            <h2>الفكرة</h2>
+            <p>الهدف كان واضح: أبني مدونة نضيفة وسريعة وبتركز على المحتوى اسمها <a href="https://ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog/" target="_blank" class="site-link">WirelessHub</a> تخلّي مقالات أحمد التقنية تلمع. من غير frameworks تقيلة. من غير build tools. من غير npm. بس HTML وCSS وvanilla JavaScript &mdash; موقع static بيفتح فورًا وبيشتغل في أي مكان.</p>
+
+            <p>أحمد كان عنده أصلًا أكتر من 25 مقال بتغطي كل حاجة من <strong>الـ FFT في الحياة اليومية</strong> لـ <strong>MIMO beamforming</strong> لـ <strong>quantum wireless communication</strong>. والموقع لازم ينظّم ده كله، مع بحث وفلترة وتصنيف ودارك مود، وحتى حلقات بودكاست مدمجة.</p>
+
+            <h2>الشغل مع Claude Code</h2>
+            <p>Claude Code ماكانش مجرد أداة autocomplete في المشروع ده. كان شريك برمجة بجد. ده شكل الشغل عمليًا:</p>
+
+            <div class="tech-list stagger">
+                <div class="tech-item">
+                    <i class="fas fa-layer-group"></i>
+                    <div>
+                        <strong>الـ Architecture</strong>
+                        <span>Claude ساعد في تصميم الـ layout المبني على tabs، وقاعدة بيانات البحث بصيغة JSONL، ونظام الـ widgets في الـ sidebar</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-code"></i>
+                    <div>
+                        <strong>التنفيذ</strong>
+                        <span>من زرار الدارك مود لحد مشغّل البودكاست بالتقديم والتأخير وشريط التقدم &mdash; Claude كتب كود جاهز للـ production</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <strong>نظام البحث</strong>
+                        <span>بحث لايف بالكلمات المفتاحية على قاعدة بيانات JSONL بتتحمّل وقت الـ runtime، وبيدوّر في العناوين والـ tags والتصنيفات</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-paint-brush"></i>
+                    <div>
+                        <strong>لمسات التصميم</strong>
+                        <span>حركات الـ hover، وظلال الكروت، وlayouts بتتظبط على كل الشاشات، ونظام ألوان متناسق بين الثيم الفاتح والغامق</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>كنت بوصف اللي عايزه &mdash; مرة بدقة ومرة بشكل عام &mdash; وClaude يلف في الـ codebase ويفهم الـ patterns الموجودة ويعمل تغييرات راكبة على المشروع بشكل طبيعي. لما قلتله &laquo;&#8294;add GoatCounter analytics to all pages&#8297;&raquo;، Claude عدّل 27 ملف HTML، وضاف سكريبت التتبع، وعمل template للمقالات، وحدّث توثيق المشروع، كل ده في لفّة واحدة.</p>
+
+            <div class="quote">
+                أحلى حاجة في الشغل مع Claude Code إنه بيقرا قبل ما يكتب. بيفهم الـ codebase الأول، وبعدين يعمل تغييرات ماشية على الـ conventions الموجودة.
+            </div>
+
+            <h2>اللي بنيناه</h2>
+            <p>الموقع في شكله النهائي static بالكامل &mdash; مستضاف ببلاش على GitHub Pages &mdash; ومع كده بيحسّسك إنه منصة محتوى كاملة:</p>
+
+            <p><strong>تنقّل بالـ tabs</strong> بين الرئيسية والمقالات والبودكاست وعن الموقع. <strong>فلترة بالتصنيفات</strong> بـ chips وأزرار ترتيب. <strong>مقال مميز</strong> في أعلى الصفحة الرئيسية. <strong>مشغّلات بودكاست</strong> في الـ sidebar وفي tab مخصوص، بتشغيل وإيقاف وشريط تقدم وتقديم وتأخير. <strong>دارك مود</strong> بيفضل محفوظ من جلسة للتانية. <strong>بحث مباشر</strong> بيفلتر المقالات والبودكاست بالكلمة. و<strong>analytics بتحترم الخصوصية</strong> عن طريق GoatCounter.</p>
+
+            <p>ده كله بـ vanilla HTML وCSS وJS. من غير build step. من غير dependencies. كود نضيف ومقروء وبس.</p>
+
+            <h2>اللي اتعلمته</h2>
+
+            <h3>الـ AI pair programming حاجة حقيقية</h3>
+            <p>Claude Code ماكانش بيطلّع snippets من الكود وبس &mdash; كان بيفهم السياق. بيقرا الملفات الموجودة، ويمشي على نفس أسلوب الكود، ويعمل تغييرات على كذا ملف ماشية مع بعض. مسك حاجات فاتتني، واقترح طرق ماكنتش فكرت فيها.</p>
+
+            <h3>المواقع الـ static لسه بتكسب</h3>
+            <p>مفيش زهق من الـ frameworks. مفيش تحديثات dependencies. مفيش build بيفشل. الموقع بيفتح بسرعة، وبيشتغل offline بعد أول تحميل، وهيفضل شغال سنين من غير صيانة. لمدونة بتركز على المحتوى، ده بالظبط المطلوب.</p>
+
+            <h3>التوثيق بيضاعف الأثر</h3>
+            <p>كان عندنا ملف <code>CLAUDE.md</code> مفصّل، مكتوب فيه كل convention في المشروع &mdash; نظام الـ tabs، وصيغة الـ JSONL، والـ HTML structure بتاع الكارت، وكلاسات CSS للتصنيفات. يعني كل مرة أبدأ جلسة جديدة مع Claude، كان يفهم المشروع على طول ويعمل تغييرات صح من غير ما أشرح تاني.</p>
+
+            <div class="quote">
+                التوثيق الكويس مش بيساعد الناس بس. ده بيخلّي الشغل مع الـ AI أفيد بمراحل.
+            </div>
+
+            <h2>شوفه بنفسك</h2>
+            <p>WirelessHub live على <a href="https://ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog/" target="_blank" class="site-link">ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog</a>. لو بتهتم بالاتصالات اللاسلكية أو معالجة الإشارات أو الرياضيات اللي ورا الاتصال الحديث، مقالات أحمد تستاهل وقتك.</p>
+
+            <p>ولو إنت developer وعندك فضول تجرّب التطوير بمساعدة الـ AI، أقدر أقولك من تجربتي: Claude Code حاجة بجد. مش كامل، بس شريك شاطر بشكل يلفت النظر، وبيخلّي المشاريع الطموحة تحسها في إيدك.</p>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="journey.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">رحلتي</span>
+            </a>
+            <a href="building-islamic-kids.html" class="article-nav-link next">
+                <span class="nav-label">المقال الجاي &larr;</span>
+                <span class="nav-title">بناء موقع إسلامي تفاعلي للأطفال</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/appearance.js?v=2" defer></script>
+    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

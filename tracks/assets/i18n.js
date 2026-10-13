@@ -7,7 +7,8 @@
    Any button with [data-lang-toggle] flips the language; ?lang=ar opens in
    Arabic. Labels only screen readers hear change too: data-i18n-aria="key"
    swaps aria-label and data-i18n-alt="key" swaps an image's alt, from the
-   same Arabic block. Switching sets <html lang dir>, so layout written with logical
+   same Arabic block. Links to articles (Articles/<slug>.html) open the Arabic
+   version (Articles/ar/<slug>.html) while the page is in Arabic. Switching sets <html lang dir>, so layout written with logical
    properties (inline-start/end) mirrors itself without per-page RTL rules.
    ========================================================================== */
 
@@ -22,6 +23,10 @@
     var attrs = [['data-i18n-aria', 'aria-label'], ['data-i18n-alt', 'alt']];
 
     nodes.forEach(function (el) { el.dataset.en = el.innerHTML; });
+    var articleLinks = Array.prototype.filter.call(document.querySelectorAll('a[href]'), function (a) {
+        return /(^|\/)Articles\/[\w-]+\.html/.test(a.getAttribute('href'));
+    });
+    articleLinks.forEach(function (a) { a.dataset.hrefEn = a.getAttribute('href'); });
     attrs.forEach(function (a) {
         document.querySelectorAll('[' + a[0] + ']').forEach(function (el) {
             el.setAttribute(a[0] + '-en', el.getAttribute(a[1]) || '');
@@ -41,6 +46,9 @@
                 var text = isAr ? ar[el.getAttribute(a[0])] : el.getAttribute(a[0] + '-en');
                 if (text != null) el.setAttribute(a[1], text);
             });
+        });
+        articleLinks.forEach(function (a) {
+            a.setAttribute('href', isAr ? a.dataset.hrefEn.replace(/Articles\//, 'Articles/ar/') : a.dataset.hrefEn);
         });
         document.querySelectorAll('[data-lang-toggle]').forEach(function (b) {
             b.textContent = isAr ? 'English' : 'عربي';

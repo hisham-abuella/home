@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>رحلتي - هشام أبو العلا</title>
+    <meta name="description" content="من القاهرة لكاليفورنيا: رحلة هشام أبو العلا في هندسة الاتصالات اللاسلكية، وأبحاث الدكتوراه، والشغل في الصناعة.">
+    <meta property="og:title" content="رحلتي - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="من القاهرة لكاليفورنيا: رحلة تميّز في هندسة الاتصالات اللاسلكية.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/journey.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/journey.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/journey.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/journey.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/journey.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <style>
+        /* Hero Image */
+        .article-hero {
+            width: 100%;
+            height: 400px;
+            background-image: url('../../Pictures/sunset.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 20px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .article-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 53, 0.3), rgba(0, 168, 204, 0.3));
+            border-radius: 20px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            color: white;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-caption {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-hover));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 60px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 0.5rem;
+        }
+
+        /* Mobile responsive for unique elements */
+        @media (max-width: 768px) {
+            .timeline-item {
+                padding-left: 40px;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item::before {
+                left: 1px;
+            }
+
+            .article-hero {
+                height: 250px;
+                margin: 1rem 0;
+            }
+
+            .hero-overlay {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-caption {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">H</div>
+            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Content -->
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">رحلتي</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 23 أغسطس 2025</span>
+                <span><i class="fas fa-clock"></i> 10 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../journey.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">من القاهرة لكاليفورنيا: رحلة تميّز في هندسة الاتصالات اللاسلكية</p>
+
+            <div class="article-hero">
+                <div class="hero-overlay">
+                    <div class="hero-title">رحلة ابتكار</div>
+                    <div class="hero-caption">كل غروب بيقفل فصل وبيفتح فصل جديد</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/journey.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>أي رحلة ليها بداية، ورحلتي بدأت في مدينة مليانة حياة اسمها <span class="highlight">القاهرة، مصر</span>. النهارده وأنا ببص على طريقي من ضفاف النيل لمراكز الابتكار في كاليفورنيا، مبهور إزاي كل خطوة شكّلت مش بس شغلي، لكن كمان فهمي لمعنى إنك تدفع حدود تكنولوجيا الاتصالات اللاسلكية لقدام.</p>
+
+            <h2>سنين التأسيس</h2>
+            <p>وأنا بكبر في القاهرة، كان بيبهرني دايماً إزاي إشارات مش باينة تقدر تنقل أصوات وبيانات واتصالات لمسافات بعيدة. الفضول ده خلاني أدرس هندسة كهربا، ومن هناك قابلت لأول مرة التعقيد الجميل بتاع معالجة الإشارات والاتصالات اللاسلكية.</p>
+
+            <div class="quote">
+                "أحسن المهندسين مش بس بيحلوا مشاكل، دول بنّايين جسور، بيوصلوا المستحيل بالحتمي."
+            </div>
+
+            <h2>التفوق الأكاديمي وإنجاز بحثي</h2>
+            <p>رحلتي الأكاديمية دخّلتني جوه عالم <span class="highlight">الاتصالات والاستشعار بالضوء المرئي</span>. وأنا بعمل أبحاث الدكتوراه اشتغلت على مشاريع رائدة، هي اللي حددت بعد كده مسار شغلي. من أكتر الإنجازات اللي فاكرها: طورت نظام بيستخدم Raspberry Pi للتحكم في photodetector عشان يكتشف العلامات الحيوية، يعني نبضات القلب وأنماط التنفس، من الناس بتكنولوجيا الضوء المرئي.</p>
+
+            <div class="timeline stagger">
+                <div class="timeline-item">
+                    <div class="timeline-year">أبحاث الدكتوراه</div>
+                    <div class="timeline-content">
+                        <strong>نظام قياس العلامات الحيوية بالضوء المرئي</strong><br>
+                        كنت من الأوائل في اكتشاف العلامات الحيوية من غير تدخل جراحي، باستخدام تكنولوجيا الاستشعار بالضوء المرئي. البحث ده وصّل لأوراق علمية في مؤتمرات IEEE مرموقة، وأثبت إمكانيات الاستشعار الضوئي في تطبيقات الرعاية الصحية.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">الأوراق العلمية</div>
+                    <div class="timeline-content">
+                        <strong>أكتر من 10 أوراق علمية</strong><br>
+                        ساهمت في المجتمع العلمي بأبحاث بتغطي الاتصالات بالضوء المرئي، وأنظمة الـ&nbsp;OFDM، وعمل نماذج أولية لأنظمة لاسلكية، وتطبيقات الـ&nbsp;machine learning في الاتصالات اللاسلكية.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">براءة اختراع</div>
+                    <div class="timeline-content">
+                        <strong>حاصل على براءة اختراع أمريكية</strong><br>
+                        حصلت على حقوق الملكية الفكرية لحلول مبتكرة في تكنولوجيا الاتصالات اللاسلكية، وده بيسد الفجوة بين البحث الأكاديمي والتطبيقات العملية.
+                    </div>
+                </div>
+            </div>
+
+            <h2>الانتقال للصناعة والنمو</h2>
+            <p>الانتقال من الأكاديميا للصناعة جاب تحديات وفرص جديدة. وبـ <span class="highlight">أكتر من 4 سنين خبرة في الصناعة</span>، اتشرفت أشتغل على مشاريع في أحدث ما وصلت له التكنولوجيا، منها:</p>
+
+            <h3>مجالات الخبرة الأساسية</h3>
+            <p>• <strong>المحاكاة والنمذجة</strong>: تطوير نماذج متقدمة لتحليل أداء الأنظمة اللاسلكية<br>
+            • <strong>تنفيذ الـ&nbsp;fixed&#8209;point</strong>: تحسين الخوارزميات عشان تتنفذ على الـ&nbsp;hardware في الأنظمة اللاسلكية<br>
+            • <strong>الـ&nbsp;RF Digital Front&#8209;end</strong>: تصميم وتنفيذ حلول معالجة الإشارات الرقمية لأنظمة الـ&nbsp;RF<br>
+            • <strong>الـ&nbsp;Digital Pre&#8209;Distortion</strong>: رفع كفاءة الـ&nbsp;power amplifier في أجهزة الإرسال اللاسلكية<br>
+            • <strong>تقدير معاملات القناة</strong>: تطوير خوارزميات لوصف القناة اللاسلكية بدقة<br>
+            • <strong>تقدير القناة في الـ&nbsp;5G Baseband</strong>: المساهمة في تطوير الجيل الجاي من تكنولوجيا الاتصالات اللاسلكية</p>
+
+            <h2>الإتقان التقني والتعلم المستمر</h2>
+            <p>طول رحلتي أتقنت مجموعة متنوعة من الأدوات والتقنيات بقت أساسية في شغلي. من <span class="highlight">MATLAB وLabVIEW</span> لنمذجة الأنظمة والتعامل مع الـ&nbsp;hardware، لحد <span class="highlight">&#8294;C/C++&#8297; وPython</span> لتطوير الخوارزميات، وكل أداة فتحت إمكانيات جديدة للابتكار.</p>
+
+            <p>دخول <span class="highlight">خوارزميات الـ&nbsp;machine learning</span> في الاتصالات اللاسلكية كان ممتع جداً. وأنا شايف الـ&nbsp;AI بيغيّر طريقتنا في تقدير القناة ومعالجة الإشارات وتحسين الأنظمة، اتأكدت أكتر إن المستقبل للمهندسين اللي يقدروا يربطوا بين أكتر من مجال.</p>
+
+            <h2>من مصر لكاليفورنيا: نظرة عالمية</h2>
+            <p>الانتقال من القاهرة لكاليفورنيا ما كانش مجرد تغيير مكان، كان تحول ثقافي ومهني. البيئة المتنوعة في كاليفورنيا، اللي بيحركها الابتكار، عرّفتني على طرق مختلفة في حل المشاكل، وأثرت نظرتي لاتجاهات التكنولوجيا في العالم.</p>
+
+            <div class="quote">
+                "الابتكار ما يعرفش حدود. أحسن الحلول بتطلع لما وجهات نظر مختلفة تتعاون عشان أهداف مشتركة."
+            </div>
+
+            <h2>تركيزي دلوقتي ورؤيتي للمستقبل</h2>
+            <p>النهارده، كـ <span class="highlight">Cellular Systems Engineer</span> عندي أكتر من 9 سنين خبرة بحثية، أنا متحمس إني أدفع حدود الممكن في الاتصالات اللاسلكية. شغلي لسه مركز على نقطة التقاء البحث النظري بالتنفيذ العملي، وعيني دايماً على حل تحديات الاتصال الحقيقية.</p>
+
+            <p>صناعة الاتصالات اللاسلكية في نقطة تحول. مع <span class="highlight">تسارع انتشار الـ&nbsp;5G</span> و<span class="highlight">بداية أبحاث الـ&nbsp;6G</span>، إحنا شايفين الاتصالات اللاسلكية بتتلاقى مع الـ&nbsp;AI والـ&nbsp;IoT وتقنيات ناشئة هتغيّر طريقة اتصالنا وتواصلنا.</p>
+
+            <h2>نظرة للقدام</h2>
+            <p>وأنا مكمّل في الرحلة دي، متحمس للفرص اللي جاية. خلفيتي البحثية وخبرتي في الصناعة وشغفي بالابتكار بيخلوني أقدر أساهم بشكل حقيقي في الجيل الجاي من تقنيات الاتصالات اللاسلكية.</p>
+
+            <p>سواء بطوّر خوارزميات معالجة إشارات أكفأ، أو بعمل تطبيقات استشعار جديدة، أو بساهم في توحيد معايير الأنظمة اللاسلكية المستقبلية، أنا ملتزم إني أدفع حدود الممكن في الاتصالات اللاسلكية.</p>
+
+            <div class="quote">
+                "رحلة ألف ابتكار بتبدأ بفكرة واحدة والشجاعة إنك تمشي وراها."
+            </div>
+
+            <p>دي حكايتي، من القاهرة لكاليفورنيا، ومن الفضول للخبرة، ومن البحث للتنفيذ. بس الأهم إن ده لسه مجرد بداية. أحلى الفصول لسه ما اتكتبتش.</p>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <div></div>
+            <a href="building-wirelesshub.html" class="article-nav-link next">
+                <span class="nav-label">المقال الجاي &larr;</span>
+                <span class="nav-title">بناء WirelessHub مع Claude</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/appearance.js?v=2" defer></script>
+    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
