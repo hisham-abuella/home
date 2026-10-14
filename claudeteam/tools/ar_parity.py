@@ -1,7 +1,8 @@
 """Check an Arabic article against its English source.
 
     python3 claudeteam/tools/ar_parity.py journey        # one article
-    python3 claudeteam/tools/ar_parity.py                # all of them
+    python3 claudeteam/tools/ar_parity.py home           # the full site: home.html vs ar/home.html
+    python3 claudeteam/tools/ar_parity.py                # all articles plus home
 
 Passes when both pages have the same body structure (same tags in the same
 order, same href/src targets once the extra ../ is allowed for) and the Arabic
@@ -38,18 +39,28 @@ class Walk(HTMLParser):
         if self.body and not any(t in SKIP for t in self.stack):
             self.text.append(' '.join(data.split()))
 
-def norm(link):
+def norm_article(link):
     link = re.sub(r'^(\.\./)+', '../', link)
     link = link.replace('audio/articles/ar/', 'audio/articles/')
     link = re.sub(r'[?&]lang=ar$', '', link)
+    link = link.replace('../ar/home.html', '../home.html')
     link = re.sub(r'^\.\./(\w[\w-]*\.html)$', r'\1', link)  # Arabic page's "Read in English" link
     link = re.sub(r'^ar/', '', link)                         # English page's "Arabic" link
     return link
 
+def norm_home(link):
+    link = link.replace('/Wireless-101/ar/', '/Wireless-101/')  # Arabic pages open Wireless 101 in Arabic
+    link = re.sub(r'^(\.\./)+', '', link)
+    link = link.replace('Articles/ar/', 'Articles/').replace('ar/home.html', 'home.html')
+    return re.sub(r'[?&]lang=ar$', '', link)
+
 def check(slug):
     en, ar = Walk(), Walk()
-    en.feed(open(f'Articles/{slug}.html', encoding='utf-8').read())
-    ar.feed(open(f'Articles/ar/{slug}.html', encoding='utf-8').read())
+    pair = ('home.html', 'ar/home.html') if slug == 'home' else (f'Articles/{slug}.html', f'Articles/ar/{slug}.html')
+    en.feed(open(pair[0], encoding='utf-8').read())
+    ar.feed(open(pair[1], encoding='utf-8').read())
+    global norm
+    norm = norm_home if slug == 'home' else norm_article
     problems = []
     if en.tags != ar.tags:
         for i, (x, y) in enumerate(zip(en.tags, ar.tags)):
@@ -66,7 +77,7 @@ def check(slug):
         problems.append(f'{len(words)} English run(s) of 6+ words left, e.g. "{words[0][:80]}"')
     return problems
 
-slugs = sys.argv[1:] or [os.path.basename(p)[:-5] for p in sorted(glob.glob('Articles/ar/*.html'))]
+slugs = sys.argv[1:] or [os.path.basename(p)[:-5] for p in sorted(glob.glob('Articles/ar/*.html'))] + ['home']
 bad = 0
 for s in slugs:
     p = check(s)
