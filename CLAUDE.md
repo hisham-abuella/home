@@ -44,6 +44,12 @@ look. Articles show only Auto/Light/Dark (Contrast appears only while it is the 
 Each article's header has the logo (to the front page) and a "Back" menu: the four tracks and
 the full website, in the article's language.
 
+**The full site is bilingual too.** `ar/home.html` is the Egyptian Arabic `home.html` (RTL, same
+structure and links; its Writing list opens the Arabic articles). The two link each other from
+the top bar ("عربي" / "English"). The Arabic gateway's "Open the full site" and countdown, and the
+Arabic articles' "Back → الموقع كامل", open `ar/home.html`. `ar_parity.py home` checks the pair.
+The CV is the one page that stays English only.
+
 **Articles are bilingual.** Every article has an Egyptian Arabic page at `Articles/ar/<slug>.html`
 (RTL, same structure, links and images; text translated only). Each page links the other
 (`.lang-switch`) and both carry `hreflang`. A track in Arabic opens the Arabic articles, and the
@@ -82,6 +88,7 @@ garble Arabic). See README "Brand".
 
 - `index.html` - the reader gateway ("Tune in")
 - `home.html` - the full site (the former homepage), with the Auto/Dark/Light/Contrast appearances
+- `ar/home.html` - the full site in Egyptian Arabic
 - `tracks/` - the four reader tracks (`recruiter`, `engineer`, `vibe`, `learner`) and `tracks/assets/`
 - `cv.html` - plain white print-ready CV
 - `Articles/` - long-form posts; `Articles/ar/` their Egyptian Arabic pages; `audio/articles/` holds
