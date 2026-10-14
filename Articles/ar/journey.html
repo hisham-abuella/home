@@ -203,8 +203,17 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">H</div>
-            <a href="../../home.html" class="back-btn">&rarr; رجوع للموقع</a>
+            <a class="logo" href="../../index.html?lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
             <div class="appearance">
                 <span id="appearance-label">المظهر</span>
                 <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
@@ -335,8 +344,9 @@
     </footer>
 
     <script src="../../js/listen.js" defer></script>
-    <script src="../../js/appearance.js?v=2" defer></script>
-    <script src="../../js/reader-bar.js?v=2" defer></script>
+    <script src="../../js/back-menu.js" defer></script>
+    <script src="../../js/appearance.js?v=3" defer></script>
+    <script src="../../js/reader-bar.js?v=3" defer></script>
     <script src="../../js/signal-field.js" defer></script>
     <script src="../../js/motion.js" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"

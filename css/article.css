@@ -33,16 +33,25 @@
 
 .logo {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-weight: 800;
-  font-size: 0.9375rem;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--card-border);
 }
+.logo img { width: 100%; height: 100%; display: block; }
+.logo:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Articles offer Auto, Light and Dark. Contrast is chosen on the full site; its button only
+   shows here while it is the stored preference, so the reader can see and leave it. */
+html:not([data-appearance-preference="contrast"]) .navbar .appearance-set button[data-appearance="contrast"] { display: none; }
+
+/* "Back" opens the four reader paths and the full website. */
+.back-menu { position: relative; }
+.back-menu summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 40px; }
+.back-menu summary::-webkit-details-marker { display: none; }
+.back-menu summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 .back-btn {
   font-size: 0.9375rem;
@@ -52,7 +61,35 @@
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.back-btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.back-btn:hover, .back-menu[open] .back-btn { color: var(--accent); border-bottom-color: var(--accent); }
+
+.back-menu ul {
+  position: absolute;
+  top: calc(100% + 8px);
+  inset-inline-start: 0;
+  z-index: 60;
+  min-width: 210px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--card-border);
+  border-radius: min(var(--card-radius, 12px), 12px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+.back-menu li a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: min(var(--card-radius, 8px), 8px);
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.back-menu li a:hover, .back-menu li a:focus-visible { background: var(--accent-subtle); color: var(--text-primary); outline: none; }
+.back-menu li:last-child { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--hairline, var(--card-border)); }
 
 /* The old single-button toggle is replaced by the shared appearance control,
    which base.css styles. Anything left over stays hidden. */

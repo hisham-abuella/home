@@ -16,7 +16,7 @@ last track and offers "continue" without auto-redirecting.
 
 **Full site.** `home.html` is the old homepage, kept as is, with its appearances Auto (default,
 follows the system), Dark (Midnight), Light (Daylight) and Contrast. The `cv.html` back button
-and the articles' "Back to Portfolio" link go to `home.html`. The CV stays a plain white,
+goes to `home.html`; articles have a "Back" menu (four tracks plus the full website). The CV stays a plain white,
 print-ready page (only addition: "Copy CV text").
 
 **Tracks** live in `tracks/`; shared assets in `tracks/assets/` (`i18n.js`, `theme.js`,
@@ -39,6 +39,10 @@ Instagram/Facebook); and it stores `localStorage['reader-path']`.
 sets a skin (catalogue, constellation, terminal, journal in `css/skins/`) plus the reader bar
 (`js/reader-bar.js`, `css/skins/reader-bar.css`): track chip and the same Auto/Light/Dark pill.
 `?via=site` clears it. No track means articles look exactly as before. Contrast is never skinned.
+Opening `home.html` also clears the stored track, so articles opened from the full site keep its
+look. Articles show only Auto/Light/Dark (Contrast appears only while it is the stored choice).
+Each article's header has the logo (to the front page) and a "Back" menu: the four tracks and
+the full website, in the article's language.
 
 **Articles are bilingual.** Every article has an Egyptian Arabic page at `Articles/ar/<slug>.html`
 (RTL, same structure, links and images; text translated only). Each page links the other
