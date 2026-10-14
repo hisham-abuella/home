@@ -41,7 +41,7 @@ class Walk(HTMLParser):
 def norm(link):
     link = re.sub(r'^(\.\./)+', '../', link)
     link = link.replace('audio/articles/ar/', 'audio/articles/')
-    link = re.sub(r'\?lang=ar$', '', link)
+    link = re.sub(r'[?&]lang=ar$', '', link)
     link = re.sub(r'^\.\./(\w[\w-]*\.html)$', r'\1', link)  # Arabic page's "Read in English" link
     link = re.sub(r'^ar/', '', link)                         # English page's "Arabic" link
     return link
