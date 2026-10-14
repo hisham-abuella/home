@@ -39,6 +39,9 @@
         var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
         var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
         document.documentElement.setAttribute('data-appearance', name);
+        // Opening the full site leaves any reader path: articles opened from here
+        // keep the full site's own look, not a path's.
+        try { localStorage.removeItem('reader-path'); } catch (error) { /* storage unavailable */ }
     })();
 </script>
 </head>
@@ -349,7 +352,7 @@
     </div>
 </main>
 
-<script src="js/appearance.js?v=2" defer></script>
+<script src="js/appearance.js?v=3" defer></script>
 
 <script src="js/signal-field.js" defer></script>
 <script src="js/motion.js" defer></script>

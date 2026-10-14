@@ -97,8 +97,11 @@
             if (!step) return;
 
             event.preventDefault();
-            var index = PREFERENCES.indexOf(preference);
-            var next = PREFERENCES[(index + step + PREFERENCES.length) % PREFERENCES.length];
+            // Step through the options this page shows (articles hide Contrast).
+            var shown = buttons.filter(function (b) { return b.offsetParent !== null; })
+                               .map(function (b) { return b.dataset.appearance; });
+            var index = shown.indexOf(preference);
+            var next = shown[(index + step + shown.length) % shown.length];
             apply(next, true);
 
             var target = buttons.filter(function (b) { return b.dataset.appearance === next; })[0];
