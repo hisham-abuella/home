@@ -409,6 +409,8 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
   timer.hidden = false;
   render();
   next();
+  // Came back on purpose (index.html?choose, from the full site or an article): no countdown.
+  if (new URLSearchParams(location.search).has('choose')) stop();
 })();
 </script>
 </body>

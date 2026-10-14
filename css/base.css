@@ -105,6 +105,11 @@ a { color: inherit; text-decoration: none; }
 }
 
 .nav-name { font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.01em; }
+.nav-logo { display: inline-flex; flex: none; width: 32px; height: 32px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--card-border); }
+.nav-logo img { width: 100%; height: 100%; display: block; }
+.nav-landing { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); white-space: nowrap; }
+.nav-landing:hover { color: var(--accent); }
+.nav-logo:focus-visible, .nav-landing:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
 .nav-links { display: flex; gap: 26px; margin-inline-start: auto; }
 
@@ -628,6 +633,7 @@ html.js .stagger.in > *:nth-child(6) { transition-delay: 0.40s; }
   body { font-size: 16px; }
   .wrap, .nav-inner { padding-left: 20px; padding-right: 20px; }
   .nav-links { gap: 18px; }
+  .nav-name { display: none; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr); }
   .card { padding: 24px; }
   .writing-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
