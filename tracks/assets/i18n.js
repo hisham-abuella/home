@@ -8,7 +8,8 @@
    Arabic. Labels only screen readers hear change too: data-i18n-aria="key"
    swaps aria-label and data-i18n-alt="key" swaps an image's alt, from the
    same Arabic block. Links to articles (Articles/<slug>.html) open the Arabic
-   version (Articles/ar/<slug>.html) while the page is in Arabic. Switching sets <html lang dir>, so layout written with logical
+   version (Articles/ar/<slug>.html) while the page is in Arabic, and a link with
+   data-href-ar="…" opens that address instead. Switching sets <html lang dir>, so layout written with logical
    properties (inline-start/end) mirrors itself without per-page RTL rules.
    ========================================================================== */
 
@@ -46,6 +47,10 @@
                 var text = isAr ? ar[el.getAttribute(a[0])] : el.getAttribute(a[0] + '-en');
                 if (text != null) el.setAttribute(a[1], text);
             });
+        });
+        document.querySelectorAll('a[data-href-ar]').forEach(function (a) {
+            if (!a.dataset.hrefEn) a.dataset.hrefEn = a.getAttribute('href');
+            a.setAttribute('href', isAr ? a.dataset.hrefAr : a.dataset.hrefEn);
         });
         articleLinks.forEach(function (a) {
             a.setAttribute('href', isAr ? a.dataset.hrefEn.replace(/Articles\//, 'Articles/ar/') : a.dataset.hrefEn);

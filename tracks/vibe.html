@@ -177,11 +177,11 @@ ul.log .add { color: var(--add); }
     </div>
 
     <h2 id="built" data-i18n="builtH">Built</h2>
-    <p class="sub" data-i18n="builtS">Things I've built with Claude, most of them started in a Claude Code session. The deck skill and the crash course began inside Apple; the links here are public versions.</p>
+    <p class="sub" data-i18n="builtS">Things I've built with Claude, most of them started in a Claude Code session. Everything linked here is personal, not Apple's.</p>
     <div class="tbl"><table>
       <tr><th data-i18n="tb1">project</th><th data-i18n="tb2">note</th><th class="wide" data-i18n="tb3">stack</th></tr>
-      <tr><td><a href="../projects/presentation-skill/template.html" data-i18n="b1">Claude presentation skill</a><div class="sub" data-i18n="b1d">Self-contained HTML decks that render offline.</div></td><td class="n" data-i18n="b1v">public version</td><td class="wide sub">Claude Code, HTML, CSS</td></tr>
-      <tr><td><a href="../projects/presentation-skill/claude101.html" data-i18n="b2">GenAI and Claude 101</a><div class="sub" data-i18n="b2d">A crash course written for Apple's internal audience.</div></td><td class="n" data-i18n="b1v">public version</td><td class="wide sub">Claude, HTML</td></tr>
+      <tr><td><a href="../projects/presentation-skill/template.html" data-i18n="b1">Claude presentation skill</a><div class="sub" data-i18n="b1d">Self-contained HTML decks that render offline.</div></td><td class="n" data-i18n="b1v">personal, not Apple's</td><td class="wide sub">Claude Code, HTML, CSS</td></tr>
+      <tr><td><a href="https://hisham-abuella.github.io/Wireless-101/courses/genai101/" data-href-ar="https://hisham-abuella.github.io/Wireless-101/ar/courses/genai101/" data-i18n="b2">GenAI 101</a><div class="sub" data-i18n="b2d">A free course on generative AI, in English and Arabic.</div></td><td class="n" data-i18n="b2v">my free course, not Apple's</td><td class="wide sub">Claude, HTML</td></tr>
       <tr><td><a href="../Articles/building-ai-server.html?via=vibe" data-i18n="b3">Personal AI engine</a><div class="sub" data-i18n="b3d">Local models, on-device images and voice, a private notes vault.</div></td><td class="n" data-i18n="b3v">in progress</td><td class="wide sub">FastAPI, Ollama, Draw Things</td></tr>
       <tr><td><a href="../Articles/local-voice-generation.html?via=vibe" data-i18n="b4">Local voice benchmark</a><div class="sub" data-i18n="b4d">Local text-to-speech measured against ElevenLabs Eleven v4.</div></td><td class="n">TTS</td><td class="wide sub">Mac Studio, Voicebox</td></tr>
       <tr><td><a href="../projects/bedtime-stories/" data-i18n="b5">Bedtime stories</a><div class="sub" data-i18n="b5d">Six board books for my son, narrated in English and Arabic.</div></td><td class="n" data-i18n="b5v">books</td><td class="wide sub">HTML, ElevenLabs, local image models</td></tr>
@@ -245,15 +245,15 @@ ul.log .add { color: var(--add); }
  "lede": "مهندس أنظمة خلوية بالنهار. وفي وقتي الخاص بحب أعمل UIs مع Claude: بعمل أدوات ومواقع وكتب، وبكتب عنها في السكة.",
  "loc": "Apple، سان دييجو. وقبلها Qualcomm.",
  "builtH": "اللي عملته",
- "builtS": "حاجات عملتها مع Claude، وأغلبها بدأ في جلسة Claude Code. الـ skill بتاعة العروض والكورس بدأوا جوه Apple، واللينكات هنا نسخ عامة.",
+ "builtS": "حاجات عملتها مع Claude، وأغلبها بدأ في جلسة Claude Code. كل اللينكات هنا شغل شخصي، مش بتاع Apple.",
  "tb1": "المشروع",
  "tb2": "ملاحظة",
  "tb3": "الأدوات",
  "b1": "الـ Claude skill للعروض",
  "b1d": "عروض HTML في ملف واحد بتشتغل من غير إنترنت.",
- "b1v": "نسخة عامة",
- "b2": "GenAI و Claude 101",
- "b2d": "كورس سريع اتكتب لجمهور داخلي في Apple.",
+ "b1v": "شخصي، مش بتاع Apple", "b2v": "كورسي ببلاش، مش بتاع Apple",
+ "b2": "GenAI 101",
+ "b2d": "كورس ببلاش عن الـ generative AI، بالإنجليزي والعربي.",
  "b3": "محرك AI شخصي",
  "b3d": "موديلات محلية، وصور وصوت على الجهاز، وأرشيف ملاحظات خاص.",
  "b3v": "شغال عليه",
@@ -315,8 +315,8 @@ ul.log .add { color: var(--add); }
       ? 'هشام أبو العلا. مهندس أنظمة خلوية في Apple، وقبلها Qualcomm.\nبحب أعمل UIs مع Claude. بعمل أدوات ومواقع وكتب في وقتي الخاص، وبكتب عنها في السكة.\nجرّب: ls ~/built أو log'
       : 'Hisham Abuella — cellular systems engineer at Apple, previously Qualcomm.\nLoves creating UIs with Claude. Builds tools, sites and books in his own time and writes build logs along the way.\n<span class="dim">Try: ls ~/built, log</span>'; },
     built: function () { return ar()
-      ? a('../projects/presentation-skill/template.html', 'الـ Claude skill للعروض') + ' · نسخة عامة\n' + a('../projects/presentation-skill/claude101.html', 'GenAI و Claude 101') + ' · نسخة عامة\n' + a('../Articles/ar/building-ai-server.html' + V, 'محرك AI شخصي') + ' · شغال عليه\n' + a('../Articles/ar/local-voice-generation.html' + V, 'مقارنة أصوات محلية') + '\n' + a('../projects/bedtime-stories/', 'حواديت قبل النوم') + ' · ست كتب\n' + a('../Articles/ar/building-islamic-kids.html' + V, 'موقع أطفال إسلامي') + '\n' + a('../Articles/ar/building-wirelesshub.html' + V, 'WirelessHub') + '\n' + more('built')
-      : 'claude-presentation-skill/  ' + a('../projects/presentation-skill/template.html', 'template') + '  <span class="dim">public version</span>\ngenai-claude-101/           ' + a('../projects/presentation-skill/claude101.html', 'deck') + '  <span class="dim">public version</span>\nai-engine/                  ' + a('../Articles/building-ai-server.html' + V, 'build log') + '  <span class="dim">in progress</span>\nlocal-tts-bench/            ' + a('../Articles/local-voice-generation.html' + V, 'results') + '\nbedtime-stories/            ' + a('../projects/bedtime-stories/', 'six books') + '\nislamic-kids/               ' + a('../Articles/building-islamic-kids.html' + V, 'build log') + '\nwirelesshub/                ' + a('../Articles/building-wirelesshub.html' + V, 'build log') + '\n' + more('built'); },
+      ? a('../projects/presentation-skill/template.html', 'الـ Claude skill للعروض') + ' · شخصي، مش بتاع Apple\n' + a('https://hisham-abuella.github.io/Wireless-101/ar/courses/genai101/', 'GenAI 101') + ' · كورسي ببلاش، مش بتاع Apple\n' + a('../Articles/ar/building-ai-server.html' + V, 'محرك AI شخصي') + ' · شغال عليه\n' + a('../Articles/ar/local-voice-generation.html' + V, 'مقارنة أصوات محلية') + '\n' + a('../projects/bedtime-stories/', 'حواديت قبل النوم') + ' · ست كتب\n' + a('../Articles/ar/building-islamic-kids.html' + V, 'موقع أطفال إسلامي') + '\n' + a('../Articles/ar/building-wirelesshub.html' + V, 'WirelessHub') + '\n' + more('built')
+      : 'claude-presentation-skill/  ' + a('../projects/presentation-skill/template.html', 'template') + '  <span class="dim">personal, not Apple\'s</span>\ngenai-101/                  ' + a('https://hisham-abuella.github.io/Wireless-101/courses/genai101/', 'course') + '  <span class="dim">my free course, not Apple\'s</span>\nai-engine/                  ' + a('../Articles/building-ai-server.html' + V, 'build log') + '  <span class="dim">in progress</span>\nlocal-tts-bench/            ' + a('../Articles/local-voice-generation.html' + V, 'results') + '\nbedtime-stories/            ' + a('../projects/bedtime-stories/', 'six books') + '\nislamic-kids/               ' + a('../Articles/building-islamic-kids.html' + V, 'build log') + '\nwirelesshub/                ' + a('../Articles/building-wirelesshub.html' + V, 'build log') + '\n' + more('built'); },
     stack: function () { return ar()
       ? 'الـ agent: Claude Code، ومعاه skills للشغل اللي بكرره\nمحلي: Mac Studio M4 Max، و Ollama، و Draw Things، و Voicebox\nالتعليق الصوتي: ElevenLabs Eleven v4، وبقارنه بمحركات محلية\nالموقع: HTML و CSS و JavaScript عادي، من غير build step، على GitHub Pages\n' + more('stack')
       : 'agent       Claude Code, plus skills for jobs I repeat\nlocal       Mac Studio M4 Max: Ollama, Draw Things, Voicebox\nnarration   ElevenLabs Eleven v4, local engines compared\nsite        vanilla HTML/CSS/JS, no build step, GitHub Pages\n' + more('stack'); },

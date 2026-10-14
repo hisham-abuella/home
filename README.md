@@ -19,7 +19,7 @@ Live at **https://www.hishamabuella.com** (GitHub Pages, deployed from `main`).
 - `cv.html` — CV, deliberately a plain white document and print-ready
 - `Articles/` — eight long-form posts, each with an optional narrated version;
   `Articles/ar/` holds their Egyptian Arabic pages
-- `projects/presentation-skill/` — slide-deck demos (`template.html`, `claude101.html`)
+- `projects/presentation-skill/` — slide-deck demo (`template.html`, my personal skill)
 - `different_designs/` — explorations only (mockups, logo concepts, older pages), not linked from the live site
 - `Pictures/`, `audio/` — media; `audio/articles/` holds the article narration
 
