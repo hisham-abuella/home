@@ -1,0 +1,76 @@
+{
+ "title": "Slides that run (beyond-slides deck)",
+ "language": "en",
+ "slides": [
+  {
+   "id": "start",
+   "title": "Slides that run",
+   "transcript": "[warmly] Hi again, it's Hisham. <break time=\"0.4s\" /> This deck is a little different. Every slide after this one is a working example of something a web page can do. Not a picture of it, and not a video of it. The real thing, running right here. <break time=\"0.5s\" /> Here's the idea in one line. A slide in this deck is a web page. And a web page can do a lot more than sit there and look nice. <break time=\"0.4s\" /> So I asked Claude to build one slide for each idea. A live app, a calculator, a physics simulation, sound, code you can edit, a game, and a few more. <break time=\"0.4s\" /> [playfully] Please touch everything. Click, drag, type, turn the sound on. If something moves, that's the point. <break time=\"0.4s\" /> Let's go."
+  },
+  {
+   "id": "idea",
+   "title": "The idea",
+   "transcript": "Here's the difference, as simply as I can put it. <break time=\"0.4s\" /> A slide file, like PowerPoint or Keynote, plays back what you made. You design it, you save it, and then later it shows exactly that. Which is great, most of the time. <break time=\"0.5s\" /> [serious] A web page runs. <break time=\"0.4s\" /> It has a little program inside it. It can react to you, do math, make sound, draw things that didn't exist a second ago, and change while you're watching. <break time=\"0.4s\" /> And since every slide in this deck is a web page, a slide can hold a working app, a simulation, sound, code, a game, or even another web page. <break time=\"0.4s\" /> Everything you're about to see is plain H T M L, C S S, and JavaScript, inside this one file. No plug ins, no add ins, nothing to install. <break time=\"0.4s\" /> Press the right arrow, and let's start with an app."
+  },
+  {
+   "id": "live-ui",
+   "title": "A live phone app",
+   "transcript": "Demo the product, not a screenshot. <break time=\"0.4s\" /> That phone on the right is real. It's not an image, it's a tiny settings screen built in H T M L. Tap the switches. <break time=\"0.5s\" /> Try turning off five G. The little label at the top changes to L T E, the way your own phone would. Now turn on airplane mode. Everything else switches off and greys out, and the status at the bottom tells you every radio is off. Turn it back on, and it all comes back. <break time=\"0.4s\" /> Why does this matter? Think about the last product demo you sat through. Usually it's a row of screenshots, and someone saying, and then if you tap here, this happens. <break time=\"0.4s\" /> Here, you just tap it. And when someone in the room asks, wait, what happens if I do this? You can show them, right there, on the slide. <break time=\"0.4s\" /> [warmly] That's a much better conversation than, good question, let me get back to you."
+  },
+  {
+   "id": "app",
+   "title": "A path loss calculator",
+   "transcript": "This one's close to my day job. <break time=\"0.4s\" /> It's a calculator for free space path loss. In plain words, how much a radio signal weakens as it travels. The further it goes, and the higher the frequency, the weaker it gets. <break time=\"0.5s\" /> Drag the sliders. Move the distance out, and watch the big number climb. Then tap the buttons. Wi fi at two point four gigahertz. Five G at three point five. And millimeter wave, at twenty eight gigahertz. <break time=\"0.4s\" /> See how much higher the line jumps for millimeter wave? That's exactly why those cells are so small. The signal just fades much faster. The dashed line is Wi fi, so you always have something to compare against. <break time=\"0.4s\" /> The formula is right there on the slide, and it's the standard one. Nothing is faked. <break time=\"0.4s\" /> [warmly] A chart pasted from a spreadsheet can't answer a question from the room. This can. Somebody says, what about five kilometers? You drag the slider, and there's your answer."
+  },
+  {
+   "id": "waves",
+   "title": "Physics you can drag",
+   "transcript": "Okay, this is my favorite slide in the deck. <break time=\"0.4s\" /> Two antennas are sending the same wave. Everywhere on the picture, the slide adds the two waves together, every single frame, live. Where they arrive in step, they add up, and you get the bright bands. Where they arrive out of step, they cancel, and you get the dark gaps. <break time=\"0.5s\" /> Grab one of the antennas and drag it around. Watch the whole pattern rearrange itself. <break time=\"0.4s\" /> Now try the phase slider. That delays one antenna a tiny bit compared to the other. And look, the bright beams swing to one side. <break time=\"0.4s\" /> [excited] That's beamforming! That's the idea behind how five G aims its signal toward your phone instead of spraying it everywhere. <break time=\"0.4s\" /> Beamforming usually gets explained with pictures and arrows. It lands so much better when people can move the antennas themselves. <break time=\"0.4s\" /> And if you're using a keyboard, click an antenna and use the arrow keys to move it."
+  },
+  {
+   "id": "sound",
+   "title": "Sound and voice",
+   "transcript": "This slide can sing, and it can talk. <break time=\"0.4s\" /> First, check that your sound is on. Then press Play tone. <break time=\"0.5s\" /> That tone isn't a recording. The browser is making it, right now, as you listen. And the screen above shows the real wave, like an oscilloscope. Slide the pitch up and down, and you'll hear it and see it change together. The slide even tells you which musical note you're closest to. Four forty hertz is the A that orchestras tune to. <break time=\"0.4s\" /> Try the square and sawtooth buttons, too. Same pitch, very different sound, and you can see why on the scope. <break time=\"0.4s\" /> Then there's the second button. Read this slide aloud. That uses the voice built into your browser, so there's no audio file at all. <break time=\"0.4s\" /> [warmly] Imagine a deck that can narrate itself. Or one that reads slides aloud for someone who can't see the screen. That's already in every modern browser. <break time=\"0.4s\" /> And when you leave this slide, the sound stops by itself."
+  },
+  {
+   "id": "you",
+   "title": "A slide made for you",
+   "transcript": "This slide knows who's watching. <break time=\"0.4s\" /> Well, a little bit. Look at the boxes. Your local time, ticking. Your time zone. Your screen size. Your language. Whether your computer is in light mode or dark mode. And whether you've asked for less motion. <break time=\"0.5s\" /> All of that is read from your own device, right now. And nothing leaves your browser. It isn't sent anywhere. <break time=\"0.4s\" /> A slide file shows everyone the exact same thing. A web page can adapt to the person looking at it. <break time=\"0.4s\" /> [playfully] Now type your name in the box. <break time=\"0.4s\" /> The heading on this slide says hello to you. And if you go back to the very first slide, it says it was made for you. <break time=\"0.4s\" /> You can do the same thing with the link, too. Add a question mark, the word for, an equals sign, and a name. So you could send one deck to ten people, and each of them would get a version that greets them by name. <break time=\"0.4s\" /> [warmly] Small touch, but people really notice it."
+  },
+  {
+   "id": "code",
+   "title": "Live code",
+   "transcript": "Code you can edit, running right on the slide. <break time=\"0.4s\" /> The box at the top is real JavaScript. The drawing underneath is what that code makes, and it redraws every frame while you're on this slide. <break time=\"0.5s\" /> Try changing a number. Make n bigger, say thirty, and you get more dots. Make r smaller, and the circle tightens up. Change it while it's spinning, and it just keeps going with your new numbers. <break time=\"0.4s\" /> If you type something that doesn't work, it doesn't crash. The line under the drawing tells you what's wrong, in plain words, and the moment you fix it, the drawing comes back. <break time=\"0.4s\" /> For anyone teaching programming, this changes things. The example on the slide is the example you run. You don't switch to another window. You change it in front of the room, and the result is right there, on the same slide. <break time=\"0.4s\" /> [calm] And it runs only on the computer of whoever's looking at it. Nothing is sent anywhere."
+  },
+  {
+   "id": "game",
+   "title": "A game",
+   "transcript": "[playfully] Now, a slide you can play. <break time=\"0.4s\" /> Press Start. Little data packets fly across from left to right. Tap or click them before they drop off the edge. You've got twenty seconds. <break time=\"0.5s\" /> Caught ones count up on the left, dropped ones count up next to them. And watch out, they get faster as the clock runs down. <break time=\"0.4s\" /> When time's up, you'll see your score, and the slide remembers your best one, right here in your browser. So you can try to beat yourself. <break time=\"0.4s\" /> Why put a game in a talk? Honestly, sometimes a room needs waking up. Right after lunch, say. Thirty seconds of everyone trying to beat each other's score does wonders. <break time=\"0.4s\" /> [warmly] And the pieces here, a timer, a score, things you click, are the same pieces you'd use for a quiz, or a poll, or a countdown for a workshop exercise. And if you leave the slide mid game, it just stops."
+  },
+  {
+   "id": "page",
+   "title": "A page in a slide",
+   "transcript": "Any web page can sit on a slide. <break time=\"0.4s\" /> The box on the right is another whole deck. It's my Gen A I one oh one lesson, running live, inside this slide. <break time=\"0.5s\" /> Click into it, and use its arrow keys. It's fully working. It has its own slides, its own themes, its own notes. When you want to come back to this deck, just click outside the box. <break time=\"0.4s\" /> Now imagine what else could go there. Your team's dashboard, live, with today's numbers. Your app's test site. A document. A map. <break time=\"0.4s\" /> [serious] Screenshots go out of date. Usually the day after you take them. A live page is always current. <break time=\"0.4s\" /> One more nice detail. The page in the box only loads when you reach this slide. So the deck stays quick to open, even with something heavy hidden inside it."
+  },
+  {
+   "id": "video",
+   "title": "Video",
+   "transcript": "Quick edits, right in the browser. <break time=\"0.4s\" /> The video here is a screen recording of the editor that comes with the skill. It's a small page, also one H T M L file, that opens a deck so you can fix words without asking Claude. <break time=\"0.5s\" /> In the clip, I retype a word in a headline, swap cue three for cue four on every slide at once, add a line to the speaker notes, and save. The same file gets written back, and only the words I changed are touched. <break time=\"0.4s\" /> Use the buttons under the video to jump to each part. Retype, find and replace, edit a note, and save. <break time=\"0.4s\" /> Now, to be fair, Keynote and PowerPoint can play videos too. What's nice here is how little it takes to control. The clip starts by itself when you arrive at this slide, and it stops when you leave. And those chapter buttons are just a few lines of code. <break time=\"0.4s\" /> [warmly] So you never have to fumble for the pause button while everyone's waiting."
+  },
+  {
+   "id": "camera",
+   "title": "Camera",
+   "transcript": "Put the room on the slide. <break time=\"0.4s\" /> Press the button, and your browser will ask if this page can use your camera. Only if you say yes, you'll see yourself, live, with a little caption on top that says live from the room. <break time=\"0.5s\" /> The caption is ordinary H T M L sitting on top of the video, so it takes the colors of whatever theme you picked. Switch the theme, and the caption changes with it. <break time=\"0.4s\" /> This is handy for a workshop, when you want to show a whiteboard or someone's hands. Or for a remote talk, when you want the audience to see your face next to the slides. <break time=\"0.4s\" /> [serious] And the important part. The picture never leaves your browser. Nothing is recorded, and nothing is sent anywhere. And the camera turns off the moment you leave the slide. <break time=\"0.4s\" /> PowerPoint can put a camera on a slide too. Here it's just a few lines of plain web code, sitting in the deck file."
+  },
+  {
+   "id": "more",
+   "title": "More ideas",
+   "transcript": "And it doesn't stop there. <break time=\"0.4s\" /> I didn't build these ones, but every idea on this slide is a standard browser feature, or a small library. Each one would fit on a slide the same way the demos did. <break time=\"0.5s\" /> A map you can pan and zoom, to walk people around a site, or a route. A three D model you can turn. A machine part, a building, a molecule. Charts fed by live data, so the numbers are right on the day you present. <break time=\"0.4s\" /> On the other side, things that listen. Polls and quizzes that count answers from the phones in the room. Live captions, as you speak, using the browser's own speech recognition. A slide that translates itself, so one deck works in many languages. <break time=\"0.4s\" /> [warmly] If a web page can do it, a slide can. That's really the whole message of this deck."
+  },
+  {
+   "id": "end",
+   "title": "Use that",
+   "transcript": "[warmly] Slides are web pages. So use that. <break time=\"0.5s\" /> Everything you just played with, the phone, the calculator, the waves, the sound, the code, the game, all of it, is one file. It opens in any browser, and there's nothing to install. <break time=\"0.4s\" /> If you want to keep exploring, press S to restyle the whole deck. Every demo picks up the new colors. P opens the presenter window, with my notes for each slide. And G shows you every slide at once. <break time=\"0.4s\" /> This is a personal project of mine. You'll find more about it, and the article that goes with this deck, at hisham abu ella dot com. <break time=\"0.5s\" /> Thanks for playing along."
+  }
+ ]
+}

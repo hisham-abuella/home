@@ -1,0 +1,96 @@
+{
+ "title": "How it works (showcase deck)",
+ "language": "en",
+ "slides": [
+  {
+   "id": "start",
+   "title": "This deck is one HTML file",
+   "transcript": "[warmly] Hi, I'm Hisham. <break time=\"0.4s\" /> Before anything else, here's the little joke that's also the whole point of this talk. The thing you're looking at right now isn't PowerPoint. It isn't Keynote either, and it isn't some web app running on a server somewhere. It's one single H T M L file. You could email it to a friend, put it on a U S B stick, or double click it on your laptop, and it would look exactly like this. <break time=\"0.5s\" /> I built it with Claude, using a skill I wrote for making slide decks. So this deck has a funny job. It explains the skill, while also being made by it. <break time=\"0.4s\" /> And please, don't just watch. Almost every slide here does something. You can click things, type into boxes, press keys, change the colors. Nothing in here is a video pretending to be interactive. <break time=\"0.4s\" /> [playfully] So go ahead and poke at it. You honestly can't break anything. Let's start with how small this whole thing is."
+  },
+  {
+   "id": "size",
+   "title": "How big is the file",
+   "transcript": "So, how big is it? <break time=\"0.4s\" /> The number on this slide isn't something I typed in. The page actually measures its own file, the one you're looking at, and prints the size. And it comes out at about a quarter of a megabyte. <break time=\"0.5s\" /> To put that in perspective, a single photo from your phone is bigger than this. Several times bigger, usually. And this file holds everything. Every slide, all the speaker notes, more than thirty themes, more than thirty font pairings, and the engine that makes it all move. <break time=\"0.4s\" /> There are no images in here, and no libraries pulled in from the internet. The only thing it fetches is fonts, from Google Fonts, and only if you're online. If you're offline, it just quietly uses the fonts already on your computer. <break time=\"0.4s\" /> [warmly] That's why it can live comfortably on my personal website, travel by email, or open from a thumb drive in a conference room with terrible wifi. <break time=\"0.4s\" /> Okay. So how does a plain request turn into a file like this? That's the next slide."
+  },
+  {
+   "id": "workflow",
+   "title": "How the skill works",
+   "transcript": "Here's the whole process, in five steps. <break time=\"0.4s\" /> Step one, I ask. I say what the talk is, in plain words. And the skill only asks me what it really can't guess. Who's in the room, and which real numbers should go on the slides. That's it. It doesn't interview me for ten minutes. <break time=\"0.4s\" /> Step two, it chooses a look. It matches the request to a recipe. A tech talk, for example, gets the Studio theme, which is the one you're seeing right now. <break time=\"0.4s\" /> Step three, it writes. Plain H T M L, one section per slide, and speaker notes on every single slide. <break time=\"0.4s\" /> Step four is my favorite. It checks. A script opens the deck in a hidden browser, looks at every slide, and makes a list of problems. Claude fixes them, and runs the check again. Three passes at most. <break time=\"0.4s\" /> And step five, it delivers. I get the file, and a short list of keys to drive it. <break time=\"0.5s\" /> [calm] Five steps, and honestly, most of my time goes into step one. Telling the story is still my job."
+  },
+  {
+   "id": "no-install",
+   "title": "No framework, nothing to install",
+   "transcript": "Let's talk about what's not in this file. <break time=\"0.4s\" /> The four numbers on this slide are counted live, by a tiny script, while you watch. It asks the page a few honest questions. How many outside script files did you load? How many files did you need from the site? Are you running from a website, or from a file on someone's disk? And how many slides do you have? <break time=\"0.5s\" /> That first number is zero, and that's the point. There's no React here, no reveal dot J S, no build step, nothing to install. The engine is plain JavaScript, sitting inside the same file as the slides. <break time=\"0.4s\" /> If you open this deck from your own computer, the protocol line will say file. On my website, it says https. Same deck, either way. <break time=\"0.4s\" /> [warmly] I really like this, because it means the deck will still open in ten years. There's no package that goes out of date, and no server that gets switched off. It's just a file, and browsers are very good at reading files."
+  },
+  {
+   "id": "stage",
+   "title": "The fixed stage",
+   "transcript": "Here's a trick that makes everything else work. <break time=\"0.4s\" /> Every slide is drawn on a fixed stage, nineteen twenty by ten eighty pixels. The same shape as a television. Then the whole stage gets scaled to fit your window. If your window's a different shape, you just get bars on the sides, like a movie. <break time=\"0.5s\" /> Try it. Drag your browser window narrower, and watch the line on this slide. The size in pixels stays the same, and only the scale changes. <break time=\"0.4s\" /> Why does that matter? Because the text never reflows. A slide looks exactly the same on my laptop, on your phone, and on the projector in the conference room. No surprise line breaks five minutes before your talk. <break time=\"0.4s\" /> And see the dashed outline? That's the safe area. A bit of margin on every side, and nothing important is allowed to leave it. [playfully] And the checker enforces that, so even if I forget, it won't."
+  },
+  {
+   "id": "layouts",
+   "title": "Layouts",
+   "transcript": "Layouts. <break time=\"0.4s\" /> There are twenty seven of them, and you pick one by name. A layout is literally just a word on the slide. Big number, chart, timeline, quote, and so on. The engine reads that word and knows where everything goes. <break time=\"0.5s\" /> The count on this slide isn't typed in, either. The page reads it from the engine itself, so it can never drift out of date. Tap any of the chips, and you'll see a tiny wireframe of that layout. The outlined ones are layouts this deck actually uses. And if you want, there's a button to jump straight to that slide. <break time=\"0.4s\" /> By the way, you're looking at the two column layout right now. <break time=\"0.4s\" /> [calm] There's one rule I keep coming back to here. Pick the layout by the job of the slide, not by how pretty it looks. If the slide's job is one number, use big number. If it's a comparison, use comparison. The look takes care of itself."
+  },
+  {
+   "id": "headline",
+   "title": "Text that fits itself",
+   "transcript": "This one's fun. Type something into the box. <break time=\"0.4s\" /> Anything you like. A short word, or a really long sentence. Every time you stop typing, the engine measures the headline and resizes it. It shrinks the text until it fits inside the safe area. Or, if there's lots of room, it grows it a little, so a short sentence doesn't look lost on a huge slide. <break time=\"0.5s\" /> The line underneath tells you the size it picked. <break time=\"0.4s\" /> This is actually a big deal for how the skill behaves. Claude never fiddles with font sizes to squeeze text in. The engine handles fitting. And if a slide's still too full, even at the smallest size, the checker says so, and the fix is to cut words. <break time=\"0.4s\" /> [playfully] Which, honestly, is almost always the right fix for a slide anyway. <break time=\"0.4s\" /> When you're done typing, press Enter or Escape, and the arrow keys go back to moving the deck."
+  },
+  {
+   "id": "builds",
+   "title": "Builds",
+   "transcript": "Builds. These are the things that appear one click at a time. <break time=\"0.4s\" /> There are six kinds, and each one has a single job. Fade and rise bring a point onto the slide. Scale is for the one thing that should really pop. Draw makes a line trace itself, which is perfect for a trend going up, or an arrow. Count lands a number by counting up from zero. And list reveals a list one item per click. <break time=\"0.5s\" /> Click through slowly, and you'll see each one. <break time=\"0.4s\" /> Now here's the rule from the skill, and I think it's a good one for any presentation. A build has to reveal the next point, in the order you're going to say it. If it's just there to look fancy, delete it. <break time=\"0.4s\" /> [warmly] Animations should help people follow you. They shouldn't make them wait."
+  },
+  {
+   "id": "magic-move",
+   "title": "Magic Move, part one",
+   "transcript": "If you've used Keynote, you probably know Magic Move. <break time=\"0.4s\" /> It's the trick where something on one slide glides smoothly into the same thing on the next slide. It changes its place, its size, its color, and it all just moves. It's one of those touches that makes a deck feel finished. <break time=\"0.5s\" /> Here, the whole recipe is one name. Each of these chips has a little label, a magic name. And on the next slide, three things carry the same names. <break time=\"0.4s\" /> When you click forward, the engine measures where each one is now, where it's going, and animates between the two. Anything that isn't paired up just fades away. <break time=\"0.4s\" /> [playfully] Okay, ready? Watch the chips closely, and click next."
+  },
+  {
+   "id": "magic-move-2",
+   "title": "Magic Move, part two",
+   "transcript": "[playfully] There it goes. <break time=\"0.4s\" /> Same three names, new places. Two of the chips stacked up, and the third one turned into a huge word, in a completely different typeface. When the typeface changes, the engine cross fades while the word travels, so you don't see a jump. <break time=\"0.5s\" /> When should you actually use this? When the same thing matters on two slides in a row. A number that grows into the hero of the next slide. Or a sentence that shrinks down and becomes a label. It helps people see that it's the same idea, carried forward. <break time=\"0.4s\" /> To be honest about its limits, it doesn't morph one drawing into a totally different drawing. It moves the matching pieces. <break time=\"0.4s\" /> Oh, and press the left arrow. [laughs] It runs backwards too."
+  },
+  {
+   "id": "chart",
+   "title": "A chart is one attribute",
+   "transcript": "Charts. <break time=\"0.4s\" /> The chart on the right is one line in the file. It says, this is a column chart, and here are the values. Monday three, Tuesday five, and so on. That's the whole chart. There's no chart library behind it. <break time=\"0.5s\" /> Now change one of the numbers in the boxes. The bars redraw right away, and the highlight jumps to whichever bar is tallest. <break time=\"0.4s\" /> Column, bar, and line charts are built in, with up to three series. And every chart also writes a hidden table behind the scenes, so someone using a screen reader can still get the numbers. <break time=\"0.4s\" /> One honest note. The numbers here are made up, just for the demo. In a real deck, the source goes in the caption, right under the chart. [calm] That's another thing the skill insists on. Real numbers, and say where they came from."
+  },
+  {
+   "id": "themes",
+   "title": "Themes",
+   "transcript": "Themes. One tap each. <break time=\"0.4s\" /> Go ahead, tap one. And notice it's not just this slide that changes. The whole deck changes. Every slide before this one, and every slide after it. <break time=\"0.5s\" /> That works because a theme is just a small set of choices. Colors, fonts, and shapes. The layouts never hard code a color, so one switch can restyle everything at once. <break time=\"0.4s\" /> There are six core looks, and then a library with a look for each profession. Engineer, teacher, doctor, lawyer, founder, chef, journalist, and plenty more. Each one has a little detail from that world. A scope grid for a wireless engineer. A heartbeat line for a clinic. <break time=\"0.4s\" /> The skill picked Studio for this deck, because this is a talk about teaching and building. But you can make it a boardroom report in one tap. <break time=\"0.4s\" /> [warmly] When you're done playing, tap Back to Studio."
+  },
+  {
+   "id": "fonts",
+   "title": "Fonts",
+   "transcript": "Fonts are a separate switch from themes. <break time=\"0.4s\" /> That means you can pair any of the font pairings with any of the themes. Tap one, and the headline on this very slide changes its voice. Same words, totally different feeling. A serif feels like a newspaper or a book. A geometric sans feels like a tech launch. A mono feels like an engineer's notebook. <break time=\"0.5s\" /> If you want to go back to what the theme had in mind, tap theme default. <break time=\"0.4s\" /> Fonts load from Google Fonts the first time you pick them. So you might see a short pause, and that's normal. And if you're offline, the deck just uses fonts that are already on your computer. <break time=\"0.4s\" /> [calm] For a deck that has to work with no internet at all, like a talk in a basement room, the skill can switch to system fonts from the start."
+  },
+  {
+   "id": "marker",
+   "title": "The marker",
+   "transcript": "Now this one's for you to try. Press the letter M. <break time=\"0.5s\" /> You can draw right on the slide, with your mouse, a pen, or your finger on a touch screen. Press H, and it turns into a highlighter. E is the eraser. C clears the slide. And the numbers one to four switch colors. Red, yellow, blue, and white. <break time=\"0.4s\" /> If you make a mess, Control Z, or Command Z on a Mac, undoes the last stroke. <break time=\"0.4s\" /> There's also a laser pointer, on the letter L. It's a little red dot that follows your mouse and leaves no trace, which is great when you just want to point at something. <break time=\"0.5s\" /> The drawings stay with each slide, and they show up in the presenter window too. But they never get printed. <break time=\"0.4s\" /> [playfully] Go on. Press M and scribble on that arrow. I won't look."
+  },
+  {
+   "id": "presenter",
+   "title": "Presenter view",
+   "transcript": "Presenter view. Press P. <break time=\"0.4s\" /> A second window opens, and that one's just for you, the speaker. It shows the current slide, a preview of what's coming next, your notes in big readable type, a timer, and a clock. <break time=\"0.5s\" /> The two windows talk to each other. So any key works in either one, and if the audience window gets reloaded by accident, the presenter window reconnects by itself. <break time=\"0.4s\" /> You can also give the deck a time limit. Then the timer counts down, and it turns amber for the last two minutes, which is a very polite way of saying, wrap it up. <break time=\"0.4s\" /> Your browser might ask you to allow pop ups the first time. That's normal. <break time=\"0.4s\" /> [warmly] Every slide in this deck has notes, so you can try it right now and see what I'd be reading."
+  },
+  {
+   "id": "checker",
+   "title": "The checker",
+   "transcript": "The checker is the part I trust the most. <break time=\"0.4s\" /> What you see on this slide is real output. I made a small deck on purpose, with two mistakes in it. A picture with no description for screen readers, and a list with seven bullets, which is just too many. Then I ran the checker on it. <break time=\"0.5s\" /> It found both. And for each one, it doesn't just complain, it tells you the fix. Add a description. Cut the list to five, or split it into two slides. <break time=\"0.4s\" /> Then I fixed the deck, and ran it again across every theme. Because someone, at some point, will press S and pick a different look, and it still has to work. <break time=\"0.4s\" /> It also catches text running off the slide, text that's too small to read from the back, colors with weak contrast, and errors in the page. <break time=\"0.4s\" /> [calm] And the rule from the skill is three passes, at most. After that, you don't keep tweaking the design. You cut words."
+  },
+  {
+   "id": "arabic",
+   "title": "In Arabic",
+   "transcript": "This slide is in Egyptian Arabic. <break time=\"0.4s\" /> It says, one H T M L file, it works in any browser. Nothing to download. Just open the file and press F. <break time=\"0.5s\" /> I put it here to show that the engine handles right to left properly. And here's the nice part. The only thing I added to this slide was two small settings. The direction, right to left, and the language, Egyptian Arabic. Everything else mirrored by itself. The text flows from the right, the layout flips, and nothing needed rebuilding. <break time=\"0.4s\" /> That's because the whole engine is written to think in start and end, instead of left and right. <break time=\"0.4s\" /> For a full Arabic deck, you set the same two things once, for the whole file, and use the trainer theme, which pairs fonts that look good in both Arabic and English. <break time=\"0.4s\" /> [warmly] My own website is in English and Arabic, so this one matters a lot to me."
+  },
+  {
+   "id": "end",
+   "title": "Your turn",
+   "transcript": "[warmly] And that's the tour. Now it's your turn. <break time=\"0.4s\" /> Each button on this slide sends the same key the keyboard would. So you can try the whole toolbox from here. G for the overview of every slide. O for the outline. S for themes and fonts. M for the marker. P for the presenter window. B for a black screen, when you want the room looking at you instead. And F for full screen. <break time=\"0.5s\" /> If you ever need it on paper, use the browser's print dialog and save it as a P D F. Every slide becomes one page, with all the builds showing. <break time=\"0.4s\" /> One more thing I want to be clear about. This is a personal project of mine. I built it on my own time. It's not an Apple product, and it's not Apple work. <break time=\"0.5s\" /> One file. Opens anywhere. [warmly] Thank you for clicking through, and I hope you make something fun with it."
+  }
+ ]
+}

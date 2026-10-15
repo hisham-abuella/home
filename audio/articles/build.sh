@@ -4,6 +4,8 @@
 #   audio/articles/build.sh two-nails-two-assistants   one article
 #   audio/articles/build.sh next                       the first article without audio yet
 #   audio/articles/build.sh all                        every article, newest first; stops at the first failure
+#   audio/articles/build.sh ar/slides-in-html          an Arabic narration (source/ar/<slug>.json -> ar/<slug>.mp3)
+#   audio/articles/build.sh deck how-it-works          per-slide clips for a showcase deck (audio/slides/source -> audio/slides/<deck>/<slide-id>.mp3)
 #
 # Transcripts (the source of truth) live in audio/articles/source/<slug>.json.
 # Per-section clips go outside the repo, in ../article-audio/<slug>/, so a single
@@ -15,7 +17,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 TOOLS="$HOME/Work/Elevenlabs-voice"
 CLIPS_ROOT="$(cd "$HERE/../../.." && pwd)/article-audio"
 VOICE="pusofH2Ro5Ny4RH6qBEO"   # Hisham (cloned)
-ORDER=(two-nails-two-assistants bedtime-stories local-voice-generation building-ai-server
+ORDER=(slides-in-html ar/slides-in-html two-nails-two-assistants bedtime-stories local-voice-generation building-ai-server
        building-wireless101 building-islamic-kids building-wirelesshub journey)
 
 [ -n "${ELEVENLABS_API_KEY:-}" ] || source "$HOME/.zshrc" >/dev/null 2>&1 || true
@@ -38,7 +40,7 @@ build() {
   local before; before="$(remaining)"
   echo "   quota before: ${before:-?}"
 
-  mkdir -p "$clips"
+  mkdir -p "$clips" "$(dirname "$out")"
   node "$TOOLS/generate.js" "$src" "$clips" \
     --voice "$VOICE" --model eleven_v4 --stability 0.5 --similarity 0.8
 
@@ -73,7 +75,17 @@ PY
   echo "   quota after:  $(remaining) (used $(( ${before:-0} - $(remaining) )))"
 }
 
+deck() { # one clip per slide, named by the slide's data-id, for the deck to play later
+  local src="$HERE/../slides/source/$1.json" out="$HERE/../slides/$1"
+  [ -f "$src" ] || { echo "no transcript: $src"; return 1; }
+  node "$TOOLS/lint-transcript.js" "$src" >/dev/null || { node "$TOOLS/lint-transcript.js" "$src"; return 1; }
+  mkdir -p "$out"; echo "== deck $1   quota before: $(remaining)"
+  node "$TOOLS/generate.js" "$src" "$out" --voice "$VOICE" --model eleven_v4 --stability 0.5 --similarity 0.8
+  echo "   quota after:  $(remaining)"
+}
+
 case "${1:-}" in
+  deck) deck "${2:?usage: $0 deck <name>}" ;;
   all)  for s in "${ORDER[@]}"; do [ -f "$HERE/$s.mp3" ] || build "$s"; done ;;
   next) for s in "${ORDER[@]}"; do [ -f "$HERE/$s.mp3" ] || { build "$s"; exit; }; done
         echo "every article already has audio" ;;
