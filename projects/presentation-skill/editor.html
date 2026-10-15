@@ -280,7 +280,11 @@ addEventListener('dragleave', () => document.body.classList.remove('over'));
 addEventListener('drop', async e => { e.preventDefault(); document.body.classList.remove('over'); const it = [...e.dataTransfer.items].find(i => i.kind === 'file'); if (!it) return; if (dirty && !confirmDiscard()) return;
   let h = null; try { h = it.getAsFileSystemHandle ? await it.getAsFileSystemHandle() : null; } catch (er) {} const f = h ? await h.getFile() : it.getAsFile(); load(await f.text(), f.name, h); });
 const qd = new URLSearchParams(location.search).get('deck');
-if (qd) fetch(qd).then(r => { if (!r.ok) throw 0; return r.text(); }).then(t => load(t, qd.split('/').pop(), null, new URL(qd, location.href).href)).catch(() => toast('Could not load ' + qd));
+// ?deck= opens only a deck that sits next to this editor: a relative .html path, same origin, no "..". The preview runs the
+// deck's scripts with this page's origin, so a link must never be able to point it at someone else's file.
+const okDeck = q => { if (!/^[\w-]+(\/[\w-]+)*\.html?$/i.test(q)) return null; try { const u = new URL(q, location.href); return u.origin === location.origin ? u : null; } catch (e) { return null; } };
+if (qd) { const u = okDeck(qd); if (!u) toast('Links can only open decks from this folder. Use Open deck for other files.');
+  else fetch(u, {credentials: 'same-origin', redirect: 'error'}).then(r => { if (!r.ok) throw 0; return r.text(); }).then(t => load(t, qd.split('/').pop(), null, u.href)).catch(() => toast('Could not load ' + qd)); }
 window.kpEditor = {load, patch, edits: () => edits};
 })();
 </script>
