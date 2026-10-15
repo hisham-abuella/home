@@ -10,6 +10,7 @@ page has no long English sentences left in its visible text (code, pre,
 translate="no", lang="en", quotes in «…» and blocks like .search-dump are skipped:
 they hold quoted source material, such as prompts given to a model).
 """
+import re
 import glob, os, re, sys
 from html.parser import HTMLParser
 
@@ -42,6 +43,7 @@ class Walk(HTMLParser):
 def norm_article(link):
     link = re.sub(r'^(\.\./)+', '../', link)
     link = link.replace('audio/articles/ar/', 'audio/articles/')
+    link = re.sub(r'(presentation-skill/(?:examples/|thumbs/)?[\w-]+)-ar\.(html|jpg)', r'\1.\2', link)  # Arabic decks and their thumbnails
     link = re.sub(r'[?&]lang=ar$', '', link)
     link = link.replace('../ar/home.html', '../home.html')
     link = re.sub(r'^\.\./(\w[\w-]*\.html)$', r'\1', link)  # Arabic page's "Read in English" link

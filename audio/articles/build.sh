@@ -6,6 +6,7 @@
 #   audio/articles/build.sh all                        every article, newest first; stops at the first failure
 #   audio/articles/build.sh ar/slides-in-html          an Arabic narration (source/ar/<slug>.json -> ar/<slug>.mp3)
 #   audio/articles/build.sh deck how-it-works          per-slide clips for a showcase deck (audio/slides/source -> audio/slides/<deck>/<slide-id>.mp3)
+#   audio/articles/build.sh deck ar/how-it-works       the same for an Arabic deck (audio/slides/source/ar -> audio/slides/ar/<deck>/)
 #
 # Transcripts (the source of truth) live in audio/articles/source/<slug>.json.
 # Per-section clips go outside the repo, in ../article-audio/<slug>/, so a single
