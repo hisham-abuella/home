@@ -848,6 +848,8 @@ function loadUrl(url) { // add a Google Fonts stylesheet once; resolves when loa
   return new Promise(res => { l.onload = l.onerror = () => res(); setTimeout(res, 2500); });
 }
 const storeKey = 'kp:' + location.pathname;
+const LOCAL = location.protocol === 'file:'; // file:// pages post with the opaque origin "null"
+const ORIGIN = LOCAL ? '*' : location.origin, sameOrigin = o => LOCAL ? o === 'null' || o === 'file://' : o === location.origin; // the presenter must be same-origin
 let pvT, committed = {theme: null, fonts: null};
 function applyLook(theme, fonts, persist, preview) {
   if (REG.themes[theme]) root.setAttribute('data-theme', theme);
@@ -1202,14 +1204,15 @@ function sendState() {
   pw.postMessage({type: 'kp-state', i: state.i, step: state.step, steps: s.kp.steps, total: N, cur: buildClone(s, state.step).outerHTML,
     next: more ? buildClone(s, state.step + 1).outerHTML : nx ? buildClone(nx, 0).outerHTML : '', nextLabel: more ? `Next: build ${state.step + 1} of ${s.kp.steps}` : nx ? 'Next: ' + titleOf(nx) : '',
     notes: ($('.notes', s) || {innerHTML: ''}).innerHTML, ink: ink.data[state.i] || [], theme: root.getAttribute('data-theme'), fonts: root.getAttribute('data-fonts') || '', screen: screenState(),
-    duration: +deck.dataset.duration || 0, lang: root.lang, dir: root.dir}, '*');
+    duration: +deck.dataset.duration || 0, lang: root.lang, dir: root.dir}, ORIGIN);
 }
 function presenterMain() { // runs inside the presenter window (stringified)
   const $ = s => document.querySelector(s); let st = null, acc = 0, t0 = Date.now(), paused = false, last = 0, buf = '', bufT, nf = +(localStorage.getItem('kp-nf') || 26);
-  const send = (cmd, n) => { try { opener && !opener.closed && opener.postMessage({type: 'kp-cmd', cmd, n, from: 'kp-pv'}, '*'); } catch (e) {} };
+  const send = (cmd, n) => { try { opener && !opener.closed && opener.postMessage({type: 'kp-cmd', cmd, n, from: 'kp-pv'}, location.protocol === 'file:' ? '*' : location.origin); } catch (e) {} };
   const fit = () => document.querySelectorAll('.pv-wrap').forEach(w => { const f = w.firstElementChild; if (f) f.style.transform = `scale(${w.clientWidth / 1920})`; });
   addEventListener('resize', fit);
-  addEventListener('message', e => { if (e.data && e.data.type === 'kp-state') { st = e.data; last = Date.now(); const h = document.documentElement; h.setAttribute('data-theme', st.theme); st.fonts ? h.setAttribute('data-fonts', st.fonts) : h.removeAttribute('data-fonts'); if (st.lang) h.lang = st.lang; render(); } });
+  addEventListener('message', e => { if (e.source !== opener || (location.protocol !== 'file:' && e.origin !== location.origin)) return; // only the deck that opened this window
+    if (e.data && e.data.type === 'kp-state') { st = e.data; last = Date.now(); const h = document.documentElement; h.setAttribute('data-theme', st.theme); st.fonts ? h.setAttribute('data-fonts', st.fonts) : h.removeAttribute('data-fonts'); if (st.lang) h.lang = st.lang; render(); } });
   function render() {
     $('#cur').innerHTML = `<div class="kp-frame">${st.cur}<canvas id="pk" width="1920" height="1080" style="position:absolute;inset:0;width:1920px;height:1080px;z-index:30"></canvas></div>`;
     $('#nxt').innerHTML = st.next ? `<div class="kp-frame">${st.next}</div>` : '<p class="end">End of deck</p>';
@@ -1224,7 +1227,7 @@ function presenterMain() { // runs inside the presenter window (stringified)
   const tick = () => { const e = elapsed(), d = st && st.duration ? st.duration * 60 : 0, tm = $('#tm');
     tm.textContent = d ? fmt(d - e) : fmt(e); tm.className = (paused ? 'paused ' : '') + (d && d - e < 0 ? 'over' : d && d - e <= 120 ? 'warn' : '');
     $('#ck').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); $('#tp').textContent = paused ? 'Resume' : 'Pause';
-    if (Date.now() - last > 5000 && opener && !opener.closed) opener.postMessage({type: 'kp-ready', from: 'kp-pv'}, '*'); // the audience window was reloaded: ask it to reconnect
+    if (Date.now() - last > 5000 && opener && !opener.closed) opener.postMessage({type: 'kp-ready', from: 'kp-pv'}, location.protocol === 'file:' ? '*' : location.origin); // the audience window was reloaded: ask it to reconnect
     $('#gone').hidden = !(opener && opener.closed); };
   const pause = () => { if (paused) { t0 = Date.now(); paused = false; } else { acc += Date.now() - t0; paused = true; } tick(); };
   const reset = () => { acc = 0; t0 = Date.now(); tick(); };
@@ -1238,7 +1241,7 @@ function presenterMain() { // runs inside the presenter window (stringified)
     if (k === '+' || k === '=') { size(2); return; } if (k === '-') { size(-2); return; } if (kk === 't') { pause(); return; }
     const m = KEYS[kk]; if (m) { e.preventDefault(); send(m); } });
   $('#bp').onclick = () => send('prev'); $('#bn').onclick = () => send('next');
-  opener && opener.postMessage({type: 'kp-ready', from: 'kp-pv'}, '*');
+  opener && opener.postMessage({type: 'kp-ready', from: 'kp-pv'}, location.protocol === 'file:' ? '*' : location.origin);
 }
 function openPresenter() {
   if (pw && !pw.closed) { pw.focus(); return; }
@@ -1264,7 +1267,7 @@ function openPresenter() {
   <script>(${presenterMain.toString()})()<\/script></body></html>`);
   pw.document.close();
 }
-addEventListener('message', e => { const d = e.data; if (!d || !e.source || e.source === window) return;
+addEventListener('message', e => { const d = e.data; if (!d || !e.source || e.source === window || !sameOrigin(e.origin)) return; // same origin only: the presenter gets slide HTML and notes
   if (!pw || pw.closed) { if ((d.type === 'kp-ready' || d.type === 'kp-cmd') && d.from === 'kp-pv') pw = e.source; else return; } // presenter survives a reload of this window
   if (e.source !== pw) return;
   if (d.type === 'kp-ready') sendState();
