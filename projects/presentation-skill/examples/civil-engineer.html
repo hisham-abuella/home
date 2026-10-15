@@ -1264,7 +1264,8 @@ function openPresenter() {
   pw.document.close();
 }
 addEventListener('message', e => { const d = e.data; if (!d || !e.source || e.source === window || !sameOrigin(e.origin)) return; // same origin only: the presenter gets slide HTML and notes
-  if (!pw || pw.closed) { if ((d.type === 'kp-ready' || d.type === 'kp-cmd') && d.from === 'kp-pv') pw = e.source; else return; } // presenter survives a reload of this window
+  if (!pw || pw.closed) { let mine = false; try { mine = e.source.opener === window; } catch (x) {} // only a window this deck opened (its opener survives a reload of this window); file:// and sandboxed pages all report origin "null"
+    if (mine && (d.type === 'kp-ready' || d.type === 'kp-cmd') && d.from === 'kp-pv') pw = e.source; else return; }
   if (e.source !== pw) return;
   if (d.type === 'kp-ready') sendState();
   if (d.type === 'kp-cmd') { ({next, prev, first: () => go(0, 0), last: () => go(N - 1, Infinity), goto: () => go(Math.min(N, Math.max(1, d.n + 1)) - 1, 0), black: () => screen('black'), white: () => screen('white'), grid: () => toggleOverview(), pen: () => ink.set(!ink.on()), narr: () => narr.toggle(), esc: escKey})[d.cmd]?.(); } });
