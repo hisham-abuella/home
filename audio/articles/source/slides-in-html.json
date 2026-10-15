@@ -1,0 +1,51 @@
+{
+ "title": "One HTML File, a Whole Keynote",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] One H T M L File, a Whole Keynote. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> I wanted slides that look and work like Keynote or PowerPoint, without opening either. So I asked Claude to build them from the plainest tools on the web. H T M L, C S S, and a little JavaScript. <break time=\"0.4s\" /> At the top of the page there is a real deck, not a video. You can click it, use the arrow keys, change its look with one tap, and jump straight to any slide."
+  },
+  {
+   "id": "s01",
+   "title": "The idea, simply",
+   "transcript": "The idea, simply. <break time=\"0.5s\" /> It does the job of a PowerPoint or Keynote file. Slides, themes, speaker notes, a presenter view, and a P D F for printing. What changes is what it is made of. <break time=\"0.4s\" /> A slide is just a web page with a fixed size. Mine are nineteen twenty by ten eighty pixels, the shape of a television screen. The browser scales that stage to whatever screen you have. So a phone, a laptop, and a projector all show the same slide, only bigger or smaller. <break time=\"0.4s\" /> Each slide is one section in the file. It has a layout name, which tells the engine where things go. It has notes, which only the speaker sees. And it has an id, which gives the slide its own link. That is everything a slide needs. <break time=\"0.4s\" /> Three layers do the rest. H T M L holds the words. C S S decides the look: colors, fonts, and spacing. JavaScript adds the motion and the tools. [playfully] Swap the C S S, and the same words become a board report, a lab talk, or a classroom lesson."
+  },
+  {
+   "id": "s02",
+   "title": "Why HTML",
+   "transcript": "Why H T M L is a good home for slides. <break time=\"0.5s\" /> It is one file. Open it in any browser, online or offline. Nothing to install, no account, no framework. <break time=\"0.3s\" /> A new look takes one line, and the whole deck changes. There are thirty two themes and thirty five font pairings. <break time=\"0.3s\" /> It is alive. A chart is one line full of numbers. Change them and the bars redraw. Headlines shrink to fit as you type. <break time=\"0.3s\" /> There is a real presenter view, with your notes, the next slide, and a timer. You can draw on a slide, or see every slide at once. <break time=\"0.3s\" /> The same file runs right to left for Arabic, and the layout mirrors itself. <break time=\"0.3s\" /> Every slide has its own link, so you can send someone straight to one slide. <break time=\"0.3s\" /> And when you need paper, the browser saves it as a P D F, one slide per page."
+  },
+  {
+   "id": "s03",
+   "title": "What Claude does",
+   "transcript": "What Claude does, and what I do. <break time=\"0.5s\" /> This is my personal Claude Code skill, not Apple's. I tell Claude who the talk is for, the story, and the real numbers. Claude picks a layout for every slide, writes them, and adds speaker notes. <break time=\"0.4s\" /> Then a checker opens every slide in a hidden browser. It looks for the things I stop seeing after the tenth edit. Text running off the slide. Type too small to read from the back of the room. Weak contrast. A chart with a typo in its numbers. Claude fixes what it finds, and runs it again. <break time=\"0.4s\" /> For a long deck, Claude splits the outline into parts. Several helpers write their parts at the same time. Then Claude joins them into one file, and reads it from start to end, so it sounds like one person wrote it."
+  },
+  {
+   "id": "s04",
+   "title": "Small edits in the browser",
+   "transcript": "Small edits, right in the browser. <break time=\"0.5s\" /> For a typo or a new date, I don't need Claude, or any app. The skill comes with a small editor, and it is also one H T M L file. It opens a deck. I click a word on a slide, and type. And Save writes the same file back. Only the words I changed are touched. The rest of the file stays exactly as it was. <break time=\"0.4s\" /> The video on the page shows it in fifteen seconds. I retype a word in a headline, swap cue three for cue four on every slide, add a speaker note, and save. <break time=\"0.4s\" /> In Chrome and Edge, it saves the same file. Other browsers download a copy. And nothing is uploaded anywhere. There is a link on the page to try it yourself."
+  },
+  {
+   "id": "s05",
+   "title": "Things a normal slide can't do",
+   "transcript": "Things a normal slide can't do. <break time=\"0.5s\" /> Keynote and PowerPoint play back what you made. [serious] A browser runs it. <break time=\"0.4s\" /> So a slide can hold anything a web page can. I asked Claude for a second deck, with one of each. <break time=\"0.3s\" /> A phone app with switches that really switch. A calculator for how much a radio signal weakens over distance. A wave simulation, where you drag two antennas and turn the beam. A tone you can hear, drawn live on a scope, and a button that reads the slide aloud. A slide that shows your own time and language, and greets you by name. Code you edit, that redraws as you type. [playfully] And a little game, where you catch data packets before they fall off the edge. <break time=\"0.4s\" /> Some of these the big apps can do too, like video and a camera. Most of them, a slide file can't do on its own. <break time=\"0.3s\" /> And it is a short list. A map you can pan. A three D model you can turn. Charts fed by live data. Polls that count answers from phones in the room. If a web page can do it, a slide can."
+  },
+  {
+   "id": "s06",
+   "title": "One look per job",
+   "transcript": "One look per job. <break time=\"0.5s\" /> The template comes with six core looks. On top of them sits a library, with one look per profession. Each has its own colors, fonts, and a small detail from that world. A scope grid for a wireless engineer. A heartbeat line for a clinic. A drawing sheet title block for a civil engineer. A ruled card for a restaurant menu. <break time=\"0.4s\" /> A deck carries only the looks it uses, so it stays small. On the page there are ten complete decks to open. Every company, person, and number in the sample decks is made up."
+  },
+  {
+   "id": "s07",
+   "title": "Where it falls short",
+   "transcript": "Where it falls short. <break time=\"0.5s\" /> It needs a browser. Everyone has one, but you can't open it in PowerPoint. <break time=\"0.3s\" /> The fonts come from Google Fonts. Offline, the deck falls back to your computer's fonts. <break time=\"0.3s\" /> It is a file, not a shared document. Two people can't edit it live at the same time. <break time=\"0.3s\" /> And the editor changes words, not layouts. New slides still go through Claude."
+  },
+  {
+   "id": "s08",
+   "title": "What I took away",
+   "transcript": "What I took away. <break time=\"0.5s\" /> I used to think of H T M L as the thing behind websites. It turns out to be a very good canvas for anything you look at on a screen. One file that carries its words, its look, and its behavior, and opens anywhere. <break time=\"0.4s\" /> [warmly] Slides were just the first thing I tried. Open the deck at the top of the page, press the letter S, and pick a look. That is the whole point, in one key. <break time=\"0.6s\" /> This article, and every deck on the page, were made with Claude Code."
+  }
+ ]
+}
