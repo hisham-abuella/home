@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>ملف HTML واحد، Keynote كامل - هشام أبو العلا</title>
+    <meta name="description" content="كنت عايز slides شكلها زي Keynote من غير Keynote. Claude بناها بـ HTML عادي: ملف واحد، و themes بتتغير على الهوا، وشاشة مقدّم، و checker. جرّب العرض في الصفحة.">
+    <meta property="og:title" content="ملف HTML واحد، Keynote كامل - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="slides شكلها زي Keynote، معمولة من HTML عادي. شغّل العرض من الصفحة على طول.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/slides-in-html.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/slides-in-html.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/slides-in-html.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/slides-in-html.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/slides-in-html.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* The live deck */
+        .deck-frame {
+            margin: 30px 0 10px;
+            border-radius: var(--card-radius);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 16 / 9;
+            max-width: 100%;
+        }
+
+        .deck-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+        .deck-caption {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            margin: 0 0 18px;
+        }
+
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 14px;
+        }
+
+        .chip-row > span {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-inline-end: 4px;
+        }
+
+        .chip {
+            font: inherit;
+            font-size: 0.875rem;
+            min-height: 40px;
+            padding: 0 14px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chip i { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+        .chip:hover { border-color: var(--accent); }
+        .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .chip[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+        /* Example decks */
+        .deck-grid {
+            list-style: none;
+            padding: 0;
+            margin: 26px 0 34px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+            gap: 16px;
+        }
+
+        .article-content .deck-grid li { margin: 0; padding: 0; }
+        .article-content .deck-grid li::before { content: none; }
+
+        .deck-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .article-content a.deck-card { color: var(--text-primary); text-decoration: none; }
+        .deck-card:hover { border-color: var(--accent); }
+        .deck-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        .article-content .deck-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .deck-card strong { display: block; padding: 12px 14px 2px; font-size: 0.9375rem; line-height: 1.35; }
+        .deck-card span { display: block; padding: 0 14px 14px; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.45; }
+
+        .link-note { font-size: 0.875rem; color: var(--text-tertiary); }
+    </style>
+
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../../index.html?choose&lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../ar/home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">ملف HTML واحد، Keynote كامل</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 14 أكتوبر 2026</span>
+                <span><i class="fas fa-clock"></i> 6 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../slides-in-html.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">كنت عايز slides شكلها كأنها طالعة من Keynote، من غير ما أفتح Keynote. فطلبت من Claude يبنيها بأبسط أدوات الويب: HTML و CSS وشوية JavaScript. العرض اللي تحت ده هو النتيجة، وتقدر تشغّله من هنا على طول.</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/slides-in-html.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+
+            <div class="deck-frame">
+                <iframe id="deck" src="../../projects/presentation-skill/how-it-works.html#start" title="عرض slides شغال: الـ skill بتاعة العروض بتشتغل إزاي" loading="lazy" allow="fullscreen"></iframe>
+            </div>
+            <p class="deck-caption">ده العرض الحقيقي، مش فيديو. دوس عليه، وبعدين استعمل أسهم الكيبورد. جواه، <strong>S</strong> بيفتح الـ themes، و <strong>M</strong> بيرسم، و <strong>G</strong> بيوريك كل الـ slides. <a href="../../projects/presentation-skill/how-it-works.html" target="_blank" rel="noopener">افتحه على الشاشة كلها</a>.</p>
+
+            <div class="chip-row" role="group" aria-label="روح على slide معينة">
+                <span>روح على</span>
+                <button type="button" class="chip" data-go="headline">كلام بيظبط مقاسه لوحده</button>
+                <button type="button" class="chip" data-go="chart">chart تقدر تعدّلها</button>
+                <button type="button" class="chip" data-go="themes">كل الـ themes</button>
+                <button type="button" class="chip" data-go="marker">ارسم على الـ slide</button>
+                <button type="button" class="chip" data-go="presenter">شاشة المقدّم</button>
+                <button type="button" class="chip" data-go="arabic">بالعربي</button>
+            </div>
+            <div class="chip-row" role="group" aria-label="غيّر شكل العرض">
+                <span>نفس الـ slides، شكل جديد</span>
+                <button type="button" class="chip" data-look="studio" aria-pressed="true"><i style="background:#f0a93b"></i>Studio</button>
+                <button type="button" class="chip" data-look="keynote-black" aria-pressed="false"><i style="background:#2997ff"></i>Keynote Black</button>
+                <button type="button" class="chip" data-look="boardroom" aria-pressed="false"><i style="background:#0b2545"></i>Boardroom</button>
+                <button type="button" class="chip" data-look="spectrum" aria-pressed="false"><i style="background:#0A6A8F"></i>Spectrum</button>
+                <button type="button" class="chip" data-look="clinic" aria-pressed="false"><i style="background:#0F766E"></i>Clinic</button>
+                <button type="button" class="chip" data-look="chalk" aria-pressed="false"><i style="background:#8FD6C0"></i>Chalk</button>
+                <button type="button" class="chip" data-look="blueprint" aria-pressed="false"><i style="background:#1558B0"></i>Blueprint</button>
+                <button type="button" class="chip" data-look="newsroom" aria-pressed="false"><i style="background:#B3121B"></i>Newsroom</button>
+                <button type="button" class="chip" data-look="menu" aria-pressed="false"><i style="background:#8E2A17"></i>Menu</button>
+                <button type="button" class="chip" data-look="pitchside" aria-pressed="false"><i style="background:#0B6B35"></i>Pitchside</button>
+            </div>
+
+            <h2>الفكرة ببساطة</h2>
+            <p>الـ slide ما هيش غير صفحة ويب مقاسها ثابت. بتاعتي 1920 في 1080 pixel، نفس شكل شاشة التليفزيون. والمتصفح بيكبّر أو بيصغّر المسرح ده على قد شاشتك، فالموبايل واللابتوب والبروجكتور كلهم بيعرضوا نفس الـ slide، بس أكبر أو أصغر.</p>
+            <p>كل slide هي <code>&lt;section&gt;</code> واحدة جوه الملف. ودي slide كاملة:</p>
+<pre dir="ltr"><code>&lt;section class="slide" data-layout="statement" data-id="pricing"&gt;
+  &lt;h2&gt;One sentence, set big, is a whole slide.&lt;/h2&gt;
+  &lt;aside class="notes"&gt;&lt;p&gt;Pause here.&lt;/p&gt;&lt;/aside&gt;
+&lt;/section&gt;</code></pre>
+            <p>اسم الـ layout بيقول للـ engine يحط كل حاجة فين. والـ notes دي للي بيقدّم، وبتظهر بس في شاشة المقدّم. والـ id بيدّي الـ slide لينك خاص بيها. ده كل اللي الـ slide محتاجاه.</p>
+            <p>وتلات طبقات بيعملوا الباقي. <strong>HTML</strong> شايل الكلام. و <strong>CSS</strong> بيحدد الشكل: الألوان والخطوط والمسافات. و <strong>JavaScript</strong> بيضيف الحركة والأدوات. غيّر الـ CSS، ونفس الكلام يبقى تقرير لمجلس إدارة، أو محاضرة في معمل، أو درس في فصل. وده بالظبط اللي الزراير اللي فوق بتعمله.</p>
+
+            <h2>ليه HTML مكان كويس للـ slides</h2>
+            <div class="feature-grid">
+                <div class="feature-card"><i class="fas fa-file-code feature-icon"></i><strong>ملف واحد</strong><span>افتحه في أي متصفح، بإنترنت أو من غير. مافيش حاجة تتسطب، ولا حساب، ولا framework.</span></div>
+                <div class="feature-card"><i class="fas fa-palette feature-icon"></i><strong>شكل جديد في سطر واحد</strong><span><code>data-theme="boardroom"</code> والعرض كله يتغير. 32 theme و 35 طقم خطوط.</span></div>
+                <div class="feature-card"><i class="fas fa-chart-column feature-icon"></i><strong>العرض عايش</strong><span>الـ chart عبارة عن attribute واحد مليان أرقام؛ غيّرها والأعمدة تترسم من جديد. والعناوين بتصغر عشان تيجي على قد الـ slide وانت بتكتب.</span></div>
+                <div class="feature-card"><i class="fas fa-person-chalkboard feature-icon"></i><strong>شاشة مقدّم بجد</strong><span><strong>P</strong> بيفتح شباك تاني فيه الـ notes، والـ slide اللي جاية، وتايمر. و <strong>M</strong> بيرسم، و <strong>G</strong> بيوريك كل الـ slides.</span></div>
+                <div class="feature-card"><i class="fas fa-language feature-icon"></i><strong>أي لغة</strong><span>نفس الملف بيشتغل من اليمين للشمال للعربي، والـ layout بيقلب نفسه لوحده.</span></div>
+                <div class="feature-card"><i class="fas fa-link feature-icon"></i><strong>لينك لكل slide</strong><span>ابعت لحد لينك يوديه على slide واحدة على طول: <code>deck.html#pricing</code>. و <strong>K</strong> بينسخه.</span></div>
+            </div>
+            <p>ولما تحتاج ورق، شباك الطباعة في المتصفح بيحفظه PDF، كل slide في صفحة.</p>
+
+            <h2>Claude بيعمل إيه، وأنا بعمل إيه</h2>
+            <p>دي الـ Claude Code skill الشخصية بتاعتي، مش بتاعة Apple. بقول لـ Claude العرض لمين، والحكاية، والأرقام الحقيقية. و Claude بيختار layout لكل slide، ويكتبها، ويضيف الـ notes بتاعة المقدّم.</p>
+            <p>بعد كده فيه checker بيفتح كل slide في متصفح مستخبي، ويدوّر على الحاجات اللي ببطّل أشوفها بعد عاشر تعديل: كلام خارج برا الـ slide، أو خط صغير ما يتقريش من آخر القاعة، أو ألوان مش باينة على بعض، أو chart فيها غلطة في أرقامها. و Claude بيصلّح اللي لقاه ويشغّله تاني.</p>
+            <p>ولو العرض طويل، Claude بيقسم الـ outline لأجزاء. وكذا مساعد بيكتبوا أجزاءهم في نفس الوقت، وبعدين Claude بيجمعهم في ملف واحد ويقراه من أوله لآخره، عشان يطلع كأن واحد بس اللي كاتبه.</p>
+            <p>وللتعديلات الصغيرة مش محتاج Claude خالص. فيه editor صغير بيفتح العرض؛ بدوس على كلمة في الـ slide، وأكتب، وأحفظ نفس الملف. والكلام اللي غيرته بس هو اللي بيتلمس.</p>
+
+            <h2>شكل لكل شغلانة</h2>
+            <p>الـ template جاي بستة أشكال أساسية. وفوقهم فيه مكتبة: شكل لكل مهنة، كل واحد بألوانه وخطوطه وتفصيلة صغيرة من عالم المهنة دي. شبكة oscilloscope لمهندس الـ wireless، وخط رسم قلب للعيادة، وجدول عنوان لوحة رسم هندسي لمهندس مدني، وكارت مسطّر لمنيو مطعم. والعرض بيشيل الأشكال اللي بيستعملها بس، فبيفضل صغير.</p>
+            <p>شوية منهم، كل واحد عرض كامل. بيفتحوا في tab جديدة.</p>
+
+            <ul class="deck-grid">
+                <li><a class="deck-card" href="../../projects/presentation-skill/how-it-works.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/how-it-works.jpg" alt="الـ slide الأولى: العرض ده ملف HTML واحد" width="960" height="540" loading="lazy"><strong>بيشتغل إزاي</strong><span>العرض اللي فوق في الصفحة دي. شكل Studio.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/genai-101.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/genai-101.jpg" alt="الـ slide الأولى: الـ large language models بتشتغل إزاي بجد" width="960" height="540" loading="lazy"><strong>الـ LLMs بتشتغل إزاي بجد</strong><span>درس معمول من كورس GenAI 101 بتاعي اللي ببلاش.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/electrical-wireless-engineer.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/electrical-wireless-engineer.jpg" alt="الـ slide الأولى من عرض مهندس الـ wireless" width="960" height="540" loading="lazy"><strong>مهندس wireless</strong><span>شكل Spectrum: شبكة oscilloscope وموجات I/Q.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/doctor-clinician.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/doctor-clinician.jpg" alt="الـ slide الأولى من عرض الدكتور" width="960" height="540" loading="lazy"><strong>حالة طبية</strong><span>شكل Clinic: أخضر مزرق هادي، وأحمر واحد للتنبيه.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/finance.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/finance.jpg" alt="الـ slide الأولى من عرض المالية" width="960" height="540" loading="lazy"><strong>مراجعة ميزانية</strong><span>شكل Ledger، للمالية.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/civil-engineer.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/civil-engineer.jpg" alt="الـ slide الأولى: كوبري مشاة Marlow Street" width="960" height="540" loading="lazy"><strong>مراجعة تصميم كوبري</strong><span>شكل Blueprint، للمهندسين المدنيين.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/journalist.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/journalist.jpg" alt="الـ slide الأولى: المعدية الفاضية" width="960" height="540" loading="lazy"><strong>عرض تحقيق صحفي</strong><span>شكل Newsroom، للصحفيين.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/chef-hospitality.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/chef-hospitality.jpg" alt="الـ slide الأولى: منيو الخريف، طبق ورا طبق" width="960" height="540" loading="lazy"><strong>إطلاق منيو</strong><span>شكل Menu، للمطابخ والمطاعم.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/trainer-bilingual.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/trainer-bilingual.jpg" alt="الـ slide الأولى من عرض المدرّب باللغتين" width="960" height="540" loading="lazy"><strong>ورشة باللغتين</strong><span>شكل Trainer، إنجليزي وعربي في عرض واحد.</span></a></li>
+            </ul>
+            <p class="link-note">كل الشركات والأشخاص والأرقام في العروض دي متألفة. والـ skill مشروعي الشخصي، مش بتاع Apple.</p>
+
+            <h2>فين بيقصّر</h2>
+            <ul>
+                <li>محتاج متصفح. كل الناس عندها واحد، بس مش هتعرف تفتحه في PowerPoint.</li>
+                <li>الخطوط جاية من Google Fonts. من غير إنترنت، العرض بيرجع لخطوط الجهاز بتاعك.</li>
+                <li>ده ملف، مش document مشترك. اتنين مش هيعرفوا يعدّلوا فيه في نفس اللحظة.</li>
+                <li>الـ editor بيغيّر الكلام، مش الـ layouts. الـ slides الجديدة لسه بتعدّي على Claude.</li>
+            </ul>
+
+            <h2>اللي خرجت بيه</h2>
+            <p>كنت فاكر إن HTML ده الحاجة اللي ورا المواقع وخلاص. طلع إنه canvas ممتاز لأي حاجة بتتشاف على شاشة: ملف واحد شايل كلامه وشكله وطريقة شغله، وبيفتح في أي حتة. والـ slides كانت أول حاجة جربتها بس. دوس <strong>S</strong> في العرض اللي فوق واختار شكل؛ دي الفكرة كلها في زرار واحد.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>المقال ده وكل العروض اللي في الصفحة دي اتعملوا بـ <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="two-nails-two-assistants.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">مسمارين ومساعدين</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script>
+        // The live deck: jump to a slide by its link id, or restyle it with one of its own themes.
+        (function () {
+            var frame = document.getElementById('deck');
+            if (!frame) return;
+            var deck = function () { try { var w = frame.contentWindow; return w && w.kp && w.kp.ready ? w.kp : null; } catch (error) { return null; } };
+            document.querySelectorAll('[data-go]').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var kp = deck(), i = kp ? kp.slugs.indexOf(b.dataset.go) : -1;
+                    if (i > -1) kp.go(i, Infinity); else frame.src = frame.src.split('#')[0] + '#' + b.dataset.go;
+                    if (frame.getBoundingClientRect().top < 0) frame.scrollIntoView({ block: 'start' });
+                });
+            });
+            var looks = document.querySelectorAll('[data-look]');
+            looks.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var kp = deck(); if (!kp || kp.themes.indexOf(b.dataset.look) < 0) return;
+                    kp.applyLook(b.dataset.look, '', false);
+                    looks.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+                });
+            });
+        })();
+    </script>
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/back-menu.js" defer></script>
+    <script src="../../js/appearance.js?v=3" defer></script>
+    <script src="../../js/reader-bar.js?v=3" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

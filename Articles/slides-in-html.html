@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+    <title>One HTML File, a Whole Keynote - Hisham Abuella</title>
+    <meta name="description" content="I wanted slides that look like Keynote without Keynote. Claude built them in plain HTML: one file, live themes, a presenter view and a checker. Try the deck on the page.">
+    <meta property="og:title" content="One HTML File, a Whole Keynote - Hisham Abuella">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Slides that look like Keynote, made of plain HTML. Drive the live deck right on the page.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/slides-in-html.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/slides-in-html.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/slides-in-html.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/slides-in-html.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/slides-in-html.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../css/skins/constellation.css">
+    <link rel="stylesheet" href="../css/skins/terminal.css">
+    <link rel="stylesheet" href="../css/skins/journal.css">
+    <link rel="stylesheet" href="../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* The live deck */
+        .deck-frame {
+            margin: 30px 0 10px;
+            border-radius: var(--card-radius);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 16 / 9;
+            max-width: 100%;
+        }
+
+        .deck-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+        .deck-caption {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            margin: 0 0 18px;
+        }
+
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 14px;
+        }
+
+        .chip-row > span {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-inline-end: 4px;
+        }
+
+        .chip {
+            font: inherit;
+            font-size: 0.875rem;
+            min-height: 40px;
+            padding: 0 14px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chip i { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+        .chip:hover { border-color: var(--accent); }
+        .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .chip[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+        /* Example decks */
+        .deck-grid {
+            list-style: none;
+            padding: 0;
+            margin: 26px 0 34px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+            gap: 16px;
+        }
+
+        .article-content .deck-grid li { margin: 0; padding: 0; }
+        .article-content .deck-grid li::before { content: none; }
+
+        .deck-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .article-content a.deck-card { color: var(--text-primary); text-decoration: none; }
+        .deck-card:hover { border-color: var(--accent); }
+        .deck-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        .article-content .deck-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .deck-card strong { display: block; padding: 12px 14px 2px; font-size: 0.9375rem; line-height: 1.35; }
+        .deck-card span { display: block; padding: 0 14px 14px; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.45; }
+
+        .link-note { font-size: 0.875rem; color: var(--text-tertiary); }
+    </style>
+
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../index.html?choose" aria-label="Hisham Abuella, front page"><img src="../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&larr; Back</summary>
+                <ul>
+                    <li><a href="../tracks/recruiter.html">Recruiter</a></li>
+                    <li><a href="../tracks/engineer.html">Engineer</a></li>
+                    <li><a href="../tracks/vibe.html">Vibe coder</a></li>
+                    <li><a href="../tracks/learner.html">Learner</a></li>
+                    <li><a href="../home.html">Full website</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">One HTML File, a Whole Keynote</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> October 14, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+                <a class="lang-switch" href="ar/slides-in-html.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
+            </div>
+            <p class="article-subtitle enter delay-3">I wanted slides that look like they came out of Keynote, without opening Keynote. So I asked Claude to build them from the plainest tools on the web: HTML, CSS and a little JavaScript. The deck below is the result, and you can drive it right here.</p>
+        </div>
+
+        <div class="listen" data-src="../audio/articles/slides-in-html.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+
+            <div class="deck-frame">
+                <iframe id="deck" src="../projects/presentation-skill/how-it-works.html#start" title="Live slide deck: how the presentation skill works" loading="lazy" allow="fullscreen"></iframe>
+            </div>
+            <p class="deck-caption">This is the real deck, not a video. Click it, then use the arrow keys. Inside it, <strong>S</strong> opens themes, <strong>M</strong> draws, <strong>G</strong> shows every slide. <a href="../projects/presentation-skill/how-it-works.html" target="_blank" rel="noopener">Open it full screen</a>.</p>
+
+            <div class="chip-row" role="group" aria-label="Jump to a slide">
+                <span>Jump to</span>
+                <button type="button" class="chip" data-go="headline">Text that fits itself</button>
+                <button type="button" class="chip" data-go="chart">A chart you can edit</button>
+                <button type="button" class="chip" data-go="themes">Every theme</button>
+                <button type="button" class="chip" data-go="marker">Draw on a slide</button>
+                <button type="button" class="chip" data-go="presenter">Presenter view</button>
+                <button type="button" class="chip" data-go="arabic">In Arabic</button>
+            </div>
+            <div class="chip-row" role="group" aria-label="Change the deck's look">
+                <span>Same slides, new look</span>
+                <button type="button" class="chip" data-look="studio" aria-pressed="true"><i style="background:#f0a93b"></i>Studio</button>
+                <button type="button" class="chip" data-look="keynote-black" aria-pressed="false"><i style="background:#2997ff"></i>Keynote Black</button>
+                <button type="button" class="chip" data-look="boardroom" aria-pressed="false"><i style="background:#0b2545"></i>Boardroom</button>
+                <button type="button" class="chip" data-look="spectrum" aria-pressed="false"><i style="background:#0A6A8F"></i>Spectrum</button>
+                <button type="button" class="chip" data-look="clinic" aria-pressed="false"><i style="background:#0F766E"></i>Clinic</button>
+                <button type="button" class="chip" data-look="chalk" aria-pressed="false"><i style="background:#8FD6C0"></i>Chalk</button>
+                <button type="button" class="chip" data-look="blueprint" aria-pressed="false"><i style="background:#1558B0"></i>Blueprint</button>
+                <button type="button" class="chip" data-look="newsroom" aria-pressed="false"><i style="background:#B3121B"></i>Newsroom</button>
+                <button type="button" class="chip" data-look="menu" aria-pressed="false"><i style="background:#8E2A17"></i>Menu</button>
+                <button type="button" class="chip" data-look="pitchside" aria-pressed="false"><i style="background:#0B6B35"></i>Pitchside</button>
+            </div>
+
+            <h2>The Idea, Simply</h2>
+            <p>A slide is just a web page with a fixed size. Mine are 1920 by 1080 pixels, the shape of a TV. The browser scales that stage to whatever screen you have, so a phone, a laptop and a projector all show the same slide, only bigger or smaller.</p>
+            <p>Each slide is one <code>&lt;section&gt;</code> in the file. This is a whole slide:</p>
+<pre><code>&lt;section class="slide" data-layout="statement" data-id="pricing"&gt;
+  &lt;h2&gt;One sentence, set big, is a whole slide.&lt;/h2&gt;
+  &lt;aside class="notes"&gt;&lt;p&gt;Pause here.&lt;/p&gt;&lt;/aside&gt;
+&lt;/section&gt;</code></pre>
+            <p>The layout name tells the engine where things go. The notes are for the speaker and only appear in the presenter window. The id gives the slide its own link. That is everything a slide needs.</p>
+            <p>Three layers do the rest. <strong>HTML</strong> holds the words. <strong>CSS</strong> decides the look: colors, fonts, spacing. <strong>JavaScript</strong> adds the motion and the tools. Swap the CSS and the same words become a board report, a lab talk or a classroom lesson. That is what the buttons above are doing.</p>
+
+            <h2>Why HTML Is a Good Home for Slides</h2>
+            <div class="feature-grid">
+                <div class="feature-card"><i class="fas fa-file-code feature-icon"></i><strong>One file</strong><span>Open it in any browser, online or offline. Nothing to install, no account, no framework.</span></div>
+                <div class="feature-card"><i class="fas fa-palette feature-icon"></i><strong>A new look in one line</strong><span><code>data-theme="boardroom"</code> and the whole deck changes. 32 themes and 35 font pairings.</span></div>
+                <div class="feature-card"><i class="fas fa-chart-column feature-icon"></i><strong>It is alive</strong><span>A chart is one attribute full of numbers; change them and the bars redraw. Headlines shrink to fit as you type.</span></div>
+                <div class="feature-card"><i class="fas fa-person-chalkboard feature-icon"></i><strong>A real presenter view</strong><span><strong>P</strong> opens a second window with notes, the next slide and a timer. <strong>M</strong> draws, <strong>G</strong> shows every slide.</span></div>
+                <div class="feature-card"><i class="fas fa-language feature-icon"></i><strong>Any language</strong><span>The same file runs right to left for Arabic, and the layout mirrors itself.</span></div>
+                <div class="feature-card"><i class="fas fa-link feature-icon"></i><strong>A link to every slide</strong><span>Send someone straight to one slide: <code>deck.html#pricing</code>. <strong>K</strong> copies it.</span></div>
+            </div>
+            <p>And when you need paper, the browser&rsquo;s print dialog saves it as a PDF, one slide per page.</p>
+
+            <h2>What Claude Does, and What I Do</h2>
+            <p>This is my personal Claude Code skill, not Apple&rsquo;s. I tell Claude who the talk is for, the story, and the real numbers. Claude picks a layout for every slide, writes them, and adds speaker notes.</p>
+            <p>Then a checker opens every slide in a hidden browser and looks for the things I stop seeing after the tenth edit: text running off the slide, type too small to read from the back of the room, weak contrast, a chart with a typo in its numbers. Claude fixes what it finds and runs it again.</p>
+            <p>For a long deck, Claude splits the outline into parts. Several helpers write their parts at the same time, then Claude joins them into one file and reads it start to end, so it sounds like one person wrote it.</p>
+            <p>For small fixes I don&rsquo;t need Claude at all. A little editor opens the deck; I click a word on a slide, type, and save the same file. Only the words I changed are touched.</p>
+
+            <h2>One Look per Job</h2>
+            <p>The template comes with six core looks. On top of them sits a library: one look per profession, each with its own colors, fonts and a small detail from that world. A scope grid for a wireless engineer, a heartbeat line for a clinic, a drawing-sheet title block for a civil engineer, a ruled card for a restaurant menu. A deck carries only the looks it uses, so it stays small.</p>
+            <p>A few of them, each a complete deck. They open in a new tab.</p>
+
+            <ul class="deck-grid">
+                <li><a class="deck-card" href="../projects/presentation-skill/how-it-works.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/how-it-works.jpg" alt="Title slide: This deck is one HTML file" width="960" height="540" loading="lazy"><strong>How it works</strong><span>The deck at the top of this page. Studio look.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/genai-101.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/genai-101.jpg" alt="Title slide: How large language models actually work" width="960" height="540" loading="lazy"><strong>How LLMs actually work</strong><span>A lesson built from my free GenAI 101 course.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/electrical-wireless-engineer.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/electrical-wireless-engineer.jpg" alt="Title slide of the wireless engineer sample deck" width="960" height="540" loading="lazy"><strong>Wireless engineer</strong><span>Spectrum look: a scope grid and I/Q traces.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/doctor-clinician.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/doctor-clinician.jpg" alt="Title slide of the clinician sample deck" width="960" height="540" loading="lazy"><strong>Clinician case</strong><span>Clinic look: calm teal, one alert red.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/finance.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/finance.jpg" alt="Title slide of the finance sample deck" width="960" height="540" loading="lazy"><strong>Budget review</strong><span>Ledger look, for finance.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/civil-engineer.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/civil-engineer.jpg" alt="Title slide: Marlow Street footbridge" width="960" height="540" loading="lazy"><strong>Bridge design review</strong><span>Blueprint look, for civil engineers.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/journalist.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/journalist.jpg" alt="Title slide: The empty ferry" width="960" height="540" loading="lazy"><strong>Investigation pitch</strong><span>Newsroom look, for journalists.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/chef-hospitality.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/chef-hospitality.jpg" alt="Title slide: The autumn menu, course by course" width="960" height="540" loading="lazy"><strong>Menu launch</strong><span>Menu look, for kitchens and restaurants.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/trainer-bilingual.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/trainer-bilingual.jpg" alt="Title slide of the bilingual trainer sample deck" width="960" height="540" loading="lazy"><strong>Bilingual workshop</strong><span>Trainer look, English and Arabic in one deck.</span></a></li>
+            </ul>
+            <p class="link-note">Every company, person and number in the sample decks is made up. The skill is my personal project, not Apple&rsquo;s.</p>
+
+            <h2>Where It Falls Short</h2>
+            <ul>
+                <li>It needs a browser. Everyone has one, but you can&rsquo;t open it in PowerPoint.</li>
+                <li>The fonts come from Google Fonts. Offline, the deck falls back to your computer&rsquo;s fonts.</li>
+                <li>It is a file, not a shared document. Two people can&rsquo;t edit it live at the same time.</li>
+                <li>The editor changes words, not layouts. New slides still go through Claude.</li>
+            </ul>
+
+            <h2>What I Took Away</h2>
+            <p>I used to think of HTML as the thing behind websites. It turns out to be a very good canvas for anything you look at on a screen: one file that carries its words, its look and its behavior, and opens anywhere. Slides were just the first thing I tried. Press <strong>S</strong> in the deck above and pick a look; that is the whole point in one key.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>This article and every deck on this page were made with <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="two-nails-two-assistants.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">Two Nails, Two Assistants</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script>
+        // The live deck: jump to a slide by its link id, or restyle it with one of its own themes.
+        (function () {
+            var frame = document.getElementById('deck');
+            if (!frame) return;
+            var deck = function () { try { var w = frame.contentWindow; return w && w.kp && w.kp.ready ? w.kp : null; } catch (error) { return null; } };
+            document.querySelectorAll('[data-go]').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var kp = deck(), i = kp ? kp.slugs.indexOf(b.dataset.go) : -1;
+                    if (i > -1) kp.go(i, Infinity); else frame.src = frame.src.split('#')[0] + '#' + b.dataset.go;
+                    if (frame.getBoundingClientRect().top < 0) frame.scrollIntoView({ block: 'start' });
+                });
+            });
+            var looks = document.querySelectorAll('[data-look]');
+            looks.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var kp = deck(); if (!kp || kp.themes.indexOf(b.dataset.look) < 0) return;
+                    kp.applyLook(b.dataset.look, '', false);
+                    looks.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+                });
+            });
+        })();
+    </script>
+    <script src="../js/listen.js" defer></script>
+    <script src="../js/back-menu.js" defer></script>
+    <script src="../js/appearance.js?v=3" defer></script>
+    <script src="../js/reader-bar.js?v=3" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
