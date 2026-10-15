@@ -7,13 +7,13 @@
     <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
     <title>One HTML File, a Whole Keynote - Hisham Abuella</title>
-    <meta name="description" content="I wanted slides that look like Keynote without Keynote. Claude built them in plain HTML: one file, live themes, a presenter view and a checker. Try the deck on the page.">
+    <meta name="description" content="I wanted slides that look and work like Keynote or PowerPoint, without either. Claude built them in plain HTML: one file, live themes, a presenter view, a browser editor, and slides that run apps, sound and games.">
     <meta property="og:title" content="One HTML File, a Whole Keynote - Hisham Abuella">
     <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:description" content="Slides that look like Keynote, made of plain HTML. Drive the live deck right on the page.">
+    <meta property="og:description" content="Slides that work like Keynote or PowerPoint, made of plain HTML. Drive the live decks right on the page.">
     <meta property="og:type" content="article">
     <link rel="canonical" href="https://www.hishamabuella.com/Articles/slides-in-html.html">
     <meta property="og:url" content="https://www.hishamabuella.com/Articles/slides-in-html.html">
@@ -131,6 +131,11 @@
         .deck-card span { display: block; padding: 0 14px 14px; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.45; }
 
         .link-note { font-size: 0.875rem; color: var(--text-tertiary); }
+
+        /* The editor video */
+        .demo-video { margin: 26px 0; }
+        .demo-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--card-radius); border: 1px solid var(--card-border); background: #000; }
+        .demo-video figcaption { font-size: 0.875rem; color: var(--text-tertiary); margin-top: 10px; }
     </style>
 
     <script>
@@ -199,11 +204,11 @@
             <h1 class="article-title enter delay-1">One HTML File, a Whole Keynote</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> October 14, 2026</span>
-                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-clock"></i> 8 min read</span>
                 <span><i class="fas fa-user"></i> Hisham Abuella</span>
                 <a class="lang-switch" href="ar/slides-in-html.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
             </div>
-            <p class="article-subtitle enter delay-3">I wanted slides that look like they came out of Keynote, without opening Keynote. So I asked Claude to build them from the plainest tools on the web: HTML, CSS and a little JavaScript. The deck below is the result, and you can drive it right here.</p>
+            <p class="article-subtitle enter delay-3">I wanted slides that look and work like Keynote or PowerPoint, without opening either. So I asked Claude to build them from the plainest tools on the web: HTML, CSS and a little JavaScript. The deck below is the result, and you can drive it right here.</p>
         </div>
 
         <div class="listen" data-src="../audio/articles/slides-in-html.mp3" hidden>
@@ -242,6 +247,7 @@
             </div>
 
             <h2>The Idea, Simply</h2>
+            <p>It does the job of a PowerPoint or Keynote file: slides, themes, speaker notes, a presenter view, a PDF for printing. What changes is what it is made of.</p>
             <p>A slide is just a web page with a fixed size. Mine are 1920 by 1080 pixels, the shape of a TV. The browser scales that stage to whatever screen you have, so a phone, a laptop and a projector all show the same slide, only bigger or smaller.</p>
             <p>Each slide is one <code>&lt;section&gt;</code> in the file. This is a whole slide:</p>
 <pre><code>&lt;section class="slide" data-layout="statement" data-id="pricing"&gt;
@@ -266,7 +272,41 @@
             <p>This is my personal Claude Code skill, not Apple&rsquo;s. I tell Claude who the talk is for, the story, and the real numbers. Claude picks a layout for every slide, writes them, and adds speaker notes.</p>
             <p>Then a checker opens every slide in a hidden browser and looks for the things I stop seeing after the tenth edit: text running off the slide, type too small to read from the back of the room, weak contrast, a chart with a typo in its numbers. Claude fixes what it finds and runs it again.</p>
             <p>For a long deck, Claude splits the outline into parts. Several helpers write their parts at the same time, then Claude joins them into one file and reads it start to end, so it sounds like one person wrote it.</p>
-            <p>For small fixes I don&rsquo;t need Claude at all. A little editor opens the deck; I click a word on a slide, type, and save the same file. Only the words I changed are touched.</p>
+
+            <h2>Small Edits, Right in the Browser</h2>
+            <p>For a typo or a new date, I don&rsquo;t need Claude, or any app. The skill comes with a small editor, itself one HTML file. It opens a deck, I click a word on a slide and type, and Save writes the same file back. Only the words I changed are touched; the rest of the file stays exactly as it was.</p>
+            <figure class="demo-video">
+                <video controls muted playsinline preload="metadata" width="1280" height="720" poster="../projects/presentation-skill/assets/edit-in-browser.jpg"><source src="../projects/presentation-skill/assets/edit-in-browser.mp4" type="video/mp4"></video>
+                <figcaption>Fifteen seconds in the editor: retype a word, swap Q3 for Q4 on every slide, add a speaker note, save.</figcaption>
+            </figure>
+            <ol>
+                <li>Open the editor and pick a deck, or drop the file on it.</li>
+                <li>Click any text on a slide and type. The speaker notes sit under the slide.</li>
+                <li>Find and replace works across every slide, and the deck&rsquo;s title too.</li>
+                <li>Save. In Chrome and Edge it writes the same file; other browsers download a copy.</li>
+            </ol>
+            <p>Try it: <a href="../projects/presentation-skill/editor.html?deck=examples/finance.html" target="_blank" rel="noopener">open the editor with the budget deck from the video</a>, or <a href="../projects/presentation-skill/editor.html" target="_blank" rel="noopener">open it empty and drop in your own deck</a>. Saving gives you your own copy; nothing is uploaded.</p>
+
+            <h2>Things a Normal Slide Can&rsquo;t Do</h2>
+            <p>Keynote and PowerPoint play back what you made. A browser runs it. So a slide can hold anything a web page can: a working app, a simulation, sound, code you edit, a game. I asked Claude for a second deck with one of each. Every slide in it works; click into one and play.</p>
+            <div class="deck-frame">
+                <iframe id="beyond" src="../projects/presentation-skill/examples/beyond-slides.html#live-ui" title="Live slide deck: slides that run apps, sound, code and games" loading="lazy" allow="fullscreen; camera; autoplay"></iframe>
+            </div>
+            <p class="deck-caption">A whole deck, live. Use the arrow keys, or jump below. <a href="../projects/presentation-skill/examples/beyond-slides.html" target="_blank" rel="noopener">Open it full screen</a>.</p>
+            <div class="chip-row" role="group" aria-label="Jump to a demo" data-deck="beyond">
+                <span>Jump to</span>
+                <button type="button" class="chip" data-go="live-ui">A phone app</button>
+                <button type="button" class="chip" data-go="app">A path-loss calculator</button>
+                <button type="button" class="chip" data-go="waves">A wave simulation</button>
+                <button type="button" class="chip" data-go="sound">Sound and voice</button>
+                <button type="button" class="chip" data-go="you">A slide made for you</button>
+                <button type="button" class="chip" data-go="code">Live code</button>
+                <button type="button" class="chip" data-go="game">A game</button>
+                <button type="button" class="chip" data-go="page">A page in a slide</button>
+                <button type="button" class="chip" data-go="video">Video</button>
+                <button type="button" class="chip" data-go="camera">Camera</button>
+            </div>
+            <p>Some of these the big apps can do too, like video and a camera. Most of them a slide file can&rsquo;t do on its own. And it is a short list: a map you can pan, a 3D model you can turn, charts fed by live data, polls that count answers from phones in the room, captions as you speak. If a web page can do it, a slide can.</p>
 
             <h2>One Look per Job</h2>
             <p>The template comes with six core looks. On top of them sits a library: one look per profession, each with its own colors, fonts and a small detail from that world. A scope grid for a wireless engineer, a heartbeat line for a clinic, a drawing-sheet title block for a civil engineer, a ruled card for a restaurant menu. A deck carries only the looks it uses, so it stays small.</p>
@@ -274,6 +314,7 @@
 
             <ul class="deck-grid">
                 <li><a class="deck-card" href="../projects/presentation-skill/how-it-works.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/how-it-works.jpg" alt="Title slide: This deck is one HTML file" width="960" height="540" loading="lazy"><strong>How it works</strong><span>The deck at the top of this page. Studio look.</span></a></li>
+                <li><a class="deck-card" href="../projects/presentation-skill/examples/beyond-slides.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/beyond-slides.jpg" alt="Slide with a wave simulation: Physics you can drag around" width="960" height="540" loading="lazy"><strong>Slides that run</strong><span>Apps, sound, code and a game on slides. Keynote Black look.</span></a></li>
                 <li><a class="deck-card" href="../projects/presentation-skill/examples/genai-101.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/genai-101.jpg" alt="Title slide: How large language models actually work" width="960" height="540" loading="lazy"><strong>How LLMs actually work</strong><span>A lesson built from my free GenAI 101 course.</span></a></li>
                 <li><a class="deck-card" href="../projects/presentation-skill/examples/electrical-wireless-engineer.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/electrical-wireless-engineer.jpg" alt="Title slide of the wireless engineer sample deck" width="960" height="540" loading="lazy"><strong>Wireless engineer</strong><span>Spectrum look: a scope grid and I/Q traces.</span></a></li>
                 <li><a class="deck-card" href="../projects/presentation-skill/examples/doctor-clinician.html" target="_blank" rel="noopener"><img src="../projects/presentation-skill/thumbs/doctor-clinician.jpg" alt="Title slide of the clinician sample deck" width="960" height="540" loading="lazy"><strong>Clinician case</strong><span>Clinic look: calm teal, one alert red.</span></a></li>
@@ -315,14 +356,15 @@
     </footer>
 
     <script>
-        // The live deck: jump to a slide by its link id, or restyle it with one of its own themes.
+        // The live decks: jump to a slide by its link id, or restyle the first deck with one of its own themes.
         (function () {
             var frame = document.getElementById('deck');
             if (!frame) return;
-            var deck = function () { try { var w = frame.contentWindow; return w && w.kp && w.kp.ready ? w.kp : null; } catch (error) { return null; } };
+            var deck = function (f) { try { var w = (f || frame).contentWindow; return w && w.kp && w.kp.ready ? w.kp : null; } catch (error) { return null; } };
             document.querySelectorAll('[data-go]').forEach(function (b) {
                 b.addEventListener('click', function () {
-                    var kp = deck(), i = kp ? kp.slugs.indexOf(b.dataset.go) : -1;
+                    var row = b.closest('[data-deck]'), frame = row && document.getElementById(row.dataset.deck) || document.getElementById('deck');
+                    var kp = deck(frame), i = kp ? kp.slugs.indexOf(b.dataset.go) : -1;
                     if (i > -1) kp.go(i, Infinity); else frame.src = frame.src.split('#')[0] + '#' + b.dataset.go;
                     if (frame.getBoundingClientRect().top < 0) frame.scrollIntoView({ block: 'start' });
                 });

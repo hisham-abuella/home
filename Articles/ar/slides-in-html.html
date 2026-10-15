@@ -7,13 +7,13 @@
     <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
     <title>ملف HTML واحد، Keynote كامل - هشام أبو العلا</title>
-    <meta name="description" content="كنت عايز slides شكلها زي Keynote من غير Keynote. Claude بناها بـ HTML عادي: ملف واحد، و themes بتتغير على الهوا، وشاشة مقدّم، و checker. جرّب العرض في الصفحة.">
+    <meta name="description" content="كنت عايز slides شكلها وشغلها زي Keynote أو PowerPoint، من غير الاتنين. Claude بناها بـ HTML عادي: ملف واحد، و themes بتتغير على الهوا، وشاشة مقدّم، و editor في المتصفح، و slides بتشغّل apps وصوت وألعاب.">
     <meta property="og:title" content="ملف HTML واحد، Keynote كامل - هشام أبو العلا">
     <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:description" content="slides شكلها زي Keynote، معمولة من HTML عادي. شغّل العرض من الصفحة على طول.">
+    <meta property="og:description" content="slides بتشتغل زي Keynote أو PowerPoint، معمولة من HTML عادي. شغّل العروض من الصفحة على طول.">
     <meta property="og:type" content="article">
     <meta property="og:locale" content="ar_EG">
     <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/slides-in-html.html">
@@ -132,6 +132,11 @@
         .deck-card span { display: block; padding: 0 14px 14px; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.45; }
 
         .link-note { font-size: 0.875rem; color: var(--text-tertiary); }
+
+        /* The editor video */
+        .demo-video { margin: 26px 0; }
+        .demo-video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--card-radius); border: 1px solid var(--card-border); background: #000; }
+        .demo-video figcaption { font-size: 0.875rem; color: var(--text-tertiary); margin-top: 10px; }
     </style>
 
     <script>
@@ -200,11 +205,11 @@
             <h1 class="article-title enter delay-1">ملف HTML واحد، Keynote كامل</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> 14 أكتوبر 2026</span>
-                <span><i class="fas fa-clock"></i> 6 دقايق قراية</span>
+                <span><i class="fas fa-clock"></i> 8 دقايق قراية</span>
                 <span><i class="fas fa-user"></i> هشام أبو العلا</span>
                 <a class="lang-switch" href="../slides-in-html.html" lang="en" hreflang="en">Read in English</a>
             </div>
-            <p class="article-subtitle enter delay-3">كنت عايز slides شكلها كأنها طالعة من Keynote، من غير ما أفتح Keynote. فطلبت من Claude يبنيها بأبسط أدوات الويب: HTML و CSS وشوية JavaScript. العرض اللي تحت ده هو النتيجة، وتقدر تشغّله من هنا على طول.</p>
+            <p class="article-subtitle enter delay-3">كنت عايز slides شكلها وشغلها زي Keynote أو PowerPoint، من غير ما أفتح أي واحد فيهم. فطلبت من Claude يبنيها بأبسط أدوات الويب: HTML و CSS وشوية JavaScript. العرض اللي تحت ده هو النتيجة، وتقدر تشغّله من هنا على طول.</p>
         </div>
 
         <div class="listen" data-src="../../audio/articles/ar/slides-in-html.mp3" hidden>
@@ -243,6 +248,7 @@
             </div>
 
             <h2>الفكرة ببساطة</h2>
+            <p>هو بيعمل شغل ملف PowerPoint أو Keynote: slides، و themes، وملاحظات للمتكلم، وشاشة مقدّم، و PDF للطباعة. الفرق كله في هو معمول من إيه.</p>
             <p>الـ slide ما هيش غير صفحة ويب مقاسها ثابت. بتاعتي 1920 في 1080 pixel، نفس شكل شاشة التليفزيون. والمتصفح بيكبّر أو بيصغّر المسرح ده على قد شاشتك، فالموبايل واللابتوب والبروجكتور كلهم بيعرضوا نفس الـ slide، بس أكبر أو أصغر.</p>
             <p>كل slide هي <code>&lt;section&gt;</code> واحدة جوه الملف. ودي slide كاملة:</p>
 <pre dir="ltr"><code>&lt;section class="slide" data-layout="statement" data-id="pricing"&gt;
@@ -267,7 +273,41 @@
             <p>دي الـ Claude Code skill الشخصية بتاعتي، مش بتاعة Apple. بقول لـ Claude العرض لمين، والحكاية، والأرقام الحقيقية. و Claude بيختار layout لكل slide، ويكتبها، ويضيف الـ notes بتاعة المقدّم.</p>
             <p>بعد كده فيه checker بيفتح كل slide في متصفح مستخبي، ويدوّر على الحاجات اللي ببطّل أشوفها بعد عاشر تعديل: كلام خارج برا الـ slide، أو خط صغير ما يتقريش من آخر القاعة، أو ألوان مش باينة على بعض، أو chart فيها غلطة في أرقامها. و Claude بيصلّح اللي لقاه ويشغّله تاني.</p>
             <p>ولو العرض طويل، Claude بيقسم الـ outline لأجزاء. وكذا مساعد بيكتبوا أجزاءهم في نفس الوقت، وبعدين Claude بيجمعهم في ملف واحد ويقراه من أوله لآخره، عشان يطلع كأن واحد بس اللي كاتبه.</p>
-            <p>وللتعديلات الصغيرة مش محتاج Claude خالص. فيه editor صغير بيفتح العرض؛ بدوس على كلمة في الـ slide، وأكتب، وأحفظ نفس الملف. والكلام اللي غيرته بس هو اللي بيتلمس.</p>
+
+            <h2>تعديلات صغيرة، في المتصفح على طول</h2>
+            <p>علشان غلطة إملائية أو تاريخ جديد، مش محتاج Claude، ولا أي برنامج. الـ skill جاية معاها editor صغير، وهو نفسه ملف HTML واحد. بيفتح العرض، وأنا بدوس على كلمة في الـ slide وأكتب، و Save بيكتب نفس الملف تاني. الكلام اللي غيرته بس هو اللي بيتلمس؛ وباقي الملف بيفضل زي ما هو بالظبط.</p>
+            <figure class="demo-video">
+                <video controls muted playsinline preload="metadata" width="1280" height="720" poster="../../projects/presentation-skill/assets/edit-in-browser.jpg"><source src="../../projects/presentation-skill/assets/edit-in-browser.mp4" type="video/mp4"></video>
+                <figcaption>ربع دقيقة في الـ editor: أغيّر كلمة، وأبدّل Q3 بـ Q4 في كل الـ slides، وأزوّد ملاحظة للمتكلم، وأحفظ.</figcaption>
+            </figure>
+            <ol>
+                <li>افتح الـ editor واختار عرض، أو ارمي الملف عليه.</li>
+                <li>دوس على أي كلام في الـ slide واكتب. ملاحظات المتكلم تحت الـ slide.</li>
+                <li>الـ Find and replace بيشتغل على كل الـ slides، وعلى عنوان العرض كمان.</li>
+                <li>احفظ. في Chrome و Edge بيكتب على نفس الملف؛ والمتصفحات التانية بتنزّل نسخة.</li>
+            </ol>
+            <p>جرّبه: <a href="../../projects/presentation-skill/editor.html?deck=examples/finance.html" target="_blank" rel="noopener">افتح الـ editor بعرض الميزانية اللي في الفيديو</a>، أو <a href="../../projects/presentation-skill/editor.html" target="_blank" rel="noopener">افتحه فاضي وارمي فيه العرض بتاعك</a>. الحفظ بيديك نسختك إنت؛ ومفيش حاجة بتترفع.</p>
+
+            <h2>حاجات الـ slide العادية ما تقدرش تعملها</h2>
+            <p>Keynote و PowerPoint بيعرضوا اللي إنت عملته. المتصفح بيشغّله. يبقى الـ slide تقدر تشيل أي حاجة صفحة الويب تقدر عليها: app شغال، و simulation، وصوت، و code بتعدّله، ولعبة. طلبت من Claude عرض تاني فيه واحدة من كل حاجة. كل slide فيه شغالة بجد؛ دوس على واحدة والعب.</p>
+            <div class="deck-frame">
+                <iframe id="beyond" src="../../projects/presentation-skill/examples/beyond-slides.html#live-ui" title="عرض شغال: slides بتشغّل apps وصوت و code وألعاب" loading="lazy" allow="fullscreen; camera; autoplay"></iframe>
+            </div>
+            <p class="deck-caption">عرض كامل، شغال. استعمل الأسهم، أو اختار من تحت. <a href="../../projects/presentation-skill/examples/beyond-slides.html" target="_blank" rel="noopener">افتحه على الشاشة كلها</a>.</p>
+            <div class="chip-row" role="group" aria-label="روح على demo معين" data-deck="beyond">
+                <span>روح على</span>
+                <button type="button" class="chip" data-go="live-ui">app على موبايل</button>
+                <button type="button" class="chip" data-go="app">حاسبة الـ path loss</button>
+                <button type="button" class="chip" data-go="waves">simulation للموجات</button>
+                <button type="button" class="chip" data-go="sound">صوت وكلام</button>
+                <button type="button" class="chip" data-go="you">slide معمولة علشانك</button>
+                <button type="button" class="chip" data-go="code">code شغال</button>
+                <button type="button" class="chip" data-go="game">لعبة</button>
+                <button type="button" class="chip" data-go="page">صفحة جوه slide</button>
+                <button type="button" class="chip" data-go="video">فيديو</button>
+                <button type="button" class="chip" data-go="camera">كاميرا</button>
+            </div>
+            <p>شوية من دول البرامج الكبيرة بتعملهم برضه، زي الفيديو والكاميرا. بس أغلبهم ملف الـ slides ما يقدرش يعملهم لوحده. والقايمة دي قصيرة: خريطة تحركها، و 3D model تلفّه، و charts بتاخد أرقامها live، واستطلاعات بتعد إجابات الموبايلات اللي في القاعة، و captions وإنت بتتكلم. أي حاجة صفحة الويب تقدر تعملها، الـ slide تقدر.</p>
 
             <h2>شكل لكل شغلانة</h2>
             <p>الـ template جاي بستة أشكال أساسية. وفوقهم فيه مكتبة: شكل لكل مهنة، كل واحد بألوانه وخطوطه وتفصيلة صغيرة من عالم المهنة دي. شبكة oscilloscope لمهندس الـ wireless، وخط رسم قلب للعيادة، وجدول عنوان لوحة رسم هندسي لمهندس مدني، وكارت مسطّر لمنيو مطعم. والعرض بيشيل الأشكال اللي بيستعملها بس، فبيفضل صغير.</p>
@@ -275,6 +315,7 @@
 
             <ul class="deck-grid">
                 <li><a class="deck-card" href="../../projects/presentation-skill/how-it-works.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/how-it-works.jpg" alt="الـ slide الأولى: العرض ده ملف HTML واحد" width="960" height="540" loading="lazy"><strong>بيشتغل إزاي</strong><span>العرض اللي فوق في الصفحة دي. شكل Studio.</span></a></li>
+                <li><a class="deck-card" href="../../projects/presentation-skill/examples/beyond-slides.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/beyond-slides.jpg" alt="slide فيها simulation للموجات: Physics you can drag around" width="960" height="540" loading="lazy"><strong>slides بتشتغل</strong><span>apps وصوت و code ولعبة جوه الـ slides. شكل Keynote Black.</span></a></li>
                 <li><a class="deck-card" href="../../projects/presentation-skill/examples/genai-101.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/genai-101.jpg" alt="الـ slide الأولى: الـ large language models بتشتغل إزاي بجد" width="960" height="540" loading="lazy"><strong>الـ LLMs بتشتغل إزاي بجد</strong><span>درس معمول من كورس GenAI 101 بتاعي اللي ببلاش.</span></a></li>
                 <li><a class="deck-card" href="../../projects/presentation-skill/examples/electrical-wireless-engineer.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/electrical-wireless-engineer.jpg" alt="الـ slide الأولى من عرض مهندس الـ wireless" width="960" height="540" loading="lazy"><strong>مهندس wireless</strong><span>شكل Spectrum: شبكة oscilloscope وموجات I/Q.</span></a></li>
                 <li><a class="deck-card" href="../../projects/presentation-skill/examples/doctor-clinician.html" target="_blank" rel="noopener"><img src="../../projects/presentation-skill/thumbs/doctor-clinician.jpg" alt="الـ slide الأولى من عرض الدكتور" width="960" height="540" loading="lazy"><strong>حالة طبية</strong><span>شكل Clinic: أخضر مزرق هادي، وأحمر واحد للتنبيه.</span></a></li>
@@ -316,14 +357,15 @@
     </footer>
 
     <script>
-        // The live deck: jump to a slide by its link id, or restyle it with one of its own themes.
+        // The live decks: jump to a slide by its link id, or restyle the first deck with one of its own themes.
         (function () {
             var frame = document.getElementById('deck');
             if (!frame) return;
-            var deck = function () { try { var w = frame.contentWindow; return w && w.kp && w.kp.ready ? w.kp : null; } catch (error) { return null; } };
+            var deck = function (f) { try { var w = (f || frame).contentWindow; return w && w.kp && w.kp.ready ? w.kp : null; } catch (error) { return null; } };
             document.querySelectorAll('[data-go]').forEach(function (b) {
                 b.addEventListener('click', function () {
-                    var kp = deck(), i = kp ? kp.slugs.indexOf(b.dataset.go) : -1;
+                    var row = b.closest('[data-deck]'), frame = row && document.getElementById(row.dataset.deck) || document.getElementById('deck');
+                    var kp = deck(frame), i = kp ? kp.slugs.indexOf(b.dataset.go) : -1;
                     if (i > -1) kp.go(i, Infinity); else frame.src = frame.src.split('#')[0] + '#' + b.dataset.go;
                     if (frame.getBoundingClientRect().top < 0) frame.scrollIntoView({ block: 'start' });
                 });

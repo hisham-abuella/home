@@ -1,0 +1,288 @@
+<!doctype html>
+<!--
+  Keynote Pro text editor. Open a deck, click any text on a slide and type, edit speaker notes, find and replace,
+  then save the same .html file again. Only the words you change are written back: the engine, the themes and the
+  layout of the file stay exactly as they were. No server, no dependencies.
+  Open:  drop a deck on the page, use "Open deck", or serve this folder and visit editor.html?deck=examples/tech-talk.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keynote Pro text editor</title>
+<style>
+:root{--bg:#f2f2f4;--panel:#ffffff;--ink:#16171a;--ink2:#5b5e66;--rule:#d9dbe0;--accent:#0a63c9;--accent-ink:#ffffff;--hot:#b42318;--ok:#11743c;--sel:#e7f0fb;--stage:#d4d6db;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--bg:#141517;--panel:#1d1f22;--ink:#eceef1;--ink2:#a4a8b0;--rule:#33363b;--accent:#5aa4ff;--accent-ink:#0b1320;--hot:#ff8a80;--ok:#6fd99a;--sel:#22344c;--stage:#0c0d0e;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:grid;grid-template-rows:auto 1fr}
+button,input,textarea{font:inherit;color:inherit}
+button{min-height:38px;padding:0 14px;border:1px solid var(--rule);background:var(--panel);border-radius:8px;cursor:pointer}
+button:hover{border-color:var(--ink2)}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+button:disabled{opacity:.45;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--rule)}
+header h1{font-size:16px;margin:0 8px 0 0;white-space:nowrap}
+#file{color:var(--ink2);font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:28ch}
+#title{flex:1 1 220px;min-width:0;min-height:38px;border:1px solid var(--rule);border-radius:8px;padding:0 10px;background:var(--bg)}
+#status{font-size:13px;color:var(--ink2);min-width:9ch}
+#status.dirty{color:var(--hot)}#status.ok{color:var(--ok)}
+.spacer{flex:1}
+main{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:0}
+#list{overflow:auto;border-inline-end:1px solid var(--rule);background:var(--panel);padding:8px}
+#list button{display:grid;grid-template-columns:30px 1fr;gap:6px;width:100%;text-align:start;border:0;background:none;padding:8px;border-radius:8px;min-height:44px;align-items:start}
+#list button .n{color:var(--ink2);font-variant-numeric:tabular-nums;font-size:13px;padding-top:1px}
+#list button .t{overflow-wrap:anywhere}
+#list button[aria-current="true"]{background:var(--sel)}
+#list button.changed .n::after{content:" •";color:var(--hot)}
+.work{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0}
+.stage{background:var(--stage);display:grid;grid-template-rows:auto minmax(0,1fr);justify-items:center;align-items:center;gap:8px;padding:10px 16px 16px;min-height:0}
+.frame{width:100%;max-height:100%;aspect-ratio:16/9;max-width:calc((100vh - 300px) * 16 / 9);min-width:0;background:#000;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.frame iframe{width:100%;height:100%;border:0;display:block}
+.hint{justify-self:start;font-size:12px;color:var(--ink2)}
+.notes{background:var(--panel);border-top:1px solid var(--rule);padding:10px 16px 14px;display:grid;gap:6px}
+.notes label{font-size:13px;color:var(--ink2)}
+#notes{min-height:84px;max-height:22vh;overflow:auto;border:1px solid var(--rule);border-radius:8px;padding:8px 10px;background:var(--bg);white-space:pre-wrap}
+#notes:empty::before{content:"No speaker notes on this slide. Type to add some.";color:var(--ink2)}
+.find{display:none;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--rule);grid-column:1/-1}
+.find.on{display:flex}
+.find input{min-height:38px;border:1px solid var(--rule);border-radius:8px;padding:0 10px;background:var(--bg);flex:1 1 180px;min-width:0}
+#findres{font-size:13px;color:var(--ink2)}
+.empty{grid-column:1/-1;display:grid;place-items:center;padding:24px}
+.drop{max-width:620px;width:100%;border:2px dashed var(--rule);border-radius:16px;padding:36px 28px;text-align:center;background:var(--panel)}
+.drop h2{margin:0 0 8px;font-size:22px}
+.drop p{color:var(--ink2);margin:0 0 18px}
+.drop ol{text-align:start;color:var(--ink2);margin:18px auto 0;max-width:46ch;padding-inline-start:20px}
+body.over .drop{border-color:var(--accent)}
+.toast{position:fixed;inset-block-end:18px;inset-inline-start:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+[hidden]{display:none!important}
+@media (max-width:760px){main{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}#list{display:flex;overflow-x:auto;border-inline-end:0;border-bottom:1px solid var(--rule);padding:6px}#list button{flex:0 0 200px}.frame{max-width:100%}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Text editor</h1>
+  <button type="button" id="open">Open deck</button>
+  <span id="file"></span>
+  <input id="title" type="text" placeholder="Deck title" aria-label="Deck title" disabled>
+  <button type="button" id="findbtn" aria-expanded="false" disabled>Find and replace</button>
+  <span id="status" role="status"></span>
+  <button type="button" id="save" class="primary" disabled title="Save (Ctrl or Cmd S)">Save</button>
+  <input type="file" id="pick" accept=".html,.htm,text/html" hidden>
+</header>
+<main id="app">
+  <div class="find" id="find">
+    <input id="q" type="search" placeholder="Find" aria-label="Find">
+    <input id="r" type="text" placeholder="Replace with" aria-label="Replace with">
+    <button type="button" id="repl">Replace all</button>
+    <span id="findres"></span>
+  </div>
+  <div class="empty" id="empty">
+    <div class="drop">
+      <h2>Make small text edits to a Keynote Pro deck</h2>
+      <p>Drop a deck's .html file here, or open one.</p>
+      <button type="button" class="primary" id="open2">Open deck</button>
+      <ol>
+        <li>Pick a slide on the left, click any text on it and type.</li>
+        <li>Edit the speaker notes under the slide.</li>
+        <li>Save writes the same file back (in Chrome and Edge), or downloads a copy.</li>
+      </ol>
+    </div>
+  </div>
+  <nav id="list" aria-label="Slides" hidden></nav>
+  <section class="work" id="work" hidden>
+    <div class="stage"><span class="hint">Click text on the slide to edit it</span><div class="frame"><iframe id="fr" title="Slide being edited"></iframe></div></div>
+    <div class="notes"><label for="notes" id="notes-l">Speaker notes</label><div id="notes" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="notes-l" spellcheck="true"></div></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+// Text-bearing elements: the outermost element whose content is only text and inline formatting.
+const INLINE = new Set(['B', 'STRONG', 'EM', 'I', 'U', 'S', 'SUP', 'SUB', 'BR', 'A', 'CODE', 'SPAN', 'MARK', 'SMALL', 'ABBR', 'KBD', 'Q', 'TIME', 'WBR']);
+const SKIP = 'svg,pre,script,style,template,.notes,canvas,video,audio,iframe,math';
+let src = null;        // the deck as a parsed document (for reading); the file itself is the string `orig`
+let orig = '';         // Save patches only the edited spans of this string, so the rest of the file stays byte for byte
+let name = 'deck.html', handle = null, base = '';
+let slides = [], edits = [], cur = 0, dirty = false;
+
+const isTextBox = e => !e.closest(SKIP) && e.textContent.trim() && [...e.querySelectorAll('*')].every(c => INLINE.has(c.tagName));
+function textBoxes(slide) { // outermost text boxes, in document order
+  const out = [];
+  const walk = n => { for (const c of n.children) { if (c.matches(SKIP)) continue; if (isTextBox(c) && !INLINE.has(c.tagName)) out.push(c); else if (isTextBox(c) && c.parentElement === slide) out.push(c); else walk(c); } };
+  walk(slide); return out;
+}
+const titleOf = s => ((s.querySelector('h1,h2,blockquote') || s.querySelector('.big,.label') || {}).textContent || '').trim().replace(/\s+/g, ' ') || '(untitled)';
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 1800); };
+function setDirty(v) { dirty = v; const s = $('#status'); s.textContent = v ? 'Unsaved changes' : (src ? 'Saved' : ''); s.className = v ? 'dirty' : src ? 'ok' : ''; }
+
+/* ---------- load ---------- */
+function load(text, fileName, fileHandle, baseUrl) {
+  const doc = new DOMParser().parseFromString(text, 'text/html');
+  const list = [...doc.querySelectorAll('.deck > .slide')];
+  if (!list.length) { toast('No slides found: this does not look like a Keynote Pro deck'); return; }
+  src = doc; orig = text; name = fileName || 'deck.html'; handle = fileHandle || null; base = baseUrl || '';
+  slides = list; edits = slides.map(() => new Map()); cur = 0;
+  slides.forEach((s, i) => textBoxes(s).forEach((e, k) => e.setAttribute('data-kpe', i + '.' + k)));
+  $('#file').textContent = name; $('#file').title = name;
+  $('#title').value = (doc.querySelector('.deck') || {}).dataset?.title || doc.title || ''; $('#title').disabled = false;
+  ['#save', '#findbtn'].forEach(s => $(s).disabled = false);
+  $('#empty').hidden = true; $('#list').hidden = false; $('#work').hidden = false;
+  renderList(); render(); setDirty(false);
+  // keep the markers out of the saved file: they live only in the copy the iframe shows
+  slides.forEach(s => s.querySelectorAll('[data-kpe]').forEach(e => { e.dataset.kpeId = e.getAttribute('data-kpe'); }));
+}
+function renderList() {
+  $('#list').innerHTML = slides.map((s, i) => `<button type="button" data-i="${i}" aria-current="${i === cur}" class="${edits[i].size || s.dataset.notesChanged ? 'changed' : ''}"><span class="n">${i + 1}</span><span class="t"></span></button>`).join('');
+  [...$('#list').children].forEach((b, i) => b.querySelector('.t').textContent = titleOf(slides[i]));
+}
+$('#list').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(+b.dataset.i); });
+function go(i) { if (i < 0 || i >= slides.length) return; cur = i; [...$('#list').children].forEach((b, k) => b.setAttribute('aria-current', k === i)); $('#list').children[i].scrollIntoView({block: 'nearest', inline: 'nearest'}); showSlide(); }
+
+/* ---------- the live preview: the deck itself in an iframe, with text boxes made editable ---------- */
+function render() {
+  const copy = src.cloneNode(true);
+  copy.querySelectorAll('[data-kpe-id]').forEach(e => e.removeAttribute('data-kpe-id'));
+  if (base) { const b = copy.createElement('base'); b.href = base; copy.head.prepend(b); }
+  const fr = $('#fr');
+  fr.onload = () => { const w = fr.contentWindow; const wait = () => (w.kp && w.kp.ready) ? wire(w) : setTimeout(wait, 60); wait(); };
+  fr.srcdoc = '<!doctype html>' + copy.documentElement.outerHTML;
+}
+function wire(w) {
+  const d = w.document; d.documentElement.classList.add('kp-editing');
+  const st = d.createElement('style'); st.textContent = '[data-kpe]{outline:1px dashed transparent;outline-offset:6px;cursor:text}[data-kpe]:hover{outline-color:rgba(10,99,201,.55)}[data-kpe]:focus{outline:2px solid #0a63c9}.kp-ui,.kp-progress{display:none!important}';
+  d.head.appendChild(st);
+  d.querySelectorAll('[data-kpe]').forEach(e => { e.contentEditable = 'true'; e.spellcheck = true; e.dataset.kpeStart = e.innerHTML; e.dataset.kpeText = e.textContent; });
+  d.addEventListener('input', e => { const t = e.target.closest('[data-kpe]'); if (!t) return; const [i] = t.dataset.kpe.split('.').map(Number); edits[i].set(t.dataset.kpe, t); setDirty(true); $('#list').children[i].classList.add('changed'); listTitle(i); });
+  d.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); save(); } if (e.key === 'Enter' && !e.shiftKey && e.target.closest('[data-kpe]') && !/^(LI|P|BLOCKQUOTE|TD|DD)$/.test(e.target.tagName)) e.preventDefault(); });
+  d.addEventListener('paste', e => { if (!e.target.closest('[data-kpe]')) return; e.preventDefault(); d.execCommand('insertText', false, (e.clipboardData || w.clipboardData).getData('text/plain')); }); // plain text only
+  showSlide();
+}
+function listTitle(i) { const s = $('#fr').contentDocument?.querySelectorAll('.deck > .slide')[i], b = $('#list').children[i]; if (s && b) b.querySelector('.t').textContent = titleOf(s); } // the list follows the edits as you type
+function showSlide() {
+  const w = $('#fr').contentWindow; if (w && w.kp && w.kp.ready) w.kp.showAll(cur);
+  const n = slides[cur].querySelector('.notes'); $('#notes').innerText = n ? n.innerText.trim() : '';
+}
+
+/* ---------- notes ---------- */
+$('#notes').addEventListener('input', () => {
+  const s = slides[cur]; let n = s.querySelector('.notes');
+  const text = $('#notes').innerText.trim();
+  if (!n) { if (!text) return; n = src.createElement('aside'); n.className = 'notes'; n.dataset.kpeNew = '1'; s.appendChild(n); }
+  n.innerHTML = text.split(/\n{2,}/).map(p => '<p>' + p.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\n/g, '<br>') + '</p>').join('');
+  s.dataset.notesChanged = '1'; setDirty(true); $('#list').children[cur].classList.add('changed');
+});
+$('#title').addEventListener('input', () => setDirty(true));
+
+/* ---------- write the edits back into the original text ---------- */
+/* A tiny scanner finds every element's inner range in the source. The k-th <h2> in the source is the k-th h2 the parser
+   built (the parser only ever adds html/head/body/tbody), so an element is found by tag name + ordinal. */
+const VOID = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i, RAW = /^(script|style|textarea|title)$/i;
+function scan(s) {
+  const by = {}, stack = [], re = /<!--[\s\S]*?-->|<!doctype[^>]*>|<\/([a-zA-Z][\w:-]*)\s*>|<([a-zA-Z][\w:-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*(\/?)>/gi;
+  let m;
+  while ((m = re.exec(s))) {
+    if (m[2]) { const tag = m[2].toLowerCase(), r = {tag, start: m.index, inStart: re.lastIndex, inEnd: -1, end: -1}; (by[tag] = by[tag] || []).push(r);
+      if (VOID.test(tag) || m[4]) { r.inEnd = r.end = re.lastIndex; continue; }
+      if (RAW.test(tag)) { const c = s.toLowerCase().indexOf('</' + tag, re.lastIndex); r.inEnd = c; r.end = s.indexOf('>', c) + 1; re.lastIndex = r.end; continue; }
+      stack.push(r);
+    } else if (m[1]) { const tag = m[1].toLowerCase(); let k = stack.length - 1; while (k >= 0 && stack[k].tag !== tag) k--; if (k < 0) continue;
+      while (stack.length > k) { const r = stack.pop(); r.inEnd = r.tag === tag ? m.index : m.index; r.end = r.tag === tag ? re.lastIndex : m.index; } }
+  }
+  return by;
+}
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const NB = ' ';
+function spaces(now, before) { // browsers type U+00A0 for spaces at the edges of edited text; keep only the ones the author wrote
+  const keep = new Set(); for (let i = before.indexOf(NB); i > -1; i = before.indexOf(NB, i + 1)) keep.add(before[i - 1] + NB + before[i + 1]);
+  let out = now.replace(/ /g, ' '); keep.forEach(k => out = out.split(k.replace(NB, ' ')).join(k)); return out;
+}
+function cleanNode(live, beforeText, orig) { // the edited content, minus what the engine and the browser added
+  const t = document.createElement('template'); t.innerHTML = live.innerHTML;
+  t.content.querySelectorAll('span.kp-txt').forEach(e => e.replaceWith(...e.childNodes)); // engine: text wrapped for Magic Move
+  t.content.querySelectorAll('span[style]').forEach(e => { if (e.attributes.length === 1) e.replaceWith(...e.childNodes); }); // browser: styled spans from typing
+  const got = [...t.content.querySelectorAll('*')], had = orig ? [...orig.querySelectorAll('*')] : [];
+  if (had.length === got.length && had.every((h, i) => h.tagName === got[i].tagName)) // same structure: the source's own attributes, exactly
+    got.forEach((g, i) => { [...g.attributes].forEach(a => g.removeAttribute(a.name)); [...had[i].attributes].forEach(a => g.setAttribute(a.name, a.value)); });
+  else got.forEach(e => { ['contenteditable', 'spellcheck', 'style'].forEach(a => e.removeAttribute(a)); [...e.classList].filter(c => c.startsWith('kp-')).forEach(c => e.classList.remove(c)); if (e.getAttribute('class') === '') e.removeAttribute('class'); });
+  const tw = document.createTreeWalker(t.content, NodeFilter.SHOW_TEXT); let n; while ((n = tw.nextNode())) n.data = spaces(n.data, beforeText).replace(/ {2,}/g, ' ');
+  let h = t.innerHTML.replace(/<br>$/, ''); if (!t.content.querySelector('*')) h = esc(t.content.textContent); // plain text stays plain
+  return h.replace(/ /g, '&nbsp;');
+}
+const ordinal = e => [...src.getElementsByTagName(e.tagName)].filter(x => !x.dataset.kpeNew).indexOf(e); // notes added this session are not in the file yet
+function patch() { // returns the new file text; updates `orig` and the parsed copy
+  const by = scan(orig), cuts = [];
+  const range = e => { const r = (by[e.tagName.toLowerCase()] || [])[ordinal(e)]; if (!r || r.inEnd < 0) throw new Error('could not find ' + e.tagName); return r; };
+  edits.forEach(m => m.forEach((live, id) => {
+    if (live.innerHTML === live.dataset.kpeStart) return;
+    const e = src.querySelector(`[data-kpe-id="${id}"]`); if (!e) return;
+    const before = live.dataset.kpeText || e.textContent, html = cleanNode(live, before, e);
+    cuts.push({...range(e), html}); live.dataset.kpeStart = live.innerHTML;
+  }));
+  slides.forEach(s => { if (!s.dataset.notesChanged) return; const n = s.querySelector('.notes');
+    if (n.dataset.kpeNew) { const r = range(s); cuts.push({inStart: r.inEnd, inEnd: r.inEnd, html: `  <aside class="notes">${n.innerHTML}</aside>\n`}); delete n.dataset.kpeNew; }
+    else cuts.push({...range(n), html: n.innerHTML}); });
+  const t = $('#title').value.trim(), deck = src.querySelector('.deck');
+  if (t && deck && deck.dataset.title !== t) { const r = range(deck), open = orig.slice(r.start, r.inStart);
+    const tr = (by.title || [])[0], old = deck.dataset.title; if (tr && orig.slice(tr.inStart, tr.inEnd).trim() === esc(old || '')) cuts.push({inStart: tr.inStart, inEnd: tr.inEnd, html: esc(t)}); // the tab title follows when it was the same
+    if (/data-title="/.test(open)) cuts.push({inStart: r.start, inEnd: r.inStart, html: open.replace(/data-title="[^"]*"/, `data-title="${esc(t).replace(/"/g, '&quot;')}"`)}); deck.dataset.title = t; }
+  cuts.sort((a, b) => b.inStart - a.inStart);
+  for (let i = 1; i < cuts.length; i++) if (cuts[i].inEnd > cuts[i - 1].inStart) throw new Error('overlapping edits');
+  let out = orig; cuts.forEach(c => out = out.slice(0, c.inStart) + c.html + out.slice(c.inEnd));
+  orig = out; slides.forEach(s => delete s.dataset.notesChanged);
+  edits.forEach(m => m.forEach((live, id) => { const e = src.querySelector(`[data-kpe-id="${id}"]`); if (e) { e.innerHTML = cleanNode(live, '', e); live.dataset.kpeText = e.textContent; } })); // later saves find the same elements
+  edits = slides.map(() => new Map());
+  return out;
+}
+async function save() {
+  if (!src) return; let html; try { html = patch(); } catch (e) { toast('Could not save: ' + e.message); return; }
+  try {
+    if (!handle && window.showSaveFilePicker) handle = await showSaveFilePicker({suggestedName: name, types: [{description: 'HTML deck', accept: {'text/html': ['.html']}}]});
+    if (handle) { const w = await handle.createWritable(); await w.write(html); await w.close(); setDirty(false); renderList(); toast('Saved ' + handle.name); return; }
+  } catch (e) { if (e.name === 'AbortError') return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([html], {type: 'text/html'})); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  setDirty(false); renderList(); toast('Downloaded ' + name + ' with your edits');
+}
+$('#save').onclick = save;
+addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); save(); } if (e.key === 'Escape' && $('#find').classList.contains('on')) toggleFind(false); });
+addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ---------- find and replace (text boxes on every slide, plus notes) ---------- */
+function toggleFind(on) { const f = $('#find'); on = on == null ? !f.classList.contains('on') : on; f.classList.toggle('on', on); $('#findbtn').setAttribute('aria-expanded', on); if (on) $('#q').focus(); }
+$('#findbtn').onclick = () => toggleFind();
+const count = q => { if (!q) return 0; let n = $('#title').value.split(q).length - 1; const d = $('#fr').contentDocument; d.querySelectorAll('[data-kpe]').forEach(e => n += e.textContent.split(q).length - 1); slides.forEach(s => { const no = s.querySelector('.notes'); if (no) n += no.textContent.split(q).length - 1; }); return n; };
+$('#q').addEventListener('input', () => { const q = $('#q').value; $('#findres').textContent = q ? count(q) + ' found' : ''; });
+$('#repl').onclick = () => {
+  const q = $('#q').value, r = $('#r').value; if (!q) return; const d = $('#fr').contentDocument; let n = 0;
+  d.querySelectorAll('[data-kpe]').forEach(e => { const tw = d.createTreeWalker(e, NodeFilter.SHOW_TEXT); let t; while ((t = tw.nextNode())) if (t.data.includes(q)) { n += t.data.split(q).length - 1; t.data = t.data.split(q).join(r); const i = +e.dataset.kpe.split('.')[0]; edits[i].set(e.dataset.kpe, e); $('#list').children[i].classList.add('changed'); } });
+  slides.forEach((s, i) => { const no = s.querySelector('.notes'); if (!no) return; const tw = src.createTreeWalker(no, NodeFilter.SHOW_TEXT); let t; while ((t = tw.nextNode())) if (t.data.includes(q)) { n += t.data.split(q).length - 1; t.data = t.data.split(q).join(r); $('#list').children[i].classList.add('changed'); } });
+  const ti = $('#title'); if (ti.value.includes(q)) { n += ti.value.split(q).length - 1; ti.value = ti.value.split(q).join(r); } // the deck title too
+  if (n) { setDirty(true); showSlide(); slides.forEach((s, i) => listTitle(i)); } $('#findres').textContent = n ? `Replaced ${n}` : 'Not found';
+};
+
+/* ---------- opening a deck ---------- */
+async function openPicker() {
+  if (dirty && !confirmDiscard()) return;
+  if (window.showOpenFilePicker) { try { const [h] = await showOpenFilePicker({types: [{description: 'HTML deck', accept: {'text/html': ['.html', '.htm']}}]}); const f = await h.getFile(); load(await f.text(), f.name, h); } catch (e) { if (e.name !== 'AbortError') toast('Could not open that file'); } return; }
+  $('#pick').click();
+}
+let discardArmed = false;
+function confirmDiscard() { if (discardArmed) { discardArmed = false; return true; } discardArmed = true; toast('Unsaved changes: press Open again to discard them'); setTimeout(() => discardArmed = false, 4000); return false; }
+$('#open').onclick = $('#open2').onclick = openPicker;
+$('#pick').onchange = async e => { const f = e.target.files[0]; if (f) load(await f.text(), f.name, null); e.target.value = ''; };
+addEventListener('dragover', e => { e.preventDefault(); document.body.classList.add('over'); });
+addEventListener('dragleave', () => document.body.classList.remove('over'));
+addEventListener('drop', async e => { e.preventDefault(); document.body.classList.remove('over'); const it = [...e.dataTransfer.items].find(i => i.kind === 'file'); if (!it) return; if (dirty && !confirmDiscard()) return;
+  let h = null; try { h = it.getAsFileSystemHandle ? await it.getAsFileSystemHandle() : null; } catch (er) {} const f = h ? await h.getFile() : it.getAsFile(); load(await f.text(), f.name, h); });
+const qd = new URLSearchParams(location.search).get('deck');
+if (qd) fetch(qd).then(r => { if (!r.ok) throw 0; return r.text(); }).then(t => load(t, qd.split('/').pop(), null, new URL(qd, location.href).href)).catch(() => toast('Could not load ' + qd));
+window.kpEditor = {load, patch, edits: () => edits};
+})();
+</script>
+</body>
+</html>
