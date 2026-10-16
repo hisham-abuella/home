@@ -261,7 +261,7 @@ ul.log .add { color: var(--add); }
  "b4": "مقارنة أصوات محلية",
  "b4d": "TTS محلي قصاد ElevenLabs Eleven v4.",
  "b5": "حواديت قبل النوم",
- "b5d": "ست كتب مقوّى لابني، متسجلة صوت بالإنجليزي والعربي.",
+ "b5d": "ستة كتب مقوّاة لابني، متسجلة صوت بالإنجليزي والعربي.",
  "b5v": "كتب",
  "b6": "موقع أطفال إسلامي",
  "b6d": "قصص مصوّرة وكويزات ونجوم مكافأة، متسجلة صوت بالإنجليزي والعربي.",
@@ -272,11 +272,11 @@ ul.log .add { color: var(--add); }
  "s1": "الـ agent",
  "s1x": "Claude Code، ومعاه skills للشغل اللي بكرره",
  "s2": "محلي",
- "s2x": "Mac Studio M4 Max: Ollama للموديلات، و Draw Things للصور، و Voicebox للصوت",
+ "s2x": "Mac Studio M4 Max: Ollama للموديلات، وDraw Things للصور، وVoicebox للصوت",
  "s3": "التعليق الصوتي",
  "s3x": "ElevenLabs Eleven v4 بصوتي المستنسخ، وبقارنه بمحركات محلية",
  "s4": "الموقع",
- "s4x": "HTML و CSS و JavaScript عادي، من غير build step، على GitHub Pages",
+ "s4x": "HTML وCSS وJavaScript عادي، من غير build step، على GitHub Pages",
  "logH": "سجل التغييرات",
  "logS": "سجلات البناء من الأحدث للأقدم، بالإنجليزي والعربي.",
  "a0": "ملف HTML واحد، Keynote كامل",
@@ -317,10 +317,10 @@ ul.log .add { color: var(--add); }
       ? 'هشام أبو العلا. مهندس أنظمة خلوية في Apple، وقبلها Qualcomm.\nبحب أعمل UIs مع Claude. بعمل أدوات ومواقع وكتب في وقتي الخاص، وبكتب عنها في السكة.\nجرّب: ls ~/built أو log'
       : 'Hisham Abuella — cellular systems engineer at Apple, previously Qualcomm.\nLoves creating UIs with Claude. Builds tools, sites and books in his own time and writes build logs along the way.\n<span class="dim">Try: ls ~/built, log</span>'; },
     built: function () { return ar()
-      ? a('../projects/presentation-skill/how-it-works.html', 'الـ Claude skill للعروض') + ' · شخصي، مش بتاع Apple\n' + a('https://hisham-abuella.github.io/Wireless-101/ar/courses/genai101/', 'GenAI 101') + ' · كورسي ببلاش، مش بتاع Apple\n' + a('../Articles/ar/building-ai-server.html' + V, 'محرك AI شخصي') + ' · شغال عليه\n' + a('../Articles/ar/local-voice-generation.html' + V, 'مقارنة أصوات محلية') + '\n' + a('../projects/bedtime-stories/', 'حواديت قبل النوم') + ' · ست كتب\n' + a('../Articles/ar/building-islamic-kids.html' + V, 'موقع أطفال إسلامي') + '\n' + a('../Articles/ar/building-wirelesshub.html' + V, 'WirelessHub') + '\n' + more('built')
+      ? a('../projects/presentation-skill/how-it-works.html', 'الـ Claude skill للعروض') + ' · شخصي، مش بتاع Apple\n' + a('https://hisham-abuella.github.io/Wireless-101/ar/courses/genai101/', 'GenAI 101') + ' · كورسي ببلاش، مش بتاع Apple\n' + a('../Articles/ar/building-ai-server.html' + V, 'محرك AI شخصي') + ' · شغال عليه\n' + a('../Articles/ar/local-voice-generation.html' + V, 'مقارنة أصوات محلية') + '\n' + a('../projects/bedtime-stories/', 'حواديت قبل النوم') + ' · ستة كتب\n' + a('../Articles/ar/building-islamic-kids.html' + V, 'موقع أطفال إسلامي') + '\n' + a('../Articles/ar/building-wirelesshub.html' + V, 'WirelessHub') + '\n' + more('built')
       : 'claude-presentation-skill/  ' + a('../projects/presentation-skill/how-it-works.html', 'demo') + '  <span class="dim">personal, not Apple\'s</span>\ngenai-101/                  ' + a('https://hisham-abuella.github.io/Wireless-101/courses/genai101/', 'course') + '  <span class="dim">my free course, not Apple\'s</span>\nai-engine/                  ' + a('../Articles/building-ai-server.html' + V, 'build log') + '  <span class="dim">in progress</span>\nlocal-tts-bench/            ' + a('../Articles/local-voice-generation.html' + V, 'results') + '\nbedtime-stories/            ' + a('../projects/bedtime-stories/', 'six books') + '\nislamic-kids/               ' + a('../Articles/building-islamic-kids.html' + V, 'build log') + '\nwirelesshub/                ' + a('../Articles/building-wirelesshub.html' + V, 'build log') + '\n' + more('built'); },
     stack: function () { return ar()
-      ? 'الـ agent: Claude Code، ومعاه skills للشغل اللي بكرره\nمحلي: Mac Studio M4 Max، و Ollama، و Draw Things، و Voicebox\nالتعليق الصوتي: ElevenLabs Eleven v4، وبقارنه بمحركات محلية\nالموقع: HTML و CSS و JavaScript عادي، من غير build step، على GitHub Pages\n' + more('stack')
+      ? 'الـ agent: Claude Code، ومعاه skills للشغل اللي بكرره\nمحلي: Mac Studio M4 Max، وOllama، وDraw Things، وVoicebox\nالتعليق الصوتي: ElevenLabs Eleven v4، وبقارنه بمحركات محلية\nالموقع: HTML وCSS وJavaScript عادي، من غير build step، على GitHub Pages\n' + more('stack')
       : 'agent       Claude Code, plus skills for jobs I repeat\nlocal       Mac Studio M4 Max: Ollama, Draw Things, Voicebox\nnarration   ElevenLabs Eleven v4, local engines compared\nsite        vanilla HTML/CSS/JS, no build step, GitHub Pages\n' + more('stack'); },
     log: function () {
       var e = [['slides-in-html', 'One HTML file, a whole Keynote', 'ملف HTML واحد، Keynote كامل', '2026-10'],
