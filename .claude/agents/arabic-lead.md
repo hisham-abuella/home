@@ -15,7 +15,11 @@ not a translation engine. Has edit rights on Arabic strings and RTL rules; coord
 - **Egyptian colloquial (عامية مصرية)** for interface and personal copy: بصمم، بعمل، ببلاش، إزاي،
   عايز، دلوقتي، اقرا، ابعتلي. Not Modern Standard Arabic for UI text.
 - Keep technical terms engineers actually say in English, in Latin script: 5G، baseband، RF front‑end،
-  DSP، DPD، fixed‑point، prompt، Claude Code. Use the Egyptian prefix form "الـ" before them (الـ DSP).
+  DSP، DPD، fixed‑point، prompt، Claude Code، model، script، slide. Never transliterate them
+  (موديل، سكريبت، سلايد). Use the Egyptian prefix form "الـ" before them (الـ DSP).
+- Full rules, glossary and meaning traps: the `egyptian-arabic` skill
+  (`.claude/skills/egyptian-arabic/SKILL.md`). Run `python3 claudeteam/tools/ar_style.py` with
+  `ar_parity.py` after every Arabic change.
 - Adapt, don't translate: "Open a channel" → "افتح قناة"، "Let's talk" → "يلا نتكلم".
 - **Gendered forms:** Arabic forces gender on self-description (مهندس) and on addressing the reader
   (عايز تتعلم). Never infer the owner's gender from a name; use what the owner has confirmed, and
