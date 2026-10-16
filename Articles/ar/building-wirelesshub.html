@@ -153,7 +153,7 @@
             <h2>الفكرة</h2>
             <p>الهدف كان واضح: أبني مدونة نضيفة وسريعة وبتركز على المحتوى اسمها <a href="https://ahmedsalahelshafie-ship-it.github.io/Ahmed_Elshafie_Blog/" target="_blank" class="site-link">WirelessHub</a> تخلّي مقالات أحمد التقنية تلمع. من غير frameworks تقيلة. من غير build tools. من غير npm. بس HTML وCSS وvanilla JavaScript &mdash; موقع static بيفتح فورًا وبيشتغل في أي مكان.</p>
 
-            <p>أحمد كان عنده أصلًا أكتر من 25 مقال بتغطي كل حاجة من <strong>الـ FFT في الحياة اليومية</strong> لـ <strong>MIMO beamforming</strong> لـ <strong>quantum wireless communication</strong>. والموقع لازم ينظّم ده كله، مع بحث وفلترة وتصنيف ودارك مود، وحتى حلقات بودكاست مدمجة.</p>
+            <p>أحمد كان عنده أصلًا أكتر من 25 مقال بتغطي كل حاجة من <strong>الـ FFT في الحياة اليومية</strong> لـ <strong>MIMO beamforming</strong> لـ <strong>quantum wireless communication</strong>. والموقع لازم ينظّم ده كله، مع بحث وfiltering وتصنيف وdark mode، وحتى حلقات podcast مدمجة.</p>
 
             <h2>الشغل مع Claude Code</h2>
             <p>Claude Code ماكانش مجرد أداة autocomplete في المشروع ده. كان شريك برمجة بجد. ده شكل الشغل عمليًا:</p>
@@ -170,26 +170,26 @@
                     <i class="fas fa-code"></i>
                     <div>
                         <strong>التنفيذ</strong>
-                        <span>من زرار الدارك مود لحد مشغّل البودكاست بالتقديم والتأخير وشريط التقدم &mdash; Claude كتب كود جاهز للـ production</span>
+                        <span>من زرار الـ dark mode لحد مشغّل الـ podcast بالتقديم والتأخير وشريط التقدم &mdash; Claude كتب code جاهز للـ production</span>
                     </div>
                 </div>
                 <div class="tech-item">
                     <i class="fas fa-search"></i>
                     <div>
                         <strong>نظام البحث</strong>
-                        <span>بحث لايف بالكلمات المفتاحية على قاعدة بيانات JSONL بتتحمّل وقت الـ runtime، وبيدوّر في العناوين والـ tags والتصنيفات</span>
+                        <span>بحث live بالكلمات المفتاحية على قاعدة بيانات JSONL بتتحمّل وقت الـ runtime، وبيدوّر في العناوين والـ tags والتصنيفات</span>
                     </div>
                 </div>
                 <div class="tech-item">
                     <i class="fas fa-paint-brush"></i>
                     <div>
                         <strong>لمسات التصميم</strong>
-                        <span>حركات الـ hover، وظلال الكروت، وlayouts بتتظبط على كل الشاشات، ونظام ألوان متناسق بين الثيم الفاتح والغامق</span>
+                        <span>حركات الـ hover، وظلال الـ cards، وlayouts بتتظبط على كل الشاشات، ونظام ألوان متناسق بين الـ theme الفاتح والغامق</span>
                     </div>
                 </div>
             </div>
 
-            <p>كنت بوصف اللي عايزه &mdash; مرة بدقة ومرة بشكل عام &mdash; وClaude يلف في الـ codebase ويفهم الـ patterns الموجودة ويعمل تغييرات راكبة على المشروع بشكل طبيعي. لما قلتله &laquo;&#8294;add GoatCounter analytics to all pages&#8297;&raquo;، Claude عدّل 27 ملف HTML، وضاف سكريبت التتبع، وعمل template للمقالات، وحدّث توثيق المشروع، كل ده في لفّة واحدة.</p>
+            <p>كنت بوصف اللي عايزه &mdash; مرة بدقة ومرة بشكل عام &mdash; وClaude يلف في الـ codebase ويفهم الـ patterns الموجودة ويعمل تغييرات راكبة على المشروع بشكل طبيعي. لما قلتله &laquo;&#8294;add GoatCounter analytics to all pages&#8297;&raquo;، Claude عدّل 27 ملف HTML، وضاف script التتبع، وعمل template للمقالات، وحدّث توثيق المشروع، كل ده في لفّة واحدة.</p>
 
             <div class="quote">
                 أحلى حاجة في الشغل مع Claude Code إنه بيقرا قبل ما يكتب. بيفهم الـ codebase الأول، وبعدين يعمل تغييرات ماشية على الـ conventions الموجودة.
@@ -198,20 +198,20 @@
             <h2>اللي بنيناه</h2>
             <p>الموقع في شكله النهائي static بالكامل &mdash; مستضاف ببلاش على GitHub Pages &mdash; ومع كده بيحسّسك إنه منصة محتوى كاملة:</p>
 
-            <p><strong>تنقّل بالـ tabs</strong> بين الرئيسية والمقالات والبودكاست وعن الموقع. <strong>فلترة بالتصنيفات</strong> بـ chips وأزرار ترتيب. <strong>مقال مميز</strong> في أعلى الصفحة الرئيسية. <strong>مشغّلات بودكاست</strong> في الـ sidebar وفي tab مخصوص، بتشغيل وإيقاف وشريط تقدم وتقديم وتأخير. <strong>دارك مود</strong> بيفضل محفوظ من جلسة للتانية. <strong>بحث مباشر</strong> بيفلتر المقالات والبودكاست بالكلمة. و<strong>analytics بتحترم الخصوصية</strong> عن طريق GoatCounter.</p>
+            <p><strong>تنقّل بالـ tabs</strong> بين الرئيسية والمقالات والـ podcast وعن الموقع. <strong>filtering بالتصنيفات</strong> بـ chips وأزرار ترتيب. <strong>مقال مميز</strong> في أعلى الصفحة الرئيسية. <strong>مشغّلات podcast</strong> في الـ sidebar وفي tab مخصوص، بتشغيل وإيقاف وشريط تقدم وتقديم وتأخير. <strong>dark mode</strong> بيفضل محفوظ من جلسة للتانية. <strong>بحث مباشر</strong> بيفلتر المقالات والـ podcast بالكلمة. و<strong>analytics بتحترم الخصوصية</strong> عن طريق GoatCounter.</p>
 
-            <p>ده كله بـ vanilla HTML وCSS وJS. من غير build step. من غير dependencies. كود نضيف ومقروء وبس.</p>
+            <p>ده كله بـ vanilla HTML وCSS وJS. من غير build step. من غير dependencies. code نضيف ومقروء وبس.</p>
 
             <h2>اللي اتعلمته</h2>
 
             <h3>الـ AI pair programming حاجة حقيقية</h3>
-            <p>Claude Code ماكانش بيطلّع snippets من الكود وبس &mdash; كان بيفهم السياق. بيقرا الملفات الموجودة، ويمشي على نفس أسلوب الكود، ويعمل تغييرات على كذا ملف ماشية مع بعض. مسك حاجات فاتتني، واقترح طرق ماكنتش فكرت فيها.</p>
+            <p>Claude Code ماكانش بيطلّع snippets من الـ code وبس &mdash; كان بيفهم السياق. بيقرا الملفات الموجودة، ويمشي على نفس أسلوب الـ code، ويعمل تغييرات على كذا ملف ماشية مع بعض. مسك حاجات فاتتني، واقترح طرق ماكنتش فكرت فيها.</p>
 
             <h3>المواقع الـ static لسه بتكسب</h3>
             <p>مفيش زهق من الـ frameworks. مفيش تحديثات dependencies. مفيش build بيفشل. الموقع بيفتح بسرعة، وبيشتغل offline بعد أول تحميل، وهيفضل شغال سنين من غير صيانة. لمدونة بتركز على المحتوى، ده بالظبط المطلوب.</p>
 
             <h3>التوثيق بيضاعف الأثر</h3>
-            <p>كان عندنا ملف <code>CLAUDE.md</code> مفصّل، مكتوب فيه كل convention في المشروع &mdash; نظام الـ tabs، وصيغة الـ JSONL، والـ HTML structure بتاع الكارت، وكلاسات CSS للتصنيفات. يعني كل مرة أبدأ جلسة جديدة مع Claude، كان يفهم المشروع على طول ويعمل تغييرات صح من غير ما أشرح تاني.</p>
+            <p>كان عندنا ملف <code>CLAUDE.md</code> مفصّل، مكتوب فيه كل convention في المشروع &mdash; نظام الـ tabs، وصيغة الـ JSONL، والـ HTML structure بتاع الـ card، وكلاسات CSS للتصنيفات. يعني كل مرة أبدأ جلسة جديدة مع Claude، كان يفهم المشروع على طول ويعمل تغييرات صح من غير ما أشرح تاني.</p>
 
             <div class="quote">
                 التوثيق الكويس مش بيساعد الناس بس. ده بيخلّي الشغل مع الـ AI أفيد بمراحل.
