@@ -194,12 +194,12 @@
             <p>زهقت من إني أعتمد على الـ cloud APIs في كل حاجة. التأخير، والتكلفة، وقلق الخصوصية &mdash; كنت عايز AI بتاعي يشتغل محلي، ويرد فوراً، ويفضل private تماماً. فبنيت واحد. <span class="highlight">محرك AI شخصي</span> شغّال على الـ Mac Studio M4 Max بتاعي، وبوصله من أي جهاز في البيت عن طريق واجهة ويب عملتها بنفسي اسمها <strong>H_AI</strong>.</p>
 
             <div class="update-note">
-                <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، كان H_AI شباك شات ومعاه شوية أدوات. من ساعتها اتعلم يشوف ويرسم ويسمع ويتكلم &mdash; كله على نفس الجهاز &mdash; وبيحتفظ بكل محادثة في vault في Obsidian يقدر يدوّر فيه. وكمان عدّى على سلسلة code reviews عملها فريق صغير من الـ AI agents، وده علّمني عن الفشل أكتر من أي feature. وعشان كده أعدت كتابة المقال.
+                <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، كان H_AI شباك chat ومعاه شوية أدوات. من ساعتها اتعلم يشوف ويرسم ويسمع ويتكلم &mdash; كله على نفس الجهاز &mdash; وبيحتفظ بكل محادثة في vault في Obsidian يقدر يدوّر فيه. وكمان عدّى على سلسلة code reviews عملها فريق صغير من الـ AI agents، وده علّمني عن الفشل أكتر من أي feature. وعشان كده أعدت كتابة المقال.
             </div>
 
             <p>الهدف دلوقتي مكتوب في أول الـ to&#8209;do list بتاعة المشروع: <em>مساعد AI محلي، لشخص واحد، كويس كفاية إنه يستبدل أدوات الـ AI الخارجية اللي بدفعلها فلوس وببعتلها بياناتي.</em> كل تغيير بيتقاس على الجملة دي.</p>
 
-            <h2>الهاردوير</h2>
+            <h2>الـ hardware</h2>
 
             <div class="spec-card">
                 <h3>Mac Studio M4 Max</h3>
@@ -222,36 +222,36 @@
                     <div class="spec-item">
                         <div class="spec-icon">🌐</div>
                         <span class="spec-value">FastAPI</span>
-                        <span class="spec-label">سيرفر الويب</span>
+                        <span class="spec-label">server الويب</span>
                     </div>
                 </div>
             </div>
 
-            <p>الـ M4 Max بـ 64 GB unified memory اختيار في الجون لتشغيل الـ LLMs المحلية. الـ GPU والـ CPU بيتشاركوا نفس الذاكرة &mdash; من غير نسخ بيانات بين الـ RAM والـ VRAM &mdash; فالموديلات اللي على PC كانت هتحتاج كارت شاشة 24 GB أو أكتر بتشتغل هنا عادي. Ollama هو اللي بيحمّل الموديلات وبيعمل الـ inference، والـ MLX builds بتاعته معمولة مخصوص لـ Apple Silicon.</p>
+            <p>الـ M4 Max بـ 64 GB unified memory اختيار في الجون لتشغيل الـ LLMs المحلية. الـ GPU والـ CPU بيتشاركوا نفس الذاكرة &mdash; من غير نسخ بيانات بين الـ RAM والـ VRAM &mdash; فالـ models اللي على PC كانت هتحتاج graphics card 24 GB أو أكتر بتشتغل هنا عادي. Ollama هو اللي بيحمّل الـ models وبيعمل الـ inference، والـ MLX builds بتاعته معمولة مخصوص لـ Apple Silicon.</p>
 
-            <h2>الموديلات</h2>
+            <h2>الـ models</h2>
             <p>التشكيلة اتغيرت تقريباً بالكامل من فبراير. المجموعة الحالية أحدث وأكبر وذاكرتها أطول بكتير:</p>
 
             <table class="model-table">
                 <tr>
-                    <th>الموديل</th>
+                    <th>الـ model</th>
                     <th>الـ Context Window</th>
                     <th>أنسب لـ</th>
                 </tr>
                 <tr>
                     <td><strong>Claude Sonnet</strong></td>
                     <td>~150,000 كلمة</td>
-                    <td>الـ default للأسئلة الصعبة &mdash; ومعاه fallback محلي أوتوماتيك</td>
+                    <td>الـ default للأسئلة الصعبة &mdash; ومعاه fallback محلي automatic</td>
                 </tr>
                 <tr>
                     <td><strong>Qwen 3.8 27B (MLX)</strong></td>
                     <td>~100,000 كلمة</td>
-                    <td>الموديل المحلي الأساسي، والـ vision، والـ fallback لما Claude مش متاح</td>
+                    <td>الـ model المحلي الأساسي، والـ vision، والـ fallback لما Claude مش متاح</td>
                 </tr>
                 <tr>
                     <td><strong>Qwen 3.6 35B-A3B</strong></td>
                     <td>~100,000 كلمة</td>
-                    <td>Mixture&#8209;of&#8209;experts &mdash; موديل كبير وتكلفة صغيرة لكل token</td>
+                    <td>Mixture&#8209;of&#8209;experts &mdash; model كبير وتكلفة صغيرة لكل token</td>
                 </tr>
                 <tr>
                     <td><strong>Gemma 4 26B / 31B</strong></td>
@@ -275,7 +275,7 @@
                 </tr>
             </table>
 
-            <p>لسه أقدر أبدّل الموديل في نص المحادثة من الهيدر. الجديد إن الـ default بقى <strong>Claude</strong>، بوصله عن طريق الـ Claude Code CLI، والسيرفر بيتأكد منه قبل كل رد. لو الـ CLI مش موجود أو عامل logout أو وصل للـ rate limit، الرد بيتحوّل بهدوء لـ Qwen 3.8 &mdash; بس عمره ما بيحصل <em>من غير ما أعرف</em>: الشات بيعرض تنبيه فيه رسالة الخطأ بتاعة Claude نفسه، لأن لو الموديل نزل لموديل أضعف من غير ما أعرف، هيبان كأن Claude هو اللي بيرد وحش. Claude مريّح، بس مش هو الأساس؛ الشغل الحقيقي هو إني أقفل الفجوة لحد ما الموديلات المحلية ما تبقاش محتاجاه.</p>
+            <p>لسه أقدر أبدّل الـ model في نص المحادثة من الـ header. الجديد إن الـ default بقى <strong>Claude</strong>، بوصله عن طريق الـ Claude Code CLI، والـ server بيتأكد منه قبل كل رد. لو الـ CLI مش موجود أو عامل logout أو وصل للـ rate limit، الرد بيتحوّل بهدوء لـ Qwen 3.8 &mdash; بس عمره ما بيحصل <em>من غير ما أعرف</em>: الـ chat بيعرض تنبيه فيه رسالة الخطأ بتاعة Claude نفسه، لأن لو الـ model نزل لـ model أضعف من غير ما أعرف، هيبان كأن Claude هو اللي بيرد وحش. Claude مريّح، بس مش هو الأساس؛ الشغل الحقيقي هو إني أقفل الفجوة لحد ما الـ models المحلية ما تبقاش محتاجاه.</p>
 
             <h2>واجهة الويب</h2>
             <p>قلب المشروع لسه هو الـ webapp: <span class="highlight">FastAPI</span> في الـ back end، وvanilla HTML/CSS/JS في الـ front end، ومتاح على HTTPS للابتوب والموبايل والتابلت. في مارس اتعمله redesign كامل، وفي سبتمبر لفّة تظبيط للموبايل: خانة الكتابة كانت 48% من عرض الموبايل وبقت 64%، وكل زرار بقى قد الحد الأدنى للـ touch target.</p>
@@ -286,22 +286,22 @@
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
                     <div>
-                        <strong>شات بالـ Streaming</strong>
-                        <span>بث الـ tokens لحظة بلحظة عن طريق Server&#8209;Sent Events، مع حالة &laquo;&#8294;Thinking&hellip;&#8297;&raquo; لموديلات الـ reasoning</span>
+                        <strong>chat بالـ Streaming</strong>
+                        <span>بث الـ tokens لحظة بلحظة عن طريق Server&#8209;Sent Events، مع حالة &laquo;&#8294;Thinking&hellip;&#8297;&raquo; للـ reasoning</span> models
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🗂️</div>
                     <div>
                         <strong>المحادثات</strong>
-                        <span>افتح أي محادثة قديمة من لوحة جانبية؛ والـ transcript بيفضل موجود بعد إعادة تحميل الصفحة وإعادة تشغيل السيرفر</span>
+                        <span>افتح أي محادثة قديمة من لوحة جانبية؛ والـ transcript بيفضل موجود بعد إعادة تحميل الصفحة وإعادة تشغيل الـ server</span>
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🧠</div>
                     <div>
                         <strong>ضغط ذكي للمحادثة</strong>
-                        <span>لما السياق يمتلي، المحادثة بتتلخّص عشان تفضل جوه حد الموديل</span>
+                        <span>لما السياق يمتلي، المحادثة بتتلخّص عشان تفضل جوه حد الـ model</span>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -315,14 +315,14 @@
                     <div class="feature-icon">🎨</div>
                     <div>
                         <strong>توليد الصور</strong>
-                        <span>اطلب صورة تظهرلك في الشات، وDraw Things بيرسمها على الـ Mac</span>
+                        <span>اطلب صورة تظهرلك في الـ chat، وDraw Things بيرسمها على الـ Mac</span>
                     </div>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🖼️</div>
                     <div>
                         <strong>Vision والمستندات</strong>
-                        <span>الصق صورة أو ارفع مستند واسأل عنه؛ والمسح الضوئي بيعدّي على موديل OCR مخصوص</span>
+                        <span>الصق صورة أو ارفع مستند واسأل عنه؛ والمسح الضوئي بيعدّي على model OCR مخصوص</span>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -336,7 +336,7 @@
                     <div class="feature-icon">📓</div>
                     <div>
                         <strong>Obsidian Vault</strong>
-                        <span>كل محادثة وصورة وتسجيل وبلوك كود بيتحفظ كـ notes بصيغة Markdown مربوطة ببعض</span>
+                        <span>كل محادثة وصورة وتسجيل وblock code بيتحفظ كـ notes بصيغة Markdown مربوطة ببعض</span>
                     </div>
                 </div>
             </div>
@@ -344,25 +344,25 @@
             <h2>أبعد من النص: يشوف ويرسم ويسمع</h2>
             <p>أكبر تغيير السنة دي إن H_AI مبقاش نصوص بس &mdash; من غير ما أي حاجة تخرج برّه البيت.</p>
 
-            <p><strong>الصور.</strong> التوليد بيعدّي على أداة الـ command&#8209;line بتاعة <span class="highlight">Draw Things</span>، بتلات موديلات لتلات مهام: موديل &laquo;&#8294;turbo&#8297;&raquo; سريع للـ drafts، وواحد جودته أعلى لما الموضوع يستاهل، وموديل تعديل بيغيّر في صورة موجودة. الصور اللي بتتولّد بتظهر في الشات مباشرة وبتتحفظ في الـ vault.</p>
+            <p><strong>الصور.</strong> التوليد بيعدّي على أداة الـ command&#8209;line بتاعة <span class="highlight">Draw Things</span>، بتلات models لتلات مهام: model &laquo;&#8294;turbo&#8297;&raquo; سريع للـ drafts، وواحد جودته أعلى لما الموضوع يستاهل، وmodel تعديل بيغيّر في صورة موجودة. الصور اللي بتتولّد بتظهر في الـ chat مباشرة وبتتحفظ في الـ vault.</p>
 
             <img src="../../Pictures/ai-server-2026-image.jpg" alt="بطلب من H_AI فنار وقت المغرب: الصورة اترسمت محلي بـ Draw Things واتحفظت في الـ vault" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
 
-            <p><strong>الـ Vision والـ OCR.</strong> Qwen 3.8 يقدر يبص على صورة أو screenshot ملصوقة؛ وDeepSeek&#8209;OCR بيقرا النص من الـ scans. تقدر تولّد صورة وبعدين تطلب من موديل الـ vision يوصفها &mdash; لفّة رايح جاي بستخدمها كـ smoke test (&laquo;&#8294;a single blue marble&#8297;&raquo; رجعت &laquo;&#8294;a glossy blue stone sphere&#8297;&raquo;).</p>
+            <p><strong>الـ Vision والـ OCR.</strong> Qwen 3.8 يقدر يبص على صورة أو screenshot ملصوقة؛ وDeepSeek&#8209;OCR بيقرا النص من الـ scans. تقدر تولّد صورة وبعدين تطلب من الـ vision model يوصفها &mdash; لفّة رايح جاي بستخدمها كـ smoke test (&laquo;&#8294;a single blue marble&#8297;&raquo; رجعت &laquo;&#8294;a glossy blue stone sphere&#8297;&raquo;).</p>
 
-            <p><strong>الصوت.</strong> تحويل الكلام لنص والعكس بيعدّوا على <span class="highlight">Voicebox</span>، شغّال محلي &mdash; نفس الـ setup اللي كتبت عنه في <a href="local-voice-generation.html">توليد الصوت من النص بموديلات محلية</a>. الإدخال الصوتي كان أول بند في قايمة &laquo;الخطوة الجاية&raquo; بتاعتي في فبراير. وخلصت.</p>
+            <p><strong>الصوت.</strong> تحويل الكلام لنص والعكس بيعدّوا على <span class="highlight">Voicebox</span>، شغّال محلي &mdash; نفس الـ setup اللي كتبت عنه في <a href="local-voice-generation.html">توليد الصوت من النص بـ models محلية</a>. الإدخال الصوتي كان أول بند في قايمة &laquo;الخطوة الجاية&raquo; بتاعتي في فبراير. وخلصت.</p>
 
             <h2>ذاكرة بتفضل في البيت</h2>
-            <p>كل محادثة دلوقتي بتتكتب في <strong>Obsidian vault</strong> كملاحظة Markdown: الكلام اللي اتقال، وأي كود اتولّد، وروابط للصور والصوت اللي اتعملوا. المحادثات ممكن تتفرّع، والفرع بيحتفظ برابط لأصله، فالـ vault بيبان كـ graph لتفكيري مشي إزاي، مش مجرد كومة logs.</p>
+            <p>كل محادثة دلوقتي بتتكتب في <strong>Obsidian vault</strong> كملاحظة Markdown: الكلام اللي اتقال، وأي code اتولّد، وروابط للصور والصوت اللي اتعملوا. المحادثات ممكن تتفرّع، والفرع بيحتفظ برابط لأصله، فالـ vault بيبان كـ graph لتفكيري مشي إزاي، مش مجرد كومة logs.</p>
 
-            <p>والأهم إن المساعد يقدر <em>يدوّر</em> في الـ vault ده. &laquo;&#8294;What did we decide about the database?&#8297;&raquo; أو &laquo;&#8294;Search my notes for the gold price&#8297;&raquo; بيعملوا بحث في ملاحظاتي أنا، والرد بيطلع من اللي موجود فيها. دي الحاجة الوحيدة اللي مفيش أداة خارجية تقدر تعملها زيها، لأن الملاحظات موجودة على الجهاز ده بس. ولما مفيش حاجة تطابق، بيقول كده &mdash; قبل ما أوصّل ده، لما كنت أسأل موديل محلي عن ملاحظاتي كان بيألّف واحدة بكل ثقة اسمها &laquo;&#8294;Gold Price History&#8297;&raquo;.</p>
+            <p>والأهم إن المساعد يقدر <em>يدوّر</em> في الـ vault ده. &laquo;&#8294;What did we decide about the database?&#8297;&raquo; أو &laquo;&#8294;Search my notes for the gold price&#8297;&raquo; بيعملوا بحث في ملاحظاتي أنا، والرد بيطلع من اللي موجود فيها. دي الحاجة الوحيدة اللي مفيش أداة خارجية تقدر تعملها زيها، لأن الملاحظات موجودة على الجهاز ده بس. ولما مفيش حاجة تطابق، بيقول كده &mdash; قبل ما أوصّل ده، لما كنت أسأل model محلي عن ملاحظاتي كان بيألّف واحدة بكل ثقة اسمها &laquo;&#8294;Gold Price History&#8297;&raquo;.</p>
 
             <h2>نظام الـ Skills</h2>
-            <p>الـ AI مش مجرد chatbot &mdash; يقدر <span class="highlight">يعمل حاجات بنفسه</span>. فيه دلوقتي 30 skill: قراية الملفات وكتابتها، والبحث في الكود، وgit، وتحميل صفحات الويب، والبحث على الويب، والحسابات، وتوليد الصور والكلام، والتنقل بين المشاريع، والبحث في الـ vault.</p>
+            <p>الـ AI مش مجرد chatbot &mdash; يقدر <span class="highlight">يعمل حاجات بنفسه</span>. فيه دلوقتي 30 skill: قراية الملفات وكتابتها، والبحث في الـ code، وgit، وتحميل صفحات الويب، والبحث على الويب، والحسابات، وتوليد الصور والكلام، والتنقل بين المشاريع، والبحث في الـ vault.</p>
 
-            <p>الموديل بيطلب أداة بإنه يكتب fenced block قصير. السيرفر بيشغّله، وبعدين &mdash; وده كان الإصلاح الكبير في الصيف &mdash; بيدّي النتيجة <em>للموديل تاني</em> ويخليه يرد من الدليل ده. قبل كده الموديل كان بينده بحث على الويب وبعدين يرد من ذاكرته برضو؛ دلوقتي الإجابات <strong>مبنية</strong> على اللي الأداة رجّعته فعلاً.</p>
+            <p>الـ model بيطلب أداة بإنه يكتب fenced block قصير. الـ server بيشغّله، وبعدين &mdash; وده كان الإصلاح الكبير في الصيف &mdash; بيدّي النتيجة <em>للـ model تاني</em> ويخليه يرد من الدليل ده. قبل كده الـ model كان بينده بحث على الويب وبعدين يرد من ذاكرته برضو؛ دلوقتي الإجابات <strong>مبنية</strong> على اللي الأداة رجّعته فعلاً.</p>
 
-            <p>الأدوات اللي للقراية بس بتشتغل فوراً. أي حاجة بتغيّر حاجة &mdash; كتابة ملف، أو commit، أو تشغيل صوت يطلع من السماعة &mdash; بيظهرلها كارت تأكيد الأول. لما أوافق، الأداة بتشتغل والموديل بيرد من ناتجها، زي ما بيعمل بالظبط مع الأدوات الأوتوماتيك.</p>
+            <p>الأدوات اللي للقراية بس بتشتغل فوراً. أي حاجة بتغيّر حاجة &mdash; كتابة ملف، أو commit، أو تشغيل صوت يطلع من السماعة &mdash; بيظهرلها card تأكيد الأول. لما أوافق، الأداة بتشتغل والـ model بيرد من ناتجها، زي ما بيعمل بالظبط مع الأدوات الـ automatic.</p>
 
             <img src="../../Pictures/ai-server-2026-chat.jpg" alt="إجابة مبنية على الدليل: Qwen 3.8 بيقرا README.md بالـ skill اسمها read_file وبيلخّصه من محتوى الملف الفعلي" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
 
@@ -373,38 +373,38 @@
                 الفشل هنا بيقدّم نفسه على إنه نجاح. الإصلاح المفروض يخلّي الفشل باين، مش بس يقلّله.
             </div>
 
-            <p>العَرَض كان تقريباً دايماً واحد: <strong>فقاعة إجابة فاضية</strong> بتخلص بشكل عادي، كأن الموديل معندوش حاجة يقولها. ورا ده كانت أسباب مختلفة خالص:</p>
+            <p>العَرَض كان تقريباً دايماً واحد: <strong>فقاعة إجابة فاضية</strong> بتخلص بشكل عادي، كأن الـ model معندوش حاجة يقولها. ورا ده كانت أسباب مختلفة خالص:</p>
 
-            <p><strong>&laquo;&#8294;What is 2+2?&#8297;&raquo; مرجّعتش أي إجابة.</strong> الـ pattern بتاع الآلة الحاسبة كان بيطابق مسافة واحدة، فحسب expression فاضي وفشل &mdash; والسيرفر اعتبر إن الأداة خلّصت السؤال، فالموديل ما اتسألش أصلاً.</p>
+            <p><strong>&laquo;&#8294;What is 2+2?&#8297;&raquo; مرجّعتش أي إجابة.</strong> الـ pattern بتاع الآلة الحاسبة كان بيطابق مسافة واحدة، فحسب expression فاضي وفشل &mdash; والـ server اعتبر إن الأداة خلّصت السؤال، فالـ model ما اتسألش أصلاً.</p>
 
-            <p><strong>typo في اسم موديل خلّى الـ stream فاضي.</strong> Ollama بيرد بخطأ &laquo;&#8294;model not found&#8297;&raquo;، بس الـ HTTP client مبيطلعش exception عليه، فالـ stream&hellip; خلص وخلاص. دلوقتي الخطأ بيظهر في الفقاعة.</p>
+            <p><strong>typo في اسم model خلّى الـ stream فاضي.</strong> Ollama بيرد بخطأ &laquo;&#8294;model not found&#8297;&raquo;، بس الـ HTTP client مبيطلعش exception عليه، فالـ stream&hellip; خلص وخلاص. دلوقتي الخطأ بيظهر في الفقاعة.</p>
 
-            <p><strong>Gemma كان بيسكت.</strong> دي فضلنا مختلفين عليها أسابيع: أنا كنت أقدر أعيدها 4 مرات من 9، والـ QA agent بتاعي مقدرش خالص. طلع إن Gemma 4 موديل <em>thinking</em> &mdash; كان بيولّد طول الوقت، بس في reasoning field مخفي، وسايب الإجابة الظاهرة فاضية. سؤال الاختبار بتاع الـ QA (&laquo;&#8294;Paris&#8297;&raquo;) ببساطة ماخلّاهوش يفكر. لما قفلت الـ thinking، الإجابات الفاضية نزلت من 4 من 9 لصفر من 6.</p>
+            <p><strong>Gemma كان بيسكت.</strong> دي فضلنا مختلفين عليها أسابيع: أنا كنت أقدر أعيدها 4 مرات من 9، والـ QA agent بتاعي مقدرش خالص. طلع إن Gemma 4 model <em>thinking</em> &mdash; كان بيولّد طول الوقت، بس في reasoning field مخفي، وسايب الإجابة الظاهرة فاضية. سؤال الاختبار بتاع الـ QA (&laquo;&#8294;Paris&#8297;&raquo;) ببساطة ماخلّاهوش يفكر. لما قفلت الـ thinking، الإجابات الفاضية نزلت من 4 من 9 لصفر من 6.</p>
 
-            <p>كل واحدة من دول اتصلّحت بإني خليت الفشل يقول هو إيه &mdash; خطأ في الفقاعة، أو تنبيه في الشات &mdash; مش بس بإني قلّلته.</p>
+            <p>كل واحدة من دول اتصلّحت بإني خليت الفشل يقول هو إيه &mdash; خطأ في الفقاعة، أو تنبيه في الـ chat &mdash; مش بس بإني قلّلته.</p>
 
-            <h2>فريق بيراجع الكود</h2>
-            <p>في سبتمبر إديت المشروع فريق ثابت من الـ AI agents في Claude Code، كل واحد له شغلة واحدة: <strong>CEO</strong> ماسك الهدف وبيقرر إيه اللي يستاهل، و<strong>QA lead</strong> بيجرّب بنفسه كل claim من أوله لآخره قبل ما يتقال على أي حاجة إنها خلصت، و<strong>security reviewer</strong>، ومسؤولين عن الـ dashboard، والموديلات، والـ tool calling، والميديا المحلية، والـ vault، والـ operations.</p>
+            <h2>فريق بيراجع الـ code</h2>
+            <p>في سبتمبر إديت المشروع فريق ثابت من الـ AI agents في Claude Code، كل واحد له شغلة واحدة: <strong>CEO</strong> ماسك الهدف وبيقرر إيه اللي يستاهل، و<strong>QA lead</strong> بيجرّب بنفسه كل claim من أوله لآخره قبل ما يتقال على أي حاجة إنها خلصت، و<strong>security reviewer</strong>، ومسؤولين عن الـ dashboard، والـ models، والـ tool calling، والميديا المحلية، والـ vault، والـ operations.</p>
 
             <p>أول security review عملوه لقى سلسلة حقيقية: نص من صفحة ويب اتحمّلت ممكن يوصل للصفحة كـ HTML، وده ممكن بعدين يشغّل الأدوات &mdash; طريق من صفحة خبيثة لتشغيل أوامر على الـ Mac بتاعي. اتقفل في نفس اليوم. المراجعات اللي بعدها طلّعت عشرات الـ bugs اللي مش باينة أوي، منها feature تاريخ المحادثات بتاعها <em>عمره ما اشتغل</em> لأن خطأ كان بيتبلع في السكوت. القاعدة اللي طلعت من ده: كل finding لازم يتعمله reproduce قبل ما يتصلّح، ومحدش بيمضي على شغله بنفسه.</p>
 
             <h2>الأمان</h2>
             <p>H_AI <strong>معمول من الأساس للـ LAN بس</strong> &mdash; قرار مقصود، هراجعه لما يبقى فيه سبب أوصل أبعد. جوه الحدود دي:</p>
 
-            <p><strong>الوصول:</strong> HTTPS في كل مكان بشهادة self&#8209;signed، ومفاتيح الـ API بتتقارن كـ hashes في constant time، وباسوردات الـ dashboard متخزّنة بـ bcrypt، وrate limits على الـ API وصفحة تسجيل الدخول الاتنين. الصور والصوت بيستخدموا signed links عمرها قصير بدل ما المفتاح يبان. وصفحة الـ dashboard مبقتش تشيل مفتاح الـ API خالص &mdash; المتصفح بيعمل authentication بالـ login session بتاعته بدل كده، ومن صفحات السيرفر نفسه بس.</p>
+            <p><strong>الوصول:</strong> HTTPS في كل مكان بشهادة self&#8209;signed، ومفاتيح الـ API بتتقارن كـ hashes في constant time، وpasswords الـ dashboard متخزّنة بـ bcrypt، وrate limits على الـ API وصفحة تسجيل الدخول الاتنين. الصور والصوت بيستخدموا signed links عمرها قصير بدل ما المفتاح يبان. وصفحة الـ dashboard مبقتش تشيل مفتاح الـ API خالص &mdash; المتصفح بيعمل authentication بالـ login session بتاعته بدل كده، ومن صفحات الـ server نفسه بس.</p>
 
-            <p><strong>المحتوى اللي مش موثوق:</strong> أي حاجة جاية من برّه &mdash; صفحة ويب، أو مستند مرفوع، أو ملاحظة قديمة &mdash; بتتحاط في fence كـ <em>data</em> قبل ما توصل للموديل، بـ marker عشوائي المحتوى ميقدرش يزوّره. ملف PDF مكتوب فيه &laquo;&#8294;ignore all previous instructions&#8297;&raquo; بيتبلّغ عنه، مش بيتنفّذ. والـ web fetch مينفعش يتوجّه للخدمات الشغّالة على الـ Mac نفسه.</p>
+            <p><strong>المحتوى اللي مش موثوق:</strong> أي حاجة جاية من برّه &mdash; صفحة ويب، أو مستند مرفوع، أو ملاحظة قديمة &mdash; بتتحاط في fence كـ <em>data</em> قبل ما توصل للـ model، بـ marker عشوائي المحتوى ميقدرش يزوّره. ملف PDF مكتوب فيه &laquo;&#8294;ignore all previous instructions&#8297;&raquo; بيتبلّغ عنه، مش بيتنفّذ. والـ web fetch مينفعش يتوجّه للخدمات الشغّالة على الـ Mac نفسه.</p>
 
-            <p><strong>العمليات:</strong> أي حاجة بتغيّر في النظام محتاجة تأكيد، ووضع الـ agent التجريبي &mdash; اللي ممكن يشغّل أوامر shell الموديل كاتبها &mdash; مقفول إلا لما أنا أفتحه.</p>
+            <p><strong>العمليات:</strong> أي حاجة بتغيّر في النظام محتاجة تأكيد، ووضع الـ agent التجريبي &mdash; اللي ممكن يشغّل أوامر shell الـ model كاتبها &mdash; مقفول إلا لما أنا أفتحه.</p>
 
             <h2>الـ Architecture</h2>
             <p>الـ stack لسه بسيط عن قصد:</p>
 
-            <p><strong>الـ Backend:</strong> FastAPI مع async streaming وPydantic validation. مفيش database &mdash; الجلسات والـ logs ملفات JSON على الديسك، والذاكرة طويلة المدى هي الـ vault بتاع Markdown.</p>
+            <p><strong>الـ Backend:</strong> FastAPI مع async streaming وPydantic validation. مفيش database &mdash; الجلسات والـ logs ملفات JSON على الـ disk، والذاكرة طويلة المدى هي الـ vault بتاع Markdown.</p>
 
             <p><strong>الـ Frontend:</strong> Vanilla HTML وCSS وJavaScript، مع Marked.js وHighlight.js. مفيش React ومفيش build step. وهو PWA، فبيتثبّت على الشاشة الرئيسية.</p>
 
-            <p><strong>الـ Runtimes بتاعة الـ AI والميديا:</strong> Ollama للموديلات المحلية، والـ Claude Code CLI لـ Claude، وDraw Things للصور، وVoicebox للكلام. كل واحد خدمة محلية لوحدها؛ لو واحدة وقعت، الـ features بتاعتها بس هي اللي بتقف، ولوحة الخدمات بتوريني أنهي واحدة.</p>
+            <p><strong>الـ Runtimes بتاعة الـ AI والميديا:</strong> Ollama للـ models المحلية، والـ Claude Code CLI لـ Claude، وDraw Things للصور، وVoicebox للكلام. كل واحد خدمة محلية لوحدها؛ لو واحدة وقعت، الـ features بتاعتها بس هي اللي بتقف، ولوحة الخدمات بتوريني أنهي واحدة.</p>
 
             <img src="../../Pictures/ai-server-2026-services.png" alt="لوحة الخدمات المحلية: Ollama وVoicebox وDraw Things والـ Claude CLI والـ vault، وقدام كل واحدة الـ skills اللي بتشغّلها" style="max-width:320px;width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem auto;display:block;">
 
@@ -415,9 +415,9 @@
             <h2>الخطوة الجاية</h2>
             <p>الصوت خلص. وكمان الصور والرؤية والذاكرة طويلة المدى. اللي فاضل:</p>
 
-            <p><strong>قفل الفجوة مع Claude</strong> &mdash; إني أخلّي الموديلات المحلية كويسة كفاية في استخدام الأدوات لدرجة إن الافتراضي بتاع الـ cloud يبقى اختياري. Claude لسه أحسن بشكل واضح في إنه يعرف <em>إمتى</em> يستخدم أداة. <strong>الوصول من بعيد</strong>، غالباً عن طريق overlay network زي Tailscale، لما يبقى فيه سبب له &mdash; المتطلبات مكتوبة، وشيل مفتاح الـ API من الصفحة كان واحد منها. وكمان أكتر من الشغل اللي طلع هو الأهم: إني ألاقي الأماكن اللي بيفشل فيها من غير صوت، وأخليها تتكلم.</p>
+            <p><strong>قفل الفجوة مع Claude</strong> &mdash; إني أخلّي الـ models المحلية كويسة كفاية في استخدام الأدوات لدرجة إن الافتراضي بتاع الـ cloud يبقى اختياري. Claude لسه أحسن بشكل واضح في إنه يعرف <em>إمتى</em> يستخدم أداة. <strong>الوصول من بعيد</strong>، غالباً عن طريق overlay network زي Tailscale، لما يبقى فيه سبب له &mdash; المتطلبات مكتوبة، وشيل مفتاح الـ API من الصفحة كان واحد منها. وكمان أكتر من الشغل اللي طلع هو الأهم: إني ألاقي الأماكن اللي بيفشل فيها من غير صوت، وأخليها تتكلم.</p>
 
-            <p>مفيش اشتراك للموديلات المحلية. ومفيش بيانات بتخرج من الشبكة بتاعتي إلا لو اخترت موديل الـ cloud. بس الهاردوير بتاعي، وسوفتوير كويس، وكل حاجة ملكي أنا.</p>
+            <p>مفيش اشتراك للـ models المحلية. ومفيش بيانات بتخرج من الشبكة بتاعتي إلا لو اخترت الـ cloud. model بس الـ hardware بتاعي، وsoftware كويس، وكل حاجة ملكي أنا.</p>
         </div>
 
         <div class="article-nav reveal-up">
@@ -427,7 +427,7 @@
             </a>
             <a href="local-voice-generation.html" class="article-nav-link next">
                 <span class="nav-label">المقال الجاي &larr;</span>
-                <span class="nav-title">توليد الصوت من النص بموديلات محلية</span>
+                <span class="nav-title">توليد الصوت من النص بـ models محلية</span>
             </a>
         </div>
     </div>

@@ -6,9 +6,9 @@
     <link rel="icon" href="../../favicon.ico" sizes="32x32">
     <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
-    <title>توليد الصوت من النص بموديلات محلية - هشام أبو العلا</title>
+    <title>توليد الصوت من النص بـ models محلية - هشام أبو العلا</title>
     <meta name="description" content="تحويل النص لصوت محليًا على Mac Studio M4 Max باستخدام Voicebox وVibeVoice، ومقارنته بـ ElevenLabs Eleven v4 &mdash; مع أمثلة من حواديت قبل النوم بلغتين.">
-    <meta property="og:title" content="توليد الصوت من النص بموديلات محلية - هشام أبو العلا">
+    <meta property="og:title" content="توليد الصوت من النص بـ models محلية - هشام أبو العلا">
     <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -200,7 +200,7 @@
 
     <div class="article-container">
         <div class="article-header">
-            <h1 class="article-title enter delay-1">توليد الصوت من النص بموديلات محلية</h1>
+            <h1 class="article-title enter delay-1">توليد الصوت من النص بـ models محلية</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> 17 فبراير 2026</span>
                 <span><i class="fas fa-sync-alt"></i> اتحدّث 2 أكتوبر 2026</span>
@@ -220,11 +220,11 @@
             <p>أنا ببني <a href="building-ai-server.html" class="site-link">محرك AI شخصي</a> بيشتغل بالكامل على الـ Mac Studio M4 Max بتاعي. توليد النص كان أول خطوة. والسؤال الطبيعي بعده: أقدر أولّد <span class="highlight">صوت</span> محليًا كمان؟ طلع آه &mdash; والنتايج حلوة بشكل مكنتش متوقعه.</p>
 
             <div class="update-note">
-                <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، الصوت المحلي كان معناه موديل واحد هو VibeVoice وتجربة واحدة. من ساعتها بقى الصوت جزء من مشاريعي اليومية: <a href="bedtime-stories.html" class="site-link">حواديت قبل النوم لابني</a> بصوتي أنا، ومجموعة محركات صوت محلية موصّلة بـ H_AI عن طريق <strong>Voicebox</strong>، وأداة batch بتطلّع قصة كاملة محليًا أو عن طريق ElevenLabs من نفس السكريبت. وElevenLabs كمان اتطوّر &mdash; الـ default عندي دلوقتي <strong>Eleven v4</strong>. فيه أمثلة ودروس جديدة تحت، ومقارنة فبراير الأصلية لسه موجودة.
+                <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، الصوت المحلي كان معناه model واحد هو VibeVoice وتجربة واحدة. من ساعتها بقى الصوت جزء من مشاريعي اليومية: <a href="bedtime-stories.html" class="site-link">حواديت قبل النوم لابني</a> بصوتي أنا، ومجموعة محركات صوت محلية موصّلة بـ H_AI عن طريق <strong>Voicebox</strong>، وأداة batch بتطلّع قصة كاملة محليًا أو عن طريق ElevenLabs من نفس الـ script. وElevenLabs كمان اتطوّر &mdash; الـ default عندي دلوقتي <strong>Eleven v4</strong>. فيه أمثلة ودروس جديدة تحت، ومقارنة فبراير الأصلية لسه موجودة.
             </div>
 
             <h2>نفس صفحة قبل النوم، بتلات أصوات</h2>
-            <p>أحدث مثال هو صفحة تصبح على خير من <a href="../../projects/bedtime-stories/books/susu.html" class="site-link">سوسو القطة</a>، تاني كتاب من كتب النوم بتاعة ابني. نفس السكريبت، تلات أصوات &mdash; واحد في الـ cloud واتنين على الـ Mac Studio:</p>
+            <p>أحدث مثال هو صفحة تصبح على خير من <a href="../../projects/bedtime-stories/books/susu.html" class="site-link">سوسو القطة</a>، تاني كتاب من كتب النوم بتاعة ابني. نفس الـ script، تلات أصوات &mdash; واحد في الـ cloud واتنين على الـ Mac Studio:</p>
 
             <div class="script-preview">
                 <p lang="en" dir="ltr"><em>[softly]</em> Goodnight, Susu. <em>&lt;pause&gt;</em> Goodnight Baba. Goodnight Mama. Goodnight Susu, curled up at the end of the bed. <em>&lt;pause&gt;</em> <em>[whispers]</em> Goodnight, Yusuf.</p>
@@ -260,14 +260,14 @@
             <p>فيه حاجتين بيلفتوا النظر. الواضحة إن الأول بس هو اللي صوته شبهي &mdash; النسخ المحلية بتستخدم أصوات جاهزة، لأني لسه ما استنسختش صوتي محليًا. والأقل وضوحًا هي التوقيت: المحركات المحلية بتقرا نفس الصفحة <strong>أبطأ بأكتر من 50%</strong>. وده مهم في كتاب مصوّر، لأن الصفحة اللي بعدها مينفعش تتقلب قبل ما الجملة تخلص.</p>
 
             <h2>إيه اللي اتغيّر في ElevenLabs: Eleven v4</h2>
-            <p>الحكي في كتب النوم معمول بـ <span class="highlight">Eleven v4</span>، اللي بقى الـ default عندي. الفرق الكبير عن Multilingual v2 القديم هو طريقة التحكم فيه. v2 كان فيه زراير &mdash; stability وstyle &mdash; وكنت بظبط الأداء بإني ألفّها. v3 وv4 بيتجاهلوا زرار الـ style خالص، وبياخدوا بدله <strong>audio tags</strong> مكتوبة جوه السكريبت: <code>[warmly]</code>، <code>[softly]</code>، <code>[whispers]</code>، وكمان <code>&lt;break time="0.5s" /&gt;</code> للوقفات.</p>
+            <p>الحكي في كتب النوم معمول بـ <span class="highlight">Eleven v4</span>، اللي بقى الـ default عندي. الفرق الكبير عن Multilingual v2 القديم هو طريقة التحكم فيه. v2 كان فيه زراير &mdash; stability وstyle &mdash; وكنت بظبط الأداء بإني ألفّها. v3 وv4 بيتجاهلوا زرار الـ style خالص، وبياخدوا بدله <strong>audio tags</strong> مكتوبة جوه الـ script: <code>[warmly]</code>، <code>[softly]</code>، <code>[whispers]</code>، وكمان <code>&lt;break time="0.5s" /&gt;</code> للوقفات.</p>
 
             <div class="feature-grid stagger">
                 <div class="feature-card">
                     <div class="feature-icon">🏷️</div>
                     <div>
                         <strong>Tags مش زراير</strong>
-                        <span>التعبير بيتكتب في السكريبت. الإعدادات اللي كانت شغالة على v2 مبتعملش حاجة على v4 ومن غير أي تنبيه</span>
+                        <span>التعبير بيتكتب في الـ script. الإعدادات اللي كانت شغالة على v2 مبتعملش حاجة على v4 ومن غير أي تنبيه</span>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -293,7 +293,7 @@
                 </div>
             </div>
 
-            <p>مفاجأة حلوة: على حسابي، v4 استهلك تقريبًا <strong>عُشر</strong> الكوتا اللي كان طول السكريبت بيوحي بيها &mdash; حوالي 740 credit لكتاب فيه 80 مقطع و4,700 حرف &mdash; والـ tags والـ breaks باين إنها مش بتتحسب أصلًا. خطتك ممكن تبقى مختلفة، فقِس الأول قبل ما تحسب ميزانيتك.</p>
+            <p>مفاجأة حلوة: على حسابي، v4 استهلك تقريبًا <strong>عُشر</strong> الـ quota اللي كان طول الـ script بيوحي بيها &mdash; حوالي 740 credit لكتاب فيه 80 مقطع و4,700 حرف &mdash; والـ tags والـ breaks باين إنها مش بتتحسب أصلًا. خطتك ممكن تبقى مختلفة، فقِس الأول قبل ما تحسب ميزانيتك.</p>
 
             <h2>الأصوات المحلية جوه H_AI: Voicebox</h2>
             <p>في فبراير قلت إن الخطوة الجاية هي إني أدمج الصوت في محرك الـ AI بتاعي. وده حصل، عن طريق <span class="highlight">Voicebox</span>، وهو استوديو صوت محلي مفتوح المصدر بيشتغل على Apple Silicon من خلال MLX. H_AI بيكلّمه عن طريق local API في الاتجاهين: <strong>speech‑to‑text</strong> (Whisper) لما أسجّل سؤال على موبايلي، و<strong>text‑to‑speech</strong> لما أطلب إن الإجابة تتقرا بصوت عالي.</p>
@@ -309,7 +309,7 @@
                     <td><strong>Kokoro</strong></td>
                     <td>54 صوت جاهز</td>
                     <td>8، منها الإنجليزي</td>
-                    <td>drafts وتجربة أصوات بسرعة &mdash; موديل حجمه 327 MB</td>
+                    <td>drafts وتجربة أصوات بسرعة &mdash; model حجمه 327 MB</td>
                 </tr>
                 <tr>
                     <td><strong>Qwen Custom Voice</strong></td>
@@ -339,26 +339,26 @@
 
             <p>المشكلة في مشاريعي هي <strong>العربي</strong>. ولا محرك محلي جاي بصوت عربي جاهز؛ محركات الاستنساخ بس هي اللي بتتكلم عربي، فالسرد بالعربي محتاج تسجيل نضيف مدته من 15 لـ 30 ثانية أستنسخ منه &mdash; ويفضّل يكون لحد بيتكلم عربي. في الـ cloud بختار صوت عربي وخلاص.</p>
 
-            <h2>سكريبت واحد، backend اتنين</h2>
-            <p>أحدث حتة هي أداة batch للتعليق الصوتي جوه H_AI. بتاخد نفس ملف السكريبت اللي بستخدمه مع ElevenLabs &mdash; entry لكل صفحة &mdash; وبتولّد كل صفحة محليًا عن طريق Voicebox، بنفس أسماء الملفات. مشغّل القصص اللي بيشغّل <code>audio/en/p1.mp3</code> مش فارق معاه مين عمله.</p>
+            <h2>script واحد، backend اتنين</h2>
+            <p>أحدث حتة هي أداة batch للتعليق الصوتي جوه H_AI. بتاخد نفس ملف الـ script اللي بستخدمه مع ElevenLabs &mdash; entry لكل صفحة &mdash; وبتولّد كل صفحة محليًا عن طريق Voicebox، بنفس أسماء الملفات. مشغّل القصص اللي بيشغّل <code>audio/en/p1.mp3</code> مش فارق معاه مين عمله.</p>
 
-            <p>المحركات المحلية عمرها ما سمعت عن <code>[warmly]</code> وهتقراها بصوت عالي، فالأداة بتشيل الـ tags، وتقسم السكريبت عند كل <code>&lt;break&gt;</code>، وتولّد كل حتة، وبعدين تلصقهم تاني بصمت حقيقي بالمدة المطلوبة. زي ما بتقول ملاحظات الأداة: <em>الإيقاع بيعدّي في النقلة، والإحساس لأ.</em></p>
+            <p>المحركات المحلية عمرها ما سمعت عن <code>[warmly]</code> وهتقراها بصوت عالي، فالأداة بتشيل الـ tags، وتقسم الـ script عند كل <code>&lt;break&gt;</code>، وتولّد كل حتة، وبعدين تلصقهم تاني بصمت حقيقي بالمدة المطلوبة. زي ما بتقول ملاحظات الأداة: <em>الإيقاع بيعدّي في النقلة، والإحساس لأ.</em></p>
 
             <p>بعد كل batch بتفحص النتايج بنفس طريقة الـ pipeline بتاع ElevenLabs عندي &mdash; وبتعلّم المقاطع اللي <strong>صامتة</strong> أو <strong>قصيرة قوي</strong> أو <strong>ممطوطة</strong>. الممطوط هو الفكرة الشاطرة: الكلام المتلخبط بيطلع برضه ملف سليم 100% وبيتفتح عادي، بس بياخد وقت أطول بكتير لكل حرف من المقاطع اللي جنبه، فبيبان إنه outlier.</p>
 
             <div class="quote">
-                اعمل الـ drafts وجرّب وعدّل محليًا ببلاش، وبعدين اصرف credits الـ cloud على النسخة النهائية. نفس السكريبت، وأمر واحد تبدّل بيه.
+                اعمل الـ drafts وجرّب وعدّل محليًا ببلاش، وبعدين اصرف credits الـ cloud على النسخة النهائية. نفس الـ script، وأمر واحد تبدّل بيه.
             </div>
 
             <h2>دروس من حواديت النوم</h2>
-            <p><strong>الـ text‑to‑speech بيبوظ مع كلمات الأصوات لوحدها.</strong> أول محاولة لأصوات الحيوانات، إدّيت للموديل نصوص زي <em>Mooooooo</em> والـ expressiveness عالي، والصوت طلع مهزوز. الكلام اللي ملوش معنى مش بيدّي الموديل أي سياق. لما حطيت كل واحدة جوه جملة قصيرة &mdash; &laquo;&#8294;the cow says moo&#8297;&raquo; &mdash; ونزّلت الـ expressiveness، المشكلة اتحلت خالص.</p>
+            <p><strong>الـ text‑to‑speech بيبوظ مع كلمات الأصوات لوحدها.</strong> أول محاولة لأصوات الحيوانات، إدّيت للـ model نصوص زي <em>Mooooooo</em> والـ expressiveness عالي، والصوت طلع مهزوز. الكلام اللي ملوش معنى مش بيدّي الـ model أي سياق. لما حطيت كل واحدة جوه جملة قصيرة &mdash; &laquo;&#8294;the cow says moo&#8297;&raquo; &mdash; ونزّلت الـ expressiveness، المشكلة اتحلت خالص.</p>
 
-            <p><strong>اكتب للودن.</strong> الأرقام تتكتب حروف، من غير اختصارات، والجمل أقل من 200 حرف تقريبًا، وفكرة واحدة في الصفحة. كل سكريبت بيعدّي على linter صغير قبل ما أي صوت يتولّد.</p>
+            <p><strong>اكتب للودن.</strong> الأرقام تتكتب حروف، من غير اختصارات، والجمل أقل من 200 حرف تقريبًا، وفكرة واحدة في الصفحة. كل script بيعدّي على linter صغير قبل ما أي صوت يتولّد.</p>
 
-            <p><strong>راجع الكلمات، مش الملف بس.</strong> لما عملت النسخ المحلية لصفحات سوسو للمقال ده، عدّيت كل مقطع تاني على speech‑to‑text عشان أتأكد إنه قال اللي في السكريبت. صفحة تصبح على خير رجعت كلمة بكلمة من الأصوات التلاتة &mdash; وعشان كده هي المثال اللي فوق.</p>
+            <p><strong>راجع الكلمات، مش الملف بس.</strong> لما عملت النسخ المحلية لصفحات سوسو للمقال ده، عدّيت كل مقطع تاني على speech‑to‑text عشان أتأكد إنه قال اللي في الـ script. صفحة تصبح على خير رجعت كلمة بكلمة من الأصوات التلاتة &mdash; وعشان كده هي المثال اللي فوق.</p>
 
-            <h2>البودكاست، زمان ودلوقتي</h2>
-            <p>من هنا بدأ المشروع. في فبراير كتبت سكريبت بودكاست مدته خمس دقايق عن مشروع <a href="building-ai-server.html" class="site-link">محرك الـ AI الشخصي</a> وولّدته مرتين &mdash; مرة محليًا بـ VibeVoice، ومرة بـ ElevenLabs بـ clone من صوتي. في أكتوبر مرّرت <strong>نفس السكريبت بالظبط</strong>، كلمة بكلمة، على المحركين المحليين الجداد، عشان تقدر تقارن الأربعة ببعض على طول.</p>
+            <h2>الـ podcast، زمان ودلوقتي</h2>
+            <p>من هنا بدأ المشروع. في فبراير كتبت script podcast مدته خمس دقايق عن مشروع <a href="building-ai-server.html" class="site-link">محرك الـ AI الشخصي</a> وولّدته مرتين &mdash; مرة محليًا بـ VibeVoice، ومرة بـ ElevenLabs بـ clone من صوتي. في أكتوبر مرّرت <strong>نفس الـ script بالظبط</strong>، كلمة بكلمة، على المحركين المحليين الجداد، عشان تقدر تقارن الأربعة ببعض على طول.</p>
 
             <h3>فبراير 2026</h3>
 
@@ -433,18 +433,18 @@
                 </tr>
             </table>
 
-            <p>النسخ الجديدة اتعملت بأداة الـ batch للتعليق الصوتي اللي اتكلمت عنها فوق: السكريبت دخل عشر فقرات، وكل فقرة اتولّدت لوحدها، والحتت اتوصّلت بوقفة قصيرة بينها. Kokoro هو المفاجأة &mdash; حلقة مدتها خمس دقايق في وقت أقل من اللي بياخده سماع الفقرة الأولى. لما عدّيت كل فقرة تاني على speech‑to‑text، النسختين الجداد طابقوا السكريبت بنسبة حوالي 98% كلمة بكلمة؛ وتقريبًا كل الفروق كانت في الإملا (&laquo;&#8294;Fast API&#8297;&raquo; بدل FastAPI)، مش غلط في القراية.</p>
+            <p>النسخ الجديدة اتعملت بأداة الـ batch للتعليق الصوتي اللي اتكلمت عنها فوق: الـ script دخل عشر فقرات، وكل فقرة اتولّدت لوحدها، والحتت اتوصّلت بوقفة قصيرة بينها. Kokoro هو المفاجأة &mdash; حلقة مدتها خمس دقايق في وقت أقل من اللي بياخده سماع الفقرة الأولى. لما عدّيت كل فقرة تاني على speech‑to‑text، النسختين الجداد طابقوا الـ script بنسبة حوالي 98% كلمة بكلمة؛ وتقريبًا كل الفروق كانت في الإملا (&laquo;&#8294;Fast API&#8297;&raquo; بدل FastAPI)، مش غلط في القراية.</p>
 
-            <p>حاجة تحطها في بالك وإنت بتسمع: السكريبت من فبراير، فهو بيوصف المشروع زي ما كان وقتها &mdash; DeepSeek وLlama و22 skill. وسبته زي ما هو وأنا قاصد، عشان كل النسخ تقرا نفس الكلمات.</p>
+            <p>حاجة تحطها في بالك وإنت بتسمع: الـ script من فبراير، فهو بيوصف المشروع زي ما كان وقتها &mdash; DeepSeek وLlama و22 skill. وسبته زي ما هو وأنا قاصد، عشان كل النسخ تقرا نفس الكلمات.</p>
 
             <h2>إيه هو VibeVoice؟</h2>
-            <p>VibeVoice هو <span class="highlight">موديل TTS من الأحدث في الحوارات الطويلة</span>، Microsoft هي اللي عملته في الأول ودلوقتي مجتمع الـ open source هو اللي ماسكه. بيطلّع من نص عادي صوت فيه إحساس ولأكتر من متكلم &mdash; زي حوارات البودكاست والسرد، وحتى محتوى فيه موسيقى في الخلفية بيألّفها لوحده حسب السياق. ولسه هو اللي برجعله لما السكريبت يبقى فيه أكتر من متكلم.</p>
+            <p>VibeVoice هو <span class="highlight">model TTS من الأحدث في الحوارات الطويلة</span>، Microsoft هي اللي عملته في الأول ودلوقتي مجتمع الـ open source هو اللي ماسكه. بيطلّع من نص عادي صوت فيه إحساس ولأكتر من متكلم &mdash; زي حوارات الـ podcast والسرد، وحتى محتوى فيه موسيقى في الخلفية بيألّفها لوحده حسب السياق. ولسه هو اللي برجعله لما الـ script يبقى فيه أكتر من متكلم.</p>
 
             <p>الجديد فيه هو الـ architecture: continuous speech tokenizers بتشتغل على 7.5 Hz مع next‑token diffusion framework. الـ LLM بيمسك سياق النص، والـ diffusion head بيطلّع التفاصيل الصوتية. والنتيجة كلام طبيعي، بإيقاع ونغمة مظبوطين، وصوت كل متكلم ثابت.</p>
 
             <table class="model-table">
                 <tr>
-                    <th>الموديل</th>
+                    <th>الـ model</th>
                     <th>أقصى مدة</th>
                     <th>المتكلمين</th>
                     <th>أنسب لـ</th>
@@ -453,13 +453,13 @@
                     <td><strong>VibeVoice 0.5B</strong></td>
                     <td>Real‑time</td>
                     <td>1</td>
-                    <td>TTS لايف بـ latency قليلة</td>
+                    <td>TTS live بـ latency قليلة</td>
                 </tr>
                 <tr>
                     <td><strong>VibeVoice 1.5B</strong></td>
                     <td>~90 دقيقة</td>
                     <td>لحد 4</td>
-                    <td>بودكاست طويل</td>
+                    <td>podcast طويل</td>
                 </tr>
                 <tr>
                     <td><strong>VibeVoice 7B</strong></td>
@@ -470,17 +470,17 @@
             </table>
 
             <h2>تشغيله محليًا</h2>
-            <p>بـ 64 GB unified memory على الـ M4 Max، أقدر أشغّل موديل الـ 7B براحتي &mdash; أكبر اختيار وأكتره واقعية. اعمل clone للـ <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">الـ repo بتاع VibeVoice</a>، وثبّت الـ dependencies بـ <code>uv pip install -e .</code>، ونزّل الـ weights بتاعة الموديل، وشغّل الـ inference من ملف نصي فيه أسماء المتكلمين زي <code>Speaker 1: Hello, welcome to the show.</code></p>
+            <p>بـ 64 GB unified memory على الـ M4 Max، أقدر أشغّل الـ 7B model براحتي &mdash; أكبر اختيار وأكتره واقعية. اعمل clone للـ <a href="https://github.com/vibevoice-community/VibeVoice" target="_blank" class="site-link">الـ repo بتاع VibeVoice</a>، وثبّت الـ dependencies بـ <code>uv pip install -e .</code>، ونزّل الـ weights بتاعة الـ model، وشغّل الـ inference من ملف نصي فيه أسماء المتكلمين زي <code>Speaker 1: Hello, welcome to the show.</code></p>
 
-            <p>التوليد بياخد كام دقيقة لحلقة بودكاست كاملة. مش real time، بس مقبول جدًا لو بتعمل محتوى. وكل ده بيحصل على جهازي &mdash; مفيش داتا بتطلع من شبكتي، ولا API calls، ولا رسوم بالدقيقة.</p>
+            <p>التوليد بياخد كام دقيقة لحلقة podcast كاملة. مش real time، بس مقبول جدًا لو بتعمل محتوى. وكل ده بيحصل على جهازي &mdash; مفيش data بتطلع من شبكتي، ولا API calls، ولا رسوم بالدقيقة.</p>
 
             <div class="script-preview">
                 <p lang="en" dir="ltr"><strong>Speaker 1:</strong> Welcome to The Build Log, where we break down real engineering projects from the ground up. Today, we're looking at something really cool. A developer named Hisham got fed up with cloud AI services, the latency, the costs, the privacy headaches, and decided to build his own personal AI engine that runs entirely on local hardware. Let's dive in.</p>
-                <p style="text-align:center;color:var(--text-secondary);font-style:italic;">[ السكريبت الكامل بيكمّل في حوالي 19 فقرة عن الهاردوير، والـ webapp، ونظام الـ skills، والأمان، والـ roadmap ]</p>
+                <p style="text-align:center;color:var(--text-secondary);font-style:italic;">[ الـ script الكامل بيكمّل في حوالي 19 فقرة عن الـ hardware، والـ webapp، ونظام الـ skills، والأمان، والـ roadmap ]</p>
             </div>
 
             <h2>محلي ولا cloud، بعد تمن شهور</h2>
-            <p>بستخدم <span class="highlight">ElevenLabs</span> لأي حاجة بتتنشر &mdash; السرد بلغتين في <a href="building-islamic-kids.html" class="site-link">موقع الأطفال الإسلامي</a>، وبودكاست Wireless 101، وكتب النوم. والمحلي بيغطي كل اللي قبل كده. ودي المقارنة بصراحة دلوقتي:</p>
+            <p>بستخدم <span class="highlight">ElevenLabs</span> لأي حاجة بتتنشر &mdash; السرد بلغتين في <a href="building-islamic-kids.html" class="site-link">موقع الأطفال الإسلامي</a>، وpodcast Wireless 101، وكتب النوم. والمحلي بيغطي كل اللي قبل كده. ودي المقارنة بصراحة دلوقتي:</p>
 
             <div class="comparison-grid stagger">
                 <div class="comparison-card">
@@ -489,7 +489,7 @@
                         <li>ببلاش ومن غير حدود &mdash; مثالي للـ drafts وتجربة الأصوات</li>
                         <li>خصوصية كاملة &mdash; مفيش حاجة بتطلع من الجهاز</li>
                         <li>Kokoro بيولّد صفحة في ثواني</li>
-                        <li>بودكاست بأكتر من متحدث مع VibeVoice</li>
+                        <li>podcast بأكتر من متحدث مع VibeVoice</li>
                         <li>متركّب جوه H_AI للصوت الداخل والطالع</li>
                     </ul>
                     <ul class="con-list">
@@ -525,7 +525,7 @@
 
             <p><strong>استنساخ صوتي أنا محليًا</strong>، عشان المسودات المحلية تطلع شبه النسخة النهائية. <strong>سرد بالعربي محليًا</strong>، عن طريق Chatterbox أو TADA مع تسجيل مرجعي عربي كويس. و<strong>كتب نوم أكتر</strong> &mdash; السلسلة بتكبر مع ابني، وكل كتاب جديد فرصة تانية أشوف بيها الأصوات المحلية وصلت لفين.</p>
 
-            <p>الأدوات موجودة. والهاردوير يقدر. ومجتمع الـ open source ماشي بالموديلات لقدام. إنك تشغّل pipeline صوت AI بتاعك مبقاش مشروع بحثي &mdash; بقى مشروع ويك إند.</p>
+            <p>الأدوات موجودة. والـ hardware يقدر. ومجتمع الـ open source ماشي بالـ models لقدام. إنك تشغّل pipeline صوت AI بتاعك مبقاش مشروع بحثي &mdash; بقى مشروع ويك إند.</p>
 
             <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
                 <p><em>المقال ده اتكتب بمساعدة <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
