@@ -287,6 +287,7 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
 <a class="skip" href="#sec-1">Skip to the article</a>
 <article>
   <header class="masthead">
+    <p class="lang-switch" style="margin:0 0 1rem;font-family:var(--sans);font-size:0.9rem"><a href="article.ar.html" lang="ar" dir="rtl" hreflang="ar">عربي</a></p>
     <h1>Cloud vs. Local LLM Agents for Generating Lecture Slides with an Agent Skill: A Preliminary Cost–Time–Quality Study</h1>
     <p class="byline"><span class="author">Hisham Abuella</span><br><span class="affil"><em>Cellular Systems Engineer | Opinions are my own</em></span></p>
     <p class="dateline"><time datetime="2026-10">October 2026</time></p>
@@ -596,10 +597,9 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
 <section id="appendix" aria-labelledby="appendix-h">
 <h2 id="appendix-h">Appendix A. System Specifications</h2>
 <p>The harness, the checker and the local models ran on the machine in TABLE A-I. The values were collected from it with <code>system_profiler</code>, <code>sw_vers</code> and <code>ollama show</code> / <code>ollama list</code>. Apple's specification page for the Mac Studio (2025) lists this M4 Max configuration (16-core CPU, 40-core GPU) with 64 GB of memory and 1 TB of storage as options <a class="cite" href="#ref-19">[19]</a>.</p>
-<p><strong>TABLE A-I</strong></p>
-<p><strong>HARDWARE AND SOFTWARE</strong></p>
-<figure class="table">
-<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<figure class="table" id="table-a-i">
+<figcaption><span class="tlabel">TABLE A-I</span><span class="tcap">HARDWARE AND SOFTWARE</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE A-I: HARDWARE AND SOFTWARE"><table>
 <thead><tr><th scope="col">Item</th><th scope="col">Value</th></tr></thead><tbody>
 <tr><td>Machine</td><td>Mac Studio, model identifier Mac16,9 <a class="cite" href="#ref-19">[19]</a></td></tr>
 <tr><td>Chip</td><td>Apple M4 Max, 16-core CPU (12 performance + 4 efficiency), 40-core GPU</td></tr>
@@ -614,10 +614,9 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
 <tr><td>Cloud models</td><td><code>claude-opus-5-5</code>, <code>claude-sonnet-5-5</code>, <code>claude-haiku-5-5</code> through the Anthropic API, each at its default effort; judge <code>claude-opus-5-5</code></td></tr>
 </tbody></table></div>
 </figure>
-<p><strong>TABLE A-II</strong></p>
-<p><strong>LOCAL MODELS (FROM <code>ollama show</code> AND <code>ollama list</code>)</strong></p>
-<figure class="table">
-<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<figure class="table" id="table-a-ii">
+<figcaption><span class="tlabel">TABLE A-II</span><span class="tcap">LOCAL MODELS (FROM <code>ollama show</code> AND <code>ollama list</code>)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE A-II: LOCAL MODELS (FROM `ollama show` AND `ollama list`)"><table>
 <thead><tr><th scope="col">Model tag</th><th scope="col">Architecture</th><th scope="col">Parameters</th><th scope="col">Quantization</th><th scope="col">Format</th><th scope="col" class="n">Context</th><th scope="col">Size</th><th scope="col">Used in</th></tr></thead><tbody>
 <tr><td><code>qwen3.8:27b-mlx</code></td><td>qwen3_5</td><td>27.8B (dense)</td><td>nvfp4</td><td>MLX</td><td class="n">262,144</td><td>18 GB</td><td>Main comparison; plan experiment</td></tr>
 <tr><td><code>qwen3.6:35b-a3b</code></td><td>qwen35moe</td><td>35.5B (MoE, about 3B active)</td><td>Q4_K_M</td><td>GGUF</td><td class="n">262,144</td><td>22 GB</td><td>Plan experiment</td></tr>

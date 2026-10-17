@@ -63,6 +63,7 @@ def norm_project(link):
     if not re.match(r'^[a-z]+:|^//|^#', link):
         link = re.sub(r'^\.\./', '', link, count=1) if norm_project.arabic else ('' if link == 'ar/' else link)
     link = link.replace('/ar/home.html', '/home.html')
+    link = re.sub(r'\.ar\.html$', '.html', link)                # a page's Arabic edition (article.ar.html)
     return re.sub(r'[?&]lang=ar$', '', link)
 
 def check(slug):

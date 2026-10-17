@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLMs على الـ cloud ولا محلي؟ – هشام أبو العلا</title>
+<meta name="description" content="LLM agents على الـ cloud ولا على جهازك؟ تحضير slides محاضرة بـ Agent Skill: دراسة أولية للتكلفة والوقت والجودة">
+<meta name="author" content="هشام أبو العلا">
+<link rel="alternate" hreflang="en" href="article.html">
+<style>
+:root {
+  --ink: #000;
+  --ink-2: #444;
+  --ink-3: #6b6b6b;
+  --rule: #c8c8c8;
+  --rule-strong: #000;
+  --stripe: #f5f5f5;
+  --panel: #fafafa;
+  --paper: #fff;
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --col: 720px;
+  --wide: 900px;
+  --gutter: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18.5px;
+  line-height: 1.6;
+  text-align: left;
+  font-kerning: normal;
+}
+@media (max-width: 600px) { body { font-size: 18px; } }
+
+/* Layout: one centred text column, optional wider lane for figures and tables */
+article {
+  display: grid;
+  --lane: clamp(0px, (100% - var(--col) - 2 * var(--gutter)) / 2, (var(--wide) - var(--col)) / 2);
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [wide-start] var(--lane)
+    [text-start] min(var(--col), 100% - 2 * var(--gutter)) [text-end]
+    var(--lane) [wide-end]
+    minmax(var(--gutter), 1fr) [full-end];
+  padding-bottom: 4rem;
+}
+article > *, section > * { grid-column: text; min-width: 0; }
+article > section, article > header {
+  grid-column: full;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+header > * { grid-column: text; min-width: 0; }
+.wide, figure.fig-wide, figure.table { grid-column: wide; }
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 16px; top: 16px; background: var(--paper); padding: 4px 8px; }
+
+/* Links: plain underlined black */
+a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+a.cite { text-decoration-color: var(--ink-3); white-space: nowrap; }
+
+/* Masthead */
+.masthead { padding-top: 3.5rem; }
+h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.25rem;
+  text-wrap: balance;
+}
+.byline { margin: 0; font-size: 1.05rem; line-height: 1.45; }
+.author { font-weight: 700; }
+.affil { color: var(--ink-2); }
+.dateline { margin: 0.6rem 0 0; font-family: var(--sans); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.status {
+  margin: 0.4rem 0 0; font-family: var(--sans); font-size: 0.9rem; color: var(--ink);
+  font-style: italic;
+}
+
+.toc { margin-top: 2rem; border-top: 1px solid var(--rule); padding-top: 0.9rem; }
+.toc .toc-h {
+  font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 0.5rem; font-weight: 600;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 2rem; font-family: var(--sans); font-size: 0.9rem; line-height: 1.5; }
+.toc li { break-inside: avoid; padding: 0.15rem 0; }
+.toc a { text-decoration-color: var(--rule); }
+.toc a:hover { text-decoration-color: var(--ink); }
+.toc .num { display: inline-block; min-width: 2.6em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+@media (max-width: 520px) { .toc ol { columns: 1; } }
+
+/* Abstract */
+.abstract { margin-top: 2rem; }
+.abstract > * { grid-column: text; }
+.abstract h2 {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 1.1rem; margin: 0 0 0.4rem;
+  font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+}
+.abstract .lead { font-size: 1.08em; line-height: 1.6; margin: 0 0 1rem; }
+.abstract .index-terms {
+  font-size: 0.9rem; color: var(--ink-2); margin: 0;
+  border-bottom: 1px solid var(--rule-strong); padding-bottom: 1.1rem;
+}
+.abstract .index-terms strong { color: var(--ink); }
+
+/* Headings */
+h2, h3 { font-family: var(--serif); color: var(--ink); text-wrap: balance; scroll-margin-top: 1rem; }
+section > h2 {
+  font-size: 1.5rem; line-height: 1.25; font-weight: 700;
+  margin: 3.2rem 0 0.9rem;
+}
+h3 { font-size: 1.15rem; line-height: 1.3; font-weight: 700; font-style: italic; margin: 2.2rem 0 0.5rem; }
+h2 .num, h3 .num { font-style: normal; font-variant-numeric: lining-nums; margin-right: 0.15em; }
+h3 .num { font-style: normal; }
+
+p { margin: 0 0 1.05rem; }
+ul, ol { margin: 0 0 1.2rem; padding-left: 1.5rem; }
+li { margin: 0 0 0.4rem; }
+li::marker { color: var(--ink-2); }
+strong { font-weight: 700; }
+code {
+  font-family: var(--mono); font-size: 0.82em;
+  background: var(--stripe); border: 1px solid #e4e4e4; border-radius: 3px;
+  padding: 0.05em 0.3em; overflow-wrap: anywhere;
+}
+
+/* Figures */
+figure { margin: 2rem 0 2.2rem; }
+figure.fig .fig-scroll { display: flex; justify-content: center; }
+figure.fig img { display: block; width: 100%; height: auto; }
+figure.fig:not(.fig-wide) img { max-width: 600px; }
+figure.fig-wide .fig-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+figure.fig-wide img { min-width: 560px; }
+figure.fig figcaption {
+  font-family: var(--sans); font-size: 0.86rem; line-height: 1.5; color: var(--ink-2);
+  margin: 0.8rem auto 0; max-width: var(--col);
+  border-top: 1px solid var(--rule); padding-top: 0.6rem;
+}
+.flabel { font-weight: 700; color: var(--ink); }
+
+/* Tables */
+figure.table { margin: 2.2rem 0 2.4rem; }
+figure.table figcaption {
+  text-align: center; font-family: var(--serif); margin: 0 0 0.7rem;
+  font-variant: small-caps; letter-spacing: 0.03em;
+}
+.tlabel { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; font-variant: normal; }
+.tcap { display: block; font-size: 0.85rem; color: var(--ink-2); }
+.table-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border-top: 1.5px solid var(--rule-strong); border-bottom: 1.5px solid var(--rule-strong);
+}
+.table-scroll:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+table {
+  border-collapse: collapse; width: 100%;
+  font-family: var(--sans); font-size: 0.8rem; line-height: 1.4;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+th, td { padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+thead th {
+  font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--rule-strong);
+  vertical-align: bottom;
+}
+tbody tr + tr td { border-top: 1px solid #e2e2e2; }
+tbody tr:nth-child(even) { background: var(--stripe); }
+td.n, th.n { text-align: right; }
+td.n { white-space: nowrap; }
+td:first-child, th:first-child { padding-left: 0.4rem; }
+td:last-child, th:last-child { padding-right: 0.4rem; }
+td code { font-size: 0.92em; white-space: nowrap; overflow-wrap: normal; }
+table { min-width: 560px; }
+#table-ii td:nth-child(2) { white-space: nowrap; }
+#table-iii th, #table-iii td { padding-inline: 0.4rem; }
+#table-iii td:nth-child(2) { white-space: nowrap; }
+#table-iii table { min-width: 860px; }
+#table-iv table { min-width: 720px; }
+#table-v table { min-width: 760px; }
+.table-note {
+  font-family: var(--sans); font-size: 0.82rem; line-height: 1.5; color: var(--ink-2);
+  margin: 0.7rem 0 0; max-width: var(--col);
+}
+
+/* Disclaimer callout */
+.callout {
+  border: 1.5px solid var(--ink); padding: 1rem 1.2rem 0.2rem; margin: 1.2rem 0 1.6rem;
+  background: var(--paper);
+}
+.callout-label {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+/* Artifacts and Reproducibility */
+section.artifacts {
+  grid-column: wide; display: block; margin-top: 3.5rem;
+  border: 1.5px solid var(--ink); background: var(--panel);
+  padding: 1.6rem clamp(16px, 4vw, 40px) 1.6rem;
+}
+section.artifacts > h2 { margin: 0 0 0.8rem; font-size: 1.6rem; }
+section.artifacts > p, section.artifacts > ul { max-width: calc(var(--col) + 80px); }
+section.artifacts > figure.table { margin-bottom: 0; }
+section.artifacts p.group { margin: 1.4rem 0 0.4rem; font-family: var(--sans); font-size: 0.95rem; }
+section.artifacts ul { font-size: 0.95rem; }
+section.artifacts li { margin-bottom: 0.35rem; }
+section.artifacts .table-note { max-width: none; }
+section.artifacts .table-scroll { background: var(--paper); }
+figure.decks table { font-size: 0.85rem; }
+figure.decks td { vertical-align: middle; }
+figure.decks td.deck { min-width: 15rem; }
+figure.decks td.deck a {
+  display: inline-block; padding: 0.3rem 0; font-weight: 600;
+  text-decoration-thickness: 1.5px;
+}
+figure.decks td.deck code { background: none; border: 0; padding: 0; font-size: 0.95em; white-space: normal; overflow-wrap: anywhere; }
+figure.decks td:nth-child(1), figure.decks td:nth-child(2) { white-space: nowrap; }
+
+/* Generated decks: stacked rows on narrow screens so every deck link is in view */
+@media (max-width: 640px) {
+  figure.decks .table-scroll { overflow: visible; }
+  figure.decks table { min-width: 0; font-size: 0.9rem; }
+  figure.decks thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  figure.decks table, figure.decks tbody, figure.decks tr, figure.decks td { display: block; }
+  figure.decks tr { padding: 0.6rem 0.4rem; }
+  figure.decks tbody tr + tr td { border-top: 0; }
+  figure.decks tbody tr + tr { border-top: 1px solid #d8d8d8; }
+  figure.decks td, figure.decks td.n { padding: 0.1rem 0; text-align: left; white-space: normal; }
+  figure.decks td:nth-child(1), figure.decks td:nth-child(2) { white-space: normal; }
+  figure.decks td::before { content: attr(data-label) ": "; font-weight: 600; color: var(--ink-2); }
+  figure.decks td:nth-child(1)::before, figure.decks td:nth-child(2)::before { content: none; }
+  figure.decks td:nth-child(1), figure.decks td:nth-child(2) { display: inline; font-weight: 600; }
+  figure.decks td:nth-child(1)::after { content: "\00a0\00b7\00a0"; }
+  figure.decks td:nth-child(3) { margin-top: 0.2rem; }
+  figure.decks td.deck { min-width: 0; }
+  figure.decks td.deck::before { content: none; }
+}
+
+/* References */
+section.references > h2 { margin-top: 3.5rem; }
+ol.refs {
+  list-style: none; padding: 0; margin: 0;
+  font-size: 0.85rem; line-height: 1.5;
+}
+ol.refs li {
+  padding-left: 2.6em; text-indent: -2.6em; margin: 0 0 0.6rem;
+  overflow-wrap: anywhere; scroll-margin-top: 1rem;
+}
+ol.refs .refnum { display: inline-block; width: 2.6em; text-indent: 0; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
+
+/* Print */
+@media print {
+  @page { margin: 18mm 16mm; }
+  body { font-size: 10.5pt; line-height: 1.45; }
+  article { display: block; padding: 0; }
+  article > section, article > header { display: block; }
+  .masthead { padding-top: 0; }
+  .skip { display: none; }
+  .toc ol { columns: 2; }
+  a { text-decoration: none; }
+  a.cite { text-decoration: none; }
+  section > h2, h3 { break-after: avoid; }
+  figure, .callout, ol.refs li, tr { break-inside: avoid; }
+  .table-scroll, figure.fig-wide .fig-scroll { overflow: visible; }
+  figure.fig-wide img { min-width: 0; }
+  table, #table-iii table, #table-iv table, #table-v table { min-width: 0; }
+  table { font-size: 7.5pt; }
+  th, td { padding: 0.25rem 0.3rem; }
+  section.artifacts { background: none; padding: 0.6rem 0 0; border-width: 1.5px 0 0; }
+  figure.decks td.deck a::after { content: none; }
+  tbody tr:nth-child(even) { background: #f2f2f2; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ---- RTL / Arabic overrides ---- */
+/* RTL overrides for article.ar.html; appended after article.css. Same black-and-white design. */
+:root {
+  --arabic: "IBM Plex Sans Arabic", "Noto Naskh Arabic", "Geeza Pro", Tahoma, sans-serif;
+  --serif: var(--arabic);
+  --sans: var(--arabic);
+}
+body { text-align: start; line-height: 1.85; font-size: 18px; }
+@media (max-width: 600px) { body { font-size: 17.5px; } }
+[dir="ltr"] { unicode-bidi: isolate; }
+code { direction: ltr; unicode-bidi: isolate; }
+
+/* No italics, letter-spacing or caps on Arabic */
+em, h3, .status, .affil { font-style: normal; }
+em { font-weight: 600; }
+h1 { letter-spacing: 0; line-height: 1.4; }
+.dateline, .toc .toc-h, .abstract h2, .callout-label { letter-spacing: 0; text-transform: none; }
+.toc .toc-h, .callout-label, .abstract h2 { font-size: 0.85rem; }
+figure.table figcaption { font-variant: normal; letter-spacing: 0; }
+.tlabel { letter-spacing: 0; }
+
+/* Language switch and English subtitle */
+.lang-switch { margin: 0 0 1rem; font-family: var(--sans); font-size: 0.9rem; }
+.subtitle {
+  margin: -0.6rem 0 1.25rem; text-align: right; color: var(--ink-2);
+  font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 1rem; line-height: 1.45;
+}
+
+/* Skip link: hidden without pushing content off to the scrollable side */
+.skip { left: auto; right: 0; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus { right: 16px; width: auto; height: auto; clip-path: none; }
+
+/* Mirror lists, numbers and tables */
+ul, ol { padding-left: 0; padding-right: 1.5rem; }
+h2 .num, h3 .num { margin-right: 0; margin-left: 0.15em; }
+.toc .num { text-align: right; padding-left: 0.4em; }
+th, td { text-align: right; }
+td.n, th.n { text-align: left; }
+td:first-child, th:first-child { padding-left: 0.6rem; padding-right: 0.4rem; }
+td:last-child, th:last-child { padding-right: 0.6rem; padding-left: 0.4rem; }
+.table-note, figure.fig figcaption { line-height: 1.7; }
+@media (max-width: 640px) {
+  figure.decks td, figure.decks td.n { text-align: right; }
+}
+
+/* References stay English, left to right */
+ol.refs { padding: 0; text-align: left; font-family: Georgia, "Times New Roman", serif; }
+
+</style>
+</head>
+<body>
+<a class="skip" href="#sec-1">روح للمقال</a>
+<article>
+  <header class="masthead">
+    <p class="lang-switch"><a href="article.html" lang="en" dir="ltr" hreflang="en"><span dir="ltr">English</span></a></p>
+    <h1><span dir="ltr">LLM agents</span> على الـ <span dir="ltr">cloud</span> ولا على جهازك؟ تحضير <span dir="ltr">slides</span> محاضرة بـ <span dir="ltr">Agent Skill</span>: دراسة أولية للتكلفة والوقت والجودة</h1>
+    <p class="subtitle" lang="en" dir="ltr"><span dir="ltr">Cloud vs</span>. <span dir="ltr">Local LLM Agents for Generating Lecture Slides with an Agent Skill: A Preliminary Cost–Time–Quality Study</span></p>
+    <p class="byline"><span class="author">هشام أبو العلا</span><br><span class="affil"><em><span dir="ltr">Cellular Systems Engineer</span> | الآراء دي آرائي الشخصية</em></span></p>
+    <p class="dateline"><time datetime="2026-10">أكتوبر 2026</time></p>
+    <p class="status">دراسة أولية: مؤشرات بدرية من <span dir="ltr">runs</span> فردية</p>
+    <nav class="toc" aria-label="المحتويات">
+      <h2 class="toc-h">المحتويات</h2>
+      <ol>
+        <li><span class="num"></span><a href="#abstract">الملخص</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">I</span>.</span><a href="#sec-1">المقدمة</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">II</span>.</span><a href="#sec-2">الشغل السابق</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">III</span>.</span><a href="#sec-3">تصميم الدراسة وحدودها</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">IV</span>.</span><a href="#sec-4">النتايج</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">V</span>.</span><a href="#sec-5">تجربة: <span dir="ltr">plan</span> واحدة مشتركة تساعد الـ <span dir="ltr">models</span> المحلية</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">VI</span>.</span><a href="#sec-6">مناقشة</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">VII</span>.</span><a href="#sec-7">تنويه وحدود الدراسة</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">VIII</span>.</span><a href="#sec-8">الخلاصة</a></li>
+        <li><span class="num" dir="ltr"><span dir="ltr">IX</span>.</span><a href="#sec-9">الشغل الجاي والاختبارات المخططة</a></li>
+        <li><span class="num"></span><a href="#artifacts">الـ <span dir="ltr">Artifacts</span> وإزاي تعيد التجربة</a></li>
+        <li><span class="num"></span><a href="#appendix">ملحق <span dir="ltr">A</span>. مواصفات الجهاز</a></li>
+        <li><span class="num"></span><a href="#references">المراجع</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <section id="abstract" class="abstract" aria-labelledby="abstract-h">
+    <h2 id="abstract-h">الملخص</h2>
+    <p class="lead">الـ <span dir="ltr">coding agents</span> بقت تقدر تبني <span dir="ltr">deck</span> كامل لوحدها لو مشيت ورا <span dir="ltr">Agent Skill</span> جاهزة. السؤال هنا: إيه الفرق بين الـ <span dir="ltr">cloud models</span> والـ <span dir="ltr">models</span> المحلية في الشغلانة دي، من ناحية الوقت والتكلفة والجودة؟ إدّينا تلات <span dir="ltr">cloud models</span> (<span dir="ltr">Opus 5.5</span>، <span dir="ltr">Sonnet 5.5</span>، <span dir="ltr">Haiku 5.5</span>) و<span dir="ltr">model</span> محلي واحد (<span dir="ltr">qwen3.8 27B</span>، شغّال عن طريق <span dir="ltr">Ollama</span> على <span dir="ltr">Mac Studio</span> بـ <span dir="ltr">Apple M4 Max</span>) نفس الطلب، مرة واحدة ومن غير أسئلة: حوّل <span dir="ltr">module</span> من كورس لـ <span dir="ltr">deck</span> محاضرة مدتها 50 دقيقة، فيه <span dir="ltr">20–30 slide</span>، باستخدام الـ <span dir="ltr">skill</span> اللي اسمها <span dir="ltr">present‑in‑html</span> في <span dir="ltr">Claude Code</span>. جرّبنا على مادتين (<span dir="ltr">Wireless 101</span> و<span dir="ltr">STATS 101</span>). الـ <span dir="ltr">decks</span> اتقيّمت بالـ <span dir="ltr">checker</span> بتاع الـ <span dir="ltr">skill</span>، وبعدّ عناصرها، وبـ <span dir="ltr">LLM judge blind</span> (مش عارف مين عمل الـ <span dir="ltr">deck</span>) على سبعة معايير. الـ <span dir="ltr">runs</span> الستة على الـ <span dir="ltr">cloud</span> خلصت كلها في <span dir="ltr">5.4–11.7</span> دقيقة؛ <span dir="ltr">Opus</span> و<span dir="ltr">Sonnet</span> خدوا <span dir="ltr">9/10</span> في المادتين، و<span dir="ltr">Haiku</span> خد <span dir="ltr">7/10</span>. الـ <span dir="ltr">dense model</span> المحلي ما خلّصش ولا مادة في 120 دقيقة. وفي تجربة منفصلة، مش داخلة في المقارنة دي، <span dir="ltr">Opus</span> كتب <span dir="ltr">plan</span> واحدة مفصّلة وتلات <span dir="ltr">models</span> محلية بنوا منها؛ واحد منهم، الـ <span dir="ltr">mixture‑of‑experts model</span> اللي اسمه <span dir="ltr">qwen3.6 35B‑A3B</span>، خلّص <span dir="ltr">deck</span> الـ <span dir="ltr">judge</span> إدّاله <span dir="ltr">9/10</span>. كل خانة هنا <span dir="ltr">run</span> واحد بس، فدي مؤشرات أولية، مش نتايج نهائية.</p>
+    <p class="index-terms"><strong>الكلمات المفتاحية</strong>: <span dir="ltr">large language models</span>، <span dir="ltr">LLM agents</span>، <span dir="ltr">Agent Skills</span>، توليد الـ <span dir="ltr">slides</span>، الـ <span dir="ltr">inference</span> المحلي، <span dir="ltr">mixture of experts</span>، <span dir="ltr">LLM‑as‑a‑judge</span>، الموازنة بين التكلفة والجودة.</p>
+  </section>
+
+<section id="sec-1" aria-labelledby="sec-1-h">
+<h2 id="sec-1-h"><span class="num" dir="ltr"><span dir="ltr">I</span>.</span> المقدمة</h2>
+<p>تحضير <span dir="ltr">deck</span> محاضرة من <span dir="ltr">module</span> في كورس شغل بطيء ومتكرر. أدوات الـ <span dir="ltr">agentic coding</span> زي <span dir="ltr">Claude Code</span> بقت تقدر في <span dir="ltr">session</span> واحدة تقرا ملف المصدر، وتنده <span dir="ltr">tools</span>، وتكتب <span dir="ltr">HTML</span>، وتشغّل <span dir="ltr">checker</span>، وهي ماشية ورا <span dir="ltr">Agent Skill</span> جاهزة <a class="cite" href="#ref-16">[16]</a>. والسؤال اللي يهم محاضر أو فريق صغير سؤال عملي: أنهي <span dir="ltr">model</span> المفروض يشغّل الـ <span dir="ltr">agent</span> ده؟ وهل الـ <span dir="ltr">model</span> اللي على جهازك كويس كفاية؟</p>
+<p>الـ <span dir="ltr">cloud models</span> سريعة، بس بتدفع على كل <span dir="ltr">token</span>. الـ <span dir="ltr">models</span> المحلية مفيهاش فلوس على الـ <span dir="ltr">token</span>، والمادة بتفضل على جهازك، بس هي أصغر وشغالة على <span dir="ltr">hardware</span> عادي زي اللي عند أي مستخدم. الـ <span dir="ltr">agent benchmarks</span> اللي اتعملت قبل كده بتقول إن فيه فجوة واضحة بين الـ <span dir="ltr">models</span> التجارية والـ <span dir="ltr">open‑weight models</span> في استخدام الـ <span dir="ltr">tools</span> على كذا <span dir="ltr">turn</span> <a class="cite" href="#ref-5">[5]</a>. وإحنا كنا عايزين نشوف الفجوة دي شكلها إيه في مهمة كتابة واحدة حقيقية، من أولها لآخرها.</p>
+<p>الورقة دي بتعرض دراسة صغيرة بتشغّل نفس الـ <span dir="ltr">skill</span> ونفس الـ <span dir="ltr">harness</span> ونفس الـ <span dir="ltr">prompt</span> على أربع <span dir="ltr">models</span> (تلاتة <span dir="ltr">cloud</span> وواحد محلي)، وبتقيس الـ <span dir="ltr">wall‑clock time</span> والتكلفة والجودة حسب تقييم الـ <span dir="ltr">judge</span>. وبتعرض كمان تجربة منفصلة الـ <span dir="ltr">models</span> المحلية فيها بتبني من <span dir="ltr">plan</span> كتبها <span dir="ltr">cloud model</span>. اللي الورقة بتضيفه:</p>
+<ul>
+<li><span dir="ltr">harness</span> تقدر تعيد بيه التجربة، بيشغّل <span dir="ltr">Claude Code</span> ‏<span dir="ltr">headless</span> <a class="cite" href="#ref-15">[15]</a> بالـ <span dir="ltr">cloud models</span>، وبالـ <span dir="ltr">models</span> المحلية عن طريق الـ <span dir="ltr">endpoint</span> بتاع <span dir="ltr">Ollama</span> المتوافق مع <span dir="ltr">Anthropic</span> <a class="cite" href="#ref-14">[14]</a>، وكل <span dir="ltr">run</span> في <span dir="ltr">folder</span> معزول.</li>
+<li>طريقة تقييم من تلات أجزاء: الـ <span dir="ltr">checker</span> التلقائي بتاع الـ <span dir="ltr">skill</span>، وعدّ لعناصر الـ <span dir="ltr">deck</span>، و<span dir="ltr">LLM judge blind</span> بـ <span dir="ltr">rubric</span> من سبعة معايير وقايمة ملاحظات بالتفصيل.</li>
+<li>نتايج لمادتين، وكمان تجربة منفصلة تلات <span dir="ltr">models</span> محلية فيها بتبني من <span dir="ltr">plan</span> واحدة كتبها <span dir="ltr">Opus</span>، ومعاها كل الـ <span dir="ltr">prompts</span>، والـ <span dir="ltr">plan</span>، والـ <span dir="ltr">transcripts</span>، ومخرجات الـ <span dir="ltr">judge</span>، والـ <span dir="ltr">decks</span> منشورة.</li>
+<li>ملاحظات على الـ <span dir="ltr">skill</span> نفسها، منها ثغرة في الـ <span dir="ltr">checker</span> بتخلّي <span dir="ltr">template</span> محدش ملاه يعدّي.</li>
+</ul>
+<p>باختصار، النتايج بتقول إن <span dir="ltr">Sonnet 5.5</span> جاب نفس جودة <span dir="ltr">Opus 5.5</span> عند الـ <span dir="ltr">judge</span> في حوالي نص الوقت، وبربع لتلت التكلفة، وإن الـ <span dir="ltr">dense model</span> المحلي كان أبطأ من إنه يخلّص لوحده. والتجربة المنفصلة (القسم <span dir="ltr">V</span>) بتقول إن <span dir="ltr">plan</span> يكتبها <span dir="ltr">model</span> قوي ممكن تخلّي الـ <span dir="ltr">build</span> المحلي يمشي.</p>
+</section>
+<section id="sec-2" aria-labelledby="sec-2-h">
+<h2 id="sec-2-h"><span class="num" dir="ltr"><span dir="ltr">II</span>.</span> الشغل السابق</h2>
+<p><strong>توليد الـ <span dir="ltr">slides</span>.</strong> <span dir="ltr">DOC2PPT</span> قدّم تحويل الـ <span dir="ltr">document</span> لـ <span dir="ltr">slides</span> كمهمة لوحدها <a class="cite" href="#ref-8">[8]</a>. <span dir="ltr">PPTAgent</span> بيعمل <span dir="ltr">presentations</span> بـ <span dir="ltr">agent</span> بيعدّل <span dir="ltr">slides</span> مرجعية، وبيقيّمها بـ <span dir="ltr">rubric</span> معتمد على <span dir="ltr">LLM</span> بيغطي المحتوى والتصميم والترابط <a class="cite" href="#ref-9">[9]</a>. <span dir="ltr">AutoPresent</span> بيعمل الـ <span dir="ltr">slides</span> على شكل برامج، وبيعمل <span dir="ltr">benchmark</span> لـ <span dir="ltr">open models</span> صغيرة قصاد الـ <span dir="ltr">frontier models</span> <a class="cite" href="#ref-10">[10]</a>. الوضع عندنا أقرب حاجة لـ <span dir="ltr">AutoPresent</span>: الـ <span dir="ltr">deck</span> عبارة عن <span dir="ltr">code</span> (ملف <span dir="ltr">HTML</span> واحد)، بس اللي بيعمله <span dir="ltr">coding agent</span> عام ماشي ورا <span dir="ltr">skill</span>، مش <span dir="ltr">model</span> معمول مخصوص للمهمة.</p>
+<p><strong>الـ <span dir="ltr">agents</span> والـ <span dir="ltr">benchmarks</span>.</strong> <span dir="ltr">ReAct</span> بيوصف الـ <span dir="ltr">loop</span> اللي أي <span dir="ltr">agent</span> بيستخدم <span dir="ltr">tools</span> بيمشي عليه: يفكّر، ويعمل <span dir="ltr">action</span>، ويشوف النتيجة، ويعيد <a class="cite" href="#ref-6">[6]</a>. <span dir="ltr">SWE‑bench</span> بيقيّم الـ <span dir="ltr">agents</span> على مهام <span dir="ltr">software</span> طويلة وفيها خطوات كتير <a class="cite" href="#ref-4">[4]</a>، و<span dir="ltr">AgentBench</span> بيقول إن الـ <span dir="ltr">API models</span> سابقة الـ <span dir="ltr">open‑weight models</span> في الشغل الـ <span dir="ltr">agentic</span> <a class="cite" href="#ref-5">[5]</a>. الـ <span dir="ltr">Agent Skills</span> بتجمع تعليمات و<span dir="ltr">scripts</span> و<span dir="ltr">resources</span> الـ <span dir="ltr">agent</span> بيحمّلها وقت ما يحتاجها <a class="cite" href="#ref-16">[16]</a>؛ والمهمة بتاعتنا بتختبر <span dir="ltr">skill</span> واحدة من دول من الأول للآخر.</p>
+<p><strong><span dir="ltr">LLM‑as‑a‑judge</span>.</strong> الـ <span dir="ltr">LLM judges</span> القوية بتتفق كويس مع تفضيلات البشر، بس عندها <span dir="ltr">biases</span>: بتتأثر بترتيب الإجابات، وبتميل للإجابات الأطول، ولإجاباتها هي <a class="cite" href="#ref-1">[1]</a>. <span dir="ltr">G‑Eval</span> بيقيّم النص على معايير صريحة باستخدام <span dir="ltr">LLM</span>، وبيلاحظ إن ممكن يكون فيه ميل للنص اللي كاتبه <span dir="ltr">LLM</span> <a class="cite" href="#ref-3">[3]</a>. والـ <span dir="ltr">LLM evaluators</span> ممكن تعرف الكلام اللي هي كاتباه وتفضّله <a class="cite" href="#ref-2">[2]</a>، وده مهم هنا لأن الـ <span dir="ltr">judge</span> بتاعنا داخل المنافسة هو كمان. ومعيار الدقة عندنا معتمد على مفهومي الـ <span dir="ltr">faithfulness</span> والـ <span dir="ltr">factual hallucination</span> زي ما الـ <span dir="ltr">survey</span> في <a class="cite" href="#ref-11">[11]</a> بيشرحهم.</p>
+<p><strong>خطّط ونفّذ.</strong> <span dir="ltr">ReWOO</span> بيفصل الـ <span dir="ltr">planner</span> عن الـ <span dir="ltr">workers</span>، وبيوري إن قدرة التخطيط ممكن تتنقل من <span dir="ltr">model</span> كبير لـ <span dir="ltr">model</span> أصغر <a class="cite" href="#ref-7">[7]</a>. وتجربة الـ <span dir="ltr">plan</span> المنفصلة عندنا (القسم <span dir="ltr">V</span>) ماشية على نفس التقسيمة: <span dir="ltr">cloud model</span> بيخطط مرة واحدة، والـ <span dir="ltr">models</span> المحلية بتنفّذ.</p>
+<p><strong>الـ <span dir="ltr">inference</span> المحلي والـ <span dir="ltr">MoE</span>.</strong> الـ <span dir="ltr">sparse mixture‑of‑experts models</span> بتشغّل جزء بس من الـ <span dir="ltr">parameters</span> لكل <span dir="ltr">token</span> <a class="cite" href="#ref-12">[12]</a>، وده بيقلل الحسابات لكل <span dir="ltr">token</span> مقارنة بـ <span dir="ltr">dense model</span> حجمه الكلي قريب منه. اتنين من الـ <span dir="ltr">models</span> المحلية في الدراسة دي شغالين بصيغة <span dir="ltr">MLX</span> على <span dir="ltr">Apple silicon</span> <a class="cite" href="#ref-13">[13]</a>، والتالت، الـ <span dir="ltr">MoE model</span>، عبارة عن <span dir="ltr">build</span> من نوع <span dir="ltr">Q4_K_M GGUF</span> (ملحق <span dir="ltr">A</span>)؛ وكلهم شغالين على <span dir="ltr">Ollama</span>، اللي بيدعم جزء بس من الـ <span dir="ltr">Anthropic Messages API</span> <a class="cite" href="#ref-14">[14]</a>.</p>
+</section>
+<section id="sec-3" aria-labelledby="sec-3-h">
+<h2 id="sec-3-h"><span class="num" dir="ltr"><span dir="ltr">III</span>.</span> تصميم الدراسة وحدودها</h2>
+<h3 id="sec-3a"><span class="num" dir="ltr"><span dir="ltr">A</span>.</span> المهمة والمدخلات</h3>
+<p>كل مهمة فيها <span dir="ltr">module</span> كورس واحد بصيغة <span dir="ltr">Markdown</span> و<span dir="ltr">prompt</span> ثابت واحد. المادتين هما <span dir="ltr">Module 1</span> من <em><span dir="ltr">Wireless 101</span></em> (الموجات، والـ <span dir="ltr">decibels</span>، والـ <span dir="ltr">path loss</span>، والـ <span dir="ltr">link budget</span>، والـ <span dir="ltr">modulation</span>، و<span dir="ltr">Shannon</span>، والـ <span dir="ltr">multiple access</span>) و<span dir="ltr">Module 1</span> من <em><span dir="ltr">STATS 101</span></em> (العينات، والانحياز، وأنواع المتغيرات، والرسوم البيانية، والنزعة المركزية، والتشتت، والقيم الشاذة، والـ <span dir="ltr">z‑scores</span>، والارتباط). الاتنين بيطلبوا <span dir="ltr">deck</span> لمحاضرة مدتها 50 دقيقة لطلبة سنة أولى جامعة، بالشروط دي: <span dir="ltr">20–30 slide</span> بنفس ترتيب الـ <span dir="ltr">module</span>؛ الحقايق والأرقام والمعادلات اللي في الملف بس؛ <span dir="ltr">diagrams</span> متحركة لما تفيد؛ <span dir="ltr">placeholders</span> للصور عليها <span dir="ltr">captions</span>؛ <span dir="ltr">speaker notes</span> على كل <span dir="ltr">slide</span>؛ <span dir="ltr">quiz</span> و<span dir="ltr">summary</span> في الآخر؛ احفظه باسم <code dir="ltr">deck.html</code> وشغّل الـ <span dir="ltr">checker</span> بتاع الـ <span dir="ltr">skill</span> لحد ما يعدّي؛ ما تسألش ولا سؤال وخلّص مرة واحدة.</p>
+<p>الفرق بين الـ <span dir="ltr">prompts</span> هو طريقة استدعاء الـ <span dir="ltr">skill</span>. الـ <span dir="ltr">prompt</span> بتاع <span dir="ltr">Wireless</span> بيبدأ بـ «<span dir="ltr">Use the present‑in‑html skill to…</span>»، فكل <span dir="ltr">model</span> قرر بنفسه إنه ينده الـ <span dir="ltr">skill</span>. أما الـ <span dir="ltr">prompts</span> بتوع <span dir="ltr">STATS</span> فبتبدأ بالـ <span dir="ltr">slash command</span> ‏<code dir="ltr">/present-in-html:present-in-html</code>، اللي بيحمّل الـ <span dir="ltr">skill</span> قبل أول <span dir="ltr">turn</span>.</p>
+<h3 id="sec-3b"><span class="num" dir="ltr"><span dir="ltr">B</span>.</span> الـ <span dir="ltr">models</span> والـ <span dir="ltr">hardware</span></h3>
+<p>الجدول <span dir="ltr">I</span> فيه الـ <span dir="ltr">models</span>. الـ <span dir="ltr">cloud models</span> اشتغلت عن طريق الـ <span dir="ltr">Anthropic API</span>؛ والـ <span dir="ltr">models</span> المحلية اشتغلت على <span dir="ltr">Mac Studio</span> واحد <span dir="ltr">(Apple M4 Max)</span> فيه <span dir="ltr">64 GB unified memory</span>، عن طريق <span dir="ltr">Ollama 0.40.5</span>، و<span dir="ltr">Claude Code</span> متوجّه للـ <span dir="ltr">endpoint</span> بتاع <span dir="ltr">Ollama</span> المتوافق مع <span dir="ltr">Anthropic</span> <a class="cite" href="#ref-14">[14]</a>. كل الـ <span dir="ltr">runs</span> استخدمت الـ <span dir="ltr">plugin</span> ‏<span dir="ltr">present‑in‑html</span> نسخة 3.1.0 على الـ <span dir="ltr">commit</span> ‏<span dir="ltr">ae03c20</span>. المواصفات الكاملة للجهاز، ومعاها الـ <span dir="ltr">architecture</span> والـ <span dir="ltr">quantization</span> بتوع كل <span dir="ltr">model</span> محلي، موجودة في ملحق <span dir="ltr">A</span> <a class="cite" href="#ref-19">[19]</a>.</p>
+<figure class="table" id="table-i">
+<figcaption><span class="tlabel">جدول <span dir="ltr">I</span></span><span class="tcap">الـ <span dir="ltr">models</span> وكانت شغالة فين</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول I: الـ models وكانت شغالة فين"><table>
+<thead><tr><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col">الـ <span dir="ltr">identifier</span></th><th scope="col">شغال على</th><th scope="col">المهام</th></tr></thead><tbody>
+<tr><td><span dir="ltr">Opus 5.5</span></td><td><code dir="ltr">claude-opus-5-5</code></td><td><span dir="ltr">Anthropic API</span></td><td><span dir="ltr">Wireless 101</span>، <span dir="ltr">STATS 101</span>؛ وكمان الـ <span dir="ltr">judge</span>، والـ <span dir="ltr">planner</span> في تجربة الـ <span dir="ltr">plan</span></td></tr>
+<tr><td><span dir="ltr">Sonnet 5.5</span></td><td><code dir="ltr">claude-sonnet-5-5</code></td><td><span dir="ltr">Anthropic API</span></td><td><span dir="ltr">Wireless 101</span>، <span dir="ltr">STATS 101</span></td></tr>
+<tr><td><span dir="ltr">Haiku 5.5</span></td><td><code dir="ltr">claude-haiku-5-5</code></td><td><span dir="ltr">Anthropic API</span></td><td><span dir="ltr">Wireless 101</span>، <span dir="ltr">STATS 101</span></td></tr>
+<tr><td><span dir="ltr">qwen3.8 27B (dense)</span></td><td><code dir="ltr">qwen3.8:27b-mlx</code></td><td><span dir="ltr">Apple M4 Max, 64 GB, Ollama 0.40.5</span></td><td><span dir="ltr">Wireless 101</span>، <span dir="ltr">STATS 101</span>؛ وكمان تجربة الـ <span dir="ltr">plan</span></td></tr>
+<tr><td><span dir="ltr">qwen3.6 35B‑A3B (MoE, 3B active)</span></td><td><code dir="ltr">qwen3.6:35b-a3b</code></td><td><span dir="ltr">Apple M4 Max, 64 GB, Ollama 0.40.5</span></td><td>تجربة الـ <span dir="ltr">plan</span> بس</td></tr>
+<tr><td><span dir="ltr">gemma4 26B</span></td><td><code dir="ltr">gemma4:26b-mlx</code></td><td><span dir="ltr">Apple M4 Max, 64 GB, Ollama 0.40.5</span></td><td>تجربة الـ <span dir="ltr">plan</span> بس</td></tr>
+</tbody></table></div>
+</figure>
+<figure class="table" id="table-ii">
+<figcaption><span class="tlabel">جدول <span dir="ltr">II</span></span><span class="tcap">إعدادات الـ <span dir="ltr">run</span> لكل مهمة</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول II: إعدادات الـ run لكل مهمة"><table>
+<thead><tr><th scope="col">المهمة</th><th scope="col">الـ <span dir="ltr">Run ID</span></th><th scope="col" class="n"><span dir="ltr">Claude Code</span></th><th scope="col">حد الوقت</th><th scope="col">سقف الميزانية على الـ <span dir="ltr">cloud</span></th></tr></thead><tbody>
+<tr><td><span dir="ltr">Wireless 101</span></td><td>20261016-000644</td><td class="n">2.1.301</td><td><span dir="ltr">120 min</span></td><td><span dir="ltr">$20</span> لكل <span dir="ltr">run</span></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">20261016-063639-stats-101</span></td><td class="n">2.1.301</td><td><span dir="ltr">120 min</span></td><td><span dir="ltr">$20</span> لكل <span dir="ltr">run</span></td></tr>
+<tr><td><span dir="ltr">STATS 101 + plan</span> (تجربة الـ <span dir="ltr">plan</span>، القسم <span dir="ltr">V</span>)</td><td><span dir="ltr">20261016-214018-stats-101-planned</span></td><td class="n">2.1.302</td><td><span dir="ltr">240 min</span></td><td><span dir="ltr">$20</span> لكل <span dir="ltr">run</span></td></tr>
+</tbody></table></div>
+</figure>
+<h3 id="sec-3c"><span class="num" dir="ltr"><span dir="ltr">C</span>.</span> الـ <span dir="ltr">harness</span> والعزل</h3>
+<p>كل <span dir="ltr">run</span> بيبدأ في <span dir="ltr">folder</span> جديد فاضي متعمل برّه الـ <span dir="ltr">repository</span>، مفيهوش غير ملف الـ <span dir="ltr">module</span> (ومعاه الـ <span dir="ltr">plan</span> في المهمة اللي فيها <span dir="ltr">plan</span>). الـ <span dir="ltr">folder</span> برّه الـ <span dir="ltr">repository</span> لأن <span dir="ltr">Claude Code</span> بيقرا <code dir="ltr">CLAUDE.md</code> من الـ <span dir="ltr">folders</span> اللي فوقه؛ والـ <span dir="ltr">script</span> بيرفض يبدأ لو أي <span dir="ltr">folder</span> فوقه فيه <code dir="ltr">CLAUDE.md</code> أو <code dir="ltr">.claude</code>. الـ <span dir="ltr">CLI</span> بيشتغل <span dir="ltr">headless</span> <a class="cite" href="#ref-15">[15]</a> من غير أي <span dir="ltr">settings files</span> ‏(<code dir="ltr">--setting-sources ""</code>)، ومن غير أي <span dir="ltr">plugins</span> غير <span dir="ltr">plugin</span> الدراسة (<code dir="ltr">--plugin-dir</code>) والتلات <span dir="ltr">plugins</span> اللي جايين <span dir="ltr">built‑in</span> مع الـ <span dir="ltr">CLI</span>، ومن غير <span dir="ltr">MCP servers</span> ولا <span dir="ltr">claude.ai connectors</span> ‏(<code dir="ltr">--strict-mcp-config</code>)، ومن غير <span dir="ltr">session</span> محفوظة، والـ <span dir="ltr">permissions</span> متخطّية <span dir="ltr">(bypassed)</span>، وكل <span dir="ltr">model</span> على الـ <span dir="ltr">effort</span> الـ <span dir="ltr">default</span> بتاعه.</p>
+<p>الـ <span dir="ltr">runs</span> بتشتغل واحد ورا التاني عشان ما يتنافسوش على الـ <span dir="ltr">CPU</span> أو الـ <span dir="ltr">GPU</span> أو الشبكة. كل <span dir="ltr">model</span> محلي بيتحمّل في الذاكرة قبل ما الساعة تبدأ، فوقت التحميل مش محسوب. والـ <code dir="ltr">init</code> <span dir="ltr">event</span> بتاع الـ <span dir="ltr">CLI</span> بيتحفظ في كل <span dir="ltr">transcript</span>، فتقدر تتأكد بعدين من الـ <span dir="ltr">plugins</span> والـ <span dir="ltr">MCP servers</span> اللي اتحمّلت.</p>
+<h3 id="sec-3d"><span class="num" dir="ltr"><span dir="ltr">D</span>.</span> تجربة الـ <span dir="ltr">plan</span> (بنعرضها لوحدها)</h3>
+<p>بعيد عن المقارنة الأساسية، عملنا تجربة عشان نساعد الـ <span dir="ltr">models</span> المحلية تخلّص؛ بنعرضها في القسم <span dir="ltr">V</span>، ومش جزء من المقارنة. في المهمة دي اللي فيها <span dir="ltr">plan</span>، <span dir="ltr">Opus 5.5</span> كتب الأول ملف <code dir="ltr">PLAN.md</code> واحد بـ <span dir="ltr">prompt</span> للتخطيط بس. الـ <span dir="ltr">prompt</span> ده بيطلب النص بالظبط لكل <span dir="ltr">slide</span> والـ <span dir="ltr">speaker notes</span> كاملة، و<span dir="ltr">SVG</span> جاهز للصق لكل <span dir="ltr">diagram</span>، وخطوات <span dir="ltr">build</span> مترقّمة فيها أوامر الـ <span dir="ltr">shell</span>، لأن الـ <span dir="ltr">plan</span> «هتتبني … بـ <span dir="ltr">model</span> محلي أصغر وأبطأ بكتير، عمره ما استخدم الـ <span dir="ltr">skill</span> دي». التخطيط خد <span dir="ltr">23m 20s</span> و<span dir="ltr">51 turn</span> و<span dir="ltr">101,973 output token</span>، وكلّف <span dir="ltr">$5.05</span> ‏<span dir="ltr">($5.046)</span>، وطلّع <span dir="ltr">plan</span> حجمها <span dir="ltr">94 KB</span>.</p>
+<p>الـ <span dir="ltr">plan</span> اتعدّلت بالإيد في مكانين قبل الـ <span dir="ltr">builds</span>: متغيّر الـ <span dir="ltr">folder</span> اللي اسمه <code dir="ltr">D</code> اتظبط على <code dir="ltr">$PWD</code> (كان شايل الـ <span dir="ltr">temp folder</span> بتاع الـ <span dir="ltr">planner</span>)، وملف الـ <span dir="ltr">deck</span> اتغيّر اسمه لـ <code dir="ltr">deck.html</code> عشان يطابق الـ <span dir="ltr">build prompt</span>. بعد كده كل <span dir="ltr">model</span> محلي خد الـ <span dir="ltr">build prompt</span>، اللي بيقوله يمشي ورا خطوات الـ <span dir="ltr">build</span> اللي في الـ <span dir="ltr">plan</span>، وما يعملش <span dir="ltr">plan</span> من جديد، وما يقراش الـ <span dir="ltr">reference files</span> بتاعة الـ <span dir="ltr">skill</span> إلا لو خطوة طلبت كده.</p>
+<h3 id="sec-3e"><span class="num" dir="ltr"><span dir="ltr">E</span>.</span> التقييم</h3>
+<p>كل <span dir="ltr">deck</span> بيتقيّم بتلات طرق. الأولى: الـ <span dir="ltr">checker</span> بتاع الـ <span dir="ltr">skill</span> ‏(<code dir="ltr">check.mjs</code>) بيختبر الـ <span dir="ltr">layout</span>، والنص اللي خارج الـ <span dir="ltr">safe area</span>، وحجم الخط، والـ <span dir="ltr">contrast</span>، والـ <span dir="ltr">charts</span> البايظة، والـ <span dir="ltr">notes</span> الناقصة، وبياخد <span dir="ltr">screenshot</span> لكل <span dir="ltr">slide</span>. التانية: <span dir="ltr">script</span> عدّ بيسجّل عدد الـ <span dir="ltr">slides</span>، والـ <span dir="ltr">slides</span> اللي ليها <span dir="ltr">notes</span>، والـ <span dir="ltr">diagrams</span>، والـ <span dir="ltr">slides</span> المتحركة، والـ <span dir="ltr">image placeholders</span>، وهل فيه <span dir="ltr">quiz</span> ولا لأ.</p>
+<p>التالتة: <span dir="ltr">judge blind</span> ‏(<span dir="ltr">Opus 5.5</span>، <code dir="ltr">claude-opus-5-5</code>) بيقيّم كل <span dir="ltr">deck</span> لوحده من غير ما يعرف أنهي <span dir="ltr">model</span> عمله، على طريقة الـ <span dir="ltr">rubric‑based LLM evaluation</span> <a class="cite" href="#ref-1">[1]</a>، <a class="cite" href="#ref-3">[3]</a>. بيقرا المصدر، والطلب، ونص الـ <span dir="ltr">slides</span> والـ <span dir="ltr">notes</span>، ومخرجات الـ <span dir="ltr">checker</span>، وكل <span dir="ltr">screenshot</span>. وبيرجّع <span dir="ltr">structured output</span> <a class="cite" href="#ref-15">[15]</a> فيه كل <span dir="ltr">claim</span> غلط (الـ <span dir="ltr">slide</span>، والجملة، والتصحيح، <span dir="ltr">major/minor</span>)، وكل <span dir="ltr">claim</span> مش موجود في المصدر وهل هو صح ولا لأ، وكل مشكلة <span dir="ltr">UI</span> باينة في الـ <span dir="ltr">screenshots</span>، والأخطاء الكبيرة. وبيقيّم سبعة معايير، كل واحد من 1 لـ 5: الدقة، والتغطية، والتدريس، والشكل، والـ <span dir="ltr">diagrams</span>، والـ <span dir="ltr">notes</span>، والالتزام بالمطلوب. وبعدين بيدّي درجة إجمالية من 1 لـ 10 على سؤال: «الـ <span dir="ltr">deck</span> ده جاهز قد إيه إني أدرّس منه بكرة؟»</p>
+<p>الوقت هو الـ <span dir="ltr">wall‑clock time</span> للـ <span dir="ltr">run</span> كله؛ والـ <span dir="ltr">API time</span> هو الوقت اللي راح في انتظار الـ <span dir="ltr">model</span>. التكلفة هي الـ <code dir="ltr">total_cost_usd</code> اللي الـ <span dir="ltr">CLI</span> بيطلّعها، واللي الـ <span dir="ltr">documentation</span> بتوصفها إنها تقدير من ناحية الـ <span dir="ltr">client</span> <a class="cite" href="#ref-15">[15]</a>. الـ <span dir="ltr">CLI</span> بيطبع سعر للـ <span dir="ltr">runs</span> المحلية كمان، بس ده مش فلوس حقيقية بتتدفع؛ فإحنا بنسجّل الـ <span dir="ltr">runs</span> المحلية بـ <span dir="ltr">$0</span> ومش بنحسب الكهربا. وتكلفة الـ <span dir="ltr">judge</span> ‏(<span dir="ltr">$0.61–$0.74</span> لكل <span dir="ltr">deck</span> خلص) محسوبة لوحدها.</p>
+<h3 id="sec-3f"><span class="num" dir="ltr"><span dir="ltr">F</span>.</span> القيود والحاجات اللي ممكن تأثر على صحة النتايج</h3>
+<ul>
+<li><strong><span dir="ltr">sample</span> واحدة لكل خانة.</strong> كل <span dir="ltr">model</span> اتشغّل مرة واحدة لكل مهمة <span dir="ltr">(n = 1)</span>. مخرجات الـ <span dir="ltr">LLMs</span> بتختلف من <span dir="ltr">run</span> للتاني حتى مع <span dir="ltr">settings</span> ثابتة <a class="cite" href="#ref-18">[18]</a>، والفروق في الدرجات اللي أصغر من الـ <span dir="ltr">variance</span> بتاع الـ <span dir="ltr">benchmark</span> ملهاش معنى <a class="cite" href="#ref-17">[17]</a>.</li>
+<li><strong>الـ <span dir="ltr">judge</span> بيفضّل نفسه.</strong> الـ <span dir="ltr">judge</span>، <span dir="ltr">Opus 5.5</span>، هو كمان واحد من الـ <span dir="ltr">models</span> اللي بنقارنها، والـ <span dir="ltr">cloud models</span> التانيين من نفس العيلة. والـ <span dir="ltr">LLM judges</span> ممكن تفضّل مخرجاتها هي <a class="cite" href="#ref-2">[2]</a>، <a class="cite" href="#ref-1">[1]</a>. والـ <span dir="ltr">blinding</span> بيخبّي اسم الـ <span dir="ltr">model</span>، بس مش بيخبّي الأسلوب.</li>
+<li><strong>التكلفة تقدير.</strong> تكاليف الـ <span dir="ltr">cloud</span> هي تقدير الـ <span dir="ltr">CLI</span> بسعر القايمة من ناحية الـ <span dir="ltr">client</span> <a class="cite" href="#ref-15">[15]</a>، مش فاتورة.</li>
+<li><strong><span dir="ltr">settings</span> مختلفة للـ <span dir="ltr">run</span> اللي فيه <span dir="ltr">plan</span>.</strong> الـ <span dir="ltr">run</span> ده استخدم <span dir="ltr">Claude Code 2.1.302</span> بحد 240 دقيقة؛ والـ <span dir="ltr">runs</span> التانية استخدمت 2.1.301 بحد 120 دقيقة. عشان كده، ولأن الـ <span dir="ltr">input</span> بتاعه مختلف، بنعرضه كتجربة منفصلة ومش بنقارنه بالـ <span dir="ltr">runs</span> الأساسية.</li>
+<li><strong><span dir="ltr">plan</span> متعدّلة بالإيد.</strong> مسارين في الـ <span dir="ltr">plan</span> بتاعة <span dir="ltr">Opus</span> اتصلّحوا بالإيد. والـ <code dir="ltr">plan-prompt.txt</code> اللي في الـ <span dir="ltr">artifacts</span> هو النسخة المعدّلة، اللي بقت بتطلب المسارين الاتنين.</li>
+<li><strong>جهاز واحد.</strong> كل النتايج المحلية جاية من <span dir="ltr">M4 Max</span> واحد فيه <span dir="ltr">64 GB</span>؛ وأي <span dir="ltr">hardware</span> تاني هيدّي أوقات مختلفة.</li>
+<li><strong><span dir="ltr">API</span> ناقص.</strong> <span dir="ltr">Ollama</span> بيدعم جزء بس من الـ <span dir="ltr">Anthropic Messages API</span> <a class="cite" href="#ref-14">[14]</a>، وده ممكن يأثر على استخدام الـ <span dir="ltr">tools</span> والـ <span dir="ltr">streaming</span> في الـ <span dir="ltr">models</span> المحلية.</li>
+<li><strong>صياغة الـ <span dir="ltr">prompt</span> والـ <span dir="ltr">rubric</span>.</strong> الـ <span dir="ltr">prompt</span> بتاع <span dir="ltr">Wireless</span> بيطلب من الـ <span dir="ltr">model</span> يستخدم الـ <span dir="ltr">skill</span>، أما الـ <span dir="ltr">prompts</span> بتوع <span dir="ltr">STATS</span> فبتحمّلها بـ <span dir="ltr">slash command</span>. والـ <span dir="ltr">run</span> بتاع <span dir="ltr">Wireless</span> اتقيّم والجمهور والمطلوب مكتوبين جوه الـ <span dir="ltr">rubric</span>؛ أما الـ <span dir="ltr">runs</span> بتوع <span dir="ltr">STATS</span> فالـ <span dir="ltr">judge</span> قرا الحاجات دي من الطلب.</li>
+</ul>
+</section>
+<section id="sec-4" aria-labelledby="sec-4-h">
+<h2 id="sec-4-h"><span class="num" dir="ltr"><span dir="ltr">IV</span>.</span> النتايج</h2>
+<p>القسم ده بيغطي المقارنة الأساسية: الـ <span dir="ltr">runs</span> التمانية على <span dir="ltr">Wireless 101</span> و<span dir="ltr">STATS 101</span>. الجدول <span dir="ltr">III</span> فيه نتايجهم. التجربة المنفصلة بتاعة القسم <span dir="ltr">V</span> مش داخلة هنا.</p>
+<figure class="table" id="table-iii">
+<figcaption><span class="tlabel">جدول <span dir="ltr">III</span></span><span class="tcap">النتايج الأساسية للمهمتين (<span dir="ltr">run</span> واحد لكل خانة)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول III: النتايج الأساسية للمهمتين (run واحد لكل خانة)"><table>
+<thead><tr><th scope="col">المهمة</th><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col">شغال على</th><th scope="col">الحالة</th><th scope="col" class="n">الـ <span dir="ltr">wall time</span></th><th scope="col" class="n">التكلفة <span dir="ltr">(USD)</span></th><th scope="col" class="n">الـ <span dir="ltr">slides</span></th><th scope="col">الـ <span dir="ltr">checker</span></th><th scope="col" class="n"><span dir="ltr">claims</span> غلط <span dir="ltr">(major)</span></th><th scope="col" class="n">مشاكل <span dir="ltr">UI</span> ‏<span dir="ltr">(major)</span></th><th scope="col">الـ <span dir="ltr">judge /10</span></th></tr></thead><tbody>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">Opus 5.5</span></td><td><span dir="ltr">cloud</span></td><td>خلص</td><td class="n"><span dir="ltr">11m 44s</span></td><td class="n">2.88</td><td class="n">30</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">2 (0)</span></td><td class="n"><span dir="ltr">4 (0)</span></td><td><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">Sonnet 5.5</span></td><td><span dir="ltr">cloud</span></td><td>خلص</td><td class="n"><span dir="ltr">5m 27s</span></td><td class="n">0.90</td><td class="n">30</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">0 (0)</span></td><td class="n"><span dir="ltr">7 (0)</span></td><td><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">Haiku 5.5</span></td><td><span dir="ltr">cloud</span></td><td>خلص</td><td class="n"><span dir="ltr">7m 05s</span></td><td class="n">0.24</td><td class="n">29</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">5 (1)</span></td><td class="n"><span dir="ltr">7 (1)</span></td><td><strong>7</strong></td></tr>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">qwen3.8 27B</span></td><td>محلي</td><td>وقته خلص</td><td class="n"><span dir="ltr">120m 00s</span></td><td class="n">0</td><td class="n">–</td><td>–</td><td class="n">–</td><td class="n">–</td><td>ما خلّصش</td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">Opus 5.5</span></td><td><span dir="ltr">cloud</span></td><td>خلص</td><td class="n"><span dir="ltr">11m 14s</span></td><td class="n">2.79</td><td class="n">30</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">1 (0)</span></td><td class="n"><span dir="ltr">4 (0)</span></td><td><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">Sonnet 5.5</span></td><td><span dir="ltr">cloud</span></td><td>خلص</td><td class="n"><span dir="ltr">5m 24s</span></td><td class="n">0.70</td><td class="n">29</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">0 (0)</span></td><td class="n"><span dir="ltr">6 (1)</span></td><td><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">Haiku 5.5</span></td><td><span dir="ltr">cloud</span></td><td>خلص</td><td class="n"><span dir="ltr">8m 44s</span></td><td class="n">0.32</td><td class="n">29</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">1 (0)</span></td><td class="n"><span dir="ltr">6 (2)</span></td><td><strong>7</strong></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">qwen3.8 27B</span></td><td>محلي</td><td>وقته خلص</td><td class="n"><span dir="ltr">120m 00s</span></td><td class="n">0</td><td class="n">–</td><td>–</td><td class="n">–</td><td class="n">–</td><td>ما خلّصش</td></tr>
+</tbody></table></div>
+<p class="table-note">التكلفة في الـ <span dir="ltr">runs</span> اللي على الـ <span dir="ltr">cloud</span> هي تقدير الـ <span dir="ltr">CLI</span> من ناحية الـ <span dir="ltr">client</span>؛ والـ <span dir="ltr">runs</span> المحلية متسجّلة بـ <span dir="ltr">$0</span> (من غير الكهربا). تكلفة الـ <span dir="ltr">judge</span> مش داخلة. وفي الـ <span dir="ltr">runs</span> الاتنين بتوع <span dir="ltr">qwen3.8 27B</span> اللي وقتهم خلص، الملف اللي فضل على الـ <span dir="ltr">disk</span> كان الـ <span dir="ltr">template</span> والـ <span dir="ltr">sample slides</span> بتاعته زي ما هي، وعدّى من الـ <span dir="ltr">checker</span>، وخد <span dir="ltr">1/10</span> (القسم <span dir="ltr">IV‑F</span>).</p>
+</figure>
+<h3 id="sec-4a"><span class="num" dir="ltr"><span dir="ltr">A</span>.</span> الوقت</h3>
+<p>الـ <span dir="ltr">runs</span> الستة على الـ <span dir="ltr">cloud</span> خلصت كلها، في وقت بين <span dir="ltr">5m 24s</span> ‏(<span dir="ltr">Sonnet</span>، <span dir="ltr">STATS</span>) و<span dir="ltr">11m 44s</span> ‏(<span dir="ltr">Opus</span>، <span dir="ltr">Wireless</span>) (شكل 1). <span dir="ltr">Sonnet</span> كان الأسرع في المادتين، بـ <span dir="ltr">5m 27s</span> و<span dir="ltr">5m 24s</span>، يعني حوالي نص الـ <span dir="ltr">11m 44s</span> والـ <span dir="ltr">11m 14s</span> بتوع <span dir="ltr">Opus</span>. و<span dir="ltr">Haiku</span> كان أبطأ من <span dir="ltr">Sonnet</span> في المادتين (<span dir="ltr">7m 05s</span> و<span dir="ltr">8m 44s</span>)، واستخدم <span dir="ltr">turns</span> أكتر (37 و46) و<span dir="ltr">output tokens</span> أكتر (68,384 و90,031) من <span dir="ltr">Sonnet</span> ‏(29 و<span dir="ltr">22 turn</span>؛ 38,188 و<span dir="ltr">29,603 token</span>).</p>
+<figure class="fig" id="fig-1">
+<div class="fig-scroll" dir="ltr"><img src="figures/fig1-time.svg" alt="الـ wall-clock time لكل run على log scale، متقسّمة حسب المهمة" loading="lazy"></div>
+<figcaption><span class="flabel">شكل 1.</span> الـ <span dir="ltr">wall‑clock time</span> لكل <span dir="ltr">run</span> على <span dir="ltr">log scale</span>، متقسّمة حسب المهمة. علامات × بتعلّم الـ <span dir="ltr">runs</span> اللي وقتها خلص؛ والخطوط المتقطّعة بتعلّم حد الـ 120 دقيقة.</figcaption>
+</figure>
+<p>أما <span dir="ltr">qwen3.8 27B</span> فوصل لحد الـ 120 دقيقة في المادتين، بعد 19 و<span dir="ltr">22 tool call</span>.</p>
+<h3 id="sec-4b"><span class="num" dir="ltr"><span dir="ltr">B</span>.</span> التكلفة</h3>
+<p>تكلفة الـ <span dir="ltr">cloud</span> لكل <span dir="ltr">deck</span> خلص كانت من <span dir="ltr">$0.24</span> ‏(<span dir="ltr">Haiku</span>، <span dir="ltr">Wireless</span>) لحد <span dir="ltr">$2.88</span> ‏(<span dir="ltr">Opus</span>، <span dir="ltr">Wireless</span>) (شكل 2). <span dir="ltr">Sonnet</span> كلّف <span dir="ltr">$0.90</span> و<span dir="ltr">$0.70</span>، يعني <span dir="ltr">31%</span> و<span dir="ltr">25%</span> من الـ <span dir="ltr">$2.88</span> والـ <span dir="ltr">$2.79</span> بتوع <span dir="ltr">Opus</span>. و<span dir="ltr">Haiku</span> كلّف <span dir="ltr">$0.24</span> و<span dir="ltr">$0.32</span>.</p>
+<figure class="fig" id="fig-2">
+<div class="fig-scroll" dir="ltr"><img src="figures/fig2-cost.svg" alt="التكلفة لكل deck خلص بالـ USD (تقدير الـ CLI)، متقسّمة حسب المهمة" loading="lazy"></div>
+<figcaption><span class="flabel">شكل 2.</span> التكلفة لكل <span dir="ltr">deck</span> خلص بالـ <span dir="ltr">USD</span> (تقدير الـ <span dir="ltr">CLI</span>)، متقسّمة حسب المهمة.</figcaption>
+</figure>
+<h3 id="sec-4c"><span class="num" dir="ltr"><span dir="ltr">C</span>.</span> الجودة</h3>
+<p>الجدول <span dir="ltr">IV</span> فيه درجات الـ <span dir="ltr">judge</span> لكل معيار، وشكل 3 بيرسم الدرجة الإجمالية قصاد التكلفة. <span dir="ltr">Opus</span> و<span dir="ltr">Sonnet</span> خدوا <span dir="ltr">9/10</span> في المادتين، و<span dir="ltr">Haiku</span> خد <span dir="ltr">7/10</span> في الاتنين. كل <span dir="ltr">deck</span> خلص عدّى من الـ <span dir="ltr">checker</span> بـ 0 مشاكل، وكان فيه <span dir="ltr">speaker notes</span> على كل <span dir="ltr">slide</span> و<span dir="ltr">quiz</span>.</p>
+<figure class="table" id="table-iv">
+<figcaption><span class="tlabel">جدول <span dir="ltr">IV</span></span><span class="tcap">درجات الـ <span dir="ltr">judge</span> للـ <span dir="ltr">decks</span> اللي خلصت (المعايير <span dir="ltr">1–5</span>، الإجمالي <span dir="ltr">1–10</span>)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول IV: درجات الـ judge للـ decks اللي خلصت (المعايير 1–5، الإجمالي 1–10)"><table>
+<thead><tr><th scope="col">المهمة</th><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col" class="n">الدقة</th><th scope="col" class="n">التغطية</th><th scope="col" class="n">التدريس</th><th scope="col" class="n">الشكل</th><th scope="col" class="n">الـ <span dir="ltr">diagrams</span></th><th scope="col" class="n">الـ <span dir="ltr">notes</span></th><th scope="col" class="n">الالتزام بالمطلوب</th><th scope="col" class="n">الإجمالي</th></tr></thead><tbody>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">Opus 5.5</span></td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">Sonnet 5.5</span></td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">4</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">Haiku 5.5</span></td><td class="n">4</td><td class="n">4</td><td class="n">4</td><td class="n">3</td><td class="n">3</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>7</strong></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">Opus 5.5</span></td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">Sonnet 5.5</span></td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">Haiku 5.5</span></td><td class="n">4</td><td class="n">4</td><td class="n">4</td><td class="n">3</td><td class="n">4</td><td class="n">5</td><td class="n">4</td><td class="n"><strong>7</strong></td></tr>
+</tbody></table></div>
+</figure>
+<figure class="fig" id="fig-3">
+<div class="fig-scroll" dir="ltr"><img src="figures/fig3-quality-vs-cost.svg" alt="الدرجة الإجمالية من الـ judge ‏(/10) قصاد التكلفة لكل deck خلص (USD)" loading="lazy"></div>
+<figcaption><span class="flabel">شكل 3.</span> الدرجة الإجمالية من الـ <span dir="ltr">judge</span> ‏<span dir="ltr">(/10)</span> قصاد التكلفة لكل <span dir="ltr">deck</span> خلص <span dir="ltr">(USD)</span>. <span dir="ltr">W = Wireless 101</span>، <span dir="ltr">S = STATS 101</span>.</figcaption>
+</figure>
+<p>شكل 4 بيوري متوسط درجات المعايير لكل <span dir="ltr">model</span>. ولا <span dir="ltr">deck</span> خد 5 في الشكل؛ <span dir="ltr">Opus</span> و<span dir="ltr">Sonnet</span> متوسطهم 4.0، و<span dir="ltr">Haiku</span> ‏3.0. أكبر فرق بين الـ <span dir="ltr">models</span> كان في الـ <span dir="ltr">diagrams</span> ‏(<span dir="ltr">Opus 5.0</span>، <span dir="ltr">Sonnet 4.5</span>، <span dir="ltr">Haiku 3.5</span>). وعدد الـ <span dir="ltr">diagrams</span> مش ماشي تماماً مع الدرجات دي: <span dir="ltr">Opus</span> رسم 13 و<span dir="ltr">11 diagram</span>، و<span dir="ltr">Sonnet</span> ‏10 و7، و<span dir="ltr">Haiku</span> ‏4 و7. و<span dir="ltr">Opus</span> كمان كتب أطول <span dir="ltr">notes</span> ‏(3,042 و2,962 كلمة).</p>
+<figure class="fig fig-wide" id="fig-4">
+<div class="fig-scroll" dir="ltr"><img src="figures/fig4-criteria.svg" alt="متوسط درجة الـ judge لكل معيار (1–5) لكل cloud model على الـ decks الاتنين اللي خلّصهم، Wireless 101 وSTATS 101 ‏(n = 2 لكل model)" loading="lazy"></div>
+<figcaption><span class="flabel">شكل 4.</span> متوسط درجة الـ <span dir="ltr">judge</span> لكل معيار <span dir="ltr">(1–5)</span> لكل <span dir="ltr">cloud model</span> على الـ <span dir="ltr">decks</span> الاتنين اللي خلّصهم، <span dir="ltr">Wireless 101</span> و<span dir="ltr">STATS 101</span> ‏(<span dir="ltr">n = 2</span> لكل <span dir="ltr">model</span>). الدرجة الإجمالية <span dir="ltr">(/10)</span> مرسومة بنص الارتفاع.</figcaption>
+</figure>
+<h3 id="sec-4d"><span class="num" dir="ltr"><span dir="ltr">D</span>.</span> الأخطاء ومشاكل الـ <span dir="ltr">UI</span></h3>
+<p>شكل 5 بيعدّ ملاحظات الـ <span dir="ltr">judge</span> على كل <span dir="ltr">deck</span>. <span dir="ltr">Sonnet</span> ما كانش عنده ولا <span dir="ltr">claim</span> غلط في المادتين. <span dir="ltr">Opus</span> كان عنده 2 و1، كلهم <span dir="ltr">minor</span>؛ مثلاً في <span dir="ltr">Wireless</span> كتب «<span dir="ltr">Wi‑Fi, Bluetooth, microwaves</span>» والمصدر بيقول <span dir="ltr">microwave ovens</span>. و<span dir="ltr">Haiku</span> كان عنده <span dir="ltr">5 claims</span> غلط في <span dir="ltr">Wireless</span> ‏(1 منهم <span dir="ltr">major</span>) و1 في <span dir="ltr">STATS</span>. وكل <span dir="ltr">deck</span> كان فيه <span dir="ltr">claims</span> مش موجودة في المصدر <span dir="ltr">(3–6)</span>، والـ <span dir="ltr">judge</span> علّم على واحد بس منهم إنه مش صح (<span dir="ltr">Haiku</span>، <span dir="ltr">Wireless</span>).</p>
+<figure class="fig fig-wide" id="fig-5">
+<div class="fig-scroll" dir="ltr"><img src="figures/fig5-issues.svg" alt="ملاحظات الـ judge على كل deck خلص: claims غلط، وclaims مش موجودة في المصدر، ومشاكل UI" loading="lazy"></div>
+<figcaption><span class="flabel">شكل 5.</span> ملاحظات الـ <span dir="ltr">judge</span> على كل <span dir="ltr">deck</span> خلص: <span dir="ltr">claims</span> غلط، و<span dir="ltr">claims</span> مش موجودة في المصدر، ومشاكل <span dir="ltr">UI</span>. الجزء الغامق من كل عمود هو نصيب الـ <span dir="ltr">major</span> (أو اللي مش صح)، والعدد بتاعه مكتوب بالأبيض.</figcaption>
+</figure>
+<p>كل <span dir="ltr">deck</span> كان فيه <span dir="ltr">4–7</span> مشاكل <span dir="ltr">UI</span>. أغلبها <span dir="ltr">minor</span>، زي أعمدة زحمة و<span dir="ltr">labels</span> لازقة في الأشكال. أما الـ <span dir="ltr">major</span> فكانت مشاكل محددة. في الـ <span dir="ltr">STATS deck</span> بتاع <span dir="ltr">Sonnet</span>: «الـ <span dir="ltr">eyebrow label</span> ‏'<span dir="ltr">The plan</span>' قاعد فوق العنوان '<span dir="ltr">Three questions</span>'.» وفي الـ <span dir="ltr">STATS deck</span> بتاع <span dir="ltr">Haiku</span>، رمز <span dir="ltr">x̄</span> اترسم بايظ، فمعادلة الـ <span dir="ltr">standard deviation</span> ممكن تتقري «<span dir="ltr">(x − x)²</span>، وده يساوي صفر.» وفي الـ <span dir="ltr">Wireless deck</span> بتاع <span dir="ltr">Haiku</span>: «كلمة '<span dir="ltr">electromagnetic</span>' داخلة في عمود الـ <span dir="ltr">Hertz</span> وراكبة على '<span dir="ltr">radio waves</span>'.»</p>
+<p>الـ <span dir="ltr">judge</span> كمان سجّل أخطاء كبيرة مش أخطاء <span dir="ltr">UI</span>. <span dir="ltr">Haiku</span> غيّر ترتيب أقسام <span dir="ltr">STATS</span> ‏(«<span dir="ltr">Population (6), Sampling (7–8), Bias (9), Study design (10), Types of variables (11)…</span>»)، والطلب كان مانع ده. و<span dir="ltr">Opus</span> ما كانش عنده ولا خطأ كبير في المادتين.</p>
+<h3 id="sec-4e"><span class="num" dir="ltr"><span dir="ltr">E</span>.</span> الـ <span dir="ltr">runs</span> المحلية اللي ما خلصتش</h3>
+<p>الـ <span dir="ltr">model</span> المحلي <span dir="ltr">qwen3.8 27B</span> ما خلّصش ولا مادة في 120 دقيقة (الجدول <span dir="ltr">V</span>). في <span dir="ltr">Wireless</span> كتب <code dir="ltr">PLAN.md</code> بس، من غير ولا <span dir="ltr">slide</span>. وفي <span dir="ltr">STATS</span> كتب <span dir="ltr">20 slide</span> ‏(17 منهم بـ <span dir="ltr">notes</span>) في اتنين <span dir="ltr">part files</span>، بس عمره ما جمّعهم في <code dir="ltr">deck.html</code>.</p>
+<figure class="table" id="table-v">
+<figcaption><span class="tlabel">جدول <span dir="ltr">V</span></span><span class="tcap">التقدّم الجزئي في الـ <span dir="ltr">runs</span> المحلية اللي ما خلصتش</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول V: التقدّم الجزئي في الـ runs المحلية اللي ما خلصتش"><table>
+<thead><tr><th scope="col">المهمة</th><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col">الحالة</th><th scope="col" class="n">الـ <span dir="ltr">wall time</span></th><th scope="col" class="n"><span dir="ltr">slides</span> مكتوبة في <span dir="ltr">parts</span></th><th scope="col" class="n">بـ <span dir="ltr">notes</span></th><th scope="col">ملفات الـ <span dir="ltr">parts</span></th><th scope="col">الـ <span dir="ltr">template</span> ‏<code dir="ltr">deck.html</code> اتقيّم بـ</th></tr></thead><tbody>
+<tr><td><span dir="ltr">Wireless 101</span></td><td><span dir="ltr">qwen3.8 27B</span></td><td>وقته خلص</td><td class="n"><span dir="ltr">120m 00s</span></td><td class="n">0</td><td class="n">0</td><td>–</td><td><span dir="ltr">21 slide</span>، الـ <span dir="ltr">checker: pass</span>، الـ <span dir="ltr">judge: 1/10</span></td></tr>
+<tr><td><span dir="ltr">STATS 101</span></td><td><span dir="ltr">qwen3.8 27B</span></td><td>وقته خلص</td><td class="n"><span dir="ltr">120m 00s</span></td><td class="n">20</td><td class="n">17</td><td><span dir="ltr">part1.html, part2.html</span></td><td><span dir="ltr">21 slide</span>، الـ <span dir="ltr">checker: pass</span>، الـ <span dir="ltr">judge: 1/10</span></td></tr>
+</tbody></table></div>
+</figure>
+<h3 id="sec-4f"><span class="num" dir="ltr"><span dir="ltr">F</span>.</span> ملاحظات على الـ <span dir="ltr">skill</span> نفسها</h3>
+<p><strong>الـ <span dir="ltr">checker</span> بيعدّي <span dir="ltr">deck</span> مش خلصان.</strong> في الـ <span dir="ltr">runs</span> الاتنين بتوع <span dir="ltr">qwen3.8 27B</span> اللي وقتهم خلص، <code dir="ltr">deck.html</code> كان لسه هو الـ <span dir="ltr">template</span> بتاع الـ <span dir="ltr">skill</span>، وفيه «<span dir="ltr">Your Name</span>» و«<span dir="ltr">you@example.com</span>» و<span dir="ltr">chart</span> للـ <span dir="ltr">revenue</span>. الـ <span dir="ltr">checker</span> عدّاه بـ 0 مشاكل، مع إن الـ <span dir="ltr">judge</span> إدّاله <span dir="ltr">1/10</span> وكتب إن «الـ <span dir="ltr">footer</span> بس هو اللي اتغيّر». الـ <span dir="ltr">checker</span> بيختبر الـ <span dir="ltr">layout</span> مش المحتوى، فمحتاجين <span dir="ltr">rule</span> تمسك بقايا الـ <span dir="ltr">template</span>.</p>
+<p><strong>أسماء خانات الـ <span dir="ltr">plan</span> بتتسرّب للـ <span dir="ltr">decks</span>.</strong> «<span dir="ltr">Fence</span>» عنوان في صيغة الـ <code dir="ltr">PLAN.md</code> بتاعة الـ <span dir="ltr">skill</span>. <span dir="ltr">Haiku</span> حط «<span dir="ltr">Fence: gain does not add energy…</span>» على الـ <span dir="ltr">slide</span> رقم 9 في <span dir="ltr">Wireless</span>، والـ <span dir="ltr">judge</span> اعتبرها خطأ كبير «هيحرج المحاضر». والـ <span dir="ltr">Wireless deck</span> بتاع <span dir="ltr">Sonnet</span> فيه «<span dir="ltr">Fence</span>:» مرتين في الـ <span dir="ltr">speaker notes</span>، والكلمة ظهرت كمان في الـ <span dir="ltr">speaker notes</span> بتاعة الـ <span dir="ltr">STATS decks</span> ‏(<span dir="ltr">Sonnet</span> مرتين، و<span dir="ltr">Haiku</span> مرة). والـ <span dir="ltr">plan‑only prompt</span> المعدّل بقى بيقول صراحة إن أسماء الخانات دي لازم تفضل برّه الـ <span dir="ltr">slides</span> والـ <span dir="ltr">notes</span>.</p>
+<p><strong>الـ <span dir="ltr">judge</span> بيمسك اللي الـ <span dir="ltr">checker</span> مش شايفه.</strong> الـ <span dir="ltr">decks</span> الستة اللي خلصت عدّت كلها من الـ <span dir="ltr">checker</span> بـ 0 مشاكل. ومع ذلك الـ <span dir="ltr">judge</span> لقى <span dir="ltr">labels</span> راكبة على بعض جوه الـ <span dir="ltr">diagrams</span>، وشعاع منعكس مش واصل للـ <span dir="ltr">receiver</span> ‏(<span dir="ltr">Sonnet</span>، <span dir="ltr">Wireless</span>)، ورمز <span dir="ltr">x̄</span> البايظ، وأقسام مش بالترتيب. فالظاهر إن <span dir="ltr">judge</span> بيقرا الـ <span dir="ltr">screenshots</span> إضافة مفيدة جنب الـ <span dir="ltr">checks</span> اللي معتمدة على <span dir="ltr">rules</span>.</p>
+</section>
+<section id="sec-5" aria-labelledby="sec-5-h">
+<h2 id="sec-5-h"><span class="num" dir="ltr"><span dir="ltr">V</span>.</span> تجربة: <span dir="ltr">plan</span> واحدة مشتركة تساعد الـ <span dir="ltr">models</span> المحلية</h2>
+<p>القسم ده بيعرض تجربة منفصلة. مش جزء من مقارنة الـ <span dir="ltr">cloud</span> والـ <span dir="ltr">local</span> في القسم <span dir="ltr">IV</span>، ونتايجها مش متقارنة بالـ <span dir="ltr">runs</span> اللي هناك.</p>
+<h3 id="sec-5a"><span class="num" dir="ltr"><span dir="ltr">A</span>.</span> ليه عملنا التجربة دي</h3>
+<p>في المقارنة الأساسية، الـ <span dir="ltr">model</span> المحلي كان أبطأ من إنه يخلّص لوحده: <span dir="ltr">qwen3.8 27B</span> وصل لحد الـ 120 دقيقة في المادتين (القسم <span dir="ltr">IV‑E</span>). وجزء كبير من الـ <span dir="ltr">run</span> بيروح في قراية الـ <span dir="ltr">skill</span> وتصميم الـ <span dir="ltr">deck</span> قبل ما أي <span dir="ltr">slide</span> تتكتب. فسألنا: هل <span dir="ltr">plan</span> مفصّلة، يكتبها <span dir="ltr">cloud model</span> قوي مرة واحدة، تخلّي الـ <span dir="ltr">models</span> المحلية تبني <span dir="ltr">deck</span> كامل؟</p>
+<h3 id="sec-5b"><span class="num" dir="ltr"><span dir="ltr">B</span>.</span> الإعداد</h3>
+<p><span dir="ltr">Opus 5.5</span> كتب <code dir="ltr">PLAN.md</code> واحد لـ <span dir="ltr">STATS 101</span> مرة واحدة، في <span dir="ltr">23m 20s</span> وبـ <span dir="ltr">$5.05</span> (القسم <span dir="ltr">III‑D</span>). الـ <span dir="ltr">plan</span> اتعدّلت بالإيد في مكانين قبل الـ <span dir="ltr">builds</span>: متغيّر الـ <span dir="ltr">folder</span> ‏<code dir="ltr">D</code> واسم ملف الـ <span dir="ltr">deck</span>. بعد كده تلات <span dir="ltr">models</span> محلية بنوا منها: <span dir="ltr">qwen3.6 35B‑A3B</span> ‏<span dir="ltr">(MoE, 3B active)</span>، و<span dir="ltr">gemma4 26B</span>، و<span dir="ltr">qwen3.8 27B</span>. كل واحد خد الـ <span dir="ltr">module</span> والـ <span dir="ltr">plan</span> و<span dir="ltr">build prompt</span> بيقوله يمشي ورا خطوات الـ <span dir="ltr">build</span> اللي في الـ <span dir="ltr">plan</span>. الـ <span dir="ltr">run</span> كان بحد 240 دقيقة و<span dir="ltr">Claude Code 2.1.302</span> (الجدول <span dir="ltr">II</span>)؛ والـ <span dir="ltr">harness</span> والجهاز ونسخة <span dir="ltr">Ollama</span> والـ <span dir="ltr">checker</span> والـ <span dir="ltr">judge</span> كانوا زي ما هما في القسم <span dir="ltr">III</span>. وكل <span dir="ltr">model</span> اتشغّل مرة واحدة.</p>
+<h3 id="sec-5c"><span class="num" dir="ltr"><span dir="ltr">C</span>.</span> اللي حصل</h3>
+<p>الجدول <span dir="ltr">VI</span> وشكل 6 فيهم النتايج.</p>
+<figure class="table" id="table-vi">
+<figcaption><span class="tlabel">جدول <span dir="ltr">VI</span></span><span class="tcap">تجربة الـ <span dir="ltr">plan: models</span> محلية بتبني من الـ <span dir="ltr">plan</span> بتاعة <span dir="ltr">Opus</span> (<span dir="ltr">run</span> واحد لكل <span dir="ltr">model</span>)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول VI: تجربة الـ plan: models محلية بتبني من الـ plan بتاعة Opus (run واحد لكل model)"><table>
+<thead><tr><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col">الحالة</th><th scope="col" class="n">الـ <span dir="ltr">wall time</span></th><th scope="col">الـ <span dir="ltr">slides</span></th><th scope="col">الـ <span dir="ltr">checker</span></th><th scope="col" class="n"><span dir="ltr">claims</span> غلط <span dir="ltr">(major)</span></th><th scope="col" class="n">مشاكل <span dir="ltr">UI</span> ‏<span dir="ltr">(major)</span></th><th scope="col">الـ <span dir="ltr">judge /10</span></th></tr></thead><tbody>
+<tr><td><span dir="ltr">qwen3.6 35B‑A3B</span></td><td>خلص</td><td class="n"><span dir="ltr">20m 07s</span></td><td>30</td><td><span dir="ltr">pass</span></td><td class="n"><span dir="ltr">0 (0)</span></td><td class="n"><span dir="ltr">5 (0)</span></td><td><strong>9</strong></td></tr>
+<tr><td><span dir="ltr">gemma4 26B</span></td><td>وقف بدري</td><td class="n"><span dir="ltr">72m 34s</span></td><td>10 في <span dir="ltr">part 1</span>، ما اتجمّعوش</td><td>–</td><td class="n">–</td><td class="n">–</td><td>ما خلّصش</td></tr>
+<tr><td><span dir="ltr">qwen3.8 27B</span></td><td><span dir="ltr">API error</span></td><td class="n"><span dir="ltr">61m 03s</span></td><td>10 في <span dir="ltr">part 1</span>، ما اتجمّعوش</td><td>–</td><td class="n">–</td><td class="n">–</td><td>ما خلّصش</td></tr>
+</tbody></table></div>
+<p class="table-note">الـ <span dir="ltr">runs</span> المحلية متسجّلة بـ <span dir="ltr">$0</span>؛ والـ <span dir="ltr">plan</span> اللي كلّفت <span dir="ltr">$5.05</span> اتدفع تمنها مرة واحدة. الـ <span dir="ltr">runs</span> اللي ما خلصتش ما سابتش <code dir="ltr">deck.html</code> وما اتقيّمتش.</p>
+</figure>
+<figure class="fig" id="fig-6">
+<div class="fig-scroll" dir="ltr"><img src="figures/fig6-planned.svg" alt="تجربة الـ plan: الـ wall-clock time لكل model محلي بيبني من الـ plan بتاعة Opus، ومكتوب جنبه نتيجة كل run" loading="lazy"></div>
+<figcaption><span class="flabel">شكل 6.</span> تجربة الـ <span dir="ltr">plan</span>: الـ <span dir="ltr">wall‑clock time</span> لكل <span dir="ltr">model</span> محلي بيبني من الـ <span dir="ltr">plan</span> بتاعة <span dir="ltr">Opus</span>، ومكتوب جنبه نتيجة كل <span dir="ltr">run</span>. الخط المتقطّع بيعلّم حد الـ 240 دقيقة.</figcaption>
+</figure>
+<p><strong><span dir="ltr">qwen3.6 35B‑A3B</span></strong> كان الـ <span dir="ltr">model</span> الوحيد اللي خلّص. بنى <span dir="ltr">deck</span> من <span dir="ltr">30 slide</span> في <span dir="ltr">20m 07s</span>، منهم <span dir="ltr">19m 37s</span> ‏<span dir="ltr">API time</span>، بـ <span dir="ltr">31 turn</span> و<span dir="ltr">30 tool call</span>. الـ <span dir="ltr">deck</span> عدّى من الـ <span dir="ltr">checker</span> بـ 0 مشاكل، وكان فيه <span dir="ltr">speaker notes</span> على كل <span dir="ltr">slide</span> و<span dir="ltr">quiz</span>. الـ <span dir="ltr">judge</span> إدّاله <span dir="ltr">9/10</span> (الدقة 5، التغطية 5، التدريس 5، الشكل 4، الـ <span dir="ltr">diagrams</span> ‏4، الـ <span dir="ltr">notes</span> ‏4، الالتزام بالمطلوب 5) وما لقاش ولا <span dir="ltr">claim</span> غلط. الخطأ الكبير الوحيد كان في الـ <span dir="ltr">notes</span> بتاعة الـ <span dir="ltr">quiz</span>، اللي بتقول «<span dir="ltr">then to reveal</span>» من غير ما تقول إزاي. والـ <span dir="ltr">deck</span> كان فيه <span dir="ltr">10 diagrams</span> و2,830 كلمة <span dir="ltr">notes</span>.</p>
+<p><strong><span dir="ltr">gemma4 26B</span></strong> كتب <span dir="ltr">part 1</span> ‏(<span dir="ltr">10 slides</span>، كلهم بـ <span dir="ltr">notes</span>)، بس أعاد كتابة الملف ده تمان مرات (وأربع <span dir="ltr">Write calls</span> كمان فشلوا لأنها اتبعتت من غير <span dir="ltr">file path</span>)، وبعدين قفل الـ <span dir="ltr">turn</span> بتاعه وهو بيقول إنه هـ «<span dir="ltr">now proceed to build Part 2</span>». في الـ <span dir="ltr">headless one‑shot mode</span>، لما الـ <span dir="ltr">turn</span> يخلص الـ <span dir="ltr">run</span> بيخلص، والـ <span dir="ltr">CLI</span> قال إن الـ <span dir="ltr">run</span> خلص <span dir="ltr">(completed)</span> بـ <span dir="ltr">exit code 0</span> مع إن مفيش <span dir="ltr">deck</span> أصلاً.</p>
+<p><strong><span dir="ltr">qwen3.8 27B</span></strong> كتب <span dir="ltr">part 1</span> ‏(<span dir="ltr">10 slides</span>، كلهم بـ <span dir="ltr">notes</span>)، وكان بيكتب <span dir="ltr">part 2</span> لما وقع بعد 61 دقيقة بالرسالة «<span dir="ltr">API Error: The response stopped arriving</span>.»</p>
+<p>جوه التجربة دي، سرعة الـ <span dir="ltr">output</span> كانت مختلفة جداً: حوالي <span dir="ltr">3,575 output token</span> في كل دقيقة <span dir="ltr">API</span> لـ <span dir="ltr">qwen3.6 35B‑A3B</span>، قصاد حوالي 182 لـ <span dir="ltr">qwen3.8 27B</span> وحوالي 745 لـ <span dir="ltr">gemma4 26B</span> (الـ <span dir="ltr">output tokens</span> مقسومة على دقايق الـ <span dir="ltr">API</span>، اللي فيها كمان معالجة الـ <span dir="ltr">prompt</span>). وده ماشي مع المتوقع إن <span dir="ltr">sparse model</span> فيه <span dir="ltr">3B active parameters</span> بيولّد أسرع من <span dir="ltr">dense model</span> حجمه <span dir="ltr">27B</span> على نفس الـ <span dir="ltr">hardware</span> <a class="cite" href="#ref-12">[12]</a>.</p>
+<p>النتايج دي بتلمّح لنوعين مختلفين من الفشل المحلي: السرعة (الـ <span dir="ltr">dense model</span> اللي حجمه <span dir="ltr">27B</span>)، والتحكم في الـ <span dir="ltr">turn</span> ‏(<span dir="ltr">gemma4</span> اللي قفل الـ <span dir="ltr">turn</span> بدري). الـ <span dir="ltr">plan</span> شالت أغلب شغل القراية والتصميم، والـ <span dir="ltr">MoE model</span> قدر بعدها يحوّل ده لـ <span dir="ltr">deck</span> كامل. ووقوع الـ <span dir="ltr">stream</span> في <span dir="ltr">qwen3.8 27B</span> ممكن يكون له علاقة بالدعم الناقص للـ <span dir="ltr">API</span> في <span dir="ltr">Ollama</span> <a class="cite" href="#ref-14">[14]</a>، أو بالـ <span dir="ltr">generations</span> الطويلة بين الـ <span dir="ltr">chunks</span> اللي بتتبعت؛ وإحنا ما عزلناش السبب.</p>
+<h3 id="sec-5d"><span class="num" dir="ltr"><span dir="ltr">D</span>.</span> حدود التجربة</h3>
+<p>دي مش مقارنة متكافئة مع الـ <span dir="ltr">runs</span> الأساسية. الـ <span dir="ltr">input</span> مختلف (<span dir="ltr">plan</span> جاهزة جنب الـ <span dir="ltr">module</span>)، والـ <span dir="ltr">settings</span> مختلفة (حد 240 دقيقة و<span dir="ltr">Claude Code 2.1.302</span>)، والـ <span dir="ltr">models</span> المحلية بس هي اللي بنت من الـ <span dir="ltr">plan</span>، وواحد بس من التلات <span dir="ltr">builds</span> خلّص. فبنقدّمها بس كمؤشر إن <span dir="ltr">plan</span> من <span dir="ltr">model</span> قوي ممكن تخلّي الـ <span dir="ltr">build</span> المحلي يمشي، مش كدليل على ترتيب الـ <span dir="ltr">models</span> المحلية قصاد الـ <span dir="ltr">cloud models</span>. والقسم <span dir="ltr">IX</span> فيه الاختبارات اللي محتاجينها عشان نقارن الطريقتين صح.</p>
+</section>
+<section id="sec-6" aria-labelledby="sec-6-h">
+<h2 id="sec-6-h"><span class="num" dir="ltr"><span dir="ltr">VI</span>.</span> مناقشة</h2>
+<p>في حدود الـ <span dir="ltr">runs</span> الفردية دي، النتايج بتلمّح لترتيب بين الـ <span dir="ltr">cloud models</span> من ناحية القيمة. <span dir="ltr">Sonnet 5.5</span> جاب نفس الدرجة الإجمالية بتاعة <span dir="ltr">Opus 5.5</span> في المادتين، من غير ولا <span dir="ltr">claim</span> غلط، في حوالي نص الوقت وبـ <span dir="ltr">25–31%</span> من التكلفة. <span dir="ltr">Opus</span> عمل أكتر <span dir="ltr">diagrams</span> وخد أعلى درجات فيها، فممكن يفضل هو الاختيار الأحسن لما الـ <span dir="ltr">diagrams</span> تكون شايلة المحاضرة. <span dir="ltr">Haiku</span> كان الأرخص، بس في كل مادة عمل خطأ واحد على الأقل المحاضر هيضطر يصلّحه قبل ما يدرّس.</p>
+<p>النتايج المحلية بتلمّح إن العائق الأساسي قدام الـ <span dir="ltr">dense model</span> المحلي، على الـ <span dir="ltr">hardware</span> ده، هو السرعة مش القدرة. الـ <span dir="ltr">dense model</span> اللي حجمه <span dir="ltr">27B</span> طلّع <span dir="ltr">slides</span> معقولة لما وصل لها، بس الوقت خلص عليه.</p>
+<p>وفيه درس عملي هنا: «الـ <span dir="ltr">run</span> خلص» و«الـ <span dir="ltr">checker</span> عدّى» مش معناهم إن «الـ <span dir="ltr">deck</span> جاهز». اتنين <span dir="ltr">runs</span> سابوا الـ <span dir="ltr">template</span> مكانه وعدّوا، و<span dir="ltr">run</span> في تجربة القسم <span dir="ltr">V</span> خلص بـ <span dir="ltr">exit code 0</span> ومفيش <span dir="ltr">deck</span>. وأي <span dir="ltr">pipeline</span> آلي مبني على <span dir="ltr">agents</span> زي دي محتاج <span dir="ltr">check</span> على مستوى المحتوى يتأكد إن الشغل خلص فعلاً.</p>
+</section>
+<section id="sec-7" aria-labelledby="sec-7-h">
+<h2 id="sec-7-h"><span class="num" dir="ltr"><span dir="ltr">VII</span>.</span> تنويه وحدود الدراسة</h2>
+<aside class="callout" aria-label="تنويه"><p class="callout-label">تنويه</p>
+<p><strong>دي مؤشرات أولية من <span dir="ltr">runs</span> فردية.</strong> كل <span dir="ltr">model</span> اتشغّل مرة واحدة لكل مهمة <span dir="ltr">(n = 1)</span>، على جهاز واحد، وبـ <span dir="ltr">judge</span> واحد من نفس عيلة تلاتة من الـ <span dir="ltr">models</span> الستة. مخرجات الـ <span dir="ltr">LLMs</span> بتختلف من <span dir="ltr">run</span> للتاني حتى مع <span dir="ltr">settings</span> ثابتة <a class="cite" href="#ref-18">[18]</a>، والفروق اللي أصغر من الـ <span dir="ltr">variance</span> بتاع الـ <span dir="ltr">benchmark</span> ملهاش معنى <a class="cite" href="#ref-17">[17]</a>. فرق نقطة واحدة في درجة الـ <span dir="ltr">judge</span> اللي من 10، أو كام دقيقة في الـ <span dir="ltr">wall time</span>، داخل في المدى اللي نتوقعه من الـ <span dir="ltr">noise</span>؛ والفرق بنقطتين بين <span dir="ltr">Haiku</span> والـ <span dir="ltr">models</span> الأكبر ثبت في المهمتين، بس هو كمان محتاج <span dir="ltr">runs</span> متكررة عشان يتأكد. محتاجين اختبارات متكررة أكتر، والأحسن بـ <span dir="ltr">confidence intervals</span>، و<span dir="ltr">judge</span> من عيلة <span dir="ltr">models</span> تانية، ومقيّمين بشر، قبل ما نطلع باستنتاجات أكيدة. وأرقام التكلفة تقديرات من ناحية الـ <span dir="ltr">client</span>، والتكلفة المحلية مش حاسبة الكهربا.</p>
+</aside>
+</section>
+<section id="sec-8" aria-labelledby="sec-8-h">
+<h2 id="sec-8-h"><span class="num" dir="ltr"><span dir="ltr">VIII</span>.</span> الخلاصة</h2>
+<p>قارنّا تلات <span dir="ltr">cloud LLMs</span> و<span dir="ltr">LLM</span> محلي واحد في بناء <span dir="ltr">deck</span> لمحاضرة مدتها 50 دقيقة بـ <span dir="ltr">Agent Skill</span> في <span dir="ltr">Claude Code</span>، وقسنا الوقت والتكلفة والجودة بتقييم <span dir="ltr">judge blind</span>. في الدراسة الصغيرة دي، كل الـ <span dir="ltr">runs</span> على الـ <span dir="ltr">cloud</span> خلصت في أقل من 12 دقيقة، و<span dir="ltr">Sonnet 5.5</span> جاب نفس الـ <span dir="ltr">9/10</span> بتاعة <span dir="ltr">Opus 5.5</span> بتكلفة أقل وفي وقت أقل. الـ <span dir="ltr">dense model</span> المحلي ما خلّصش لوحده. وفي تجربة منفصلة، مش متقارنة بالـ <span dir="ltr">runs</span> دي، <span dir="ltr">model</span> واحد من تلات <span dir="ltr">models</span> محلية بنى <span dir="ltr">deck</span> الـ <span dir="ltr">judge</span> إدّاله <span dir="ltr">9/10</span> من <span dir="ltr">plan</span> كاتبها <span dir="ltr">Opus</span>، وده مؤشر إن <span dir="ltr">plan</span> زي دي ممكن تخلّي الـ <span dir="ltr">build</span> المحلي يمشي. والدراسة لقت كمان إن الـ <span dir="ltr">checker</span> بتاع الـ <span dir="ltr">skill</span> بيعدّي <span dir="ltr">template</span> محدش لمسه، ودي مشكلة يحلّها <span dir="ltr">check</span> على المحتوى. النتايج دي أولية ومحتاجة <span dir="ltr">runs</span> متكررة عشان تتأكد.</p>
+</section>
+<section id="sec-9" aria-labelledby="sec-9-h">
+<h2 id="sec-9-h"><span class="num" dir="ltr"><span dir="ltr">IX</span>.</span> الشغل الجاي والاختبارات المخططة</h2>
+<ol>
+<li><strong><span dir="ltr">runs</span> متكررة.</strong> نشغّل كل خانة <span dir="ltr">model</span>–مهمة كذا مرة (مثلاً 5 لكل خانة) ونطلّع متوسطات بـ <span dir="ltr">confidence intervals</span> للوقت والتكلفة والدرجات <a class="cite" href="#ref-17">[17]</a>، <a class="cite" href="#ref-18">[18]</a>.</li>
+<li><strong>مهام ومواد أكتر.</strong> نضيف <span dir="ltr">modules</span> من مجالات تانية، وبأطوال تانية ولغات تانية، ومنها <span dir="ltr">decks</span> من اليمين للشمال.</li>
+<li><strong>تقييم مستقل.</strong> نستخدم <span dir="ltr">judge</span> من عيلة <span dir="ltr">models</span> تانية، أو كذا <span dir="ltr">judge</span>، أو مقيّمين بشر، ونقيس اتفاقهم مع الـ <span dir="ltr">judge</span> الحالي <a class="cite" href="#ref-1">[1]</a>، <a class="cite" href="#ref-2">[2]</a>.</li>
+<li><strong><span dir="ltr">builds</span> متكررة من الـ <span dir="ltr">plan</span>.</strong> نبني بكل <span dir="ltr">model</span> محلي من نفس الـ <span dir="ltr">plan</span> كذا مرة، عشان نعرف الـ <span dir="ltr">build</span> المحلي اللي معاه <span dir="ltr">plan</span> بيخلص بنسبة قد إيه، وجودته بتختلف قد إيه.</li>
+<li><strong><span dir="ltr">cloud models</span> بتبني من الـ <span dir="ltr">plan</span> كـ <span dir="ltr">control</span>.</strong> نشغّل <span dir="ltr">Opus</span> و<span dir="ltr">Sonnet</span> و<span dir="ltr">Haiku</span> على المهمة اللي فيها <span dir="ltr">plan</span>، بنفس نسخة الـ <span dir="ltr">CLI</span> ونفس حد الوقت بتوع الـ <span dir="ltr">builds</span> المحلية، عشان نفصل تأثير الـ <span dir="ltr">plan</span> عن تأثير الـ <span dir="ltr">model</span> اللي بيبني. ونكتب <span dir="ltr">plans</span> للمادتين عشان نقارن الـ <span dir="ltr">builds</span> اللي بـ <span dir="ltr">plan</span> واللي من غير <span dir="ltr">plan</span> مقارنة متكافئة.</li>
+<li><strong>توزيع تكلفة الـ <span dir="ltr">plan</span>.</strong> نبني من <span dir="ltr">plan</span> واحدة كذا مرة، مثلاً بعد تعديلات، أو بكذا <span dir="ltr">theme</span> أو لغة، أو محلياً عشان المادة تفضل على الجهاز، ونطلّع تكلفة الـ <span dir="ltr">plan</span> لكل <span dir="ltr">deck</span> خلص، ونحسب معاها الـ <span dir="ltr">builds</span> اللي فشلت.</li>
+<li><strong><span dir="ltr">models</span> و<span dir="ltr">quantizations</span> محلية أكتر.</strong> نجرّب <span dir="ltr">MoE</span> و<span dir="ltr">dense models</span> تانية وكذا مستوى <span dir="ltr">quantization</span> على نفس الـ <span dir="ltr">hardware</span>.</li>
+<li><strong>قياسات أدق.</strong> نسجّل الوقت لحد أول <span dir="ltr">slide</span> واستهلاك الطاقة لكل <span dir="ltr">deck</span>، عشان يبقى للـ <span dir="ltr">runs</span> المحلية رقم تكلفة حقيقي.</li>
+<li><strong><span dir="ltr">rule</span> في الـ <span dir="ltr">checker</span> لبقايا الـ <span dir="ltr">template</span>.</strong> أي <span dir="ltr">deck</span> لسه فيه محتوى من الـ <span dir="ltr">template</span>، زي أسماء <span dir="ltr">placeholder</span> أو إيميلات أو <span dir="ltr">charts</span> عيّنة، يفشل.</li>
+<li><strong>حل لمشكلة الـ <span dir="ltr">streaming timeout</span>.</strong> ندوّر على سبب وقوع الـ <span dir="ltr">stream</span> في الـ <span dir="ltr">generations</span> المحلية الطويلة ونصلّحه، وبعدين نشغّل <span dir="ltr">qwen3.8 27B</span> تاني على المهمة اللي فيها <span dir="ltr">plan</span>.</li>
+<li><strong><span dir="ltr">hardware</span> مختلف.</strong> نعيد الـ <span dir="ltr">runs</span> المحلية على أجهزة تانية، منها لابتوبات أصغر و<span dir="ltr">desktop GPU</span>.</li>
+</ol>
+</section>
+<section id="artifacts" class="artifacts" aria-labelledby="artifacts-h">
+<h2 id="artifacts-h">الـ <span dir="ltr">Artifacts</span> وإزاي تعيد التجربة</h2>
+<p>كل اللينكات نسبية للـ <span dir="ltr">folder</span> ‏<code dir="ltr">paper/</code>.</p>
+<p class="group"><strong>الـ <span dir="ltr">prompts</span>.</strong></p>
+<ul>
+<li>الـ <span dir="ltr">build prompt</span> بتاع <span dir="ltr">Wireless 101</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/wireless-101/prompt.txt"><code dir="ltr">evals/model-comparison/tasks/wireless-101/prompt.txt</code></a></li>
+<li>الـ <span dir="ltr">build prompt</span> بتاع <span dir="ltr">STATS 101</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101/prompt.txt"><code dir="ltr">evals/model-comparison/tasks/stats-101/prompt.txt</code></a></li>
+<li>الـ <span dir="ltr">build prompt</span> بتاع <span dir="ltr">STATS 101</span> اللي فيه <span dir="ltr">plan</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/prompt.txt"><code dir="ltr">evals/model-comparison/tasks/stats-101-planned/prompt.txt</code></a></li>
+<li>الـ <span dir="ltr">plan‑only prompt</span> (النسخة المعدّلة، شوف القسم <span dir="ltr">III‑F</span>): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/plan-prompt.txt"><code dir="ltr">evals/model-comparison/tasks/stats-101-planned/plan-prompt.txt</code></a></li>
+<li>الـ <span dir="ltr">prompt</span> بتاع الـ <span dir="ltr">judge</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/judge-prompt.txt"><code dir="ltr">evals/model-comparison/judge-prompt.txt</code></a></li>
+<li>الـ <span dir="ltr">output schema</span> بتاع الـ <span dir="ltr">judge</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/judge-schema.json"><code dir="ltr">evals/model-comparison/judge-schema.json</code></a></li>
+</ul>
+<p class="group"><strong>الـ <span dir="ltr">modules</span> اللي دخلت كـ <span dir="ltr">input</span>.</strong></p>
+<ul>
+<li><span dir="ltr">Wireless 101</span>، <span dir="ltr">Module 1</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/wireless-101/wireless-101-module-1.md"><code dir="ltr">evals/model-comparison/tasks/wireless-101/wireless-101-module-1.md</code></a></li>
+<li><span dir="ltr">STATS 101</span>، <span dir="ltr">Module 1</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101/stats-101-module-1.md"><code dir="ltr">evals/model-comparison/tasks/stats-101/stats-101-module-1.md</code></a></li>
+<li><span dir="ltr">STATS 101</span>، <span dir="ltr">Module 1</span> (النسخة اللي استخدمتها المهمة اللي فيها <span dir="ltr">plan</span>): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/stats-101-module-1.md"><code dir="ltr">evals/model-comparison/tasks/stats-101-planned/stats-101-module-1.md</code></a></li>
+</ul>
+<p class="group"><strong>الـ <span dir="ltr">plan</span> المشتركة.</strong></p>
+<ul>
+<li>الـ <span dir="ltr">plan</span> بالنسخة اللي الـ <span dir="ltr">builds</span> اتعملت منها (بعد التعديلين اللي بالإيد): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/PLAN.md"><code dir="ltr">evals/model-comparison/tasks/stats-101-planned/PLAN.md</code></a></li>
+<li>وقت الـ <span dir="ltr">planner</span> وتكلفته وملاحظة التعديل: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/plan.json"><code dir="ltr">evals/model-comparison/tasks/stats-101-planned/plan.json</code></a></li>
+<li>الـ <span dir="ltr">transcript</span> بتاع الـ <span dir="ltr">planner</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/plan-transcript.jsonl"><code dir="ltr">evals/model-comparison/tasks/stats-101-planned/plan-transcript.jsonl</code></a></li>
+</ul>
+<p class="group"><strong>الـ <span dir="ltr">scripts</span>.</strong></p>
+<ul>
+<li>الـ <span dir="ltr">run harness</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/run.sh"><code dir="ltr">evals/model-comparison/run.sh</code></a></li>
+<li>الـ <span dir="ltr">planner</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/plan.sh"><code dir="ltr">evals/model-comparison/plan.sh</code></a></li>
+<li>الـ <span dir="ltr">checker</span> والعدّ والـ <span dir="ltr">judge</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/evaluate.sh"><code dir="ltr">evals/model-comparison/evaluate.sh</code></a></li>
+<li>استخراج الـ <span dir="ltr">slides</span> والـ <span dir="ltr">notes</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/extract-slides.mjs"><code dir="ltr">evals/model-comparison/extract-slides.mjs</code></a></li>
+<li>مولّد التقارير: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/report.mjs"><code dir="ltr">evals/model-comparison/report.mjs</code></a></li>
+<li>الـ <span dir="ltr">figures</span> وجداول البيانات بتاعة الورقة دي: <a href="make-figures.mjs"><code dir="ltr">make-figures.mjs</code></a>، <a href="data/tables.md"><code dir="ltr">data/tables.md</code></a>، <a href="data/study-data.json"><code dir="ltr">data/study-data.json</code></a></li>
+<li>ملاحظات تصميم الدراسة ونتايجها: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/README.md"><code dir="ltr">evals/model-comparison/README.md</code></a>، <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/RESULTS.md"><code dir="ltr">evals/model-comparison/RESULTS.md</code></a></li>
+</ul>
+<p class="group"><strong>نتايج كل <span dir="ltr">run</span></strong> (كل <span dir="ltr">folder</span> فيه الـ <span dir="ltr">prompt</span>، والمصدر، و<code dir="ltr">run.json</code>، و<code dir="ltr">results.json</code>، ولكل <span dir="ltr">model</span> الـ <span dir="ltr">transcript</span>، ومخرجات الـ <span dir="ltr">checker</span>، والـ <span dir="ltr">screenshots</span>، ونص الـ <span dir="ltr">slides</span>، و<code dir="ltr">judge.json</code>).</p>
+<ul>
+<li><span dir="ltr">Wireless 101</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/results/20261016-000644/REPORT.md"><code dir="ltr">evals/model-comparison/results/20261016-000644/REPORT.md</code></a></li>
+<li><span dir="ltr">STATS 101</span>: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/results/20261016-063639-stats-101/REPORT.md"><code dir="ltr">evals/model-comparison/results/20261016-063639-stats-101/REPORT.md</code></a></li>
+<li><span dir="ltr">STATS 101 + plan</span> (تجربة الـ <span dir="ltr">plan</span>، القسم <span dir="ltr">V</span>): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/results/20261016-214018-stats-101-planned/REPORT.md"><code dir="ltr">evals/model-comparison/results/20261016-214018-stats-101-planned/REPORT.md</code></a></li>
+</ul>
+<figure class="table decks" id="table-vii">
+<figcaption><span class="tlabel">جدول <span dir="ltr">VII</span></span><span class="tcap">الـ <span dir="ltr">decks</span> اللي اتعملت، المقارنة الأساسية</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول VII: الـ decks اللي اتعملت، المقارنة الأساسية"><table>
+<thead><tr><th scope="col">المهمة</th><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col">الحالة</th><th scope="col" class="n">الـ <span dir="ltr">slides</span></th><th scope="col" class="n">الـ <span dir="ltr">judge /10</span></th><th scope="col">الـ <span dir="ltr">deck</span></th></tr></thead><tbody>
+<tr><td data-label="المهمة"><span dir="ltr">Wireless 101</span></td><td data-label="الـ model"><span dir="ltr">Opus 5.5</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">30</td><td data-label="الـ judge /10" class="n">9</td><td data-label="الـ deck" class="deck"><a href="../decks/wireless-101_opus.html"><code dir="ltr">../decks/wireless-101_opus.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">Wireless 101</span></td><td data-label="الـ model"><span dir="ltr">Sonnet 5.5</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">30</td><td data-label="الـ judge /10" class="n">9</td><td data-label="الـ deck" class="deck"><a href="../decks/wireless-101_sonnet.html"><code dir="ltr">../decks/wireless-101_sonnet.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">Wireless 101</span></td><td data-label="الـ model"><span dir="ltr">Haiku 5.5</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">29</td><td data-label="الـ judge /10" class="n">7</td><td data-label="الـ deck" class="deck"><a href="../decks/wireless-101_haiku.html"><code dir="ltr">../decks/wireless-101_haiku.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">Wireless 101</span></td><td data-label="الـ model"><span dir="ltr">qwen3.8 27B</span></td><td data-label="الحالة">وقته خلص، وما كتبش ولا <span dir="ltr">slide</span></td><td data-label="الـ slides" class="n">–</td><td data-label="الـ judge /10" class="n">–</td><td data-label="الـ deck" class="deck">مفيش <span dir="ltr">deck</span></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101</span></td><td data-label="الـ model"><span dir="ltr">Opus 5.5</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">30</td><td data-label="الـ judge /10" class="n">9</td><td data-label="الـ deck" class="deck"><a href="../decks/stats-101_opus.html"><code dir="ltr">../decks/stats-101_opus.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101</span></td><td data-label="الـ model"><span dir="ltr">Sonnet 5.5</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">29</td><td data-label="الـ judge /10" class="n">9</td><td data-label="الـ deck" class="deck"><a href="../decks/stats-101_sonnet.html"><code dir="ltr">../decks/stats-101_sonnet.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101</span></td><td data-label="الـ model"><span dir="ltr">Haiku 5.5</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">29</td><td data-label="الـ judge /10" class="n">7</td><td data-label="الـ deck" class="deck"><a href="../decks/stats-101_haiku.html"><code dir="ltr">../decks/stats-101_haiku.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101</span></td><td data-label="الـ model"><span dir="ltr">qwen3.8 27B</span></td><td data-label="الحالة"><strong><span dir="ltr">PARTIAL</span></strong>: وقته خلص؛ اتجمّع بعدين</td><td data-label="الـ slides" class="n">20</td><td data-label="الـ judge /10" class="n">ما اتقيّمش</td><td data-label="الـ deck" class="deck"><a href="../decks/PARTIAL_stats-101_qwen3.8-27b.html"><code dir="ltr">../decks/PARTIAL_stats-101_qwen3.8-27b.html</code></a></td></tr>
+</tbody></table></div>
+</figure>
+<figure class="table decks" id="table-viii">
+<figcaption><span class="tlabel">جدول <span dir="ltr">VIII</span></span><span class="tcap">الـ <span dir="ltr">decks</span> اللي اتعملت، تجربة الـ <span dir="ltr">plan</span> (القسم <span dir="ltr">V</span>)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول VIII: الـ decks اللي اتعملت، تجربة الـ plan (القسم V)"><table>
+<thead><tr><th scope="col">المهمة</th><th scope="col">الـ <span dir="ltr">model</span></th><th scope="col">الحالة</th><th scope="col" class="n">الـ <span dir="ltr">slides</span></th><th scope="col" class="n">الـ <span dir="ltr">judge /10</span></th><th scope="col">الـ <span dir="ltr">deck</span></th></tr></thead><tbody>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101 + plan</span></td><td data-label="الـ model"><span dir="ltr">qwen3.6 35B‑A3B</span></td><td data-label="الحالة">خلص</td><td data-label="الـ slides" class="n">30</td><td data-label="الـ judge /10" class="n">9</td><td data-label="الـ deck" class="deck"><a href="../decks/stats-101-planned_qwen3.6-35b-a3b.html"><code dir="ltr">../decks/stats-101-planned_qwen3.6-35b-a3b.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101 + plan</span></td><td data-label="الـ model"><span dir="ltr">qwen3.8 27B</span></td><td data-label="الحالة"><strong><span dir="ltr">PARTIAL</span></strong>: ‏<span dir="ltr">API error</span>؛ اتجمّع بعدين</td><td data-label="الـ slides" class="n">10</td><td data-label="الـ judge /10" class="n">ما اتقيّمش</td><td data-label="الـ deck" class="deck"><a href="../decks/PARTIAL_stats-101-planned_qwen3.8-27b.html"><code dir="ltr">../decks/PARTIAL_stats-101-planned_qwen3.8-27b.html</code></a></td></tr>
+<tr><td data-label="المهمة"><span dir="ltr">STATS 101 + plan</span></td><td data-label="الـ model"><span dir="ltr">gemma4 26B</span></td><td data-label="الحالة"><strong><span dir="ltr">PARTIAL</span></strong>: وقف بدري؛ اتجمّع بعدين</td><td data-label="الـ slides" class="n">10</td><td data-label="الـ judge /10" class="n">ما اتقيّمش</td><td data-label="الـ deck" class="deck"><a href="../decks/PARTIAL_stats-101-planned_gemma4-26b.html"><code dir="ltr">../decks/PARTIAL_stats-101-planned_gemma4-26b.html</code></a></td></tr>
+</tbody></table></div>
+<p class="table-note">الـ <span dir="ltr">PARTIAL decks</span> التلاتة (واحد في الجدول <span dir="ltr">VII</span>، واتنين في الجدول <span dir="ltr">VIII</span>) مش الـ <span dir="ltr">models</span> هي اللي عملتها. الكاتب جمّعها بعد الـ <span dir="ltr">runs</span> من ملفات الـ <span dir="ltr">slide parts</span> اللي كتبتها الـ <span dir="ltr">models</span> المحلية اللي ما خلصتش، عشان تقدر تشوف الـ <span dir="ltr">slides</span> بتاعتها. ما اتعملّهاش <span dir="ltr">check</span> ولا اتقيّمت، ومش محسوبة في أي نتيجة. ودرجات الـ <span dir="ltr">1/10</span> بتاعة الـ <span dir="ltr">judge</span> في الجدول <span dir="ltr">V</span> تخص الـ <span dir="ltr">template</span> (والـ <span dir="ltr">sample slides</span> زي ما هي) اللي فضل باسم <code dir="ltr">deck.html</code>، مش الملفات دي.</p>
+</figure>
+</section>
+<section id="appendix" aria-labelledby="appendix-h">
+<h2 id="appendix-h">ملحق <span dir="ltr">A</span>. مواصفات الجهاز</h2>
+<p>الـ <span dir="ltr">harness</span> والـ <span dir="ltr">checker</span> والـ <span dir="ltr">models</span> المحلية اشتغلوا على الجهاز اللي في الجدول <span dir="ltr">A‑I</span>. القيم دي اتجمعت منه بـ <code dir="ltr">system_profiler</code> و<code dir="ltr">sw_vers</code> و<code dir="ltr">ollama show</code> / <code dir="ltr">ollama list</code>. وصفحة مواصفات <span dir="ltr">Apple</span> للـ <span dir="ltr">Mac Studio</span> ‏<span dir="ltr">(2025)</span> بتعرض الـ <span dir="ltr">configuration</span> ده من <span dir="ltr">M4 Max</span> ‏(<span dir="ltr">16-core CPU</span>، <span dir="ltr">40-core GPU</span>)، و<span dir="ltr">64 GB memory</span> و<span dir="ltr">1 TB storage</span> من ضمن الاختيارات المتاحة <a class="cite" href="#ref-19">[19]</a>.</p>
+<figure class="table" id="table-a-i">
+<figcaption><span class="tlabel">جدول <span dir="ltr">A‑I</span></span><span class="tcap">الـ <span dir="ltr">hardware</span> والـ <span dir="ltr">software</span></span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول A-I: الـ hardware والـ software"><table>
+<thead><tr><th scope="col">البند</th><th scope="col">القيمة</th></tr></thead><tbody>
+<tr><td>الجهاز</td><td><span dir="ltr">Mac Studio</span>، الـ <span dir="ltr">model identifier</span> ‏<span dir="ltr">Mac16,9</span> <a class="cite" href="#ref-19">[19]</a></td></tr>
+<tr><td>الـ <span dir="ltr">chip</span></td><td><span dir="ltr">Apple M4 Max</span>، <span dir="ltr">16-core CPU (12 performance + 4 efficiency)</span>، <span dir="ltr">40-core GPU</span></td></tr>
+<tr><td>الذاكرة</td><td><span dir="ltr">64 GB unified</span></td></tr>
+<tr><td>التخزين</td><td><span dir="ltr">1 TB SSD (926 GiB volume)</span></td></tr>
+<tr><td>نظام التشغيل</td><td><span dir="ltr">macOS 26.3 (build 25D125), arm64</span></td></tr>
+<tr><td><span dir="ltr">Claude Code</span></td><td>2.1.301 (الـ <span dir="ltr">runs</span> بتوع <span dir="ltr">Wireless 101</span> و<span dir="ltr">STATS 101</span>)؛ 2.1.302 (تجربة الـ <span dir="ltr">plan</span> والتقييم بتاعها)</td></tr>
+<tr><td><span dir="ltr">Ollama</span></td><td>0.40.5</td></tr>
+<tr><td><span dir="ltr">Node.js</span></td><td><span dir="ltr">v24.12.0</span></td></tr>
+<tr><td>الـ <span dir="ltr">screenshots</span> بتاعة الـ <span dir="ltr">checker</span></td><td><span dir="ltr">Playwright 1.64.1 (Chromium)</span></td></tr>
+<tr><td>التحويل لـ <span dir="ltr">JPEG</span></td><td>الـ <code dir="ltr">sips</code> بتاع <span dir="ltr">macOS</span></td></tr>
+<tr><td>الـ <span dir="ltr">cloud models</span></td><td><code dir="ltr">claude-opus-5-5</code>، <code dir="ltr">claude-sonnet-5-5</code>، <code dir="ltr">claude-haiku-5-5</code> عن طريق الـ <span dir="ltr">Anthropic API</span>، كل واحد على الـ <span dir="ltr">effort</span> الـ <span dir="ltr">default</span> بتاعه؛ والـ <span dir="ltr">judge</span> ‏<code dir="ltr">claude-opus-5-5</code></td></tr>
+</tbody></table></div>
+</figure>
+<figure class="table" id="table-a-ii">
+<figcaption><span class="tlabel">جدول <span dir="ltr">A‑II</span></span><span class="tcap">الـ <span dir="ltr">models</span> المحلية (من <code dir="ltr">ollama show</code> و<code dir="ltr">ollama list</code>)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="جدول A-II: الـ models المحلية (من `ollama show` و`ollama list`)"><table>
+<thead><tr><th scope="col">الـ <span dir="ltr">model tag</span></th><th scope="col">الـ <span dir="ltr">architecture</span></th><th scope="col">الـ <span dir="ltr">parameters</span></th><th scope="col">الـ <span dir="ltr">quantization</span></th><th scope="col">الـ <span dir="ltr">format</span></th><th scope="col" class="n">الـ <span dir="ltr">context</span></th><th scope="col">الحجم</th><th scope="col">اتستخدم في</th></tr></thead><tbody>
+<tr><td><code dir="ltr">qwen3.8:27b-mlx</code></td><td><span dir="ltr">qwen3_5</span></td><td><span dir="ltr">27.8B (dense)</span></td><td><span dir="ltr">nvfp4</span></td><td><span dir="ltr">MLX</span></td><td class="n">262,144</td><td><span dir="ltr">18 GB</span></td><td>المقارنة الأساسية؛ تجربة الـ <span dir="ltr">plan</span></td></tr>
+<tr><td><code dir="ltr">qwen3.6:35b-a3b</code></td><td><span dir="ltr">qwen35moe</span></td><td><span dir="ltr">35.5B</span> (<span dir="ltr">MoE</span>، حوالي <span dir="ltr">3B active</span>)</td><td><span dir="ltr">Q4_K_M</span></td><td><span dir="ltr">GGUF</span></td><td class="n">262,144</td><td><span dir="ltr">22 GB</span></td><td>تجربة الـ <span dir="ltr">plan</span></td></tr>
+<tr><td><code dir="ltr">gemma4:26b-mlx</code></td><td><span dir="ltr">gemma4</span></td><td><span dir="ltr">26.2B</span></td><td><span dir="ltr">nvfp4</span></td><td><span dir="ltr">MLX</span></td><td class="n">262,144</td><td><span dir="ltr">18 GB</span></td><td>تجربة الـ <span dir="ltr">plan</span></td></tr>
+</tbody></table></div>
+<p class="table-note">التلات <span dir="ltr">models</span> المحلية اشتغلوا والـ <span dir="ltr">tool calling</span> والـ <span dir="ltr">thinking</span> شغالين، وبالـ <span dir="ltr">settings</span> الـ <span dir="ltr">default</span> بتاعة <span dir="ltr">Ollama</span>. ومش متأكدين هنا إذا كان <span dir="ltr">gemma4 26B</span> ‏<span dir="ltr">dense</span> ولا <span dir="ltr">mixture of experts</span>.</p>
+</figure>
+</section>
+<section id="references" class="references" aria-labelledby="references-h">
+<h2 id="references-h">المراجع</h2>
+<ol class="refs" dir="ltr" lang="en">
+<li id="ref-1"><span class="refnum">[1]</span>L. Zheng, W.-L. Chiang, Y. Sheng, S. Zhuang, Z. Wu, Y. Zhuang, Z. Lin, Z. Li, D. Li, E. P. Xing, H. Zhang, J. E. Gonzalez, and I. Stoica, "Judging LLM-as-a-judge with MT-Bench and Chatbot Arena," in <em>Advances in Neural Information Processing Systems 36 (NeurIPS 2023), Datasets and Benchmarks Track</em>, 2023, pp. 46595–46623. [Online]. Available: <a href="https://arxiv.org/abs/2306.05685">https://arxiv.org/abs/2306.05685</a></li>
+<li id="ref-2"><span class="refnum">[2]</span>A. Panickssery, S. R. Bowman, and S. Feng, "LLM evaluators recognize and favor their own generations," in <em>Advances in Neural Information Processing Systems 37 (NeurIPS 2024)</em>, 2024, pp. 68772–68802, doi: 10.52202/079017-2197. [Online]. Available: <a href="https://arxiv.org/abs/2404.13076">https://arxiv.org/abs/2404.13076</a></li>
+<li id="ref-3"><span class="refnum">[3]</span>Y. Liu, D. Iter, Y. Xu, S. Wang, R. Xu, and C. Zhu, "G-Eval: NLG evaluation using GPT-4 with better human alignment," in <em>Proc. 2023 Conf. Empirical Methods in Natural Language Processing (EMNLP)</em>, Singapore, 2023, pp. 2511–2522, doi: 10.18653/v1/2023.emnlp-main.153.</li>
+<li id="ref-4"><span class="refnum">[4]</span>C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press, and K. Narasimhan, "SWE-bench: Can language models resolve real-world GitHub issues?" in <em>Proc. Int. Conf. Learning Representations (ICLR)</em>, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2310.06770">https://arxiv.org/abs/2310.06770</a></li>
+<li id="ref-5"><span class="refnum">[5]</span>X. Liu, H. Yu, H. Zhang, Y. Xu, X. Lei, H. Lai, Y. Gu, H. Ding, K. Men, K. Yang <em>et al.</em>, "AgentBench: Evaluating LLMs as agents," in <em>Proc. Int. Conf. Learning Representations (ICLR)</em>, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2308.03688">https://arxiv.org/abs/2308.03688</a></li>
+<li id="ref-6"><span class="refnum">[6]</span>S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao, "ReAct: Synergizing reasoning and acting in language models," in <em>Proc. Int. Conf. Learning Representations (ICLR)</em>, 2023. [Online]. Available: <a href="https://arxiv.org/abs/2210.03629">https://arxiv.org/abs/2210.03629</a></li>
+<li id="ref-7"><span class="refnum">[7]</span>B. Xu, Z. Peng, B. Lei, S. Mukherjee, Y. Liu, and D. Xu, "ReWOO: Decoupling reasoning from observations for efficient augmented language models," arXiv preprint arXiv:2305.18323, 2023. [Online]. Available: <a href="https://arxiv.org/abs/2305.18323">https://arxiv.org/abs/2305.18323</a></li>
+<li id="ref-8"><span class="refnum">[8]</span>T.-J. Fu, W. Y. Wang, D. McDuff, and Y. Song, "DOC2PPT: Automatic presentation slides generation from scientific documents," in <em>Proc. AAAI Conf. Artificial Intelligence</em>, vol. 36, no. 1, 2022, pp. 634–642, doi: 10.1609/aaai.v36i1.19943.</li>
+<li id="ref-9"><span class="refnum">[9]</span>H. Zheng, X. Guan, H. Kong, W. Zhang, J. Zheng, W. Zhou, H. Lin, Y. Lu, X. Han, and L. Sun, "PPTAgent: Generating and evaluating presentations beyond text-to-slides," in <em>Proc. 2025 Conf. Empirical Methods in Natural Language Processing (EMNLP)</em>, Suzhou, China, 2025, pp. 14402–14418, doi: 10.18653/v1/2025.emnlp-main.728.</li>
+<li id="ref-10"><span class="refnum">[10]</span>J. Ge, Z. Z. Wang, X. Zhou, Y.-H. Peng, S. Subramanian, Q. Tan, M. Sap, A. Suhr, D. Fried, G. Neubig, and T. Darrell, "AutoPresent: Designing structured visuals from scratch," in <em>Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)</em>, 2025, pp. 2902–2911, doi: 10.1109/CVPR52734.2025.00276. [Online]. Available: <a href="https://arxiv.org/abs/2501.00912">https://arxiv.org/abs/2501.00912</a></li>
+<li id="ref-11"><span class="refnum">[11]</span>L. Huang, W. Yu, W. Ma, W. Zhong, Z. Feng, H. Wang, Q. Chen, W. Peng, X. Feng, B. Qin, and T. Liu, "A survey on hallucination in large language models: Principles, taxonomy, challenges, and open questions," <em>ACM Trans. Inf. Syst.</em>, vol. 43, no. 2, pp. 1–55, 2025, doi: 10.1145/3703155. [Online]. Available: <a href="https://arxiv.org/abs/2311.05232">https://arxiv.org/abs/2311.05232</a></li>
+<li id="ref-12"><span class="refnum">[12]</span>W. Fedus, B. Zoph, and N. Shazeer, "Switch Transformers: Scaling to trillion parameter models with simple and efficient sparsity," <em>J. Mach. Learn. Res.</em>, vol. 23, no. 120, pp. 1–39, 2022. [Online]. Available: <a href="https://jmlr.org/papers/v23/21-0998.html">https://jmlr.org/papers/v23/21-0998.html</a></li>
+<li id="ref-13"><span class="refnum">[13]</span>A. Hannun, J. Digani, A. Katharopoulos, and R. Collobert, "MLX: Efficient and flexible machine learning on Apple silicon," GitHub repository, 2023. [Online]. Available: <a href="https://github.com/ml-explore/mlx">https://github.com/ml-explore/mlx</a></li>
+<li id="ref-14"><span class="refnum">[14]</span>Ollama, "Anthropic compatibility," Ollama documentation. Accessed: Oct. 17, 2026. [Online]. Available: <a href="https://docs.ollama.com/api/anthropic-compatibility">https://docs.ollama.com/api/anthropic-compatibility</a></li>
+<li id="ref-15"><span class="refnum">[15]</span>Anthropic, "Run Claude Code programmatically," Claude Code documentation. Accessed: Oct. 17, 2026. [Online]. Available: <a href="https://code.claude.com/docs/en/headless">https://code.claude.com/docs/en/headless</a></li>
+<li id="ref-16"><span class="refnum">[16]</span>B. Zhang, K. Lazuka, and M. Murag, "Equipping agents for the real world with Agent Skills," Anthropic Engineering Blog, Oct. 16, 2025. [Online]. Available: <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+<li id="ref-17"><span class="refnum">[17]</span>L. Madaan, A. K. Singh, R. Schaeffer, A. Poulton, S. Koyejo, P. Stenetorp, S. Narang, and D. Hupkes, "Quantifying variance in evaluation benchmarks," arXiv preprint arXiv:2406.10229, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2406.10229">https://arxiv.org/abs/2406.10229</a></li>
+<li id="ref-18"><span class="refnum">[18]</span>B. Atil, S. Aykent, A. Chittams, L. Fu, R. J. Passonneau, E. Radcliffe, G. R. Rajagopal, A. Sloan, T. Tudrej, F. Ture, Z. Wu, L. Xu, and B. Baldwin, "Non-determinism of 'deterministic' LLM settings," arXiv preprint arXiv:2408.04667, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2408.04667">https://arxiv.org/abs/2408.04667</a></li>
+<li id="ref-19"><span class="refnum">[19]</span>Apple, "Mac Studio (2025) - Tech Specs," Apple Support. Accessed: Oct. 17, 2026. [Online]. Available: <a href="https://support.apple.com/en-us/122211">https://support.apple.com/en-us/122211</a></li>
+</ol>
+</section>
+</article>
+</body>
+</html>
