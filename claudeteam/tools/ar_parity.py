@@ -2,6 +2,7 @@
 
     python3 claudeteam/tools/ar_parity.py journey        # one article
     python3 claudeteam/tools/ar_parity.py home           # the full site: home.html vs ar/home.html
+    python3 claudeteam/tools/ar_parity.py projects/NAME  # a project page: projects/NAME/index.html vs its ar/index.html
     python3 claudeteam/tools/ar_parity.py                # all articles plus home
 
 Passes when both pages have the same body structure (same tags in the same
@@ -54,15 +55,25 @@ def norm_home(link):
     link = link.replace('/Wireless-101/ar/', '/Wireless-101/')  # Arabic pages open Wireless 101 in Arabic
     link = re.sub(r'^(\.\./)+', '', link)
     link = link.replace('Articles/ar/', 'Articles/').replace('ar/home.html', 'home.html')
+    link = re.sub(r'^(projects/[\w-]+/)ar/$', r'\1', link)  # Arabic pages open a project's Arabic page
+    return re.sub(r'[?&]lang=ar$', '', link)
+
+def norm_project(link):
+    # The Arabic page sits one folder deeper (ar/index.html): one more ../ on every relative link.
+    if not re.match(r'^[a-z]+:|^//|^#', link):
+        link = re.sub(r'^\.\./', '', link, count=1) if norm_project.arabic else ('' if link == 'ar/' else link)
+    link = link.replace('/ar/home.html', '/home.html')
     return re.sub(r'[?&]lang=ar$', '', link)
 
 def check(slug):
     en, ar = Walk(), Walk()
-    pair = ('home.html', 'ar/home.html') if slug == 'home' else (f'Articles/{slug}.html', f'Articles/ar/{slug}.html')
+    pair = ('home.html', 'ar/home.html') if slug == 'home' else \
+           (f'{slug}/index.html', f'{slug}/ar/index.html') if slug.startswith('projects/') else \
+           (f'Articles/{slug}.html', f'Articles/ar/{slug}.html')
     en.feed(open(pair[0], encoding='utf-8').read())
     ar.feed(open(pair[1], encoding='utf-8').read())
     global norm
-    norm = norm_home if slug == 'home' else norm_article
+    norm = norm_home if slug == 'home' else norm_project if slug.startswith('projects/') else norm_article
     problems = []
     if en.tags != ar.tags:
         for i, (x, y) in enumerate(zip(en.tags, ar.tags)):
@@ -70,7 +81,10 @@ def check(slug):
                 problems.append(f'element #{i}: English <{x}>, Arabic <{y}>'); break
         else:
             problems.append(f'element count: English {len(en.tags)}, Arabic {len(ar.tags)}')
-    el, al = [norm(l) for l in en.links], [norm(l) for l in ar.links]
+    norm_project.arabic = False
+    el = [norm(l) for l in en.links]
+    norm_project.arabic = True
+    al = [norm(l) for l in ar.links]
     if el != al:
         diff = [(x, y) for x, y in zip(el, al) if x != y][:3]
         problems.append(f'links differ: {diff or (len(el), len(al))}')
