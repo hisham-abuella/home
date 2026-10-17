@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloud vs Local LLM Slides</title>
+<meta name="description" content="Cloud vs. Local LLM Agents for Generating Lecture Slides with an Agent Skill: A Preliminary Cost–Time–Quality Study">
+<meta name="author" content="Hisham Abuella">
+<style>
+:root {
+  --ink: #000;
+  --ink-2: #444;
+  --ink-3: #6b6b6b;
+  --rule: #c8c8c8;
+  --rule-strong: #000;
+  --stripe: #f5f5f5;
+  --panel: #fafafa;
+  --paper: #fff;
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --col: 720px;
+  --wide: 900px;
+  --gutter: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18.5px;
+  line-height: 1.6;
+  text-align: left;
+  font-kerning: normal;
+}
+@media (max-width: 600px) { body { font-size: 18px; } }
+
+/* Layout: one centred text column, optional wider lane for figures and tables */
+article {
+  display: grid;
+  --lane: clamp(0px, (100% - var(--col) - 2 * var(--gutter)) / 2, (var(--wide) - var(--col)) / 2);
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [wide-start] var(--lane)
+    [text-start] min(var(--col), 100% - 2 * var(--gutter)) [text-end]
+    var(--lane) [wide-end]
+    minmax(var(--gutter), 1fr) [full-end];
+  padding-bottom: 4rem;
+}
+article > *, section > * { grid-column: text; min-width: 0; }
+article > section, article > header {
+  grid-column: full;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+header > * { grid-column: text; min-width: 0; }
+.wide, figure.fig-wide, figure.table { grid-column: wide; }
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 16px; top: 16px; background: var(--paper); padding: 4px 8px; }
+
+/* Links: plain underlined black */
+a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+a.cite { text-decoration-color: var(--ink-3); white-space: nowrap; }
+
+/* Masthead */
+.masthead { padding-top: 3.5rem; }
+h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.25rem;
+  text-wrap: balance;
+}
+.byline { margin: 0; font-size: 1.05rem; line-height: 1.45; }
+.author { font-weight: 700; }
+.affil { color: var(--ink-2); }
+.dateline { margin: 0.6rem 0 0; font-family: var(--sans); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.status {
+  margin: 0.4rem 0 0; font-family: var(--sans); font-size: 0.9rem; color: var(--ink);
+  font-style: italic;
+}
+
+.toc { margin-top: 2rem; border-top: 1px solid var(--rule); padding-top: 0.9rem; }
+.toc .toc-h {
+  font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3); margin: 0 0 0.5rem; font-weight: 600;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 2rem; font-family: var(--sans); font-size: 0.9rem; line-height: 1.5; }
+.toc li { break-inside: avoid; padding: 0.15rem 0; }
+.toc a { text-decoration-color: var(--rule); }
+.toc a:hover { text-decoration-color: var(--ink); }
+.toc .num { display: inline-block; min-width: 2.6em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+@media (max-width: 520px) { .toc ol { columns: 1; } }
+
+/* Abstract */
+.abstract { margin-top: 2rem; }
+.abstract > * { grid-column: text; }
+.abstract h2 {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 1.1rem; margin: 0 0 0.4rem;
+  font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+}
+.abstract .lead { font-size: 1.08em; line-height: 1.6; margin: 0 0 1rem; }
+.abstract .index-terms {
+  font-size: 0.9rem; color: var(--ink-2); margin: 0;
+  border-bottom: 1px solid var(--rule-strong); padding-bottom: 1.1rem;
+}
+.abstract .index-terms strong { color: var(--ink); }
+
+/* Headings */
+h2, h3 { font-family: var(--serif); color: var(--ink); text-wrap: balance; scroll-margin-top: 1rem; }
+section > h2 {
+  font-size: 1.5rem; line-height: 1.25; font-weight: 700;
+  margin: 3.2rem 0 0.9rem;
+}
+h3 { font-size: 1.15rem; line-height: 1.3; font-weight: 700; font-style: italic; margin: 2.2rem 0 0.5rem; }
+h2 .num, h3 .num { font-style: normal; font-variant-numeric: lining-nums; margin-right: 0.15em; }
+h3 .num { font-style: normal; }
+
+p { margin: 0 0 1.05rem; }
+ul, ol { margin: 0 0 1.2rem; padding-left: 1.5rem; }
+li { margin: 0 0 0.4rem; }
+li::marker { color: var(--ink-2); }
+strong { font-weight: 700; }
+code {
+  font-family: var(--mono); font-size: 0.82em;
+  background: var(--stripe); border: 1px solid #e4e4e4; border-radius: 3px;
+  padding: 0.05em 0.3em; overflow-wrap: anywhere;
+}
+
+/* Figures */
+figure { margin: 2rem 0 2.2rem; }
+figure.fig .fig-scroll { display: flex; justify-content: center; }
+figure.fig img { display: block; width: 100%; height: auto; }
+figure.fig:not(.fig-wide) img { max-width: 600px; }
+figure.fig-wide .fig-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+figure.fig-wide img { min-width: 560px; }
+figure.fig figcaption {
+  font-family: var(--sans); font-size: 0.86rem; line-height: 1.5; color: var(--ink-2);
+  margin: 0.8rem auto 0; max-width: var(--col);
+  border-top: 1px solid var(--rule); padding-top: 0.6rem;
+}
+.flabel { font-weight: 700; color: var(--ink); }
+
+/* Tables */
+figure.table { margin: 2.2rem 0 2.4rem; }
+figure.table figcaption {
+  text-align: center; font-family: var(--serif); margin: 0 0 0.7rem;
+  font-variant: small-caps; letter-spacing: 0.03em;
+}
+.tlabel { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; font-variant: normal; }
+.tcap { display: block; font-size: 0.85rem; color: var(--ink-2); }
+.table-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border-top: 1.5px solid var(--rule-strong); border-bottom: 1.5px solid var(--rule-strong);
+}
+.table-scroll:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+table {
+  border-collapse: collapse; width: 100%;
+  font-family: var(--sans); font-size: 0.8rem; line-height: 1.4;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+th, td { padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+thead th {
+  font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--rule-strong);
+  vertical-align: bottom;
+}
+tbody tr + tr td { border-top: 1px solid #e2e2e2; }
+tbody tr:nth-child(even) { background: var(--stripe); }
+td.n, th.n { text-align: right; }
+td.n { white-space: nowrap; }
+td:first-child, th:first-child { padding-left: 0.4rem; }
+td:last-child, th:last-child { padding-right: 0.4rem; }
+td code { font-size: 0.92em; white-space: nowrap; overflow-wrap: normal; }
+table { min-width: 560px; }
+#table-ii td:nth-child(2) { white-space: nowrap; }
+#table-iii th, #table-iii td { padding-inline: 0.4rem; }
+#table-iii td:nth-child(2) { white-space: nowrap; }
+#table-iii table { min-width: 860px; }
+#table-iv table { min-width: 720px; }
+#table-v table { min-width: 760px; }
+.table-note {
+  font-family: var(--sans); font-size: 0.82rem; line-height: 1.5; color: var(--ink-2);
+  margin: 0.7rem 0 0; max-width: var(--col);
+}
+
+/* Disclaimer callout */
+.callout {
+  border: 1.5px solid var(--ink); padding: 1rem 1.2rem 0.2rem; margin: 1.2rem 0 1.6rem;
+  background: var(--paper);
+}
+.callout-label {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+/* Artifacts and Reproducibility */
+section.artifacts {
+  grid-column: wide; display: block; margin-top: 3.5rem;
+  border: 1.5px solid var(--ink); background: var(--panel);
+  padding: 1.6rem clamp(16px, 4vw, 40px) 1.6rem;
+}
+section.artifacts > h2 { margin: 0 0 0.8rem; font-size: 1.6rem; }
+section.artifacts > p, section.artifacts > ul { max-width: calc(var(--col) + 80px); }
+section.artifacts > figure.table { margin-bottom: 0; }
+section.artifacts p.group { margin: 1.4rem 0 0.4rem; font-family: var(--sans); font-size: 0.95rem; }
+section.artifacts ul { font-size: 0.95rem; }
+section.artifacts li { margin-bottom: 0.35rem; }
+section.artifacts .table-note { max-width: none; }
+section.artifacts .table-scroll { background: var(--paper); }
+figure.decks table { font-size: 0.85rem; }
+figure.decks td { vertical-align: middle; }
+figure.decks td.deck { min-width: 15rem; }
+figure.decks td.deck a {
+  display: inline-block; padding: 0.3rem 0; font-weight: 600;
+  text-decoration-thickness: 1.5px;
+}
+figure.decks td.deck code { background: none; border: 0; padding: 0; font-size: 0.95em; white-space: normal; overflow-wrap: anywhere; }
+figure.decks td:nth-child(1), figure.decks td:nth-child(2) { white-space: nowrap; }
+
+/* Generated decks: stacked rows on narrow screens so every deck link is in view */
+@media (max-width: 640px) {
+  figure.decks .table-scroll { overflow: visible; }
+  figure.decks table { min-width: 0; font-size: 0.9rem; }
+  figure.decks thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  figure.decks table, figure.decks tbody, figure.decks tr, figure.decks td { display: block; }
+  figure.decks tr { padding: 0.6rem 0.4rem; }
+  figure.decks tbody tr + tr td { border-top: 0; }
+  figure.decks tbody tr + tr { border-top: 1px solid #d8d8d8; }
+  figure.decks td, figure.decks td.n { padding: 0.1rem 0; text-align: left; white-space: normal; }
+  figure.decks td:nth-child(1), figure.decks td:nth-child(2) { white-space: normal; }
+  figure.decks td::before { content: attr(data-label) ": "; font-weight: 600; color: var(--ink-2); }
+  figure.decks td:nth-child(1)::before, figure.decks td:nth-child(2)::before { content: none; }
+  figure.decks td:nth-child(1), figure.decks td:nth-child(2) { display: inline; font-weight: 600; }
+  figure.decks td:nth-child(1)::after { content: "\00a0\00b7\00a0"; }
+  figure.decks td:nth-child(3) { margin-top: 0.2rem; }
+  figure.decks td.deck { min-width: 0; }
+  figure.decks td.deck::before { content: none; }
+}
+
+/* References */
+section.references > h2 { margin-top: 3.5rem; }
+ol.refs {
+  list-style: none; padding: 0; margin: 0;
+  font-size: 0.85rem; line-height: 1.5;
+}
+ol.refs li {
+  padding-left: 2.6em; text-indent: -2.6em; margin: 0 0 0.6rem;
+  overflow-wrap: anywhere; scroll-margin-top: 1rem;
+}
+ol.refs .refnum { display: inline-block; width: 2.6em; text-indent: 0; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
+
+/* Print */
+@media print {
+  @page { margin: 18mm 16mm; }
+  body { font-size: 10.5pt; line-height: 1.45; }
+  article { display: block; padding: 0; }
+  article > section, article > header { display: block; }
+  .masthead { padding-top: 0; }
+  .skip { display: none; }
+  .toc ol { columns: 2; }
+  a { text-decoration: none; }
+  a.cite { text-decoration: none; }
+  section > h2, h3 { break-after: avoid; }
+  figure, .callout, ol.refs li, tr { break-inside: avoid; }
+  .table-scroll, figure.fig-wide .fig-scroll { overflow: visible; }
+  figure.fig-wide img { min-width: 0; }
+  table, #table-iii table, #table-iv table, #table-v table { min-width: 0; }
+  table { font-size: 7.5pt; }
+  th, td { padding: 0.25rem 0.3rem; }
+  section.artifacts { background: none; padding: 0.6rem 0 0; border-width: 1.5px 0 0; }
+  figure.decks td.deck a::after { content: none; }
+  tbody tr:nth-child(even) { background: #f2f2f2; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#sec-1">Skip to the article</a>
+<article>
+  <header class="masthead">
+    <h1>Cloud vs. Local LLM Agents for Generating Lecture Slides with an Agent Skill: A Preliminary Cost–Time–Quality Study</h1>
+    <p class="byline"><span class="author">Hisham Abuella</span><br><span class="affil"><em>[Affiliation placeholder]</em></span></p>
+    <p class="dateline"><time datetime="2026-10">October 2026</time></p>
+    <p class="status">Preliminary study: early indications from single runs</p>
+    <nav class="toc" aria-label="Contents">
+      <h2 class="toc-h">Contents</h2>
+      <ol>
+        <li><span class="num"></span><a href="#abstract">Abstract</a></li>
+        <li><span class="num">I.</span><a href="#sec-1">Introduction</a></li>
+        <li><span class="num">II.</span><a href="#sec-2">Related Work</a></li>
+        <li><span class="num">III.</span><a href="#sec-3">Study Design and Constraints</a></li>
+        <li><span class="num">IV.</span><a href="#sec-4">Results</a></li>
+        <li><span class="num">V.</span><a href="#sec-5">Experiment: A Shared Plan to Help Local Models</a></li>
+        <li><span class="num">VI.</span><a href="#sec-6">Discussion</a></li>
+        <li><span class="num">VII.</span><a href="#sec-7">Disclaimer and Limitations</a></li>
+        <li><span class="num">VIII.</span><a href="#sec-8">Conclusion</a></li>
+        <li><span class="num">IX.</span><a href="#sec-undefined">Future Work and Planned Tests</a></li>
+        <li><span class="num"></span><a href="#artifacts">Artifacts and Reproducibility</a></li>
+        <li><span class="num"></span><a href="#undefined">Appendix A. System Specifications</a></li>
+        <li><span class="num"></span><a href="#references">References</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <section id="abstract" class="abstract" aria-labelledby="abstract-h">
+    <h2 id="abstract-h">Abstract</h2>
+    <p class="lead">Coding agents can now build complete slide decks by following a packaged Agent Skill. We ask how cloud and local models compare on that job in time, cost and quality. Three cloud models (Opus 5.5, Sonnet 5.5, Haiku 5.5) and one local model (qwen3.8 27B, served through Ollama on a Mac Studio with an Apple M4 Max) were given the same one-shot request: turn a course module into a 20–30 slide, 50-minute lecture deck using the present-in-html skill in Claude Code. We ran two subjects (Wireless 101, STATS 101). Decks were scored by the skill's checker, by counts, and by a blind LLM judge on seven criteria. All six cloud runs finished in 5.4–11.7 minutes; Opus and Sonnet scored 9/10 on both subjects and Haiku 7/10. The dense local model did not finish within 120 minutes on either subject. In a separate experiment, not compared with these runs, Opus wrote one detailed plan and three local models built from it; one of them, the mixture-of-experts model qwen3.6 35B-A3B, finished a deck the judge scored 9/10. Each cell is a single run, so these are early indications, not firm conclusions.</p>
+    <p class="index-terms"><strong>Index Terms</strong>: large language models, LLM agents, Agent Skills, slide generation, local inference, mixture of experts, LLM-as-a-judge, cost–quality trade-off.</p>
+  </section>
+
+<section id="sec-1" aria-labelledby="sec-1-h">
+<h2 id="sec-1-h"><span class="num">I.</span> Introduction</h2>
+<p>Preparing a lecture deck from a course module is slow, repetitive work. Agentic coding tools such as Claude Code can now read a source file, call tools, write HTML and run a checker in one session, guided by a packaged Agent Skill <a class="cite" href="#ref-16">[16]</a>. The question for a lecturer or a small team is practical: which model should run that agent, and is a model on one's own computer good enough?</p>
+<p>Cloud models are fast but billed per token. Local models are free per token and keep the material on the machine, but they are smaller and run on consumer hardware. Prior agent benchmarks report a clear gap between commercial and open-weight models in multi-turn tool use <a class="cite" href="#ref-5">[5]</a>. We wanted to see how that gap looks on one concrete, end-to-end authoring task.</p>
+<p>This paper reports a small study that runs the same skill, harness and prompt across four models (three cloud, one local) and measures wall-clock time, cost and judged quality. It also reports a separate experiment in which local models build from a plan written by a cloud model. Its contributions are:</p>
+<ul>
+<li>A reproducible harness that runs Claude Code headless <a class="cite" href="#ref-15">[15]</a> with cloud models and with local models through Ollama's Anthropic-compatible endpoint <a class="cite" href="#ref-14">[14]</a>, in isolated folders.</li>
+<li>A three-part scoring scheme: the skill's automatic checker, structural counts, and a blind LLM judge with a seven-criterion rubric and itemised findings.</li>
+<li>Results for two subjects, plus a separate experiment in which three local models build from one Opus-written plan, with all prompts, the plan, transcripts, judge outputs and decks released.</li>
+<li>Observations about the skill itself, including a checker gap that lets an unfilled template pass.</li>
+</ul>
+<p>In short, the results indicate that Sonnet 5.5 matched Opus 5.5 on judged quality at about half the time and a quarter to a third of the cost, and that the dense local model was too slow to finish unaided. The separate experiment (Section V) indicates that a plan written by a strong model can make a local build feasible.</p>
+</section>
+<section id="sec-2" aria-labelledby="sec-2-h">
+<h2 id="sec-2-h"><span class="num">II.</span> Related Work</h2>
+<p><strong>Slide generation.</strong> DOC2PPT framed document-to-slide generation as a task <a class="cite" href="#ref-8">[8]</a>. PPTAgent generates presentations with an agent that edits reference slides and evaluates them with an LLM-based rubric covering content, design and coherence <a class="cite" href="#ref-9">[9]</a>. AutoPresent generates slides as programs and benchmarks small open models against frontier models <a class="cite" href="#ref-10">[10]</a>. Our setting is closest to AutoPresent: the deck is code (one HTML file), but the generator is a general coding agent driven by a skill rather than a task-specific model.</p>
+<p><strong>Agents and benchmarks.</strong> ReAct describes the interleaved reason–act–observe loop that tool-using agents follow <a class="cite" href="#ref-6">[6]</a>. SWE-bench evaluates agents on long, multi-step software tasks <a class="cite" href="#ref-4">[4]</a>, and AgentBench reports that API models lead open-weight models in agentic settings <a class="cite" href="#ref-5">[5]</a>. Agent Skills package instructions, scripts and resources that the agent loads on demand <a class="cite" href="#ref-16">[16]</a>; our task tests one such skill end to end.</p>
+<p><strong>LLM-as-a-judge.</strong> Strong LLM judges agree well with human preferences but show position, verbosity and self-enhancement biases <a class="cite" href="#ref-1">[1]</a>. G-Eval scores text against explicit criteria with an LLM and notes a possible preference for LLM-written text <a class="cite" href="#ref-3">[3]</a>. LLM evaluators can recognise and favour their own generations <a class="cite" href="#ref-2">[2]</a>, which matters here because our judge also competes. Our accuracy criterion relies on the notions of faithfulness and factual hallucination surveyed in <a class="cite" href="#ref-11">[11]</a>.</p>
+<p><strong>Plan and execute.</strong> ReWOO separates a planner from workers and shows that planning ability can be passed from a large model to a smaller one <a class="cite" href="#ref-7">[7]</a>. Our separate plan experiment (Section V) follows the same split: a cloud model plans once, local models execute.</p>
+<p><strong>Local and MoE inference.</strong> Sparse mixture-of-experts models activate only a subset of parameters per token <a class="cite" href="#ref-12">[12]</a>, which lowers compute per token compared with a dense model of similar total size. Two of the local models in this study run in MLX format on Apple silicon <a class="cite" href="#ref-13">[13]</a> and the third, the MoE model, is a Q4_K_M GGUF build (Appendix A); all are served by Ollama, which implements only a subset of the Anthropic Messages API <a class="cite" href="#ref-14">[14]</a>.</p>
+</section>
+<section id="sec-3" aria-labelledby="sec-3-h">
+<h2 id="sec-3-h"><span class="num">III.</span> Study Design and Constraints</h2>
+<h3 id="sec-3a"><span class="num">A.</span> Task and Inputs</h3>
+<p>Each task supplies one Markdown course module and one fixed prompt. The two subjects are Module 1 of <em>Wireless 101</em> (waves, decibels, path loss, link budget, modulation, Shannon, multiple access) and Module 1 of <em>STATS 101</em> (samples, bias, variable types, graphs, centre, spread, outliers, z-scores, correlation). Both prompts ask for a deck for a 50-minute lecture to first-year undergraduates with these requirements: 20–30 slides in the module's order; only facts, numbers and formulas from the file; animated diagrams where they help; captioned image placeholders; speaker notes on every slide; a quiz and a summary at the end; save as <code>deck.html</code> and run the skill's checker until it passes; ask no questions and finish in one go.</p>
+<p>The prompts differ in how the skill is invoked. The Wireless prompt begins "Use the present-in-html skill to…", so each model chose to call the skill itself. The STATS prompts begin with the slash command <code>/present-in-html:present-in-html</code>, which loads the skill before the first turn.</p>
+<h3 id="sec-3b"><span class="num">B.</span> Models and Hardware</h3>
+<p>TABLE I lists the models. Cloud models ran through the Anthropic API; local models ran on a single Mac Studio (Apple M4 Max) with 64 GB of unified memory, through Ollama 0.40.5, with Claude Code pointed at Ollama's Anthropic-compatible endpoint <a class="cite" href="#ref-14">[14]</a>. All runs used present-in-html plugin 3.1.0 at commit ae03c20. The full system specifications, including each local model's architecture and quantization, are in Appendix A <a class="cite" href="#ref-19">[19]</a>.</p>
+<figure class="table" id="table-i">
+<figcaption><span class="tlabel">TABLE I</span><span class="tcap">MODELS AND WHERE THEY RAN</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE I: MODELS AND WHERE THEY RAN"><table>
+<thead><tr><th scope="col">Model</th><th scope="col">Identifier</th><th scope="col">Runs on</th><th scope="col">Tasks</th></tr></thead><tbody>
+<tr><td>Opus 5.5</td><td><code>claude-opus-5-5</code></td><td>Anthropic API</td><td>Wireless 101, STATS 101; also judge, and planner for the plan experiment</td></tr>
+<tr><td>Sonnet 5.5</td><td><code>claude-sonnet-5-5</code></td><td>Anthropic API</td><td>Wireless 101, STATS 101</td></tr>
+<tr><td>Haiku 5.5</td><td><code>claude-haiku-5-5</code></td><td>Anthropic API</td><td>Wireless 101, STATS 101</td></tr>
+<tr><td>qwen3.8 27B (dense)</td><td><code>qwen3.8:27b-mlx</code></td><td>Apple M4 Max, 64 GB, Ollama 0.40.5</td><td>Wireless 101, STATS 101; also plan experiment</td></tr>
+<tr><td>qwen3.6 35B-A3B (MoE, 3B active)</td><td><code>qwen3.6:35b-a3b</code></td><td>Apple M4 Max, 64 GB, Ollama 0.40.5</td><td>Plan experiment only</td></tr>
+<tr><td>gemma4 26B</td><td><code>gemma4:26b-mlx</code></td><td>Apple M4 Max, 64 GB, Ollama 0.40.5</td><td>Plan experiment only</td></tr>
+</tbody></table></div>
+</figure>
+<figure class="table" id="table-ii">
+<figcaption><span class="tlabel">TABLE II</span><span class="tcap">RUN SETTINGS PER TASK</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE II: RUN SETTINGS PER TASK"><table>
+<thead><tr><th scope="col">Task</th><th scope="col">Run ID</th><th scope="col" class="n">Claude Code</th><th scope="col">Time limit</th><th scope="col">Cloud budget cap</th></tr></thead><tbody>
+<tr><td>Wireless 101</td><td>20261016-000644</td><td class="n">2.1.301</td><td>120 min</td><td>$20 per run</td></tr>
+<tr><td>STATS 101</td><td>20261016-063639-stats-101</td><td class="n">2.1.301</td><td>120 min</td><td>$20 per run</td></tr>
+<tr><td>STATS 101 + plan (plan experiment, Section V)</td><td>20261016-214018-stats-101-planned</td><td class="n">2.1.302</td><td>240 min</td><td>$20 per run</td></tr>
+</tbody></table></div>
+</figure>
+<h3 id="sec-3c"><span class="num">C.</span> Harness and Isolation</h3>
+<p>Each run starts in a new empty folder created outside the repository, holding only the source module (and, for the planned task, the plan). The folder is outside the repository because Claude Code reads <code>CLAUDE.md</code> from parent folders; the script refuses to start if any parent folder has a <code>CLAUDE.md</code> or <code>.claude</code>. The CLI runs headless <a class="cite" href="#ref-15">[15]</a> with no settings files (<code>--setting-sources ""</code>), only the study's plugin (<code>--plugin-dir</code>) besides the CLI's three built-in plugins, no MCP servers or claude.ai connectors (<code>--strict-mcp-config</code>), no saved session, permissions bypassed, and each model's default effort.</p>
+<p>Runs execute one at a time so they do not compete for CPU, GPU or network. Each local model is loaded into memory before its clock starts, so load time is not counted. The CLI's <code>init</code> event is saved in each transcript, so the loaded plugins and MCP servers can be checked after the fact.</p>
+<h3 id="sec-3d"><span class="num">D.</span> Plan Experiment (Reported Separately)</h3>
+<p>Separately from the main comparison, we ran an experiment to help local models finish; it is reported in Section V and is not part of the comparison. For this planned task, Opus 5.5 first wrote one <code>PLAN.md</code> with a plan-only prompt. That prompt asks for every slide's exact text and full speaker notes, ready-to-paste SVG for each diagram, and numbered build steps with shell commands, because the plan "will be built … by a smaller, much slower local model that has never used this skill." Planning took 23m 20s, 51 turns and 101,973 output tokens, cost $5.05 ($5.046), and produced a 94 KB plan.</p>
+<p>The plan was patched by hand in two places before the builds: the folder variable <code>D</code> was set to <code>$PWD</code> (it held the planner's temp folder) and the deck file was renamed <code>deck.html</code> to match the build prompt. Each local model then received the build prompt, which tells it to follow the plan's build steps, not to re-plan, and not to read the skill's reference files unless a step says so.</p>
+<h3 id="sec-3e"><span class="num">E.</span> Scoring</h3>
+<p>Every deck is scored three ways. First, the skill's checker (<code>check.mjs</code>) tests layout, text outside the safe area, text size, contrast, broken charts and missing notes, and takes a screenshot of every slide. Second, a counting script records slides, slides with notes, diagrams, animated slides, image placeholders and whether a quiz is present.</p>
+<p>Third, a blind judge (Opus 5.5, <code>claude-opus-5-5</code>) grades each deck separately without being told which model made it, in the spirit of rubric-based LLM evaluation <a class="cite" href="#ref-1">[1]</a>, <a class="cite" href="#ref-3">[3]</a>. It reads the source, the request, the slide text and notes, the checker output and every screenshot. It returns structured output <a class="cite" href="#ref-15">[15]</a> that lists each wrong claim (slide, quote, correction, major/minor), each claim not in the source and whether it is true, each UI issue seen in the screenshots, and the major mistakes. It scores seven criteria from 1 to 5: accuracy, coverage, teaching, visual, diagrams, notes and requirements. It then gives an overall score from 1 to 10 for "how ready this deck is to teach from tomorrow."</p>
+<p>Time is wall-clock time for the whole run; API time is time spent waiting on the model. Cost is the CLI's reported <code>total_cost_usd</code>, which the documentation describes as a client-side estimate <a class="cite" href="#ref-15">[15]</a>. The CLI also prints a price for local runs, which is not a real charge; we record local runs as $0 and do not count electricity. The judge's cost ($0.61–$0.74 per finished deck) is kept separate.</p>
+<h3 id="sec-3f"><span class="num">F.</span> Constraints and Threats to Validity</h3>
+<ul>
+<li><strong>One sample per cell.</strong> Each model ran once per task (n = 1). LLM outputs vary between runs even with fixed settings <a class="cite" href="#ref-18">[18]</a>, and score differences smaller than benchmark variance are not meaningful <a class="cite" href="#ref-17">[17]</a>.</li>
+<li><strong>Judge self-preference.</strong> The judge, Opus 5.5, is also one of the models compared, and the other two cloud models are from the same family. LLM judges can favour their own outputs <a class="cite" href="#ref-2">[2]</a>, <a class="cite" href="#ref-1">[1]</a>. Blinding hides the model name but not the style.</li>
+<li><strong>Cost is an estimate.</strong> Cloud costs are the CLI's client-side list-price estimate <a class="cite" href="#ref-15">[15]</a>, not an invoice.</li>
+<li><strong>Different settings for the planned run.</strong> It used Claude Code 2.1.302 with a 240-minute limit; the other runs used 2.1.301 with 120 minutes. For this reason, and because its input differs, it is reported as a separate experiment and not compared with the main runs.</li>
+<li><strong>Hand-patched plan.</strong> Two paths in the Opus plan were fixed by hand. The <code>plan-prompt.txt</code> in the artifacts is the revised version, which now asks for both paths.</li>
+<li><strong>One machine.</strong> All local results come from a single M4 Max with 64 GB; other hardware would give different times.</li>
+<li><strong>Partial API.</strong> Ollama implements only a subset of the Anthropic Messages API <a class="cite" href="#ref-14">[14]</a>, which may affect local tool use and streaming.</li>
+<li><strong>Prompt and rubric wording.</strong> The Wireless prompt asks the model to use the skill, while the STATS prompts load it with a slash command. The Wireless run was judged with the audience and requirements written into the rubric; the STATS runs read them from the request.</li>
+</ul>
+</section>
+<section id="sec-4" aria-labelledby="sec-4-h">
+<h2 id="sec-4-h"><span class="num">IV.</span> Results</h2>
+<p>This section covers the main comparison: the eight runs on Wireless 101 and STATS 101. TABLE III gives their results. The separate experiment of Section V is not included here.</p>
+<figure class="table" id="table-iii">
+<figcaption><span class="tlabel">TABLE III</span><span class="tcap">MAIN RESULTS FOR THE TWO MAIN TASKS (ONE RUN PER CELL)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE III: MAIN RESULTS FOR THE TWO MAIN TASKS (ONE RUN PER CELL)"><table>
+<thead><tr><th scope="col">Task</th><th scope="col">Model</th><th scope="col">Runs on</th><th scope="col">Status</th><th scope="col" class="n">Wall time</th><th scope="col" class="n">Cost (USD)</th><th scope="col" class="n">Slides</th><th scope="col">Checker</th><th scope="col" class="n">Wrong claims (major)</th><th scope="col" class="n">UI issues (major)</th><th scope="col" class="n">Judge /10</th></tr></thead><tbody>
+<tr><td>Wireless 101</td><td>Opus 5.5</td><td>Cloud</td><td>finished</td><td class="n">11m 44s</td><td class="n">2.88</td><td class="n">30</td><td>pass</td><td class="n">2 (0)</td><td class="n">4 (0)</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>Wireless 101</td><td>Sonnet 5.5</td><td>Cloud</td><td>finished</td><td class="n">5m 27s</td><td class="n">0.90</td><td class="n">30</td><td>pass</td><td class="n">0 (0)</td><td class="n">7 (0)</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>Wireless 101</td><td>Haiku 5.5</td><td>Cloud</td><td>finished</td><td class="n">7m 05s</td><td class="n">0.24</td><td class="n">29</td><td>pass</td><td class="n">5 (1)</td><td class="n">7 (1)</td><td class="n"><strong>7</strong></td></tr>
+<tr><td>Wireless 101</td><td>qwen3.8 27B</td><td>Local</td><td>timed out</td><td class="n">120m 00s</td><td class="n">0</td><td class="n">–</td><td>–</td><td class="n">–</td><td class="n">–</td><td class="n">unfinished</td></tr>
+<tr><td>STATS 101</td><td>Opus 5.5</td><td>Cloud</td><td>finished</td><td class="n">11m 14s</td><td class="n">2.79</td><td class="n">30</td><td>pass</td><td class="n">1 (0)</td><td class="n">4 (0)</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>STATS 101</td><td>Sonnet 5.5</td><td>Cloud</td><td>finished</td><td class="n">5m 24s</td><td class="n">0.70</td><td class="n">29</td><td>pass</td><td class="n">0 (0)</td><td class="n">6 (1)</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>STATS 101</td><td>Haiku 5.5</td><td>Cloud</td><td>finished</td><td class="n">8m 44s</td><td class="n">0.32</td><td class="n">29</td><td>pass</td><td class="n">1 (0)</td><td class="n">6 (2)</td><td class="n"><strong>7</strong></td></tr>
+<tr><td>STATS 101</td><td>qwen3.8 27B</td><td>Local</td><td>timed out</td><td class="n">120m 00s</td><td class="n">0</td><td class="n">–</td><td>–</td><td class="n">–</td><td class="n">–</td><td class="n">unfinished</td></tr>
+</tbody></table></div>
+<p class="table-note">Cost is the CLI's client-side estimate for cloud runs; local runs are recorded as $0 (electricity not counted). The judge's cost is not included. For the two timed-out qwen3.8 27B runs, the file left on disk was the template with its sample slides unchanged, which passed the checker and was scored 1/10 (Section IV-F).</p>
+</figure>
+<h3 id="sec-4a"><span class="num">A.</span> Time</h3>
+<p>All six cloud runs finished, between 5m 24s (Sonnet, STATS) and 11m 44s (Opus, Wireless) (Fig. 1). Sonnet was the fastest on both subjects, at 5m 27s and 5m 24s, about half of Opus's 11m 44s and 11m 14s. Haiku was slower than Sonnet on both subjects (7m 05s and 8m 44s) and used more turns (37 and 46) and more output tokens (68,384 and 90,031) than Sonnet (29 and 22 turns; 38,188 and 29,603 tokens).</p>
+<figure class="fig" id="fig-1">
+<div class="fig-scroll"><img src="figures/fig1-time.svg" alt="Wall-clock time per run on a log scale, grouped by task" loading="lazy"></div>
+<figcaption><span class="flabel">Fig. 1.</span> Wall-clock time per run on a log scale, grouped by task. Crosses mark runs that timed out; dashed lines mark the 120-minute limit.</figcaption>
+</figure>
+<p>qwen3.8 27B reached the 120-minute limit on both subjects, after 19 and 22 tool calls.</p>
+<h3 id="sec-4b"><span class="num">B.</span> Cost</h3>
+<p>Cloud cost per finished deck ranged from $0.24 (Haiku, Wireless) to $2.88 (Opus, Wireless) (Fig. 2). Sonnet cost $0.90 and $0.70, which is 31% and 25% of Opus's $2.88 and $2.79. Haiku cost $0.24 and $0.32.</p>
+<figure class="fig" id="fig-2">
+<div class="fig-scroll"><img src="figures/fig2-cost.svg" alt="Cost per finished deck in USD (CLI estimate), grouped by task" loading="lazy"></div>
+<figcaption><span class="flabel">Fig. 2.</span> Cost per finished deck in USD (CLI estimate), grouped by task.</figcaption>
+</figure>
+<h3 id="sec-4c"><span class="num">C.</span> Quality</h3>
+<p>TABLE IV gives the judge's criterion scores, and Fig. 3 plots overall score against cost. Opus and Sonnet scored 9/10 on both subjects and Haiku 7/10 on both. Every finished deck passed the checker with 0 issues and had speaker notes on every slide and a quiz.</p>
+<figure class="table" id="table-iv">
+<figcaption><span class="tlabel">TABLE IV</span><span class="tcap">JUDGE SCORES FOR FINISHED DECKS (CRITERIA 1–5, OVERALL 1–10)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE IV: JUDGE SCORES FOR FINISHED DECKS (CRITERIA 1–5, OVERALL 1–10)"><table>
+<thead><tr><th scope="col">Task</th><th scope="col">Model</th><th scope="col" class="n">Accuracy</th><th scope="col" class="n">Coverage</th><th scope="col" class="n">Teaching</th><th scope="col" class="n">Visual</th><th scope="col" class="n">Diagrams</th><th scope="col" class="n">Notes</th><th scope="col" class="n">Requirements</th><th scope="col" class="n">Overall</th></tr></thead><tbody>
+<tr><td>Wireless 101</td><td>Opus 5.5</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>Wireless 101</td><td>Sonnet 5.5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">4</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>Wireless 101</td><td>Haiku 5.5</td><td class="n">4</td><td class="n">4</td><td class="n">4</td><td class="n">3</td><td class="n">3</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>7</strong></td></tr>
+<tr><td>STATS 101</td><td>Opus 5.5</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>STATS 101</td><td>Sonnet 5.5</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">5</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>STATS 101</td><td>Haiku 5.5</td><td class="n">4</td><td class="n">4</td><td class="n">4</td><td class="n">3</td><td class="n">4</td><td class="n">5</td><td class="n">4</td><td class="n"><strong>7</strong></td></tr>
+</tbody></table></div>
+</figure>
+<figure class="fig" id="fig-3">
+<div class="fig-scroll"><img src="figures/fig3-quality-vs-cost.svg" alt="Judge overall score (/10) against cost per finished deck (USD)" loading="lazy"></div>
+<figcaption><span class="flabel">Fig. 3.</span> Judge overall score (/10) against cost per finished deck (USD). W = Wireless 101, S = STATS 101.</figcaption>
+</figure>
+<p>Fig. 4 shows the mean criterion scores per model. No deck scored 5 on visual; Opus and Sonnet averaged 4.0 and Haiku 3.0. The models differed most on diagrams (Opus 5.0, Sonnet 4.5, Haiku 3.5). The diagram counts only partly match these scores: Opus drew 13 and 11 diagrams, Sonnet 10 and 7, and Haiku 4 and 7. Opus also wrote the longest notes (3,042 and 2,962 words).</p>
+<figure class="fig fig-wide" id="fig-4">
+<div class="fig-scroll"><img src="figures/fig4-criteria.svg" alt="Mean judge score per criterion (1–5) for each cloud model over its two finished decks, Wireless 101 and STATS 101 (n = 2 per model)" loading="lazy"></div>
+<figcaption><span class="flabel">Fig. 4.</span> Mean judge score per criterion (1–5) for each cloud model over its two finished decks, Wireless 101 and STATS 101 (n = 2 per model). The overall score (/10) is drawn at half height.</figcaption>
+</figure>
+<h3 id="sec-4d"><span class="num">D.</span> Errors and UI Issues</h3>
+<p>Fig. 5 counts the judge's findings per deck. Sonnet had no wrong claims on either subject. Opus had 2 and 1, all minor; for example, on Wireless it wrote "Wi-Fi, Bluetooth, microwaves" where the source says microwave ovens. Haiku had 5 wrong claims on Wireless (1 major) and 1 on STATS. Every deck had some claims not in the source (3–6), and the judge marked only one of them untrue (Haiku, Wireless).</p>
+<figure class="fig fig-wide" id="fig-5">
+<div class="fig-scroll"><img src="figures/fig5-issues.svg" alt="Judge findings per finished deck: wrong claims, claims not in the source and UI issues" loading="lazy"></div>
+<figcaption><span class="flabel">Fig. 5.</span> Judge findings per finished deck: wrong claims, claims not in the source and UI issues. The darker part of each bar is the major (or untrue) share, with its count in white.</figcaption>
+</figure>
+<p>Each deck had 4–7 UI issues. Most were minor, such as cramped columns and labels touching shapes. The major ones were concrete. On Sonnet's STATS deck, "the eyebrow label 'The plan' sits on top of the title 'Three questions'." On Haiku's STATS deck, the x̄ symbol rendered broken, so the standard deviation formula could read "(x − x)², which is zero." On Haiku's Wireless deck, "'electromagnetic' runs into the Hertz column and overlaps 'radio waves'."</p>
+<p>The judge also listed major mistakes that are not UI faults. Haiku reordered the STATS sections ("Population (6), Sampling (7–8), Bias (9), Study design (10), Types of variables (11)…"), which the request forbade. Opus had no major mistakes on either subject.</p>
+<h3 id="sec-4e"><span class="num">E.</span> Unfinished Local Runs</h3>
+<p>qwen3.8 27B finished neither subject in 120 minutes (TABLE V). On Wireless it wrote a <code>PLAN.md</code> but no slides. On STATS it wrote 20 slides (17 with notes) in two part files but never assembled <code>deck.html</code>.</p>
+<figure class="table" id="table-v">
+<figcaption><span class="tlabel">TABLE V</span><span class="tcap">PARTIAL PROGRESS OF UNFINISHED LOCAL RUNS</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE V: PARTIAL PROGRESS OF UNFINISHED LOCAL RUNS"><table>
+<thead><tr><th scope="col">Task</th><th scope="col">Model</th><th scope="col">Status</th><th scope="col" class="n">Wall time</th><th scope="col" class="n">Slides written in parts</th><th scope="col" class="n">With notes</th><th scope="col">Part files</th><th scope="col">Template <code>deck.html</code> scored</th></tr></thead><tbody>
+<tr><td>Wireless 101</td><td>qwen3.8 27B</td><td>timed out</td><td class="n">120m 00s</td><td class="n">0</td><td class="n">0</td><td>–</td><td>21 slides, checker pass, judge 1/10</td></tr>
+<tr><td>STATS 101</td><td>qwen3.8 27B</td><td>timed out</td><td class="n">120m 00s</td><td class="n">20</td><td class="n">17</td><td>part1.html, part2.html</td><td>21 slides, checker pass, judge 1/10</td></tr>
+</tbody></table></div>
+</figure>
+<h3 id="sec-4f"><span class="num">F.</span> Observations About the Skill Itself</h3>
+<p><strong>The checker passes an unfinished deck.</strong> In both timed-out qwen3.8 27B runs, <code>deck.html</code> was still the skill's template, with "Your Name," "you@example.com" and a revenue chart. The checker passed it with 0 issues, while the judge scored it 1/10 and noted "only the footer was changed." The checker tests layout, not content, so a rule for template leftovers is needed.</p>
+<p><strong>Plan field names leak into decks.</strong> "Fence" is a heading in the skill's <code>PLAN.md</code> format. Haiku put "Fence: gain does not add energy…" on Wireless slide 9, which the judge called a major mistake that "would embarrass the lecturer." Sonnet's Wireless deck has "Fence:" twice in its speaker notes, and the word also appears in the speaker notes of the STATS decks (Sonnet twice, Haiku once). The revised plan-only prompt now states that such field names must stay out of slides and notes.</p>
+<p><strong>The judge catches what the checker cannot.</strong> All six finished decks passed the checker with 0 issues. The judge still found overlapping labels inside diagrams, a reflected ray that misses the receiver (Sonnet, Wireless), the broken x̄ symbol, and sections out of order. A screenshot-reading judge appears to be a useful complement to rule-based checks.</p>
+</section>
+<section id="sec-5" aria-labelledby="sec-5-h">
+<h2 id="sec-5-h"><span class="num">V.</span> Experiment: A Shared Plan to Help Local Models</h2>
+<p>This section reports a separate experiment. It is not part of the cloud-versus-local comparison in Section IV, and its results are not ranked against the runs there.</p>
+<h3 id="sec-5a"><span class="num">A.</span> Motivation</h3>
+<p>In the main comparison, the local model was too slow to finish unaided: qwen3.8 27B reached the 120-minute limit on both subjects (Section IV-E). Much of a run goes into reading the skill and designing the deck before any slide is written. We therefore asked whether a detailed plan, written once by a strong cloud model, would let local models build a full deck.</p>
+<h3 id="sec-5b"><span class="num">B.</span> Setup</h3>
+<p>Opus 5.5 wrote one <code>PLAN.md</code> for STATS 101 once, in 23m 20s for $5.05 (Section III-D). The plan was patched by hand in two places before the builds: the folder variable <code>D</code> and the deck's file name. Three local models then built from it: qwen3.6 35B-A3B (MoE, 3B active), gemma4 26B and qwen3.8 27B. Each received the module, the plan and a build prompt that tells it to follow the plan's build steps. The run used a 240-minute limit and Claude Code 2.1.302 (TABLE II); the harness, machine, Ollama version, checker and judge were the same as in Section III. Each model ran once.</p>
+<h3 id="sec-5c"><span class="num">C.</span> Outcomes</h3>
+<p>TABLE VI and Fig. 6 give the outcomes.</p>
+<figure class="table" id="table-vi">
+<figcaption><span class="tlabel">TABLE VI</span><span class="tcap">PLAN EXPERIMENT: LOCAL MODELS BUILDING FROM THE OPUS PLAN (ONE RUN EACH)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE VI: PLAN EXPERIMENT: LOCAL MODELS BUILDING FROM THE OPUS PLAN (ONE RUN EACH)"><table>
+<thead><tr><th scope="col">Model</th><th scope="col">Status</th><th scope="col" class="n">Wall time</th><th scope="col">Slides</th><th scope="col">Checker</th><th scope="col" class="n">Wrong claims (major)</th><th scope="col" class="n">UI issues (major)</th><th scope="col" class="n">Judge /10</th></tr></thead><tbody>
+<tr><td>qwen3.6 35B-A3B</td><td>finished</td><td class="n">20m 07s</td><td>30</td><td>pass</td><td class="n">0 (0)</td><td class="n">5 (0)</td><td class="n"><strong>9</strong></td></tr>
+<tr><td>gemma4 26B</td><td>stopped early</td><td class="n">72m 34s</td><td>10 in part 1, not assembled</td><td>–</td><td class="n">–</td><td class="n">–</td><td class="n">unfinished</td></tr>
+<tr><td>qwen3.8 27B</td><td>API error</td><td class="n">61m 03s</td><td>10 in part 1, not assembled</td><td>–</td><td class="n">–</td><td class="n">–</td><td class="n">unfinished</td></tr>
+</tbody></table></div>
+<p class="table-note">Local runs are recorded as $0; the $5.05 plan was paid once. The unfinished runs left no <code>deck.html</code> and were not judged.</p>
+</figure>
+<figure class="fig" id="fig-6">
+<div class="fig-scroll"><img src="figures/fig6-planned.svg" alt="Plan experiment: wall-clock time per local model building from the Opus plan, labelled with each run's outcome" loading="lazy"></div>
+<figcaption><span class="flabel">Fig. 6.</span> Plan experiment: wall-clock time per local model building from the Opus plan, labelled with each run's outcome. The dashed line marks the 240-minute limit.</figcaption>
+</figure>
+<p><strong>qwen3.6 35B-A3B</strong> was the only model to finish. It built a 30-slide deck in 20m 07s, of which 19m 37s was API time, with 31 turns and 30 tool calls. The deck passed the checker with 0 issues and had speaker notes on every slide and a quiz. The judge scored it 9/10 (accuracy 5, coverage 5, teaching 5, visual 4, diagrams 4, notes 4, requirements 5) and found no wrong claims. Its one major mistake was in the quiz notes, which say "then to reveal" without saying how. The deck had 10 diagrams and 2,830 words of notes.</p>
+<p><strong>gemma4 26B</strong> wrote part 1 (10 slides, all with notes), but it rewrote that file eight times (four more Write calls failed for lack of a file path) and then ended its turn saying it would "now proceed to build Part 2." In headless one-shot mode, ending the turn ends the run, and the CLI reported the run as completed with exit code 0 even though no deck existed.</p>
+<p><strong>qwen3.8 27B</strong> wrote part 1 (10 slides, all with notes) and was writing part 2 when it failed after 61 minutes with "API Error: The response stopped arriving."</p>
+<p>Within this experiment, output rates differed widely: about 3,575 output tokens per API minute for qwen3.6 35B-A3B, against about 182 for qwen3.8 27B and about 745 for gemma4 26B (output tokens divided by API minutes, which also include prompt processing). This fits the expectation that a sparse model with 3B active parameters generates faster than a dense 27B model on the same hardware <a class="cite" href="#ref-12">[12]</a>.</p>
+<p>These outcomes suggest two different local failure modes: speed (the dense 27B model) and turn control (gemma4 ending its turn early). The plan removed most of the reading and design work, which the MoE model could then turn into a full deck. The qwen3.8 27B stream failure may relate to Ollama's partial API support <a class="cite" href="#ref-14">[14]</a> or to long generations between streamed chunks; we did not isolate the cause.</p>
+<h3 id="sec-5d"><span class="num">D.</span> Scope of the Experiment</h3>
+<p>This is not a like-for-like comparison with the main runs. The input differs (a finished plan as well as the module), the settings differ (a 240-minute limit and Claude Code 2.1.302), only local models built from the plan, and only one of three builds finished. We therefore present it only as an indication that a plan from a strong model can make a local build feasible, not as evidence about how local models rank against cloud models. Section IX lists the tests needed to compare the two routes properly.</p>
+</section>
+<section id="sec-6" aria-labelledby="sec-6-h">
+<h2 id="sec-6-h"><span class="num">VI.</span> Discussion</h2>
+<p>Within the limits of single runs, the results suggest a value ordering among the cloud models. Sonnet 5.5 matched Opus 5.5 on the overall score on both subjects, with no wrong claims, in about half the time and at 25–31% of the cost. Opus produced the most diagrams and the highest diagram scores, so it may still be the better choice when diagrams carry the lecture. Haiku was the cheapest, but in each subject it made at least one mistake a lecturer would have to fix before teaching.</p>
+<p>The local results suggest that, on this hardware, the main barrier for a dense local model is speed rather than ability. The dense 27B model produced reasonable slides when it got to them but ran out of time.</p>
+<p>A practical lesson is that "the run finished" and "the checker passed" are not the same as "the deck is done." Two runs left the template in place and passed, and one run in the experiment of Section V ended with exit code 0 and no deck. Any automated pipeline built on such agents needs a content-level completion check.</p>
+</section>
+<section id="sec-7" aria-labelledby="sec-7-h">
+<h2 id="sec-7-h"><span class="num">VII.</span> Disclaimer and Limitations</h2>
+<aside class="callout" aria-label="Disclaimer"><p class="callout-label">Disclaimer</p>
+<p><strong>These are early indications from single runs.</strong> Each model was run once per task (n = 1), on one machine, with one judge from the same model family as three of the six models. LLM outputs vary between runs even under fixed settings <a class="cite" href="#ref-18">[18]</a>, and differences smaller than benchmark variance are not meaningful <a class="cite" href="#ref-17">[17]</a>. Differences of one point on a 10-point judge score, or of a few minutes in wall time, are within the range we would expect from noise; the two-point gap between Haiku and the larger models held on both tasks but also needs repeated runs to confirm. More repeated tests, ideally with confidence intervals, a cross-family judge and human raters, are needed before drawing firm conclusions. Cost figures are client-side estimates, and local costs exclude electricity.</p>
+</aside>
+</section>
+<section id="sec-8" aria-labelledby="sec-8-h">
+<h2 id="sec-8-h"><span class="num">VIII.</span> Conclusion</h2>
+<p>We compared three cloud LLMs and one local LLM on building a 50-minute lecture deck with an Agent Skill in Claude Code, measuring time, cost and blind-judged quality. In this small study, all cloud runs finished within 12 minutes, and Sonnet 5.5 matched Opus 5.5's 9/10 at a lower cost and in less time. The dense local model did not finish unaided. In a separate experiment, not compared with these runs, one of three local models built a deck the judge scored 9/10 from an Opus-written plan, an indication that such a plan can make a local build feasible. The study also found that the skill's checker passes an untouched template, which a content check would fix. These findings are preliminary and need repeated runs to confirm.</p>
+</section>
+<section id="sec-undefined" aria-labelledby="sec-undefined-h">
+<h2 id="sec-undefined-h"><span class="num">IX.</span> Future Work and Planned Tests</h2>
+<ol>
+<li><strong>Repeated runs.</strong> Run each model–task cell several times (e.g., 5 per cell) and report means with confidence intervals for time, cost and scores <a class="cite" href="#ref-17">[17]</a>, <a class="cite" href="#ref-18">[18]</a>.</li>
+<li><strong>More tasks and subjects.</strong> Add modules from other fields, other lengths and other languages, including right-to-left decks.</li>
+<li><strong>Independent judging.</strong> Use a judge from a different model family, several judges, or human raters, and measure their agreement with the current judge <a class="cite" href="#ref-1">[1]</a>, <a class="cite" href="#ref-2">[2]</a>.</li>
+<li><strong>Repeated planned builds.</strong> Build each local model from the same plan several times to measure how often a planned local build finishes and how much its quality varies.</li>
+<li><strong>Cloud models built from the plan as a control.</strong> Run Opus, Sonnet and Haiku on the planned task, with the same CLI version and time limit as the local builds, to separate the effect of the plan from the effect of the builder. Write plans for both subjects so that planned and unplanned builds can be compared like for like.</li>
+<li><strong>Amortising the plan cost.</strong> Build one plan several times, for example after edits, in several themes or languages, or locally to keep material on the machine, and report the plan cost per finished deck, counting failed builds.</li>
+<li><strong>More local models and quantizations.</strong> Test further MoE and dense models and several quantization levels on the same hardware.</li>
+<li><strong>Finer measurements.</strong> Record time to first slide and energy use per deck, so local runs have a real cost figure.</li>
+<li><strong>Checker rule for template leftovers.</strong> Fail any deck that still contains template content such as placeholder names, e-mail addresses or sample charts.</li>
+<li><strong>Streaming-timeout fix.</strong> Investigate and fix the stream stopping during long local generations, then rerun qwen3.8 27B on the planned task.</li>
+<li><strong>Different hardware.</strong> Repeat the local runs on other machines, including smaller laptops and a desktop GPU.</li>
+</ol>
+</section>
+<section id="artifacts" class="artifacts" aria-labelledby="artifacts-h">
+<h2 id="artifacts-h">Artifacts and Reproducibility</h2>
+<p>All links are relative to the <code>paper/</code> folder.</p>
+<p class="group"><strong>Prompts.</strong></p>
+<ul>
+<li>Wireless 101 build prompt: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/wireless-101/prompt.txt"><code>../study/tasks/wireless-101/prompt.txt</code></a></li>
+<li>STATS 101 build prompt: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101/prompt.txt"><code>../study/tasks/stats-101/prompt.txt</code></a></li>
+<li>STATS 101 planned build prompt: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/prompt.txt"><code>../study/tasks/stats-101-planned/prompt.txt</code></a></li>
+<li>Plan-only prompt (revised version, see Section III-F): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/plan-prompt.txt"><code>../study/tasks/stats-101-planned/plan-prompt.txt</code></a></li>
+<li>Judge prompt: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/judge-prompt.txt"><code>../study/scripts/judge-prompt.txt</code></a></li>
+<li>Judge output schema: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/judge-schema.json"><code>../study/scripts/judge-schema.json</code></a></li>
+</ul>
+<p class="group"><strong>Input modules.</strong></p>
+<ul>
+<li>Wireless 101, Module 1: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/wireless-101/wireless-101-module-1.md"><code>../study/tasks/wireless-101/wireless-101-module-1.md</code></a></li>
+<li>STATS 101, Module 1: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101/stats-101-module-1.md"><code>../study/tasks/stats-101/stats-101-module-1.md</code></a></li>
+<li>STATS 101, Module 1 (copy used by the planned task): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/stats-101-module-1.md"><code>../study/tasks/stats-101-planned/stats-101-module-1.md</code></a></li>
+</ul>
+<p class="group"><strong>Shared plan.</strong></p>
+<ul>
+<li>The plan as built from (after the two hand patches): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/PLAN.md"><code>../study/tasks/stats-101-planned/PLAN.md</code></a></li>
+<li>Planner time, cost and patch note: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/plan.json"><code>../study/tasks/stats-101-planned/plan.json</code></a></li>
+<li>Planner transcript: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/tasks/stats-101-planned/plan-transcript.jsonl"><code>../study/tasks/stats-101-planned/plan-transcript.jsonl</code></a></li>
+</ul>
+<p class="group"><strong>Scripts.</strong></p>
+<ul>
+<li>Run harness: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/run.sh"><code>../study/scripts/run.sh</code></a></li>
+<li>Planner: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/plan.sh"><code>../study/scripts/plan.sh</code></a></li>
+<li>Checker, counts and judge: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/evaluate.sh"><code>../study/scripts/evaluate.sh</code></a></li>
+<li>Slide and notes extraction: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/extract-slides.mjs"><code>../study/scripts/extract-slides.mjs</code></a></li>
+<li>Report generator: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/report.mjs"><code>../study/scripts/report.mjs</code></a></li>
+<li>Figures and data tables for this paper: <a href="make-figures.mjs"><code>make-figures.mjs</code></a>, <a href="data/tables.md"><code>data/tables.md</code></a>, <a href="data/study-data.json"><code>data/study-data.json</code></a></li>
+<li>Study design and results notes: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/README.md"><code>../study/README-original.md</code></a>, <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/RESULTS.md"><code>../study/RESULTS.md</code></a></li>
+</ul>
+<p class="group"><strong>Per-run results</strong> (each folder holds the prompt, source, <code>run.json</code>, <code>results.json</code>, and per model the transcript, checker output, screenshots, slide text and <code>judge.json</code>).</p>
+<ul>
+<li>Wireless 101: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/results/20261016-000644/REPORT.md"><code>../results/20261016-000644/REPORT.md</code></a></li>
+<li>STATS 101: <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/results/20261016-063639-stats-101/REPORT.md"><code>../results/20261016-063639-stats-101/REPORT.md</code></a></li>
+<li>STATS 101 + plan (plan experiment, Section V): <a href="https://github.com/hisham-abuella/present-in-html/blob/main/evals/model-comparison/results/20261016-214018-stats-101-planned/REPORT.md"><code>../results/20261016-214018-stats-101-planned/REPORT.md</code></a></li>
+</ul>
+<figure class="table decks" id="table-vii">
+<figcaption><span class="tlabel">TABLE VII</span><span class="tcap">GENERATED DECKS, MAIN COMPARISON</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE VII: GENERATED DECKS, MAIN COMPARISON"><table>
+<thead><tr><th scope="col">Task</th><th scope="col">Model</th><th scope="col">Status</th><th scope="col" class="n">Slides</th><th scope="col" class="n">Judge /10</th><th scope="col">Deck</th></tr></thead><tbody>
+<tr><td data-label="Task">Wireless 101</td><td data-label="Model">Opus 5.5</td><td data-label="Status">finished</td><td data-label="Slides" class="n">30</td><td data-label="Judge /10" class="n">9</td><td data-label="Deck" class="deck"><a href="../decks/wireless-101_opus.html"><code>../decks/wireless-101_opus.html</code></a></td></tr>
+<tr><td data-label="Task">Wireless 101</td><td data-label="Model">Sonnet 5.5</td><td data-label="Status">finished</td><td data-label="Slides" class="n">30</td><td data-label="Judge /10" class="n">9</td><td data-label="Deck" class="deck"><a href="../decks/wireless-101_sonnet.html"><code>../decks/wireless-101_sonnet.html</code></a></td></tr>
+<tr><td data-label="Task">Wireless 101</td><td data-label="Model">Haiku 5.5</td><td data-label="Status">finished</td><td data-label="Slides" class="n">29</td><td data-label="Judge /10" class="n">7</td><td data-label="Deck" class="deck"><a href="../decks/wireless-101_haiku.html"><code>../decks/wireless-101_haiku.html</code></a></td></tr>
+<tr><td data-label="Task">Wireless 101</td><td data-label="Model">qwen3.8 27B</td><td data-label="Status">timed out, no slides written</td><td data-label="Slides" class="n">–</td><td data-label="Judge /10" class="n">–</td><td data-label="Deck" class="deck">no deck</td></tr>
+<tr><td data-label="Task">STATS 101</td><td data-label="Model">Opus 5.5</td><td data-label="Status">finished</td><td data-label="Slides" class="n">30</td><td data-label="Judge /10" class="n">9</td><td data-label="Deck" class="deck"><a href="../decks/stats-101_opus.html"><code>../decks/stats-101_opus.html</code></a></td></tr>
+<tr><td data-label="Task">STATS 101</td><td data-label="Model">Sonnet 5.5</td><td data-label="Status">finished</td><td data-label="Slides" class="n">29</td><td data-label="Judge /10" class="n">9</td><td data-label="Deck" class="deck"><a href="../decks/stats-101_sonnet.html"><code>../decks/stats-101_sonnet.html</code></a></td></tr>
+<tr><td data-label="Task">STATS 101</td><td data-label="Model">Haiku 5.5</td><td data-label="Status">finished</td><td data-label="Slides" class="n">29</td><td data-label="Judge /10" class="n">7</td><td data-label="Deck" class="deck"><a href="../decks/stats-101_haiku.html"><code>../decks/stats-101_haiku.html</code></a></td></tr>
+<tr><td data-label="Task">STATS 101</td><td data-label="Model">qwen3.8 27B</td><td data-label="Status"><strong>PARTIAL</strong>: timed out; assembled after the fact</td><td data-label="Slides" class="n">20</td><td data-label="Judge /10" class="n">not judged</td><td data-label="Deck" class="deck"><a href="../decks/PARTIAL_stats-101_qwen3.8-27b.html"><code>../decks/PARTIAL_stats-101_qwen3.8-27b.html</code></a></td></tr>
+</tbody></table></div>
+</figure>
+<figure class="table decks" id="table-viii">
+<figcaption><span class="tlabel">TABLE VIII</span><span class="tcap">GENERATED DECKS, PLAN EXPERIMENT (SECTION V)</span></figcaption>
+<div class="table-scroll" tabindex="0" role="region" aria-label="TABLE VIII: GENERATED DECKS, PLAN EXPERIMENT (SECTION V)"><table>
+<thead><tr><th scope="col">Task</th><th scope="col">Model</th><th scope="col">Status</th><th scope="col" class="n">Slides</th><th scope="col" class="n">Judge /10</th><th scope="col">Deck</th></tr></thead><tbody>
+<tr><td data-label="Task">STATS 101 + plan</td><td data-label="Model">qwen3.6 35B-A3B</td><td data-label="Status">finished</td><td data-label="Slides" class="n">30</td><td data-label="Judge /10" class="n">9</td><td data-label="Deck" class="deck"><a href="../decks/stats-101-planned_qwen3.6-35b-a3b.html"><code>../decks/stats-101-planned_qwen3.6-35b-a3b.html</code></a></td></tr>
+<tr><td data-label="Task">STATS 101 + plan</td><td data-label="Model">qwen3.8 27B</td><td data-label="Status"><strong>PARTIAL</strong>: API error; assembled after the fact</td><td data-label="Slides" class="n">10</td><td data-label="Judge /10" class="n">not judged</td><td data-label="Deck" class="deck"><a href="../decks/PARTIAL_stats-101-planned_qwen3.8-27b.html"><code>../decks/PARTIAL_stats-101-planned_qwen3.8-27b.html</code></a></td></tr>
+<tr><td data-label="Task">STATS 101 + plan</td><td data-label="Model">gemma4 26B</td><td data-label="Status"><strong>PARTIAL</strong>: stopped early; assembled after the fact</td><td data-label="Slides" class="n">10</td><td data-label="Judge /10" class="n">not judged</td><td data-label="Deck" class="deck"><a href="../decks/PARTIAL_stats-101-planned_gemma4-26b.html"><code>../decks/PARTIAL_stats-101-planned_gemma4-26b.html</code></a></td></tr>
+</tbody></table></div>
+<p class="table-note">The three PARTIAL decks (one in TABLE VII, two in TABLE VIII) were not made by the models. The author assembled them after the runs from the slide part files the unfinished local models wrote, so their slides can be viewed. They were not checked or judged and are not counted in any result. The judge scores of 1/10 in TABLE V refer to the template (sample slides unchanged) left as <code>deck.html</code>, not to these files.</p>
+</figure>
+</section>
+<section id="undefined" aria-labelledby="undefined-h">
+<h2 id="undefined-h">Appendix A. System Specifications</h2>
+<p>The harness, the checker and the local models ran on the machine in TABLE A-I. The values were collected from it with <code>system_profiler</code>, <code>sw_vers</code> and <code>ollama show</code> / <code>ollama list</code>. Apple's specification page for the Mac Studio (2025) lists this M4 Max configuration (16-core CPU, 40-core GPU) with 64 GB of memory and 1 TB of storage as options <a class="cite" href="#ref-19">[19]</a>.</p>
+<p><strong>TABLE A-I</strong></p>
+<p><strong>HARDWARE AND SOFTWARE</strong></p>
+<figure class="table">
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead><tr><th scope="col">Item</th><th scope="col">Value</th></tr></thead><tbody>
+<tr><td>Machine</td><td>Mac Studio, model identifier Mac16,9 <a class="cite" href="#ref-19">[19]</a></td></tr>
+<tr><td>Chip</td><td>Apple M4 Max, 16-core CPU (12 performance + 4 efficiency), 40-core GPU</td></tr>
+<tr><td>Memory</td><td>64 GB unified</td></tr>
+<tr><td>Storage</td><td>1 TB SSD (926 GiB volume)</td></tr>
+<tr><td>Operating system</td><td>macOS 26.3 (build 25D125), arm64</td></tr>
+<tr><td>Claude Code</td><td>2.1.301 (Wireless 101 and STATS 101 runs); 2.1.302 (plan experiment and its judging)</td></tr>
+<tr><td>Ollama</td><td>0.40.5</td></tr>
+<tr><td>Node.js</td><td>v24.12.0</td></tr>
+<tr><td>Screenshots for the checker</td><td>Playwright 1.64.1 (Chromium)</td></tr>
+<tr><td>JPEG conversion</td><td>macOS <code>sips</code></td></tr>
+<tr><td>Cloud models</td><td><code>claude-opus-5-5</code>, <code>claude-sonnet-5-5</code>, <code>claude-haiku-5-5</code> through the Anthropic API, each at its default effort; judge <code>claude-opus-5-5</code></td></tr>
+</tbody></table></div>
+</figure>
+<p><strong>TABLE A-II</strong></p>
+<p><strong>LOCAL MODELS (FROM <code>ollama show</code> AND <code>ollama list</code>)</strong></p>
+<figure class="table">
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table"><table>
+<thead><tr><th scope="col">Model tag</th><th scope="col">Architecture</th><th scope="col">Parameters</th><th scope="col">Quantization</th><th scope="col">Format</th><th scope="col" class="n">Context</th><th scope="col">Size</th><th scope="col">Used in</th></tr></thead><tbody>
+<tr><td><code>qwen3.8:27b-mlx</code></td><td>qwen3_5</td><td>27.8B (dense)</td><td>nvfp4</td><td>MLX</td><td class="n">262,144</td><td>18 GB</td><td>Main comparison; plan experiment</td></tr>
+<tr><td><code>qwen3.6:35b-a3b</code></td><td>qwen35moe</td><td>35.5B (MoE, about 3B active)</td><td>Q4_K_M</td><td>GGUF</td><td class="n">262,144</td><td>22 GB</td><td>Plan experiment</td></tr>
+<tr><td><code>gemma4:26b-mlx</code></td><td>gemma4</td><td>26.2B</td><td>nvfp4</td><td>MLX</td><td class="n">262,144</td><td>18 GB</td><td>Plan experiment</td></tr>
+</tbody></table></div>
+<p class="table-note">All three local models ran with tool calling and thinking enabled and Ollama's default settings. Whether gemma4 26B is dense or a mixture of experts is not confirmed here.</p>
+</figure>
+<section id="references" class="references" aria-labelledby="references-h">
+<h2 id="references-h">References</h2>
+<ol class="refs">
+<li id="ref-1"><span class="refnum">[1]</span>L. Zheng, W.-L. Chiang, Y. Sheng, S. Zhuang, Z. Wu, Y. Zhuang, Z. Lin, Z. Li, D. Li, E. P. Xing, H. Zhang, J. E. Gonzalez, and I. Stoica, "Judging LLM-as-a-judge with MT-Bench and Chatbot Arena," in <em>Advances in Neural Information Processing Systems 36 (NeurIPS 2023), Datasets and Benchmarks Track</em>, 2023, pp. 46595–46623. [Online]. Available: <a href="https://arxiv.org/abs/2306.05685">https://arxiv.org/abs/2306.05685</a></li>
+<li id="ref-2"><span class="refnum">[2]</span>A. Panickssery, S. R. Bowman, and S. Feng, "LLM evaluators recognize and favor their own generations," in <em>Advances in Neural Information Processing Systems 37 (NeurIPS 2024)</em>, 2024, pp. 68772–68802, doi: 10.52202/079017-2197. [Online]. Available: <a href="https://arxiv.org/abs/2404.13076">https://arxiv.org/abs/2404.13076</a></li>
+<li id="ref-3"><span class="refnum">[3]</span>Y. Liu, D. Iter, Y. Xu, S. Wang, R. Xu, and C. Zhu, "G-Eval: NLG evaluation using GPT-4 with better human alignment," in <em>Proc. 2023 Conf. Empirical Methods in Natural Language Processing (EMNLP)</em>, Singapore, 2023, pp. 2511–2522, doi: 10.18653/v1/2023.emnlp-main.153.</li>
+<li id="ref-4"><span class="refnum">[4]</span>C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press, and K. Narasimhan, "SWE-bench: Can language models resolve real-world GitHub issues?" in <em>Proc. Int. Conf. Learning Representations (ICLR)</em>, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2310.06770">https://arxiv.org/abs/2310.06770</a></li>
+<li id="ref-5"><span class="refnum">[5]</span>X. Liu, H. Yu, H. Zhang, Y. Xu, X. Lei, H. Lai, Y. Gu, H. Ding, K. Men, K. Yang <em>et al.</em>, "AgentBench: Evaluating LLMs as agents," in <em>Proc. Int. Conf. Learning Representations (ICLR)</em>, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2308.03688">https://arxiv.org/abs/2308.03688</a></li>
+<li id="ref-6"><span class="refnum">[6]</span>S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao, "ReAct: Synergizing reasoning and acting in language models," in <em>Proc. Int. Conf. Learning Representations (ICLR)</em>, 2023. [Online]. Available: <a href="https://arxiv.org/abs/2210.03629">https://arxiv.org/abs/2210.03629</a></li>
+<li id="ref-7"><span class="refnum">[7]</span>B. Xu, Z. Peng, B. Lei, S. Mukherjee, Y. Liu, and D. Xu, "ReWOO: Decoupling reasoning from observations for efficient augmented language models," arXiv preprint arXiv:2305.18323, 2023. [Online]. Available: <a href="https://arxiv.org/abs/2305.18323">https://arxiv.org/abs/2305.18323</a></li>
+<li id="ref-8"><span class="refnum">[8]</span>T.-J. Fu, W. Y. Wang, D. McDuff, and Y. Song, "DOC2PPT: Automatic presentation slides generation from scientific documents," in <em>Proc. AAAI Conf. Artificial Intelligence</em>, vol. 36, no. 1, 2022, pp. 634–642, doi: 10.1609/aaai.v36i1.19943.</li>
+<li id="ref-9"><span class="refnum">[9]</span>H. Zheng, X. Guan, H. Kong, W. Zhang, J. Zheng, W. Zhou, H. Lin, Y. Lu, X. Han, and L. Sun, "PPTAgent: Generating and evaluating presentations beyond text-to-slides," in <em>Proc. 2025 Conf. Empirical Methods in Natural Language Processing (EMNLP)</em>, Suzhou, China, 2025, pp. 14402–14418, doi: 10.18653/v1/2025.emnlp-main.728.</li>
+<li id="ref-10"><span class="refnum">[10]</span>J. Ge, Z. Z. Wang, X. Zhou, Y.-H. Peng, S. Subramanian, Q. Tan, M. Sap, A. Suhr, D. Fried, G. Neubig, and T. Darrell, "AutoPresent: Designing structured visuals from scratch," in <em>Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)</em>, 2025, pp. 2902–2911, doi: 10.1109/CVPR52734.2025.00276. [Online]. Available: <a href="https://arxiv.org/abs/2501.00912">https://arxiv.org/abs/2501.00912</a></li>
+<li id="ref-11"><span class="refnum">[11]</span>L. Huang, W. Yu, W. Ma, W. Zhong, Z. Feng, H. Wang, Q. Chen, W. Peng, X. Feng, B. Qin, and T. Liu, "A survey on hallucination in large language models: Principles, taxonomy, challenges, and open questions," <em>ACM Trans. Inf. Syst.</em>, vol. 43, no. 2, pp. 1–55, 2025, doi: 10.1145/3703155. [Online]. Available: <a href="https://arxiv.org/abs/2311.05232">https://arxiv.org/abs/2311.05232</a></li>
+<li id="ref-12"><span class="refnum">[12]</span>W. Fedus, B. Zoph, and N. Shazeer, "Switch Transformers: Scaling to trillion parameter models with simple and efficient sparsity," <em>J. Mach. Learn. Res.</em>, vol. 23, no. 120, pp. 1–39, 2022. [Online]. Available: <a href="https://jmlr.org/papers/v23/21-0998.html">https://jmlr.org/papers/v23/21-0998.html</a></li>
+<li id="ref-13"><span class="refnum">[13]</span>A. Hannun, J. Digani, A. Katharopoulos, and R. Collobert, "MLX: Efficient and flexible machine learning on Apple silicon," GitHub repository, 2023. [Online]. Available: <a href="https://github.com/ml-explore/mlx">https://github.com/ml-explore/mlx</a></li>
+<li id="ref-14"><span class="refnum">[14]</span>Ollama, "Anthropic compatibility," Ollama documentation. Accessed: Oct. 17, 2026. [Online]. Available: <a href="https://docs.ollama.com/api/anthropic-compatibility">https://docs.ollama.com/api/anthropic-compatibility</a></li>
+<li id="ref-15"><span class="refnum">[15]</span>Anthropic, "Run Claude Code programmatically," Claude Code documentation. Accessed: Oct. 17, 2026. [Online]. Available: <a href="https://code.claude.com/docs/en/headless">https://code.claude.com/docs/en/headless</a></li>
+<li id="ref-16"><span class="refnum">[16]</span>B. Zhang, K. Lazuka, and M. Murag, "Equipping agents for the real world with Agent Skills," Anthropic Engineering Blog, Oct. 16, 2025. [Online]. Available: <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+<li id="ref-17"><span class="refnum">[17]</span>L. Madaan, A. K. Singh, R. Schaeffer, A. Poulton, S. Koyejo, P. Stenetorp, S. Narang, and D. Hupkes, "Quantifying variance in evaluation benchmarks," arXiv preprint arXiv:2406.10229, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2406.10229">https://arxiv.org/abs/2406.10229</a></li>
+<li id="ref-18"><span class="refnum">[18]</span>B. Atil, S. Aykent, A. Chittams, L. Fu, R. J. Passonneau, E. Radcliffe, G. R. Rajagopal, A. Sloan, T. Tudrej, F. Ture, Z. Wu, L. Xu, and B. Baldwin, "Non-determinism of 'deterministic' LLM settings," arXiv preprint arXiv:2408.04667, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2408.04667">https://arxiv.org/abs/2408.04667</a></li>
+<li id="ref-19"><span class="refnum">[19]</span>Apple, "Mac Studio (2025) - Tech Specs," Apple Support. Accessed: Oct. 17, 2026. [Online]. Available: <a href="https://support.apple.com/en-us/122211">https://support.apple.com/en-us/122211</a></li>
+</ol>
+</section>
+</article>
+</body>
+</html>

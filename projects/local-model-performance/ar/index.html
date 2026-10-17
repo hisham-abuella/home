@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../../brand/apple-touch-icon.png">
+    <title>LLM agents على الـ cloud ولا محلية لـ slides المحاضرات - هشام أبو العلا</title>
+    <meta name="description" content="دراسة مبدئية عن التكلفة والوقت والجودة: تلات models على الـ cloud وmodel محلي عملوا نفس عرض المحاضرة بالـ Agent Skill بتاعة present-in-html في Claude Code. المقال، والـ IEEE paper، وكل العروض اللي اتعملت.">
+    <meta property="og:title" content="LLM agents على الـ cloud ولا محلية لـ slides المحاضرات - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Opus وSonnet وHaiku وmodel محلي عملوا نفس عرض المحاضرة بـ Agent Skill واحدة. دراسة مبدئية، معاها المقال والـ IEEE paper وكل العروض.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/projects/local-model-performance/ar/">
+    <meta property="og:url" content="https://www.hishamabuella.com/projects/local-model-performance/ar/">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/projects/local-model-performance/">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/projects/local-model-performance/ar/">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/projects/local-model-performance/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/base.css">
+    <link rel="stylesheet" href="../../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../../css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* The two editions of the paper */
+        .read-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+        .read-actions .btn { gap: 10px; min-height: 48px; text-decoration: none; }
+
+        /* Generated decks */
+        .deck-grid {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+            gap: 14px;
+        }
+
+        .article-content .deck-grid li { margin: 0; padding: 0; }
+        .article-content .deck-grid li::before { content: none; }
+
+        .deck-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            height: 100%;
+            padding: 16px 18px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-inline-start: 3px solid var(--accent);
+            border-radius: var(--card-radius);
+            border-start-start-radius: 0;
+            border-end-start-radius: 0;
+        }
+
+        .article-content a.deck-card { color: var(--text-primary); text-decoration: none; }
+        .deck-card:hover { border-color: var(--accent); }
+        .deck-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .deck-card.partial { border-inline-start-color: var(--card-border); border-inline-start-style: dashed; }
+
+        .deck-card strong { font-size: 1rem; line-height: 1.35; }
+        .deck-card span { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; }
+        .deck-card .wip-badge { align-self: flex-start; color: var(--accent); }
+
+        .link-note { font-size: 0.875rem; color: var(--text-tertiary); }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: the page matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../../../index.html?choose&lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../../ar/home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">LLM agents على الـ cloud ولا محلية، لعمل slides المحاضرات بـ Agent Skill</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> أكتوبر 2026</span>
+                <span><i class="fas fa-flask"></i> دراسة مبدئية عن التكلفة والوقت والجودة</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">تلات models على الـ cloud، هما Claude Opus 5.5 وSonnet 5.5 وHaiku 5.5، وmodel محلي واحد، qwen3.8 27B، شغال بـ Ollama على Mac Studio فيه M4 Max وذاكرة 64 GB، عملوا نفس عرض المحاضرة، من 20 لـ 30 slide، من نفس الـ prompt، بالـ Agent Skill بتاعة present-in-html في Claude Code. Opus وSonnet خدوا 9/10 في الموضوعين، وSonnet خلّص في حوالي نص وقت Opus، بربع لتلت تكلفته؛ وHaiku خد 7/10 بحوالي 0.30 دولار. والـ model المحلي الـ dense ماخلصش في 120 دقيقة.</p>
+            <div class="read-actions enter delay-3">
+                <a class="btn btn-primary" href="../paper/article.html"><i class="fas fa-book-open" aria-hidden="true"></i>اقرا المقال</a>
+                <a class="btn btn-quiet" href="../paper/paper-ieee.html"><i class="fas fa-file-lines" aria-hidden="true"></i>الـ IEEE paper (عمودين)</a>
+            </div>
+        </div>
+
+        <div class="article-content">
+
+            <p class="quote"><strong>دراسة مبدئية.</strong> كل model اشتغل مرة واحدة بس في كل مهمة، فدي مؤشرات أولية، مش نتايج نهائية. لسه محتاجين tests أكتر.</p>
+
+            <h2>الدراسة باختصار</h2>
+            <p>كل model خد module واحد من كورس وprompt ثابت: يحوّله لعرض من 20 لـ 30 slide لمحاضرة 50 دقيقة، فيه speaker notes على كل slide وquiz في الآخر. كان فيه موضوعين، <strong>Wireless 101</strong> و<strong>STATS 101</strong>. الـ checker بتاع الـ skill وLLM judge مايعرفش مين عمل إيه (blind) قيّموا كل عرض خلص.</p>
+
+            <h2>العروض اللي اتعملت: المقارنة الأساسية</h2>
+            <p>run واحد لكل model في كل موضوع. كل عرض ملف HTML واحد، وبيفتح في tab جديدة.</p>
+
+            <h3>Wireless 101</h3>
+            <ul class="deck-grid">
+                <li><a class="deck-card" href="../decks/wireless-101_opus.html" target="_blank" rel="noopener"><strong>Opus 5.5</strong><span>30 slide · التقييم 9/10 · 11 دقيقة و44 ثانية · 2.88 دولار</span></a></li>
+                <li><a class="deck-card" href="../decks/wireless-101_sonnet.html" target="_blank" rel="noopener"><strong>Sonnet 5.5</strong><span>30 slide · التقييم 9/10 · 5 دقايق و27 ثانية · 0.90 دولار</span></a></li>
+                <li><a class="deck-card" href="../decks/wireless-101_haiku.html" target="_blank" rel="noopener"><strong>Haiku 5.5</strong><span>29 slide · التقييم 7/10 · 7 دقايق و5 ثواني · 0.24 دولار</span></a></li>
+            </ul>
+            <p class="link-note">qwen3.8 27B، الـ model المحلي، وصل لحد الـ 120 دقيقة في Wireless 101 من غير ما يكتب ولا slide، فمافيش عرض.</p>
+
+            <h3>STATS 101</h3>
+            <ul class="deck-grid">
+                <li><a class="deck-card" href="../decks/stats-101_opus.html" target="_blank" rel="noopener"><strong>Opus 5.5</strong><span>30 slide · التقييم 9/10 · 11 دقيقة و14 ثانية · 2.79 دولار</span></a></li>
+                <li><a class="deck-card" href="../decks/stats-101_sonnet.html" target="_blank" rel="noopener"><strong>Sonnet 5.5</strong><span>29 slide · التقييم 9/10 · 5 دقايق و24 ثانية · 0.70 دولار</span></a></li>
+                <li><a class="deck-card" href="../decks/stats-101_haiku.html" target="_blank" rel="noopener"><strong>Haiku 5.5</strong><span>29 slide · التقييم 7/10 · 8 دقايق و44 ثانية · 0.32 دولار</span></a></li>
+                <li><a class="deck-card partial" href="../decks/PARTIAL_stats-101_qwen3.8-27b.html" target="_blank" rel="noopener"><span class="wip-badge">اتجمّع بعدين</span><strong>qwen3.8 27B، محلي</strong><span>الوقت خلص عند 120 دقيقة. فيه 20 slide من الـ run اللي ماخلصش. ماتقيّمش.</span></a></li>
+            </ul>
+
+            <h2>العروض اللي اتعملت: تجربة الخطة</h2>
+            <p>تجربة منفصلة، ومش بتتقارن بالـ runs اللي فوق. Opus كتب خطة واحدة لـ STATS 101، وتلات models محلية بنوا منها عرض.</p>
+            <ul class="deck-grid">
+                <li><a class="deck-card" href="../decks/stats-101-planned_qwen3.6-35b-a3b.html" target="_blank" rel="noopener"><strong>qwen3.6 35B-A3B، MoE محلي</strong><span>30 slide · التقييم 9/10 · 20 دقيقة</span></a></li>
+                <li><a class="deck-card partial" href="../decks/PARTIAL_stats-101-planned_qwen3.8-27b.html" target="_blank" rel="noopener"><span class="wip-badge">اتجمّع بعدين</span><strong>qwen3.8 27B، محلي</strong><span>وقف بسبب API error. فيه 10 slides من الـ run اللي ماخلصش. ماتقيّمش.</span></a></li>
+                <li><a class="deck-card partial" href="../decks/PARTIAL_stats-101-planned_gemma4-26b.html" target="_blank" rel="noopener"><span class="wip-badge">اتجمّع بعدين</span><strong>gemma4 26B، محلي</strong><span>وقف بدري. فيه 10 slides من الـ run اللي ماخلصش. ماتقيّمش.</span></a></li>
+            </ul>
+            <p class="link-note">العروض اللي عليها «اتجمّع بعدين» مش الـ models اللي عملتها. أنا جمّعتها بعد الـ runs من ملفات الـ slides اللي سابتها الـ runs المحلية اللي ماخلصتش، عشان تقدر تشوف الـ slides بتاعتها. ماعدّتش على الـ checker ولا اتقيّمت، ومش محسوبة في أي نتيجة.</p>
+
+            <h2>الـ source والـ data والـ scripts</h2>
+            <p>الـ prompts والـ harness والـ judge والـ scripts موجودين على GitHub: <a href="https://github.com/hisham-abuella/present-in-html/tree/main/evals/model-comparison" target="_blank" rel="noopener">present-in-html/evals/model-comparison</a>. والأرقام اللي ورا الرسومات موجودة هنا كمان: <a href="../paper/data/study-data.json">study-data.json</a> و<a href="../paper/data/tables.md">tables.md</a>.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>الدراسة اشتغلت في <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong> بالـ plugin الشخصي بتاعي present-in-html، مش بتاع Apple.</em></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../../js/back-menu.js" defer></script>
+    <script src="../../../js/appearance.js?v=3" defer></script>
+    <script src="../../../js/reader-bar.js?v=3" defer></script>
+    <script src="../../../js/signal-field.js" defer></script>
+    <script src="../../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
