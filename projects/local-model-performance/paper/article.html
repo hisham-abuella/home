@@ -303,9 +303,9 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
         <li><span class="num">VI.</span><a href="#sec-6">Discussion</a></li>
         <li><span class="num">VII.</span><a href="#sec-7">Disclaimer and Limitations</a></li>
         <li><span class="num">VIII.</span><a href="#sec-8">Conclusion</a></li>
-        <li><span class="num">IX.</span><a href="#sec-undefined">Future Work and Planned Tests</a></li>
+        <li><span class="num">IX.</span><a href="#sec-9">Future Work and Planned Tests</a></li>
         <li><span class="num"></span><a href="#artifacts">Artifacts and Reproducibility</a></li>
-        <li><span class="num"></span><a href="#undefined">Appendix A. System Specifications</a></li>
+        <li><span class="num"></span><a href="#appendix">Appendix A. System Specifications</a></li>
         <li><span class="num"></span><a href="#references">References</a></li>
       </ol>
     </nav>
@@ -512,8 +512,8 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
 <h2 id="sec-8-h"><span class="num">VIII.</span> Conclusion</h2>
 <p>We compared three cloud LLMs and one local LLM on building a 50-minute lecture deck with an Agent Skill in Claude Code, measuring time, cost and blind-judged quality. In this small study, all cloud runs finished within 12 minutes, and Sonnet 5.5 matched Opus 5.5's 9/10 at a lower cost and in less time. The dense local model did not finish unaided. In a separate experiment, not compared with these runs, one of three local models built a deck the judge scored 9/10 from an Opus-written plan, an indication that such a plan can make a local build feasible. The study also found that the skill's checker passes an untouched template, which a content check would fix. These findings are preliminary and need repeated runs to confirm.</p>
 </section>
-<section id="sec-undefined" aria-labelledby="sec-undefined-h">
-<h2 id="sec-undefined-h"><span class="num">IX.</span> Future Work and Planned Tests</h2>
+<section id="sec-9" aria-labelledby="sec-9-h">
+<h2 id="sec-9-h"><span class="num">IX.</span> Future Work and Planned Tests</h2>
 <ol>
 <li><strong>Repeated runs.</strong> Run each model–task cell several times (e.g., 5 per cell) and report means with confidence intervals for time, cost and scores <a class="cite" href="#ref-17">[17]</a>, <a class="cite" href="#ref-18">[18]</a>.</li>
 <li><strong>More tasks and subjects.</strong> Add modules from other fields, other lengths and other languages, including right-to-left decks.</li>
@@ -593,8 +593,8 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
 <p class="table-note">The three PARTIAL decks (one in TABLE VII, two in TABLE VIII) were not made by the models. The author assembled them after the runs from the slide part files the unfinished local models wrote, so their slides can be viewed. They were not checked or judged and are not counted in any result. The judge scores of 1/10 in TABLE V refer to the template (sample slides unchanged) left as <code>deck.html</code>, not to these files.</p>
 </figure>
 </section>
-<section id="undefined" aria-labelledby="undefined-h">
-<h2 id="undefined-h">Appendix A. System Specifications</h2>
+<section id="appendix" aria-labelledby="appendix-h">
+<h2 id="appendix-h">Appendix A. System Specifications</h2>
 <p>The harness, the checker and the local models ran on the machine in TABLE A-I. The values were collected from it with <code>system_profiler</code>, <code>sw_vers</code> and <code>ollama show</code> / <code>ollama list</code>. Apple's specification page for the Mac Studio (2025) lists this M4 Max configuration (16-core CPU, 40-core GPU) with 64 GB of memory and 1 TB of storage as options <a class="cite" href="#ref-19">[19]</a>.</p>
 <p><strong>TABLE A-I</strong></p>
 <p><strong>HARDWARE AND SOFTWARE</strong></p>
@@ -625,6 +625,7 @@ ol.refs li:target { background: var(--stripe); outline: 1px solid var(--rule); }
 </tbody></table></div>
 <p class="table-note">All three local models ran with tool calling and thinking enabled and Ollama's default settings. Whether gemma4 26B is dense or a mixture of experts is not confirmed here.</p>
 </figure>
+</section>
 <section id="references" class="references" aria-labelledby="references-h">
 <h2 id="references-h">References</h2>
 <ol class="refs">
