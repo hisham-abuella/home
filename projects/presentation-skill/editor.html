@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Keynote Pro text editor. Open a deck, click any text on a slide and type, edit speaker notes, find and replace,
+  present-in-html text editor. Open a deck, click any text on a slide and type, edit speaker notes, find and replace,
   then save the same .html file again. Only the words you change are written back: the engine, the themes and the
   layout of the file stay exactly as they were. No server, no dependencies.
   Open:  drop a deck on the page, use "Open deck", or serve this folder and visit editor.html?deck=examples/tech-talk.html
@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Keynote Pro text editor</title>
+<title>present-in-html text editor</title>
 <style>
 :root{--bg:#f2f2f4;--panel:#ffffff;--ink:#16171a;--ink2:#5b5e66;--rule:#d9dbe0;--accent:#0a63c9;--accent-ink:#ffffff;--hot:#b42318;--ok:#11743c;--sel:#e7f0fb;--stage:#d4d6db;color-scheme:light}
 @media (prefers-color-scheme: dark){:root{--bg:#141517;--panel:#1d1f22;--ink:#eceef1;--ink2:#a4a8b0;--rule:#33363b;--accent:#5aa4ff;--accent-ink:#0b1320;--hot:#ff8a80;--ok:#6fd99a;--sel:#22344c;--stage:#0c0d0e;color-scheme:dark}}
@@ -82,7 +82,7 @@ body.over .drop{border-color:var(--accent)}
   </div>
   <div class="empty" id="empty">
     <div class="drop">
-      <h2>Make small text edits to a Keynote Pro deck</h2>
+      <h2>Make small text edits to a present-in-html deck</h2>
       <p>Drop a deck's .html file here, or open one.</p>
       <button type="button" class="primary" id="open2">Open deck</button>
       <ol>
@@ -125,7 +125,7 @@ function setDirty(v) { dirty = v; const s = $('#status'); s.textContent = v ? 'U
 function load(text, fileName, fileHandle, baseUrl) {
   const doc = new DOMParser().parseFromString(text, 'text/html');
   const list = [...doc.querySelectorAll('.deck > .slide')];
-  if (!list.length) { toast('No slides found: this does not look like a Keynote Pro deck'); return; }
+  if (!list.length) { toast('No slides found: this does not look like a present-in-html deck'); return; }
   src = doc; orig = text; name = fileName || 'deck.html'; handle = fileHandle || null; base = baseUrl || '';
   slides = list; edits = slides.map(() => new Map()); cur = 0;
   slides.forEach((s, i) => textBoxes(s).forEach((e, k) => e.setAttribute('data-kpe', i + '.' + k)));
