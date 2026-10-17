@@ -203,8 +203,8 @@
             <h1 class="article-title enter delay-1">توليد الصوت من النص بـ models محلية</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> 17 فبراير 2026</span>
-                <span><i class="fas fa-sync-alt"></i> اتحدّث 2 أكتوبر 2026</span>
-                <span><i class="fas fa-clock"></i> 11 دقيقة قراية</span>
+                <span><i class="fas fa-sync-alt"></i> اتحدّث 15 أكتوبر 2026</span>
+                <span><i class="fas fa-clock"></i> 14 دقيقة قراية</span>
                 <span><i class="fas fa-user"></i> هشام أبو العلا</span>
                 <a class="lang-switch" href="../local-voice-generation.html" lang="en" hreflang="en">Read in English</a>
             </div>
@@ -223,8 +223,12 @@
                 <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، الصوت المحلي كان معناه model واحد هو VibeVoice وتجربة واحدة. من ساعتها بقى الصوت جزء من مشاريعي اليومية: <a href="bedtime-stories.html" class="site-link">حواديت قبل النوم لابني</a> بصوتي أنا، ومجموعة محركات صوت محلية موصّلة بـ H_AI عن طريق <strong>Voicebox</strong>، وأداة batch بتطلّع قصة كاملة محليًا أو عن طريق ElevenLabs من نفس الـ script. وElevenLabs كمان اتطوّر &mdash; الـ default عندي دلوقتي <strong>Eleven v4</strong>. فيه أمثلة ودروس جديدة تحت، ومقارنة فبراير الأصلية لسه موجودة.
             </div>
 
-            <h2>نفس صفحة قبل النوم، بتلات أصوات</h2>
-            <p>أحدث مثال هو صفحة تصبح على خير من <a href="../../projects/bedtime-stories/books/susu.html" class="site-link">سوسو القطة</a>، تاني كتاب من كتب النوم بتاعة ابني. نفس الـ script، تلات أصوات &mdash; واحد في الـ cloud واتنين على الـ Mac Studio:</p>
+            <div class="update-note">
+                <strong>تحديث، 15 أكتوبر 2026.</strong> آخر حاجة في قايمة &laquo;الخطوة الجاية&raquo; عندي خلصت: صوتي أنا بقى بيشتغل محليًا. بعد ما جرّبت 11 model صوت مفتوح المصدر جنب بعض، اخترت <strong>Fish S2-Pro</strong>. بيستنسخ صوتي من تسجيل قصير، وبيمشي على نفس الـ tags زي <code>[warmly]</code> اللي بيفهمها ElevenLabs، وبقى الصوت الـ default في H_AI. الصوت الجديد موجود في المقارنة اللي تحت وليه قسم لوحده. وعملت نفس التجربة بالعربي المصري كمان؛ نتايجها أقل وضوحًا، وليها قسم لوحدها.
+            </div>
+
+            <h2>نفس صفحة قبل النوم، بأربع أصوات</h2>
+            <p>أحدث مثال هو صفحة تصبح على خير من <a href="../../projects/bedtime-stories/books/susu.html" class="site-link">سوسو القطة</a>، تاني كتاب من كتب النوم بتاعة ابني. نفس الـ script، أربع أصوات &mdash; واحد في الـ cloud وتلاتة على الـ Mac Studio. وأول اتنين صوتي أنا:</p>
 
             <div class="script-preview">
                 <p lang="en" dir="ltr"><em>[softly]</em> Goodnight, Susu. <em>&lt;pause&gt;</em> Goodnight Baba. Goodnight Mama. Goodnight Susu, curled up at the end of the bed. <em>&lt;pause&gt;</em> <em>[whispers]</em> Goodnight, Yusuf.</p>
@@ -235,6 +239,15 @@
                 <p>في الـ cloud &mdash; audio tags للأداء &mdash; النسخة اللي في الكتاب &mdash; 8.6 ثانية</p>
                 <audio controls preload="metadata">
                     <source src="../../projects/bedtime-stories/audio-susu/en/p9.mp3" type="audio/mpeg">
+                    المتصفح بتاعك مش بيدعم عنصر الصوت.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Fish S2-Pro &mdash; صوتي المستنسخ، محلي</h3>
+                <p>Mac Studio &mdash; نفس الـ tags، والـ model بيمشي عليها &mdash; اتولّد في حوالي 10 ثواني &mdash; 10.4 ثانية</p>
+                <audio controls preload="metadata">
+                    <source src="../../audio/susu-goodnight-fish.mp3" type="audio/mpeg">
                     المتصفح بتاعك مش بيدعم عنصر الصوت.
                 </audio>
             </div>
@@ -257,7 +270,7 @@
                 </audio>
             </div>
 
-            <p>فيه حاجتين بيلفتوا النظر. الواضحة إن الأول بس هو اللي صوته شبهي &mdash; النسخ المحلية بتستخدم أصوات جاهزة، لأني لسه ما استنسختش صوتي محليًا. والأقل وضوحًا هي التوقيت: المحركات المحلية بتقرا نفس الصفحة <strong>أبطأ بأكتر من 50%</strong>. وده مهم في كتاب مصوّر، لأن الصفحة اللي بعدها مينفعش تتقلب قبل ما الجملة تخلص.</p>
+            <p>أول ما عملت المقارنة دي، نسخة ElevenLabs بس هي اللي كان صوتها شبهي؛ المحركات المحلية كانت بتستخدم أصوات جاهزة. ده اتغيّر. النسخة التانية هي صوتي أنا، مستنسخ على الـ Mac Studio، وبتمشي على الـ tags <code>[softly]</code> و<code>[whispers]</code> المكتوبة في الـ script زي ElevenLabs بالظبط. والصوتين الجاهزين بيورّوا المشكلة التانية اللي لقيتها: بيقروا نفس الصفحة <strong>أبطأ بأكتر من 50%</strong>. وده مهم في كتاب مصوّر، لأن الصفحة اللي بعدها مينفعش تتقلب قبل ما الجملة تخلص. والنسخة المحلية من صوتي جت في النص: 10.4 ثانية، قصاد 8.6 لـ ElevenLabs.</p>
 
             <h2>إيه اللي اتغيّر في ElevenLabs: Eleven v4</h2>
             <p>الحكي في كتب النوم معمول بـ <span class="highlight">Eleven v4</span>، اللي بقى الـ default عندي. الفرق الكبير عن Multilingual v2 القديم هو طريقة التحكم فيه. v2 كان فيه زراير &mdash; stability وstyle &mdash; وكنت بظبط الأداء بإني ألفّها. v3 وv4 بيتجاهلوا زرار الـ style خالص، وبياخدوا بدله <strong>audio tags</strong> مكتوبة جوه الـ script: <code>[warmly]</code>، <code>[softly]</code>، <code>[whispers]</code>، وكمان <code>&lt;break time="0.5s" /&gt;</code> للوقفات.</p>
@@ -335,14 +348,156 @@
                     <td>10، منها العربي</td>
                     <td>استنساخ متعدد اللغات، وهو الأتقل بحجم 8 GB</td>
                 </tr>
+                <tr>
+                    <td><strong>Fish S2-Pro</strong> <em>(جديد)</em></td>
+                    <td>استنساخ صوت + tags جوه النص</td>
+                    <td>لغات كتير</td>
+                    <td>صوتي أنا &mdash; وبقى الـ default في H_AI</td>
+                </tr>
             </table>
 
             <p>المشكلة في مشاريعي هي <strong>العربي</strong>. ولا محرك محلي جاي بصوت عربي جاهز؛ محركات الاستنساخ بس هي اللي بتتكلم عربي، فالسرد بالعربي محتاج تسجيل نضيف مدته من 15 لـ 30 ثانية أستنسخ منه &mdash; ويفضّل يكون لحد بيتكلم عربي. في الـ cloud بختار صوت عربي وخلاص.</p>
 
+            <h2>صوتي أنا، محليًا: Fish S2-Pro</h2>
+            <p>استنساخ صوتي كان أول حاجة في قايمة &laquo;الخطوة الجاية&raquo;، فعملت مسابقة. خدت أحدث الـ models المفتوحة المصدر وأكترها إعجابًا على Hugging Face، وإدّيت كل واحد نفس التسجيل القصير لصوتي. وكل واحد قرا نفس كتاب النوم صفحة صفحة، وعدّيت كل صفحة تاني على speech‑to‑text عشان أعدّ الكلمات اللي غلط فيها.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>الـ model</th>
+                    <th>أخطاء الكلمات</th>
+                    <th>بيمشي على الـ <code>[tags]</code></th>
+                    <th>الترخيص</th>
+                </tr>
+                <tr>
+                    <td><strong>Fish S2-Pro</strong></td>
+                    <td>0.0%</td>
+                    <td>آه</td>
+                    <td>غير تجاري</td>
+                </tr>
+                <tr>
+                    <td><strong>VoxCPM2</strong></td>
+                    <td>2.9%</td>
+                    <td>لأ</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Fish Drama-3</strong></td>
+                    <td>3.4%</td>
+                    <td>آه</td>
+                    <td>غير تجاري</td>
+                </tr>
+                <tr>
+                    <td><strong>OmniVoice</strong></td>
+                    <td>3.4%</td>
+                    <td>لأ</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td><strong>ElevenLabs v4</strong> <em>(cloud)</em></td>
+                    <td>4.1%</td>
+                    <td>آه</td>
+                    <td>مدفوع</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen3-TTS</strong></td>
+                    <td>4.3%</td>
+                    <td>لأ</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Chatterbox</strong></td>
+                    <td>4.9%</td>
+                    <td>لأ</td>
+                    <td>MIT</td>
+                </tr>
+            </table>
+
+            <p>المفاجأة في نص الجدول: <strong>كل الـ models المحلية قرت الكلمات بدقة ElevenLabs</strong>. الدقة مبقتش هي اللي بتفرق بينهم. اللي بيفرق هو هل الصوت شبهي، وهل يقدر يمشي على توجيهات الأداء. وFish S2-Pro كسب في الاتنين. وهو كمان واحد من اتنين بس من الـ models اللي بيفهموا الـ tags الموجودة أصلًا في الـ scripts بتاعتي. سطر مكتوب كده <code>[whispers] Goodnight, Yusuf.</code> لـ ElevenLabs بيتقال همس محليًا كمان، فبقى script واحد شغال في الناحيتين من غير ما أشيل منه حاجة.</p>
+
+            <p>فيه حاجتين لازم أقولهم بصراحة. الترخيص <strong>غير تجاري</strong>، وده مفيهوش مشكلة لموقعي ولكتب ابني، بس كان هيمنعه في أي product. والنسخة الأولى من الاستنساخ اتعلّمت من حوالي 19 ثانية من سرد ElevenLabs بتاعي، مش من تسجيل جديد &mdash; نسخة من نسخة. تسجيل نضيف بصوتي هو التحسين الجاي.</p>
+
+            <p>وعشان يبقى استخدام يومي، ضفت Fish S2-Pro لـ Voicebox كمحرك جديد، وخليت صوتي المستنسخ هو الـ default في H_AI. لما أطلب إن إجابة تتقرا بصوت عالي، دلوقتي بترجع بصوتي، متولّدة على الـ Mac Studio.</p>
+
+            <h2>العربي المصري محليًا: لسه</h2>
+            <p>كل كتاب من كتب النوم ليه نسخة بالعربي المصري، فعملت نفس التجربة بالمصري. نصين: النسخة المصرية من بسم الله، اللي ElevenLabs بيحكيها أصلًا، وقصة جديدة من 6 صفحات كتبتها مخصوص للتجربة. الـ models العامة بتقول إنها بتدعم العربي بس مش المصري، فضفت الـ models المفتوحة المتظبطة على المصري اللي لقيتها: <strong>VoiceTut</strong> (OmniVoice متدرّب على حوالي 380 ساعة كلام مصري)، و<strong>NileTTS</strong> و<strong>EGTTS</strong> (الاتنين مبنيين على XTTS-v2)، و<strong>Habibi</strong>. وكل الـ models اللي بتستنسخ قلّدت نفس الصوت المرجعي المصري القصير؛ وVoiceTut فيه كمان أصوات مصرية جاهزة.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>الـ model</th>
+                    <th>بسم الله (مصري)</th>
+                    <th>القصة الجديدة</th>
+                    <th>الترخيص</th>
+                </tr>
+                <tr>
+                    <td><strong>ElevenLabs v4</strong> <em>(cloud)</em></td>
+                    <td>16.2%</td>
+                    <td>&mdash;</td>
+                    <td>مدفوع</td>
+                </tr>
+                <tr>
+                    <td><strong>XTTS-v2</strong></td>
+                    <td>15.0%</td>
+                    <td>27.5%</td>
+                    <td>غير تجاري</td>
+                </tr>
+                <tr>
+                    <td><strong>OmniVoice</strong></td>
+                    <td>16.1%</td>
+                    <td>28.1%</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td><strong>VoiceTut</strong>، صوت &laquo;&#8294;Hossam&#8297;&raquo;</td>
+                    <td>17.1%</td>
+                    <td>29.8%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Fish S2-Pro</strong></td>
+                    <td>18.6%</td>
+                    <td>26.5%</td>
+                    <td>غير تجاري</td>
+                </tr>
+                <tr>
+                    <td><strong>NileTTS</strong></td>
+                    <td>19.1%</td>
+                    <td>56.5%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>VoiceTut</strong>، صوت &laquo;&#8294;Omar&#8297;&raquo;</td>
+                    <td>19.9%</td>
+                    <td>24.7%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen3-TTS</strong></td>
+                    <td>21.4%</td>
+                    <td>27.0%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Habibi</strong> (مصري)</td>
+                    <td>22.8%</td>
+                    <td>26.9%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>EGTTS</strong></td>
+                    <td>38.4%</td>
+                    <td>34.4%</td>
+                    <td>غير تجاري</td>
+                </tr>
+            </table>
+
+            <p>الجدول ده يتقري غير الجدول الإنجليزي. هنا الـ speech‑to‑text نفسه جزء من المشكلة: Whisper بيسمع المصري غلط لوحده، فحتى سرد ElevenLabs اللي في الكتاب جاب 16%. ومعظم الـ models المحلية وقعت في نفس المدى من 15 لـ 30%، جوه الدوشة دي، فالأرقام متقدرش ترتّبهم. وأوضح دليل هو Qwen3-TTS: مش بيدعم العربي أصلًا، ومع ذلك جاب نتيجة في نفس المدى.</p>
+
+            <p>اللي الأرقام تقدر تورّيه هو الصوت اللي بيبوظ. NileTTS اتنقل من 19% في نص لـ 56% في التاني، وHabibi وقع خالص لما استنسخ تسجيلي الإنجليزي بدل تسجيل مصري (74% و82%). يعني الأرقام بتقولّي أرمي أنهي مقاطع، مش أحتفظ بأنهي صوت. لسه ما حكمتش على الأصوات المصرية بودني؛ ولحد ما أعمل كده، السرد العربي عندي هيفضل مع ElevenLabs.</p>
+
             <h2>script واحد، backend اتنين</h2>
             <p>أحدث حتة هي أداة batch للتعليق الصوتي جوه H_AI. بتاخد نفس ملف الـ script اللي بستخدمه مع ElevenLabs &mdash; entry لكل صفحة &mdash; وبتولّد كل صفحة محليًا عن طريق Voicebox، بنفس أسماء الملفات. مشغّل القصص اللي بيشغّل <code>audio/en/p1.mp3</code> مش فارق معاه مين عمله.</p>
 
-            <p>المحركات المحلية عمرها ما سمعت عن <code>[warmly]</code> وهتقراها بصوت عالي، فالأداة بتشيل الـ tags، وتقسم الـ script عند كل <code>&lt;break&gt;</code>، وتولّد كل حتة، وبعدين تلصقهم تاني بصمت حقيقي بالمدة المطلوبة. زي ما بتقول ملاحظات الأداة: <em>الإيقاع بيعدّي في النقلة، والإحساس لأ.</em></p>
+            <p>معظم المحركات المحلية عمرها ما سمعت عن <code>[warmly]</code> وهتقراها بصوت عالي، فمعاهم الأداة بتشيل الـ tags، وتقسم الـ script عند كل <code>&lt;break&gt;</code>، وتولّد كل حتة، وبعدين تلصقهم تاني بصمت حقيقي بالمدة المطلوبة. زي ما بتقول ملاحظات الأداة: <em>الإيقاع بيعدّي في النقلة، والإحساس لأ.</em> مع Fish S2-Pro الـ tags تقدر تفضل في الـ script: بيقراها كتوجيهات، فالـ breaks بس هي اللي بتبقى صمت، والإحساس بيعدّي كمان.</p>
 
             <p>بعد كل batch بتفحص النتايج بنفس طريقة الـ pipeline بتاع ElevenLabs عندي &mdash; وبتعلّم المقاطع اللي <strong>صامتة</strong> أو <strong>قصيرة قوي</strong> أو <strong>ممطوطة</strong>. الممطوط هو الفكرة الشاطرة: الكلام المتلخبط بيطلع برضه ملف سليم 100% وبيتفتح عادي، بس بياخد وقت أطول بكتير لكل حرف من المقاطع اللي جنبه، فبيبان إنه outlier.</p>
 
@@ -355,7 +510,7 @@
 
             <p><strong>اكتب للودن.</strong> الأرقام تتكتب حروف، من غير اختصارات، والجمل أقل من 200 حرف تقريبًا، وفكرة واحدة في الصفحة. كل script بيعدّي على linter صغير قبل ما أي صوت يتولّد.</p>
 
-            <p><strong>راجع الكلمات، مش الملف بس.</strong> لما عملت النسخ المحلية لصفحات سوسو للمقال ده، عدّيت كل مقطع تاني على speech‑to‑text عشان أتأكد إنه قال اللي في الـ script. صفحة تصبح على خير رجعت كلمة بكلمة من الأصوات التلاتة &mdash; وعشان كده هي المثال اللي فوق.</p>
+            <p><strong>راجع الكلمات، مش الملف بس.</strong> لما عملت النسخ المحلية لصفحات سوسو للمقال ده، عدّيت كل مقطع تاني على speech‑to‑text عشان أتأكد إنه قال اللي في الـ script. صفحة تصبح على خير رجعت كلمة بكلمة من الأصوات التلاتة &mdash; وعشان كده هي المثال اللي فوق. والـ pipeline الجديد بيعمل الفحص ده لوحده، جملة جملة: لو الـ speech‑to‑text سمع كلام غلط، أو الإيقاع مش مظبوط، الجملة بتتولّد تاني، لحد 4 مرات، وبيفضل أحسن take.</p>
 
             <h2>الـ podcast، زمان ودلوقتي</h2>
             <p>من هنا بدأ المشروع. في فبراير كتبت script podcast مدته خمس دقايق عن مشروع <a href="building-ai-server.html" class="site-link">محرك الـ AI الشخصي</a> وولّدته مرتين &mdash; مرة محليًا بـ VibeVoice، ومرة بـ ElevenLabs بـ clone من صوتي. في أكتوبر مرّرت <strong>نفس الـ script بالظبط</strong>، كلمة بكلمة، على المحركين المحليين الجداد، عشان تقدر تقارن الأربعة ببعض على طول.</p>
@@ -484,19 +639,20 @@
 
             <div class="comparison-grid stagger">
                 <div class="comparison-card">
-                    <h3>محلي (Voicebox + VibeVoice)</h3>
+                    <h3>محلي (Voicebox وVibeVoice وFish S2-Pro)</h3>
                     <ul class="pro-list">
                         <li>ببلاش ومن غير حدود &mdash; مثالي للـ drafts وتجربة الأصوات</li>
                         <li>خصوصية كاملة &mdash; مفيش حاجة بتطلع من الجهاز</li>
                         <li>Kokoro بيولّد صفحة في ثواني</li>
                         <li>podcast بأكتر من متحدث مع VibeVoice</li>
                         <li>متركّب جوه H_AI للصوت الداخل والطالع</li>
+                        <li>صوتي أنا، مستنسخ محليًا، ومعاه audio tags</li>
                     </ul>
                     <ul class="con-list">
-                        <li>مفيش audio tags &mdash; الإيقاع بيعدّي، والإحساس لأ</li>
+                        <li>معظم المحركات بتتجاهل الـ audio tags &mdash; Fish S2-Pro هو الاستثنا</li>
                         <li>العربي عن طريق استنساخ الصوت بس</li>
-                        <li>بيقرا أبطأ بشكل ملحوظ من ElevenLabs</li>
-                        <li>صوتي أنا لسه مش مستنسخ محليًا</li>
+                        <li>بيقرا أبطأ من ElevenLabs &mdash; صوتي المستنسخ بحوالي 20%</li>
+                        <li>أحسن استنساخ ترخيصه غير تجاري بس</li>
                     </ul>
                 </div>
                 <div class="comparison-card">
@@ -517,13 +673,13 @@
             </div>
 
             <div class="quote">
-                المسافة بين الـ TTS المحلي والـ cloud بتقل باستمرار. المحلي دلوقتي كويس كفاية إني أعمل مسودة كتاب كامل ببلاش؛ والـ cloud لسه بيستاهل مكانه في النسخة النهائية &mdash; خصوصًا لما الصوت لازم يبقى صوتي.
+                المسافة بين الـ TTS المحلي والـ cloud بتقل باستمرار. المحلي دلوقتي كويس كفاية إني أعمل مسودة كتاب كامل ببلاش &mdash; ولأول مرة، بصوتي أنا. والـ cloud لسه بيستاهل مكانه في النسخة النهائية، وفي العربي.
             </div>
 
             <h2>الخطوة الجاية</h2>
             <p>في فبراير كانت الخطوة الجاية هي إدخال الصوت. وده خلص &mdash; أقدر أسجّل سؤال على موبايلي وH_AI يحوّله لنص محليًا. والجاي دلوقتي:</p>
 
-            <p><strong>استنساخ صوتي أنا محليًا</strong>، عشان المسودات المحلية تطلع شبه النسخة النهائية. <strong>سرد بالعربي محليًا</strong>، عن طريق Chatterbox أو TADA مع تسجيل مرجعي عربي كويس. و<strong>كتب نوم أكتر</strong> &mdash; السلسلة بتكبر مع ابني، وكل كتاب جديد فرصة تانية أشوف بيها الأصوات المحلية وصلت لفين.</p>
+            <p>استنساخ صوتي محليًا خلص. اللي فاضل: <strong>تسجيل نضيف</strong> أستنسخ منه، بدل سرد ElevenLabs بتاعي. <strong>سرد بالعربي محليًا</strong> &mdash; تجربة المصري اللي فوق ضيّقت الاختيار لكام model، منهم VoiceTut، بس الـ speech‑to‑text مش هيقدر يختار الكسبان، ولسه ما حكمتش عليهم بودني، فالعربي هيفضل في الـ cloud دلوقتي. و<strong>كتب نوم أكتر</strong> &mdash; السلسلة بتكبر مع ابني، وكل كتاب جديد فرصة تانية أشوف بيها الأصوات المحلية وصلت لفين.</p>
 
             <p>الأدوات موجودة. والـ hardware يقدر. ومجتمع الـ open source ماشي بالـ models لقدام. إنك تشغّل pipeline صوت AI بتاعك مبقاش مشروع بحثي &mdash; بقى مشروع ويك إند.</p>
 

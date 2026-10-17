@@ -7,7 +7,7 @@
     <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
     <title>Generating Voice from Text with Local Models - Hisham Abuella</title>
-    <meta name="description" content="Local text-to-speech on a Mac Studio M4 Max with Voicebox and VibeVoice, compared with ElevenLabs Eleven v4 &mdash; with examples from bilingual bedtime stories.">
+    <meta name="description" content="Local text-to-speech on a Mac Studio M4 Max with Voicebox, VibeVoice and Fish S2-Pro &mdash; now cloning my own voice &mdash; compared with ElevenLabs Eleven v4, with examples from bilingual bedtime stories.">
     <meta property="og:title" content="Generating Voice from Text Using Local Models - Hisham Abuella">
     <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -202,8 +202,8 @@
             <h1 class="article-title enter delay-1">Generating Voice from Text Using Local Models</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> February 17, 2026</span>
-                <span><i class="fas fa-sync-alt"></i> Updated October 2, 2026</span>
-                <span><i class="fas fa-clock"></i> 11 min read</span>
+                <span><i class="fas fa-sync-alt"></i> Updated October 15, 2026</span>
+                <span><i class="fas fa-clock"></i> 14 min read</span>
                 <span><i class="fas fa-user"></i> Hisham Abuella</span>
                 <a class="lang-switch" href="ar/local-voice-generation.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
             </div>
@@ -222,8 +222,12 @@
                 <strong>Update, October 2026.</strong> When I first wrote this in February, local voice meant one model, VibeVoice, and one experiment. Since then voice has become part of everyday projects: <a href="bedtime-stories.html" class="site-link">bedtime stories for my son</a> narrated in my own voice, a set of local voice engines wired into H_AI through <strong>Voicebox</strong>, and a batch tool that renders a whole story locally or through ElevenLabs from the same script. ElevenLabs moved too &mdash; my default is now <strong>Eleven v4</strong>. New examples and lessons below; the original February comparison is still here.
             </div>
 
-            <h2>The Same Bedtime Page, Three Voices</h2>
-            <p>The newest example is the goodnight page from <a href="../projects/bedtime-stories/books/susu.html" class="site-link">Susu the Cat</a>, the second of my son&rsquo;s bedtime books. Same script, three voices &mdash; one in the cloud, two on the Mac Studio:</p>
+            <div class="update-note">
+                <strong>Update, October 15, 2026.</strong> The last item on my &ldquo;what&rsquo;s next&rdquo; list is done: my own voice now runs locally. After testing eleven open-source voice models side by side, I picked <strong>Fish S2-Pro</strong>. It clones my voice from a short recording, follows the same <code>[warmly]</code> tags as ElevenLabs, and is now the default voice in H_AI. The new voice is in the comparison below and has its own section. I ran the same test in Egyptian Arabic too; those results are less clear-cut, and they have their own section.
+            </div>
+
+            <h2>The Same Bedtime Page, Four Voices</h2>
+            <p>The newest example is the goodnight page from <a href="../projects/bedtime-stories/books/susu.html" class="site-link">Susu the Cat</a>, the second of my son&rsquo;s bedtime books. Same script, four voices &mdash; one in the cloud, three on the Mac Studio. The first two are both my voice:</p>
 
             <div class="script-preview">
                 <p><em>[softly]</em> Goodnight, Susu. <em>&lt;pause&gt;</em> Goodnight Baba. Goodnight Mama. Goodnight Susu, curled up at the end of the bed. <em>&lt;pause&gt;</em> <em>[whispers]</em> Goodnight, Yusuf.</p>
@@ -234,6 +238,15 @@
                 <p>Cloud &mdash; audio tags for delivery &mdash; the version that ships in the book &mdash; 8.6 s</p>
                 <audio controls preload="metadata">
                     <source src="../projects/bedtime-stories/audio-susu/en/p9.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="audio-player-wrap">
+                <h3>Fish S2-Pro &mdash; my cloned voice, local</h3>
+                <p>Mac Studio &mdash; same tags, followed by the model &mdash; rendered in about 10 seconds &mdash; 10.4 s</p>
+                <audio controls preload="metadata">
+                    <source src="../audio/susu-goodnight-fish.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
             </div>
@@ -256,7 +269,7 @@
                 </audio>
             </div>
 
-            <p>Two things stand out. The obvious one is that only the first sounds like me &mdash; the local versions use preset voices, because I haven&rsquo;t cloned my own voice locally yet. The less obvious one is timing: the local engines read the same page <strong>more than 50% slower</strong>. That matters for a picture book, where the next page shouldn&rsquo;t turn before the sentence ends.</p>
+            <p>When I first made this comparison, only the ElevenLabs version sounded like me; the local engines used preset voices. That has changed. The second version is my own voice, cloned on the Mac Studio. It follows the <code>[softly]</code> and <code>[whispers]</code> tags written into the script, just as ElevenLabs does. The two preset voices show the other problem I found: they read the same page <strong>more than 50% slower</strong>. That matters for a picture book, where the next page shouldn&rsquo;t turn before the sentence ends. My local clone lands in between: 10.4 seconds, against 8.6 for ElevenLabs.</p>
 
             <h2>What Changed at ElevenLabs: Eleven v4</h2>
             <p>The bedtime books are narrated with <span class="highlight">Eleven v4</span>, which is now my default. The big change from the older Multilingual v2 is how you steer it. v2 had dials &mdash; stability, style &mdash; and you tuned delivery by turning them. v3 and v4 ignore the style dial entirely and take <strong>audio tags</strong> written into the script instead: <code>[warmly]</code>, <code>[softly]</code>, <code>[whispers]</code>, plus <code>&lt;break time="0.5s" /&gt;</code> for pauses.</p>
@@ -334,14 +347,156 @@
                     <td>10, incl. Arabic</td>
                     <td>Multilingual cloning, the heaviest at 8 GB</td>
                 </tr>
+                <tr>
+                    <td><strong>Fish S2-Pro</strong> <em>(new)</em></td>
+                    <td>Voice cloning + inline tags</td>
+                    <td>Multilingual</td>
+                    <td>My own voice &mdash; now H_AI&rsquo;s default</td>
+                </tr>
             </table>
 
             <p>The catch for my projects is <strong>Arabic</strong>. None of the local engines ship an Arabic preset voice; only the cloning engines speak it, so Arabic narration needs a clean 15&ndash;30 second recording to clone from &mdash; ideally of someone speaking Arabic. In the cloud, I just pick an Arabic voice.</p>
 
+            <h2>My Own Voice, Locally: Fish S2-Pro</h2>
+            <p>Cloning my own voice was at the top of my &ldquo;what&rsquo;s next&rdquo; list, so I held a bake-off. I took the newest and most-liked open-source voice models on Hugging Face and gave each one the same short recording of my voice. Each then read the same bedtime book, page by page, and I ran every page back through speech-to-text to count the words it got wrong.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>Model</th>
+                    <th>Word errors</th>
+                    <th>Follows <code>[tags]</code></th>
+                    <th>License</th>
+                </tr>
+                <tr>
+                    <td><strong>Fish S2-Pro</strong></td>
+                    <td>0.0%</td>
+                    <td>Yes</td>
+                    <td>Non-commercial</td>
+                </tr>
+                <tr>
+                    <td><strong>VoxCPM2</strong></td>
+                    <td>2.9%</td>
+                    <td>No</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Fish Drama-3</strong></td>
+                    <td>3.4%</td>
+                    <td>Yes</td>
+                    <td>Non-commercial</td>
+                </tr>
+                <tr>
+                    <td><strong>OmniVoice</strong></td>
+                    <td>3.4%</td>
+                    <td>No</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td><strong>ElevenLabs v4</strong> <em>(cloud)</em></td>
+                    <td>4.1%</td>
+                    <td>Yes</td>
+                    <td>Paid</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen3-TTS</strong></td>
+                    <td>4.3%</td>
+                    <td>No</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Chatterbox</strong></td>
+                    <td>4.9%</td>
+                    <td>No</td>
+                    <td>MIT</td>
+                </tr>
+            </table>
+
+            <p>The surprise is the middle of the table: <strong>every local model read the words as accurately as ElevenLabs</strong>. Accuracy is no longer what separates them. What does is whether the voice sounds like me, and whether it can follow delivery. Fish S2-Pro won on both. It is also one of only two models that understand the tags already in my scripts. A line written as <code>[whispers] Goodnight, Yusuf.</code> for ElevenLabs is whispered locally too, so one script now works on both sides without stripping anything.</p>
+
+            <p>Two honest caveats. The license is <strong>non-commercial</strong>, which is fine for my site and my son&rsquo;s books, but would rule it out for a product. And for this first version, the clone learned from about 19 seconds of my ElevenLabs narration rather than a fresh recording &mdash; a copy of a copy. A clean recording of my own is the next improvement.</p>
+
+            <p>To make it everyday, I added Fish S2-Pro to Voicebox as a new engine and made my cloned voice the default in H_AI. When I ask for an answer read aloud, it now comes back in my voice, rendered on the Mac Studio.</p>
+
+            <h2>Egyptian Arabic, Locally: Not Yet</h2>
+            <p>Every bedtime book also has an Egyptian Arabic edition, so I ran the same test in Egyptian. Two texts: the Egyptian edition of Bismillah, which ElevenLabs already narrates, and a new six-page story I wrote for the test. The general models list Arabic but not Egyptian, so I added the Egyptian-tuned open models I could find: <strong>VoiceTut</strong> (OmniVoice trained on about 380 hours of Egyptian speech), <strong>NileTTS</strong> and <strong>EGTTS</strong> (both built on XTTS-v2), and <strong>Habibi</strong>. The cloning models all copied the same short Egyptian reference voice; VoiceTut also has built-in Egyptian voices.</p>
+
+            <table class="model-table">
+                <tr>
+                    <th>Model</th>
+                    <th>Bismillah (Egyptian)</th>
+                    <th>New story</th>
+                    <th>License</th>
+                </tr>
+                <tr>
+                    <td><strong>ElevenLabs v4</strong> <em>(cloud)</em></td>
+                    <td>16.2%</td>
+                    <td>&mdash;</td>
+                    <td>Paid</td>
+                </tr>
+                <tr>
+                    <td><strong>XTTS-v2</strong></td>
+                    <td>15.0%</td>
+                    <td>27.5%</td>
+                    <td>Non-commercial</td>
+                </tr>
+                <tr>
+                    <td><strong>OmniVoice</strong></td>
+                    <td>16.1%</td>
+                    <td>28.1%</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td><strong>VoiceTut</strong>, voice &ldquo;Hossam&rdquo;</td>
+                    <td>17.1%</td>
+                    <td>29.8%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Fish S2-Pro</strong></td>
+                    <td>18.6%</td>
+                    <td>26.5%</td>
+                    <td>Non-commercial</td>
+                </tr>
+                <tr>
+                    <td><strong>NileTTS</strong></td>
+                    <td>19.1%</td>
+                    <td>56.5%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>VoiceTut</strong>, voice &ldquo;Omar&rdquo;</td>
+                    <td>19.9%</td>
+                    <td>24.7%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Qwen3-TTS</strong></td>
+                    <td>21.4%</td>
+                    <td>27.0%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>Habibi</strong> (Egyptian)</td>
+                    <td>22.8%</td>
+                    <td>26.9%</td>
+                    <td>Apache 2.0</td>
+                </tr>
+                <tr>
+                    <td><strong>EGTTS</strong></td>
+                    <td>38.4%</td>
+                    <td>34.4%</td>
+                    <td>Non-commercial</td>
+                </tr>
+            </table>
+
+            <p>Read this table differently from the English one. Here the speech-to-text is part of the problem: Whisper mishears Egyptian on its own, so even the ElevenLabs narration that ships in the book scores 16%. Most local models land in the same 15&ndash;30% band, inside that noise, so the numbers can&rsquo;t rank them. The clearest sign is Qwen3-TTS: it doesn&rsquo;t support Arabic at all, yet it scores in the same band.</p>
+
+            <p>What the numbers can show is a voice that breaks. NileTTS swung from 19% on one text to 56% on the other, and Habibi fell apart completely when it cloned my English recording instead of an Egyptian one (74% and 82%). So the scores tell me which clips to throw away, not which voice to keep. I haven&rsquo;t judged the Egyptian voices by ear yet; until I do, my Arabic narration stays with ElevenLabs.</p>
+
             <h2>One Script, Two Backends</h2>
             <p>The newest piece is a batch voice-over tool in H_AI. It takes the same script file I use for ElevenLabs &mdash; one entry per page &mdash; and renders every page locally through Voicebox, with the same file names. A story player that plays <code>audio/en/p1.mp3</code> doesn&rsquo;t care which one made it.</p>
 
-            <p>Local engines have never heard of <code>[warmly]</code> and will read it out loud, so the tool strips the tags, splits the script at every <code>&lt;break&gt;</code>, renders each piece, and splices them back together with real silence of the requested length. As the tool&rsquo;s notes put it: <em>pacing survives the move; emotion does not.</em></p>
+            <p>Most local engines have never heard of <code>[warmly]</code> and would read it out loud, so for them the tool strips the tags, splits the script at every <code>&lt;break&gt;</code>, renders each piece, and splices them back together with real silence of the requested length. As the tool&rsquo;s notes put it: <em>pacing survives the move; emotion does not.</em> With Fish S2-Pro the tags can stay in the script: it reads them as directions, so only the breaks become silence and the emotion survives the move too.</p>
 
             <p>After each batch it checks the results the same way my ElevenLabs pipeline does &mdash; flagging clips that are <strong>silent</strong>, <strong>too short</strong>, or <strong>stretched</strong>. Stretched is the clever one: garbled speech still decodes as a perfectly valid file, but it takes far longer per character than its neighbours, so it shows up as an outlier.</p>
 
@@ -354,7 +509,7 @@
 
             <p><strong>Write for the ear.</strong> Numbers spelled out, no abbreviations, sentences under about 200 characters, one idea per page. Every script goes through a small linter before any audio is generated.</p>
 
-            <p><strong>Check the words, not just the file.</strong> When I made the local versions of the Susu pages for this article, I ran every clip back through speech-to-text to confirm it said what the script said. The goodnight page came back word-for-word from all three voices &mdash; which is why it&rsquo;s the example above.</p>
+            <p><strong>Check the words, not just the file.</strong> When I made the local versions of the Susu pages for this article, I ran every clip back through speech-to-text to confirm it said what the script said. The goodnight page came back word-for-word from all three voices &mdash; which is why it&rsquo;s the example above. The new pipeline does this check automatically, one sentence at a time: if speech-to-text hears the wrong words, or the pace is off, that sentence is generated again, up to four times, and the best take is kept.</p>
 
             <h2>The Podcast, Then and Now</h2>
             <p>This is where the project started. In February I wrote a five-minute podcast script about my <a href="building-ai-server.html" class="site-link">Personal AI Engine</a> project and generated it twice &mdash; once locally with VibeVoice, once with ElevenLabs using a clone of my voice. In October I ran the <strong>exact same script</strong>, word for word, through the two new local engines, so all four can be compared directly.</p>
@@ -483,19 +638,20 @@
 
             <div class="comparison-grid stagger">
                 <div class="comparison-card">
-                    <h3>Local (Voicebox + VibeVoice)</h3>
+                    <h3>Local (Voicebox, VibeVoice, Fish S2-Pro)</h3>
                     <ul class="pro-list">
                         <li>Free and unlimited &mdash; ideal for drafts and auditions</li>
                         <li>Total privacy &mdash; nothing leaves the machine</li>
                         <li>Kokoro renders a page in seconds</li>
                         <li>Multi-speaker podcasts with VibeVoice</li>
                         <li>Built into H_AI for voice in and voice out</li>
+                        <li>My own voice, cloned locally, with audio tags</li>
                     </ul>
                     <ul class="con-list">
-                        <li>No audio tags &mdash; pacing carries over, emotion doesn&rsquo;t</li>
+                        <li>Most engines ignore audio tags &mdash; Fish S2-Pro is the exception</li>
                         <li>Arabic only through voice cloning</li>
-                        <li>Reads noticeably slower than ElevenLabs</li>
-                        <li>My own voice isn&rsquo;t cloned locally yet</li>
+                        <li>Reads slower than ElevenLabs &mdash; my clone by about 20%</li>
+                        <li>The best clone is non-commercial only</li>
                     </ul>
                 </div>
                 <div class="comparison-card">
@@ -516,13 +672,13 @@
             </div>
 
             <div class="quote">
-                The gap between local and cloud TTS keeps closing. Local is now good enough to draft a whole book for free; the cloud still earns its place on the final cut &mdash; especially when the voice has to be mine.
+                The gap between local and cloud TTS keeps closing. Local is now good enough to draft a whole book for free &mdash; and, for the first time, in my own voice. The cloud still earns its place on the final cut, and on Arabic.
             </div>
 
             <h2>What&rsquo;s Next</h2>
             <p>In February, the next step was voice input. That&rsquo;s done &mdash; I can record a question on my phone and H_AI transcribes it locally. What&rsquo;s next now:</p>
 
-            <p><strong>Cloning my own voice locally</strong>, so local drafts sound like the final cut. <strong>Arabic narration locally</strong>, through Chatterbox or TADA with a proper Arabic reference recording. And <strong>more bedtime books</strong> &mdash; the series grows with my son, and each new one is another chance to see how far the local voices have come.</p>
+            <p>Cloning my own voice locally is done. What&rsquo;s left: <strong>a proper recording</strong> to clone from, instead of my ElevenLabs narration. <strong>Arabic narration locally</strong> &mdash; the Egyptian test above narrowed it to a few candidates, VoiceTut among them, but speech-to-text can&rsquo;t pick the winner, and I haven&rsquo;t judged them by ear yet, so for now Arabic stays in the cloud. And <strong>more bedtime books</strong> &mdash; the series grows with my son, and each new one is another chance to see how far the local voices have come.</p>
 
             <p>The tools are here. The hardware is capable. The open-source community keeps pushing the models forward. Running your own AI voice pipeline is no longer a research project &mdash; it&rsquo;s a weekend project.</p>
 
