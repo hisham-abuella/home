@@ -1,0 +1,11 @@
+{
+ "title": "Welcome",
+ "language": "ar",
+ "slides": [
+  {
+   "id": "welcome",
+   "title": "Welcome",
+   "transcript": "[warmly] أهلاً بيك! <break time=\"0.5s\" /> نوّرت الركن بتاع هِشام أبو العِلا على الإنترنت. <break time=\"0.6s\" /> بالنهار، أنا مهندس وايرلس. <break time=\"0.4s\" /> وبالليل... <break time=\"0.3s\" /> [playfully] مهووس بالذكاء الاصطناعي والأوتوميشن. <break time=\"0.6s\" /> [warmly] فاتفضّل، براحتك. <break time=\"0.3s\" /> اتفرّج على المقالات، <break time=\"0.2s\" /> أو على المشاريع الحلوة اللي بشتغل عليها."
+  }
+ ]
+}

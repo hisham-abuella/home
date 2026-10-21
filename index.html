@@ -93,6 +93,15 @@ a { color: inherit; }
 h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-spacing: -0.01em; }
 [dir="rtl"] h1 { line-height: 1.25; letter-spacing: 0; }
 .intro p { margin: 8px 0 0; color: var(--soft); max-width: 52ch; }
+/* "Hear a hello": plays only on click; English or Egyptian Arabic follows the page language */
+.hello { display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; font: 600 15px/1.2 var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--edge); border-radius: 999px; padding: 8px 16px 8px 8px; cursor: pointer; min-height: 44px; }
+[dir="rtl"] .hello { padding: 8px 8px 8px 16px; }
+.hello:hover { border-color: var(--soft); }
+.hello .ic { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--night); flex: none; }
+.hello .ic svg { width: 12px; height: 12px; fill: currentColor; }
+.hello .pause, .hello.playing .play { display: none; }
+.hello.playing .pause { display: block; }
+.hello small { font-weight: 400; color: var(--soft); }
 .ask { margin: clamp(36px, 7vh, 64px) 0 0; font: 600 clamp(1.4rem, 3vw, 2rem)/1.2 var(--display); }
 
 /* The dial (laptop) */
@@ -178,6 +187,10 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
       <h1 data-i18n="name">Hisham Abuella</h1>
       <p class="idline" data-i18n="idLine">Muslim | Cellular Systems Engineer</p>
       <p data-i18n="lede">I love creating UIs with Claude, vibe coding with local AI models, and writing about what I learn along the way.</p>
+      <button type="button" class="hello" id="hello" aria-pressed="false">
+        <span class="ic" aria-hidden="true"><svg class="play" viewBox="0 0 12 12"><path d="M3 1.5v9l7.5-4.5z"/></svg><svg class="pause" viewBox="0 0 12 12"><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"/></svg></span>
+        <span><span data-i18n="hello">Hear a hello in my voice</span> <small data-i18n="helloNote">· cloned locally with AI</small></span>
+      </button>
     </div>
   </div>
 
@@ -270,6 +283,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
   "l1": "اللي اتعلمته، يومية ورا يومية", "l2": "مصادر تتعلم منها ببلاش", "l3": "آخر يومية الأول",
   "allT": "عايز كل حاجة في صفحة واحدة؟", "allL": "افتح الموقع كامل",
   "stay": "خليني هنا",
+  "hello": "اسمع ترحيب بصوتي", "helloNote": "· متعمل بالـ AI",
   "idName": "هشام أبو العلا", "idLine": "مسلم | مهندس أنظمة خلوية", "idLoc": "كاليفورنيا، أمريكا",
   "idCopy": "انسخ الإيميل", "idCv": "اعرض الـ CV",
   "idS1": "سنين في البحث اللاسلكي", "idS2": "سنين في الصناعة", "idS3": "ورقة تقنية منشورة", "idS4": "براءة اختراع أمريكية", "ariaPick": "اختار صفحة", "ariaContact": "التواصل", "ariaSocial": "حساباتي على السوشيال ميديا"
@@ -411,6 +425,26 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
   next();
   // Came back on purpose (index.html?choose, from the full site or an article): no countdown.
   if (new URLSearchParams(location.search).has('choose')) stop();
+})();
+</script>
+<script>
+(function () {
+  // Never autoplays: the clip loads and plays only when the visitor presses the button.
+  var btn = document.getElementById('hello'), audio = null;
+  function stop() {
+    if (audio) { audio.pause(); audio = null; }
+    btn.classList.remove('playing'); btn.setAttribute('aria-pressed', 'false');
+  }
+  btn.addEventListener('click', function () {
+    if (audio) { stop(); return; }
+    var lang = document.documentElement.dir === 'rtl' ? 'ar' : 'en';
+    audio = new Audio('audio/welcome-' + lang + '.mp3');
+    audio.addEventListener('ended', stop);
+    audio.play().then(function () {
+      btn.classList.add('playing'); btn.setAttribute('aria-pressed', 'true');
+    }).catch(stop);
+  });
+  document.addEventListener('langchange', stop);
 })();
 </script>
 </body>
