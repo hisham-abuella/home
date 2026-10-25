@@ -222,7 +222,7 @@ html[data-theme="campaign"] .slide .label{display:inline-block;align-self:flex-s
 html[data-theme="campaign"] .slide:not(:is([data-layout="title"],[data-layout="section"],[data-layout="closing"],[data-layout="full-bleed"],[data-tone="hero"])) .kp-foot{border-top:3px solid var(--ink);padding-top:12px}
 html[data-theme="campaign"] .slide:is([data-layout="title"],[data-layout="section"],[data-layout="closing"]) h1{font-size:calc(124px*var(--fh))}
 html[data-theme="campaign"][dir="rtl"] .label,html[data-theme="campaign"] [dir="rtl"] .label{transform:translate(-4px,12px) rotate(1.5deg);transform-origin:100% 0}
-html[data-theme="campaign"] .slide [data-layout="big-number"] .big{-webkit-text-stroke:0}
+html[data-theme="campaign"] .slide[data-layout="big-number"] .big{-webkit-text-stroke:0}
 html[data-theme="campaign"] .slide[data-layout="ask"] .amount b{font-size:calc(220px*var(--fit))} /* the extended display face is about 35% wider; 300px pushes a 3-digit amount out of its column */
 /* /THEME */
 /* ---------- 7 chalk: university lecturer ---------- */
@@ -1210,13 +1210,22 @@ html.kp-idle .kp-ui{opacity:0;pointer-events:none}html.kp-idle .kp-ui:focus-with
   .kp-ui{bottom:8px;padding:3px;gap:2px;border-radius:10px}.kp-ui button{min-width:36px;height:36px}.kp-ui svg{width:18px;height:18px}
   .kp-ui .kp-count{min-width:50px;padding:0 4px;font-size:12px}.kp-ui .kp-sep{margin:6px 2px}
   .kp-ui :is([data-act="outline"],[data-act="pres"],[data-act="link"],[data-act="pen"]){display:none}}
-html.kp-clean :is(.kp-ui,.kp-pen,.kp-set,.kp-ol,.kp-progress,.kp-toast,.kp-laser){display:none!important}
+html.kp-clean :is(.kp-ui,.kp-pen,.kp-set,.kp-ol,.kp-progress,.kp-toast,.kp-laser,.kp-sound){display:none!important}
 .kp-progress{position:fixed;left:0;bottom:0;height:4px;width:100%;background:var(--brand,#0066cc);transform-origin:0 50%;transform:scaleX(0);transition:transform .4s;z-index:40;pointer-events:none}
 [dir="rtl"] .kp-progress{transform-origin:100% 50%}
 .kp-live-region{position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
 .kp-screen{position:fixed;inset:0;z-index:90;background:#000;display:none;color:#8e8e93;font:500 22px system-ui,sans-serif;place-items:center}.kp-screen.white{background:#fff}.kp-screen.on{display:block}.kp-screen.on.end{display:grid}
 .kp-toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);background:rgba(24,24,26,.9);color:#fff;font:600 28px system-ui,sans-serif;padding:10px 22px;border-radius:12px;z-index:95;opacity:0;transition:opacity .2s;pointer-events:none}
 .kp-toast.on{opacity:1}
+/* Sound marker: shown only when the deck's narration clips exist. A click is what browsers need before they play sound. */
+.kp-sound{position:fixed;top:20px;right:20px;z-index:60;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(24,24,26,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#f2f2f2;font:600 16px system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.28);transition:opacity .3s}
+[dir="rtl"] .kp-sound{right:auto;left:20px;padding:8px 16px 8px 8px}
+.kp-sound svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.kp-sound button{all:unset;box-sizing:border-box;cursor:pointer;min-height:44px;padding:0 18px;border-radius:999px;background:var(--brand,#0a84ff);color:#fff;font:700 16px system-ui,sans-serif;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.kp-sound button:hover{filter:brightness(1.12)}.kp-sound button:focus-visible{outline:2px solid #6db3ff;outline-offset:2px}
+.kp-sound.on button{background:rgba(255,255,255,.18)}
+html.kp-idle .kp-sound.on{opacity:0;pointer-events:none}html.kp-idle .kp-sound.on:focus-within{opacity:1;pointer-events:auto}
+@media (max-width:760px),(max-height:480px){.kp-sound{top:8px;right:8px;gap:8px;padding:4px 4px 4px 12px;font-size:13px}[dir="rtl"] .kp-sound{left:8px;padding:4px 12px 4px 4px}.kp-sound button{min-height:36px;padding:0 12px;font-size:13px}}
 .kp-ink{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:30;pointer-events:none;touch-action:none}
 html.kp-penmode .kp-ink{pointer-events:auto;cursor:crosshair}
 .kp-laser{position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:radial-gradient(circle,#ff2d20 0 28%,rgba(255,45,32,.55) 45%,rgba(255,45,32,0) 70%);pointer-events:none;z-index:96;display:none}
@@ -1271,7 +1280,7 @@ html.kp-idle .kp-set{opacity:1}
   .slide{position:relative!important;visibility:visible!important;opacity:1!important;transform:none!important;width:1920px;height:1080px;break-after:page;break-inside:avoid;
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .slide:last-of-type{break-after:auto}
-  .kp-ui,.kp-progress,.kp-overview,.kp-screen,.kp-toast,.kp-ink,.kp-pen,.kp-set,.kp-ol{display:none!important}
+  .kp-ui,.kp-progress,.kp-overview,.kp-screen,.kp-toast,.kp-ink,.kp-pen,.kp-set,.kp-ol,.kp-sound{display:none!important}
   .kb,.kb *{opacity:1!important;transform:none!important;clip-path:none!important;transition:none!important}
   .kd{stroke-dashoffset:0!important}
   .chart .bar{transform:none!important}.chart .ln-path{stroke-dashoffset:0!important}.chart .val,.chart .dot{opacity:1!important}
@@ -2186,6 +2195,7 @@ addEventListener('beforeprint', () => { finish(); });
 /* ---------- 13. Narration: one recorded clip per slide ----------
    <main class="deck" data-narration="audio/my-deck/"> plays audio/my-deck/<slide link id>.mp3 for each slide (A or the speaker button).
    The button stays hidden until the first slide's clip loads, so a deck can ship before its audio exists.
+   Once it loads, a "This deck has sound" marker with a Play with sound button also appears (top corner; Arabic labels when lang="ar").
    While narration is on: arriving on a slide plays its clip and reveals its builds; when the clip ends the deck moves on. */
 const narr = (() => {
   const base = deck.dataset.narration;
@@ -2201,12 +2211,22 @@ const narr = (() => {
     a.src = url(state.i); a.play().catch(() => {});
     tRev = setTimeout(() => { if (on && cur === state.i && state.step < slides[state.i].kp.steps) go(state.i, Infinity); }, 900); // the narration speaks to the whole slide
   }
+  const T = /^ar/i.test(root.lang) ? {has: 'العرض ده بالصوت', play: 'شغّل بالصوت', playing: 'شغّال بالصوت', stop: 'وقّف'}
+    : {has: 'This deck has sound', play: 'Play with sound', playing: 'Playing with sound', stop: 'Stop'};
+  let pill = null;
+  function syncPill() { if (!pill) return; pill.classList.toggle('on', on); $('.kp-sound-txt', pill).textContent = on ? T.playing : T.has;
+    const b = $('button', pill); b.innerHTML = `<span aria-hidden="true">${on ? '■' : '▶'}</span> ${on ? T.stop : T.play}`; b.setAttribute('aria-pressed', on); }
+  function showPill() { // the marker and its start button; starting from the last slide goes back to the first
+    pill = el('div', 'kp-sound', `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON.narr}</svg><span class="kp-sound-txt"></span><button type="button"></button>`);
+    pill.setAttribute('role', 'region'); pill.setAttribute('aria-label', T.has);
+    $('button', pill).addEventListener('click', e => { if (!on && state.i === N - 1) go(0, 0, {instant: true}); set(!on); if (e.detail > 0) e.currentTarget.blur(); });
+    document.body.appendChild(pill); syncPill(); }
   function set(v) { on = !!v && ok; const b = button(); if (b) b.setAttribute('aria-pressed', on); cur = -1; clear();
-    if (on) sync(); else a.pause(); toast(on ? 'Narration on (A to stop)' : 'Narration off'); }
+    if (on) sync(); else a.pause(); syncPill(); toast(on ? 'Narration on (A to stop)' : 'Narration off'); }
   a.addEventListener('ended', () => { if (on) advance(1200); });
   a.addEventListener('error', () => { if (!on || !a.getAttribute('src')) return; toast('No narration for this slide'); advance(3000); });
   function probe() { const p = new Audio(); p.preload = 'metadata';
-    p.addEventListener('loadedmetadata', () => { ok = true; const b = button(); if (b) { b.hidden = false; b.setAttribute('aria-pressed', 'false'); } }, {once: true});
+    p.addEventListener('loadedmetadata', () => { ok = true; const b = button(); if (b) { b.hidden = false; b.setAttribute('aria-pressed', 'false'); } showPill(); }, {once: true});
     p.src = url(0); }
   return {sync, probe, toggle: () => { if (ok) set(!on); }, on: () => on};
 })();
