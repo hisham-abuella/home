@@ -327,7 +327,7 @@
         (function () {
             var button = document.getElementById('copy-cv');
             var label = button.querySelector('.copy-label');
-            var original = label.innerHTML;
+            var original = label.innerHTML, timer;
             var blocks = '.header h1, .contact-info, .section-title, .job-title, .job-company, li, ' +
                          '.publication, .degree, .school, .edu-details, .award-item, .footer span';
 
@@ -368,19 +368,36 @@
                 return ok;
             }
 
-            function done(message) {
+            function done(message, wait) {
+                clearTimeout(timer);
                 label.textContent = message;
-                setTimeout(function () { label.innerHTML = original; }, 2000);
+                timer = setTimeout(function () { label.innerHTML = original; }, wait || 2000);
+            }
+
+            // Clipboard blocked (some in-app browsers): select the CV itself so it can be copied by hand.
+            function selectCv() {
+                var parts = document.querySelectorAll('.container');
+                try {
+                    var range = document.createRange();
+                    range.setStartBefore(parts[0]);
+                    range.setEndAfter(parts[parts.length - 1]);
+                    var sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                } catch (error) { return done('Copy failed'); }
+                done('Selected: press ' + (/Mac|iP/.test(navigator.platform) ? '\u2318C' : 'Ctrl+C'), 8000);
             }
 
             button.addEventListener('click', function () {
                 var text = cvText();
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(function () { done('Copied'); }, function () {
-                        done(fallbackCopy(text) ? 'Copied' : 'Copy failed');
+                        if (fallbackCopy(text)) done('Copied'); else selectCv();
                     });
+                } else if (fallbackCopy(text)) {
+                    done('Copied');
                 } else {
-                    done(fallbackCopy(text) ? 'Copied' : 'Copy failed');
+                    selectCv();
                 }
             });
         })();

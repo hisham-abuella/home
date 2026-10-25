@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css">
+<link rel="stylesheet" href="assets/ident.css?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
@@ -150,13 +150,14 @@ a { color: var(--pen); text-underline-offset: 3px; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#content" data-i18n="skip">Skip to content</a>
 <div class="wrap">
   <div class="bar">
     <a class="chip-link" href="../index.html?choose"><i></i><span data-i18n="viewing">Viewing as a learner · change</span></a>
     <span class="top-tools"><span data-theme-switch></span> <button class="lang" type="button" data-lang-toggle>عربي</button></span>
   </div>
 
-  <header class="hero">
+  <header class="hero" id="content" tabindex="-1" data-skip-target>
     <div>
       <p class="byline"><b data-i18n="idName">Hisham Abuella</b> · <span data-i18n="idLine">Muslim | Cellular Systems Engineer</span></p>
       <h1 data-i18n="h1">What I learned building with Claude, and where you can learn too.</h1>
@@ -235,6 +236,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
 
 <script type="application/json" id="i18n-ar">
 {
+  "skip": "روح للمحتوى على طول",
   "viewing": "بتتفرج كمتعلّم · غيّر", "me": "أنا",
   "h1": "اللي اتعلمته وأنا ببني مع Claude، وفين تقدر تتعلم إنت كمان.",
   "lede": "أنا هشام، مهندس أنظمة خلوية وبحب أعمل UIs مع Claude. في وقتي الخاص ببني حاجات مع Claude وmodels AI محلية، وبكتب اللي اتعلمته، حتى اللي غلطت فيه. تحت هتلاقي الدروس دي، وحاجات ببلاش تتعلم منها.",
@@ -262,7 +264,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
 </script>
 <script src="assets/i18n.js"></script>
 <script src="assets/theme.js"></script>
-<script src="assets/ident.js"></script>
+<script src="assets/ident.js?v=2"></script>
 <script>
 (function () {
   try { localStorage.setItem('reader-path', 'learner'); } catch (e) { /* storage unavailable */ }

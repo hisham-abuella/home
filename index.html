@@ -20,6 +20,49 @@
 <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/">
 <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/?lang=ar">
 <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.hishamabuella.com/#person",
+  "name": "Hisham Abuella",
+  "alternateName": "هشام أبو العلا",
+  "jobTitle": "Cellular Systems Engineer",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Apple"
+  },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Oklahoma State University"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Istanbul Sehir University"
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  },
+  "url": "https://www.hishamabuella.com/",
+  "image": "https://www.hishamabuella.com/tracks/assets/bio.jpg",
+  "knowsAbout": [
+    "5G baseband",
+    "RF digital front-end",
+    "Signal processing",
+    "Machine learning",
+    "Visible light sensing"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/hisham-abuella-808b91171/",
+    "https://github.com/hisham-abuella",
+    "https://scholar.google.com/citations?user=51HWj54AAAAJ"
+  ]
+}
+</script>
 <script>
 // Theme before first paint: the visitor's choice, else the system setting.
 (function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
@@ -27,7 +70,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="tracks/assets/ident.css">
+<link rel="stylesheet" href="tracks/assets/ident.css?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -169,6 +212,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
 </style>
 </head>
 <body>
+<a class="skip-link" href="#content" data-i18n="skip">Skip to content</a>
 <div class="page">
   <header class="top">
     <span><b data-i18n="name">Hisham Abuella</b></span>
@@ -194,7 +238,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
     </div>
   </div>
 
-  <h2 class="ask" data-i18n="ask">Tune in. What brings you here?</h2>
+  <h2 class="ask" id="content" tabindex="-1" data-skip-target data-i18n="ask">Tune in. What brings you here?</h2>
   <div class="timer" id="timer" hidden>
     <span id="timerText"></span>
     <span class="track" aria-hidden="true"><span class="fill" id="timerFill"></span></span>
@@ -269,6 +313,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
 
 <script type="application/json" id="i18n-ar">
 {
+  "skip": "روح للمحتوى على طول",
   "name": "هشام أبو العلا",
   "lede": "بحب أعمل UIs مع Claude، وأعمل vibe coding بـ models AI محلية، وأكتب عن اللي بتعلمه في السكة.",
   "ask": "اختار الموجة بتاعتك. إيه اللي جابك هنا؟",
@@ -291,7 +336,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
 </script>
 <script src="tracks/assets/i18n.js"></script>
 <script src="tracks/assets/theme.js"></script>
-<script src="tracks/assets/ident.js"></script>
+<script src="tracks/assets/ident.js?v=2"></script>
 <script>
 (function () {
   var KEY = 'reader-path';

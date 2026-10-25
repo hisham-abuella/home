@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css">
+<link rel="stylesheet" href="assets/ident.css?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
@@ -88,6 +88,8 @@ a { color: var(--blue); text-underline-offset: 3px; }
 .cmds { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 18px 16px; border-top: 1.5px solid var(--ink); }
 .cmds button { font: 500 14px/1 'IBM Plex Mono', monospace; padding: 10px 12px; min-height: 40px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; }
 .cmds button:hover { background: var(--mark); }
+/* The one main command: what I've built with Claude */
+.cmds button.main, .dock button.main { background: var(--ink); color: var(--paper); }
 
 /* README */
 .readme { margin-top: 60px; }
@@ -135,20 +137,20 @@ ul.log .add { color: var(--add); }
   }
   .dock::-webkit-scrollbar { display: none; }
   .dock button { flex: none; font: 500 14px/1 'IBM Plex Mono', monospace; padding: 12px 14px; min-height: 46px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); }
-  .dock button:first-child { background: var(--ink); color: var(--paper); }
 }
 /* Isolated numbers align to the Arabic side */
 [dir="rtl"] td.n { text-align: right; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#shell" data-i18n="skip">Skip to content</a>
 <div class="page">
   <div class="bar">
     <a class="chip" href="../index.html?choose"><i></i><span data-i18n="viewing">Viewing as a vibe coder · change</span></a>
     <span class="top-tools"><span data-theme-switch></span> <button class="lang" type="button" data-lang-toggle>عربي</button></span>
   </div>
 
-  <div class="shell" id="shell" dir="ltr">
+  <div class="shell" id="shell" tabindex="-1" data-skip-target dir="ltr">
     <div class="shell-head"><span>~/hisham</span><span>zsh — 80×24</span></div>
     <div class="screen" id="screen" aria-live="polite"></div>
     <form class="prompt" id="form" autocomplete="off">
@@ -157,7 +159,7 @@ ul.log .add { color: var(--add); }
     </form>
     <div class="cmds" aria-label="Commands" data-i18n-aria="ariaCmds">
       <button type="button" data-run="whoami">whoami</button>
-      <button type="button" data-run="ls ~/built">ls ~/built</button>
+      <button type="button" class="main" data-run="ls ~/built">ls ~/built</button>
       <button type="button" data-run="stack">stack</button>
       <button type="button" data-run="log">log</button>
       <button type="button" data-run="contact">contact</button>
@@ -234,7 +236,7 @@ ul.log .add { color: var(--add); }
 
 <nav class="dock" aria-label="Commands" data-i18n-aria="ariaCmds">
   <button type="button" data-run="whoami">whoami</button>
-  <button type="button" data-run="ls ~/built">ls ~/built</button>
+  <button type="button" class="main" data-run="ls ~/built">ls ~/built</button>
   <button type="button" data-run="stack">stack</button>
   <button type="button" data-run="log">log</button>
   <button type="button" data-run="contact">contact</button>
@@ -242,6 +244,7 @@ ul.log .add { color: var(--add); }
 
 <script type="application/json" id="i18n-ar">
 {
+  "skip": "روح للمحتوى على طول",
  "viewing": "بتتفرج كـ vibe coder · غيّر",
  "name": "هشام أبو العلا",
  "lede": "مهندس أنظمة خلوية بالنهار. وفي وقتي الخاص بحب أعمل UIs مع Claude: بعمل أدوات ومواقع وكتب، وبكتب عنها في السكة.",
@@ -302,7 +305,7 @@ ul.log .add { color: var(--add); }
 </script>
 <script src="assets/i18n.js"></script>
 <script src="assets/theme.js"></script>
-<script src="assets/ident.js"></script>
+<script src="assets/ident.js?v=2"></script>
 <script>
 (function () {
   try { localStorage.setItem('reader-path', 'vibe'); } catch (e) { /* storage unavailable */ }

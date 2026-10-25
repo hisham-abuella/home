@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/base.css?v=2">
 <link rel="stylesheet" href="../css/themes/midnight.css">
 <link rel="stylesheet" href="../css/themes/daylight.css">
 <link rel="stylesheet" href="../css/themes/contrast.css">
@@ -46,6 +46,92 @@
         // keep the full site's own look, not a path's.
         try { localStorage.removeItem('reader-path'); } catch (error) { /* storage unavailable */ }
     })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.hishamabuella.com/#person",
+      "name": "Hisham Abuella",
+      "alternateName": "هشام أبو العلا",
+      "jobTitle": "Cellular Systems Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Apple"
+      },
+      "alumniOf": [
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "Oklahoma State University"
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          "name": "Istanbul Sehir University"
+        }
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "url": "https://www.hishamabuella.com/",
+      "image": "https://www.hishamabuella.com/tracks/assets/bio.jpg",
+      "knowsAbout": [
+        "5G baseband",
+        "RF digital front-end",
+        "Signal processing",
+        "Machine learning",
+        "Visible light sensing"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/hisham-abuella-808b91171/",
+        "https://github.com/hisham-abuella",
+        "https://scholar.google.com/citations?user=51HWj54AAAAJ"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.hishamabuella.com/ar/home.html#faq",
+      "inLanguage": "ar-EG",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "يعني إيه cellular systems engineer؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بصمم إزاي الـ modem في الموبايل بيستقبل إشارة الراديو ويجهزها علشان تتفك. في Apple بشتغل على الـ AGC (automatic gain control) للـ cellular modems. وقبلها في Qualcomm كنت بشتغل على الـ 5G receive digital front-end والـ channel estimation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "بتعمل إيه بـ Claude؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بحب أعمل UIs مع Claude. بعمل tools ومواقع وكتب، أغلبها في sessions على Claude Code، وبكتب build logs في السكة. شوف اللي عملته."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "أنا جديد في الـ wireless أو الـ AI. أبدأ منين؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "افتح صفحة المتعلّم: يومياتي باللي اتعلمته، entry ورا entry، ومعاها مصادر ببلاش تتعلم منها."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "أكلمك إزاي؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ابعتلي إيميل من الجزء اللي تحت، أو كلمني على LinkedIn. الـ CV بتاعي فيه كل التفاصيل."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 </head>
 <body>
@@ -348,6 +434,21 @@
                         <div class="writing-date numeral">أغسطس 2025</div>
                     </a>
 
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="faq">
+            <div class="section-head reveal-up">
+                <h2>أسئلة بتتسأل كتير</h2>
+                <p>إجابات قصيرة وبكلام بسيط.</p>
+            </div>
+            <div class="section-body">
+                <div class="faq-list reveal-up">
+                    <details class="faq-item"><summary>يعني إيه cellular systems engineer؟</summary><p>بصمم إزاي الـ modem في الموبايل بيستقبل إشارة الراديو ويجهزها علشان تتفك. في Apple بشتغل على الـ AGC (automatic gain control) للـ cellular modems. وقبلها في Qualcomm كنت بشتغل على الـ 5G receive digital front-end والـ channel estimation.</p></details>
+                    <details class="faq-item"><summary>بتعمل إيه بـ Claude؟</summary><p>بحب أعمل UIs مع Claude. بعمل tools ومواقع وكتب، أغلبها في sessions على Claude Code، وبكتب build logs في السكة. <a href="../tracks/vibe.html?lang=ar">شوف اللي عملته</a>.</p></details>
+                    <details class="faq-item"><summary>أنا جديد في الـ wireless أو الـ AI. أبدأ منين؟</summary><p>افتح <a href="../tracks/learner.html?lang=ar">صفحة المتعلّم</a>: يومياتي باللي اتعلمته، entry ورا entry، ومعاها مصادر ببلاش تتعلم منها.</p></details>
+                    <details class="faq-item"><summary>أكلمك إزاي؟</summary><p>ابعتلي إيميل من الجزء اللي تحت، أو كلمني على LinkedIn. <a href="../cv.html">الـ CV بتاعي</a> فيه كل التفاصيل.</p></details>
                 </div>
             </div>
         </section>

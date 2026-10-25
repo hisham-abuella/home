@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<title>No signal · Hisham Abuella</title>
+<meta name="robots" content="noindex">
+<script>
+// Same theme rule as the gateway: the visitor's choice, else the system setting.
+(function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
+  if (['light', 'dark'].indexOf(p) < 0) p = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', p); })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* 404 — the tuner landed between stations. English and Egyptian Arabic side by
+   side, so it needs no language guess. All links are root-absolute because
+   GitHub Pages serves this file at whatever path was missing. */
+:root {
+  --night: #0A0E17; --panel: #121A28; --edge: #243044; --ink: #ECEFF4; --soft: #A4AEBD;
+  --eng: #FFD58A; --dial-a: #0E1520; --dial-b: #0B111A;
+  --tick: rgba(236, 239, 244, 0.16); --tick-b: rgba(236, 239, 244, 0.45);
+  --display: 'Barlow Condensed', sans-serif; --body: 'Barlow', system-ui, sans-serif;
+  --ar: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+}
+:root[data-theme="light"] {
+  --night: #F3F5F8; --panel: #FFFFFF; --edge: #D3DAE4; --ink: #0E1726; --soft: #4A5568;
+  --eng: #8A570C; --dial-a: #FFFFFF; --dial-b: #EEF2F6;
+  --tick: rgba(14, 23, 38, 0.14); --tick-b: rgba(14, 23, 38, 0.4);
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body { margin: 0; background: var(--night); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--eng); outline-offset: 3px; }
+.skip { position: absolute; inset-inline-start: -9999px; }
+.skip:focus { inset-inline-start: 16px; top: 16px; z-index: 9; background: var(--panel); border: 1px solid var(--edge); border-radius: 8px; padding: 10px 14px; }
+
+.page { max-width: 1000px; margin: 0 auto; padding: 0 24px 40px; }
+.top { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; font-size: 15px; color: var(--soft); }
+.top a { color: var(--ink); font-weight: 600; text-decoration: none; }
+
+.dial { position: relative; margin-top: clamp(24px, 8vh, 72px); height: 64px; border-radius: 12px; background: linear-gradient(var(--dial-a), var(--dial-b)); border: 1px solid var(--edge); overflow: hidden;
+  background-image: repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 12px), linear-gradient(var(--dial-a), var(--dial-b)); }
+.needle { position: absolute; top: 6px; bottom: 6px; width: 3px; left: 54%; border-radius: 2px; background: var(--soft); animation: hunt 3.2s ease-in-out infinite alternate; }
+@keyframes hunt { from { left: 46%; } to { left: 58%; } }
+.code { position: absolute; inset-inline-end: 14px; top: 50%; transform: translateY(-50%); font: 600 14px/1 var(--display); color: var(--soft); letter-spacing: .04em; }
+
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+.side { padding: 24px; border-radius: 14px; background: var(--panel); border: 1px solid var(--edge); }
+.side[dir="rtl"] { font-family: var(--ar); line-height: 1.8; }
+h1, h2 { margin: 0; font: 700 clamp(2rem, 5vw, 3.2rem)/1.05 var(--display); }
+[dir="rtl"] h2 { font-family: var(--ar); font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.3; }
+.side p { margin: 10px 0 0; color: var(--soft); }
+.go { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.go a { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; padding: 12px 16px; border: 1px solid var(--edge); border-radius: 10px; text-decoration: none; font-weight: 600; }
+.go a:hover { border-color: var(--soft); }
+.go a.primary { background: var(--ink); color: var(--night); border-color: var(--ink); }
+.go a span { color: inherit; opacity: .7; font-weight: 400; }
+[dir="rtl"] .go a span { transform: scaleX(-1); }
+
+@media (max-width: 720px) {
+  .page { padding: 0 16px 24px; }
+  .pair { grid-template-columns: 1fr; gap: 10px; }
+  .side { padding: 18px; }
+  .dial { height: 48px; margin-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .needle { animation: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="page">
+  <header class="top"><a href="/">Hisham Abuella</a><span>404</span></header>
+
+  <div class="dial" aria-hidden="true"><div class="needle"></div><span class="code">NO SIGNAL</span></div>
+
+  <main id="main" class="pair">
+    <section class="side" lang="en" dir="ltr">
+      <h1>No signal on this frequency.</h1>
+      <p>This page moved or never existed. Pick a station and you are back on air.</p>
+      <nav class="go" aria-label="Where to go">
+        <a class="primary" href="/">Tune in <span>→</span></a>
+        <a href="/home.html">Open the full site <span>→</span></a>
+        <a href="/home.html#writing">Read the articles <span>→</span></a>
+      </nav>
+    </section>
+    <section class="side" lang="ar" dir="rtl">
+      <h2>مفيش إشارة على الموجة دي.</h2>
+      <p>الصفحة دي اتنقلت أو مكانتش موجودة أصلًا. اختار محطة وترجع على الهوا.</p>
+      <nav class="go" aria-label="تروح فين">
+        <a class="primary" href="/?lang=ar">اختار الموجة <span>→</span></a>
+        <a href="/ar/home.html">افتح الموقع كامل <span>→</span></a>
+        <a href="/ar/home.html#writing">اقرا المقالات <span>→</span></a>
+      </nav>
+    </section>
+  </main>
+</div>
+</body>
+</html>

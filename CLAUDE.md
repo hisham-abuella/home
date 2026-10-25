@@ -91,6 +91,7 @@ garble Arabic). See README "Brand".
 - `ar/home.html` - the full site in Egyptian Arabic
 - `tracks/` - the four reader tracks (`recruiter`, `engineer`, `vibe`, `learner`) and `tracks/assets/`
 - `cv.html` - plain white print-ready CV
+- `404.html` - "No signal" page, English and Egyptian Arabic side by side (root-absolute links)
 - `Articles/` - long-form posts; `Articles/ar/` their Egyptian Arabic pages; `audio/articles/` holds
   their narration
 - `css/` - `base.css` (layout, no colour), `themes/*.css` (tokens), `article.css`, `cv.css`,

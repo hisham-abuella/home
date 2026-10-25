@@ -58,3 +58,11 @@
   background: transparent; color: var(--id-soft); cursor: pointer;
 }
 [data-theme-switch] button[aria-pressed="true"] { background: var(--id-ink); color: var(--id-bg-solid, var(--id-bg)); }
+
+/* Skip link: hidden until the first Tab press, then jumps past the top bar */
+.skip-link { position: absolute; inset-inline-start: -9999px; top: 12px; z-index: 100; }
+.skip-link:focus {
+  inset-inline-start: 12px; padding: 12px 16px; border-radius: var(--id-radius, 10px);
+  background: var(--id-accent); color: var(--id-accent-ink); font-weight: 600; text-decoration: none;
+}
+[data-skip-target]:focus { outline: none; }

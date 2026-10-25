@@ -453,6 +453,33 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ==========================================================================
+   Questions (FAQ): native <details>, ruled like the Writing list
+   ========================================================================== */
+
+.faq-list { border-top: 1px solid var(--hairline); }
+.faq-item { border-bottom: 1px solid var(--hairline); }
+.faq-item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  min-height: 44px;
+  padding: 18px 4px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.25s ease;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: '+'; flex: none; font-weight: 400; color: var(--text-tertiary); }
+.faq-item[open] summary::after { content: '\2212'; }
+.faq-item summary:hover { color: var(--accent); }
+.faq-item p { margin: 0; padding: 0 4px 22px; max-width: 68ch; color: var(--text-secondary); }
+.faq-item p a { color: var(--accent); }
+
+/* ==========================================================================
    Contact
    ========================================================================== */
 
