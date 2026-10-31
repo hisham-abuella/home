@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+    <title>A Shared Calendar on the TV - Hisham Abuella</title>
+    <meta name="description" content="One calendar for my wife and me, on our phones and on the TV, served from my own Mac and shown by a Raspberry Pi. Built in two days with Claude Code.">
+    <meta property="og:title" content="A Shared Calendar on the TV - Hisham Abuella">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="A self-hosted calendar shared with my wife, and a Raspberry Pi that turns the TV into a wall display.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/tv-calendar.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/tv-calendar.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/tv-calendar.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/tv-calendar.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/tv-calendar.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../css/skins/constellation.css">
+    <link rel="stylesheet" href="../css/skins/terminal.css">
+    <link rel="stylesheet" href="../css/skins/journal.css">
+    <link rel="stylesheet" href="../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <style>
+        /* Four pieces: two by two, never three plus an orphan */
+        .feature-grid { grid-template-columns: repeat(2, 1fr); }
+
+        .shot { margin: 2rem 0 2.5rem; }
+        .shot img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .shot figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* The path one message takes, phone to Mac and back */
+        .article-content .flow {
+            list-style: none;
+            margin: 2rem 0;
+            margin-inline-start: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .flow li {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 1rem;
+            align-items: start;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .flow .step {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .flow strong {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        @media (max-width: 560px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../index.html?choose" aria-label="Hisham Abuella, front page"><img src="../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&larr; Back</summary>
+                <ul>
+                    <li><a href="../tracks/recruiter.html">Recruiter</a></li>
+                    <li><a href="../tracks/engineer.html">Engineer</a></li>
+                    <li><a href="../tracks/vibe.html">Vibe coder</a></li>
+                    <li><a href="../tracks/learner.html">Learner</a></li>
+                    <li><a href="../home.html">Full website</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">A Shared Calendar on the TV</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> October 30, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+                <a class="lang-switch" href="ar/tv-calendar.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
+            </div>
+            <p class="article-subtitle enter delay-3">One calendar for my wife and me: on our phones, and on the TV, where a Raspberry Pi shows the day at a glance. It runs on my own Mac, and I built it in two days with Claude Code.</p>
+        </div>
+
+        <div class="listen" data-src="../audio/articles/tv-calendar.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>I wanted one calendar that my wife and I could both see: on both our phones, and on one screen in the house that shows the day without anyone opening anything.</p>
+
+            <p>I had the same rule as for <a href="texting-my-ai.html">texting my own AI</a>: it lives on <strong>my own hardware</strong>, and only our own devices can reach it. So I asked Claude Code to build it, and a Raspberry Pi to put it on the TV.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🗓️</div>
+                    <div>
+                        <strong>The calendar</strong>
+                        <span>A small web app on the Mac: FastAPI and SQLite, plain JavaScript, installable on a phone like an app</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✉️</div>
+                    <div>
+                        <strong>Invites from email</strong>
+                        <span>Meeting invites are picked up from Mail on the Mac, read only. Nothing is sent, moved or deleted</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <div>
+                        <strong>Shared links</strong>
+                        <span>One private link per person, with exactly what they may see and do</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📺</div>
+                    <div>
+                        <strong>The wall display</strong>
+                        <span>A Raspberry Pi on the TV shows today and the next three days, full screen, all day</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Two Days, Twenty-Two Commits</h2>
+            <p>The first commit was the whole back end: events, repeat rules, sharing, email sync and tests. Then came review. A security reviewer agent read the code in several rounds, and every finding was fixed before the next one. By the end there were <strong>145 tests</strong>, and a script that opens every screen at every size, in light and dark, and fails on low contrast, clipped text or a button too small to tap.</p>
+
+            <p>Repeat rules took more care than I expected. &ldquo;Every Tuesday and Thursday until December 15&rdquo;, &ldquo;the last Friday of the month&rdquo;, and the question every calendar has to ask when you change one meeting in a series: <em>this event, this and following, or all events?</em></p>
+
+            <h2>Sharing It With My Wife</h2>
+            <p>Sharing works with links, one per person. Each link says what that person can do: see titles and places, or only &ldquo;Busy&rdquo;; leave comments; block time of their own. A link can expire, and turning it off works at once. The link is shown one time when it is made, and the server keeps only a hash of it.</p>
+
+            <p>My wife uses a link that sees the full details. Time blocked through a shared link shows up on my calendar hatched and labelled with the person&rsquo;s name, so a plan can be seen before it clashes.</p>
+
+            <p><strong>A bug on the Home Screen.</strong> A shared link saved to a phone&rsquo;s Home Screen opened <em>my</em> sign-in page instead of the shared calendar. The app had one manifest for everyone, and it said &ldquo;start at the front page&rdquo;. Now each shared link, and the TV&rsquo;s link, gets its own, so the icon opens the calendar it was saved from.</p>
+
+            <h2>Invites You Can Trust</h2>
+            <p>Every fifteen minutes the app asks Mail on the Mac for recent messages that look like invites, and reads their calendar parts. The interesting part is not reading them. It is deciding who is allowed to change an event by email, because the &ldquo;From&rdquo; line of an email is easy to fake.</p>
+
+            <p>So an invite only counts as coming from its sender when the email provider checked it on arrival, and the app reads that check only from the part of the headers the provider itself wrote. A change or a cancellation is accepted only from the person who sent the original invite. Anything it cannot confirm still appears, once, with a yellow &ldquo;Check this invite&rdquo; note.</p>
+
+            <h2>The TV</h2>
+            <figure class="shot">
+                <img src="../Articles/img/tv-calendar-display.jpg" alt="The wall display: a large clock and the date on the left, today's events on the right with what is on now, and the next three days along the bottom" width="1440" height="810" loading="lazy">
+                <figcaption>The wall display, shown here with made-up demo events.</figcaption>
+            </figure>
+
+            <p>The display is its own page, made for a screen across the room. A large clock and the date. Today, with all-day items first, what is on <strong>now</strong> and what is next, finished events folded into one line, and &ldquo;+2 more&rdquo; when the day is too full. Then the next three days. It refreshes every minute, stays dark, and never needs a touch. On a screen turned on its side it switches to a portrait layout by itself, and a few photos rotate on it between updates.</p>
+
+            <p>It opens with its own read-only link, so the TV can show the day but can&rsquo;t change anything.</p>
+
+            <h2>The Raspberry Pi</h2>
+            <p>The Pi&rsquo;s whole job is to open one page and keep it open. That turned out to need a few steps:</p>
+
+            <ol class="flow">
+                <li><span class="step">01</span><div><strong>It powers on and signs in by itself</strong>So after a power cut the TV comes back to the calendar with nobody touching it.</div></li>
+                <li><span class="step">02</span><div><strong>It waits for the Mac</strong>A small script checks the Wi-Fi, the private network and the calendar&rsquo;s health page first, so the screen never opens on an error.</div></li>
+                <li><span class="step">03</span><div><strong>Chromium opens full screen</strong>Kiosk mode: no bars, no pop-ups, no &ldquo;restore pages?&rdquo;.</div></li>
+                <li><span class="step">04</span><div><strong>If it ever closes, it comes back</strong>The script starts it again five seconds later.</div></li>
+            </ol>
+
+            <p>The display link carries a secret, so it never appears in a script or a log. It lives in a file on the Pi that only its own user can read. To change it, I copy the new link on the Mac and run one command: it sends the clipboard to the Pi over SSH and restarts the screen.</p>
+
+            <p><strong>The bug that froze the whole Pi.</strong> The whole Pi froze. The system log said the SD card was <em>stuck being busy</em>. Chromium writes to its profile and cache all the time, and the card couldn&rsquo;t keep up. The fix was to give Chromium a profile and cache that live in memory instead, emptied at every boot. The card now has almost nothing to do.</p>
+
+            <p>One small one, too: the Pi&rsquo;s region is set to the UK, which means a 24-hour clock, so the link asks for a 12-hour clock itself.</p>
+
+            <h2>Keeping It Private</h2>
+            <p><strong>Only our devices.</strong> The app listens only on the Mac itself. Our phones and the Pi reach it through Tailscale, my private network, and it is never published to the open internet.</p>
+
+            <p><strong>Links, not passwords, for guests.</strong> Shared links are long random tokens, stored only as hashes, with their own limits on how often they can be tried. &ldquo;Sign out everywhere&rdquo; ends every session at once.</p>
+
+            <p><strong>Nothing loaded from elsewhere.</strong> No fonts, scripts or styles from other sites. The page only runs what the Mac itself serves.</p>
+
+            <h2>My AI Can Use It Too</h2>
+            <p>The calendar has an MCP server, so Claude Code and my <a href="building-ai-server.html">AI engine</a> can list events, find free time on a day, add an event or block time, the same way I would. &ldquo;Find me an hour on Thursday&rdquo; is now a question, not a search.</p>
+
+            <div class="quote">
+                The best family calendar is the one you don&rsquo;t have to open.
+            </div>
+
+            <h2>What&rsquo;s Next</h2>
+            <p>A proper sign-in for my wife, instead of a link. Testing invites from real email providers, not only the ones the tests describe. And trying the drag-to-move gesture on a real iPad, which so far has only been tested in a browser.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>The calendar, the Pi setup and this article were built with <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="texting-my-ai.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">Texting My Own AI, End to End Encrypted</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/listen.js" defer></script>
+    <script src="../js/back-menu.js" defer></script>
+    <script src="../js/appearance.js?v=3" defer></script>
+    <script src="../js/reader-bar.js?v=3" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+<script src="../tracks/assets/mascot.js?v=3" defer></script>
+<script src="../tracks/assets/mascot-buddy.js?v=3" defer></script>
+</body>
+</html>

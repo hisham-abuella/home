@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>calendar مشترك على التلفزيون - هشام أبو العلا</title>
+    <meta name="description" content="calendar واحد ليّا أنا ومراتي، على الموبايلات وعلى التلفزيون، شغال من الـ Mac بتاعي وبيعرضه Raspberry Pi. اتبنى في يومين بـ Claude Code.">
+    <meta property="og:title" content="calendar مشترك على التلفزيون - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="calendar على جهازي متشارك مع مراتي، وRaspberry Pi بيحوّل التلفزيون لشاشة حيطة.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/tv-calendar.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/tv-calendar.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/tv-calendar.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/tv-calendar.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/tv-calendar.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <style>
+        /* Four pieces: two by two, never three plus an orphan */
+        .feature-grid { grid-template-columns: repeat(2, 1fr); }
+
+        .shot { margin: 2rem 0 2.5rem; }
+        .shot img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .shot figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* The path one message takes, phone to Mac and back */
+        .article-content .flow {
+            list-style: none;
+            margin: 2rem 0;
+            margin-inline-start: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .flow li {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 1rem;
+            align-items: start;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .flow .step {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .flow strong {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        @media (max-width: 560px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../../index.html?choose&lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../ar/home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">calendar مشترك على التلفزيون</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 30 أكتوبر 2026</span>
+                <span><i class="fas fa-clock"></i> 6 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../tv-calendar.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">calendar واحد ليّا أنا ومراتي: على موبايلاتنا، وعلى التلفزيون، اللي عليه Raspberry Pi بيعرض اليوم كله في نظرة. شغال على الـ Mac بتاعي، وبنيته في يومين بـ Claude Code.</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/tv-calendar.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>كنت عايز calendar واحد أنا ومراتي نشوفه احنا الاتنين: على موبايلاتنا، وعلى شاشة واحدة في البيت بتعرض اليوم من غير ما حد يفتح أي حاجة.</p>
+
+            <p>حطيت نفس القاعدة اللي حطيتها لما <a href="texting-my-ai.html">بقيت بكلّم الـ AI بتاعي على الموبايل</a>: يكون على <strong>الـ hardware بتاعي</strong>، ومحدش يوصله غير أجهزتنا احنا. فطلبت من Claude Code يبنيه، ومن Raspberry Pi يعرضه على التلفزيون.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🗓️</div>
+                    <div>
+                        <strong>الـ calendar</strong>
+                        <span>web app صغير على الـ Mac: FastAPI وSQLite وJavaScript عادي، وينفع يتسطّب على الموبايل كأنه app</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✉️</div>
+                    <div>
+                        <strong>الدعوات من الإيميل</strong>
+                        <span>دعوات الاجتماعات بتتسحب من Mail على الـ Mac، قراية بس. مفيش حاجة بتتبعت أو تتنقل أو تتمسح</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <div>
+                        <strong>لينكات مشتركة</strong>
+                        <span>لينك خاص لكل شخص، فيه بالظبط هو يشوف إيه ويعمل إيه</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📺</div>
+                    <div>
+                        <strong>شاشة الحيطة</strong>
+                        <span>Raspberry Pi على التلفزيون بيعرض النهارده والتلات أيام اللي جايين، على الشاشة كلها، طول اليوم</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>يومين، و22 commit</h2>
+            <p>أول commit كان الـ back end كله: المواعيد، وقواعد التكرار، والمشاركة، ومزامنة الإيميل، والـ tests. بعدها جت المراجعة. agent بيراجع الأمان قرا الـ code على كذا جولة، وكل ملاحظة اتصلّحت قبل الجولة اللي بعدها. في الآخر كان فيه <strong>145 test</strong>، وscript بيفتح كل شاشة على كل مقاس، فاتح وغامق، وبيفشل لو التباين ضعيف أو النص مقصوص أو فيه زرار أصغر من إنه يتداس عليه.</p>
+
+            <p>قواعد التكرار خدت اهتمام أكتر ما كنت متوقع. &laquo;كل تلات وخميس لحد 15 ديسمبر&raquo;، و&laquo;آخر جمعة في الشهر&raquo;، والسؤال اللي أي calendar لازم يسأله لما تغيّر اجتماع واحد من سلسلة: <em>الميعاد ده بس، ولا ده واللي بعده، ولا كل المواعيد؟</em></p>
+
+            <h2>بشاركه مع مراتي</h2>
+            <p>المشاركة بتتعمل بلينكات، لينك لكل شخص. كل لينك بيقول الشخص ده يقدر يعمل إيه: يشوف العناوين والأماكن، ولا يشوف &laquo;مشغول&raquo; بس؛ يكتب تعليقات؛ يحجز وقت باسمه. اللينك ممكن يخلص بعد مدة، ولو قفلته بيتقفل في ساعتها. اللينك بيظهر مرة واحدة بس وهو بيتعمل، والـ server مش بيحتفظ غير بـ hash منه.</p>
+
+            <p>مراتي معاها لينك بيشوف التفاصيل كاملة. أي وقت يتحجز من لينك مشترك بيظهر على الـ calendar بتاعي مخطط ومكتوب عليه اسم الشخص، فالميعاد يبان قبل ما يتعارض مع حاجة.</p>
+
+            <p><strong>bug على الـ Home Screen.</strong> لينك مشترك اتحفظ على الـ Home Screen بتاع موبايل كان بيفتح صفحة تسجيل الدخول <em>بتاعتي</em> بدل الـ calendar المشترك. الـ app كان عنده manifest واحد للكل، ومكتوب فيه &laquo;ابدأ من الصفحة الرئيسية&raquo;. دلوقتي كل لينك مشترك، ولينك التلفزيون كمان، ليه واحد خاص بيه، فالأيقونة بتفتح الـ calendar اللي اتحفظت منه.</p>
+
+            <h2>دعوات تقدر تثق فيها</h2>
+            <p>كل ربع ساعة الـ app بيسأل Mail على الـ Mac عن الرسايل الجديدة اللي شكلها دعوات، وبيقرا الجزء بتاع الـ calendar منها. الحتة المهمة مش القراية. الحتة المهمة إنه يقرر مين مسموح له يغيّر ميعاد بالإيميل، لأن سطر &laquo;From&raquo; في الإيميل سهل يتزوّر.</p>
+
+            <p>فالدعوة متتحسبش جاية من صاحبها غير لو مزوّد الإيميل اتأكد منها وهي داخلة، والـ app بيقرا التأكيد ده من الجزء اللي المزوّد نفسه كتبه في الـ headers بس. أي تعديل أو إلغاء بيتقبل بس من الشخص اللي بعت الدعوة الأصلية. وأي حاجة مقدرش يتأكد منها بتظهر برضه، مرة واحدة، وعليها ملاحظة صفرا &laquo;Check this invite&raquo;.</p>
+
+            <h2>التلفزيون</h2>
+            <figure class="shot">
+                <img src="../../Articles/img/tv-calendar-display.jpg" alt="شاشة الحيطة: ساعة كبيرة والتاريخ على الشمال، ومواعيد النهارده على اليمين ومعاها اللي شغال دلوقتي، والتلات أيام اللي جايين تحت" width="1440" height="810" loading="lazy">
+                <figcaption>شاشة الحيطة، وعليها مواعيد تجريبية متألفة.</figcaption>
+            </figure>
+
+            <p>الشاشة دي صفحة لوحدها، معمولة عشان تتشاف من آخر الأوضة. ساعة كبيرة والتاريخ. والنهارده، المواعيد اللي طول اليوم الأول، وبعدين اللي شغال <strong>دلوقتي</strong> واللي بعده، والمواعيد اللي خلصت متجمعة في سطر واحد، و&laquo;+2 كمان&raquo; لو اليوم مليان. وبعدين التلات أيام اللي جايين. بتتحدّث كل دقيقة، وفضلها غامقة، ومش محتاجة حد يلمسها خالص. ولو الشاشة متلفّة على جنبها بتقلب لوحدها على layout بالطول، وفيه كام صورة بتتبدّل عليها بين التحديثات.</p>
+
+            <p>بتتفتح بلينك خاص بيها للقراية بس، فالتلفزيون يقدر يعرض اليوم بس ميقدرش يغيّر أي حاجة.</p>
+
+            <h2>الـ Raspberry Pi</h2>
+            <p>شغلانة الـ Pi كلها إنه يفتح صفحة واحدة ويفضل فاتحها. وده طلع محتاج كام خطوة:</p>
+
+            <ol class="flow">
+                <li><span class="step">01</span><div><strong>بيشتغل ويسجّل دخول لوحده</strong>فلو النور قطع، التلفزيون بيرجع للـ calendar من غير ما حد يلمسه.</div></li>
+                <li><span class="step">02</span><div><strong>بيستنى الـ Mac</strong>script صغير بيتأكد الأول من الـ Wi-Fi والشبكة الخاصة وصفحة الـ health بتاعة الـ calendar، فالشاشة عمرها ما تفتح على error.</div></li>
+                <li><span class="step">03</span><div><strong>Chromium بيفتح على الشاشة كلها</strong>kiosk mode: من غير شريط، ولا رسايل منبثقة، ولا &laquo;ترجّع الصفحات؟&raquo;.</div></li>
+                <li><span class="step">04</span><div><strong>لو اتقفل، بيرجع</strong>الـ script بيشغّله تاني بعد خمس ثواني.</div></li>
+            </ol>
+
+            <p>لينك الشاشة فيه سر، فعمره ما بيظهر في script أو log. بيتحفظ في ملف على الـ Pi محدش يقدر يقراه غير اليوزر بتاعه. ولو عايز أغيّره، بنسخ اللينك الجديد على الـ Mac وبشغّل أمر واحد: بيبعت اللي في الـ clipboard للـ Pi عن طريق SSH وبيعيد تشغيل الشاشة.</p>
+
+            <p><strong>الـ bug اللي وقّف الـ Pi كله.</strong> الـ Pi كله هنج. والـ log بتاع النظام قال إن كارت الـ SD <em>stuck being busy</em>. Chromium بيكتب في الـ profile والـ cache بتوعه طول الوقت، والكارت مكانش ملاحق. الحل كان إن Chromium ياخد profile وcache عايشين في الـ memory بدل الكارت، وبيتمسحوا مع كل تشغيل. دلوقتي الكارت تقريبًا مالوش شغل.</p>
+
+            <p>وحاجة صغيرة كمان: منطقة الـ Pi متظبطة على بريطانيا، يعني ساعة 24 ساعة، فاللينك نفسه بيطلب ساعة 12 ساعة.</p>
+
+            <h2>إزاي فاضل خاص</h2>
+            <p><strong>أجهزتنا بس.</strong> الـ app بيسمع على الـ Mac نفسه بس. موبايلاتنا والـ Pi بيوصلوله عن طريق Tailscale، الشبكة الخاصة بتاعتي، وعمره ما اتنشر على الإنترنت المفتوح.</p>
+
+            <p><strong>لينكات مش passwords للضيوف.</strong> اللينكات المشتركة tokens عشوائية طويلة، متخزنة كـ hashes بس، وليها حد لعدد المحاولات. و&laquo;Sign out everywhere&raquo; بيقفل كل الجلسات مرة واحدة.</p>
+
+            <p><strong>مفيش حاجة بتتحمّل من برّه.</strong> لا fonts ولا scripts ولا styles من مواقع تانية. الصفحة مش بتشغّل غير اللي الـ Mac نفسه بيقدّمه.</p>
+
+            <h2>الـ AI بتاعي يقدر يستخدمه كمان</h2>
+            <p>الـ calendar ليه MCP server، فـ Claude Code و<a href="building-ai-server.html">محرك الـ AI بتاعي</a> يقدروا يعرضوا المواعيد، ويلاقوا وقت فاضي في يوم، ويضيفوا ميعاد أو يحجزوا وقت، بالظبط زيي. &laquo;لاقيلي ساعة يوم الخميس&raquo; بقت سؤال، مش تدوير.</p>
+
+            <div class="quote">
+                أحسن calendar للعيلة هو اللي مش محتاج تفتحه.
+            </div>
+
+            <h2>اللي جاي</h2>
+            <p>تسجيل دخول حقيقي لمراتي بدل اللينك. تجربة دعوات من مزوّدين إيميل حقيقيين، مش بس اللي الـ tests بتوصفهم. وتجربة السحب لتحريك ميعاد على iPad حقيقي، لأنه لحد دلوقتي اتجرب في browser بس.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>الـ calendar وإعداد الـ Pi والمقال ده اتبنوا بـ <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="texting-my-ai.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">بكلّم الـ AI بتاعي على الموبايل، ومتشفّر من الأول للآخر</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/back-menu.js" defer></script>
+    <script src="../../js/appearance.js?v=3" defer></script>
+    <script src="../../js/reader-bar.js?v=3" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+<script src="../../tracks/assets/mascot.js?v=3" defer></script>
+<script src="../../tracks/assets/mascot-buddy.js?v=3" defer></script>
+</body>
+</html>

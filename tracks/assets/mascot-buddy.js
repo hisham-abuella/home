@@ -23,8 +23,8 @@
         ['Still learning. Always.', 'لسه بتعلم. وعلى طول.'],
         ['Psst… click me.', 'بُص… دوس عليّا.'],
         ['Every bug is a lesson.', 'كل bug درس.'],
-        ['Good choice of page.', 'اختيار حلو للصفحة دي.'],
-        ['Low latency, high vibes.', 'latency قليلة و vibes عالية.'],
+        ['Good choice of page.', 'اخترت صفحة حلوة.'],
+        ['Low latency, high vibes.', 'latency قليلة وvibes عالية.'],
         ['Keep going, the good part is coming.', 'كمّل، الحلو جاي.'],
         ['I watch your cursor. Politely.', 'أنا بتابع الـ cursor بتاعك. بأدب.']
     ];
