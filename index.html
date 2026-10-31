@@ -132,7 +132,7 @@ a { color: inherit; }
 .back button { font: inherit; color: var(--soft); background: none; border: 0; cursor: pointer; text-decoration: underline; padding: 6px 0; }
 
 .intro { display: flex; align-items: center; gap: 22px; margin-top: clamp(28px, 8vh, 80px); }
-.intro img { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 2px solid var(--edge); flex: none; }
+.intro .me { width: 132px; height: 132px; margin: 0; align-self: flex-start; } /* mini Hisham: the drawn mascot of the photo */
 h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-spacing: -0.01em; }
 [dir="rtl"] h1 { line-height: 1.25; letter-spacing: 0; }
 .intro p { margin: 8px 0 0; color: var(--soft); max-width: 52ch; }
@@ -145,7 +145,10 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
 .hello .pause, .hello.playing .play { display: none; }
 .hello.playing .pause { display: block; }
 .hello small { font-weight: 400; color: var(--soft); }
-.ask { margin: clamp(36px, 7vh, 64px) 0 0; font: 600 clamp(1.4rem, 3vw, 2rem)/1.2 var(--display); }
+/* The ask, with a radio mascot that watches the pointer and reacts when booped (tracks/assets/mascot.js) */
+.ask-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: clamp(36px, 7vh, 64px); }
+.ask { margin: 0; font: 600 clamp(1.4rem, 3vw, 2rem)/1.2 var(--display); }
+.mascot { position: relative; flex: none; width: 112px; height: 112px; margin-bottom: -22px; padding: 0; border: 0; background: none; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
 
 /* The dial (laptop) */
 .dial { position: relative; margin-top: 22px; height: 64px; border-radius: 12px; background: linear-gradient(var(--dial-a), var(--dial-b)); border: 1px solid var(--edge); overflow: hidden; }
@@ -184,10 +187,12 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
 @media (max-width: 720px), (pointer: coarse) and (max-width: 900px) {
   .page { padding: 0 16px 20px; }
   .intro { margin-top: 18px; gap: 14px; }
-  .intro img { width: 60px; height: 60px; }
+  .intro .me { width: 84px; height: 84px; }
   .intro p { font-size: 15px; }
   .dial { display: none; }
-  .ask { margin-top: auto; padding-top: 28px; font-size: 1.35rem; }
+  .ask-row { margin-top: auto; padding-top: 28px; align-items: center; }
+  .ask { font-size: 1.35rem; }
+  .mascot { width: 72px; height: 72px; margin-bottom: 0; }
   .stations { grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
   .st { flex-direction: row; align-items: center; gap: 14px; padding: 16px; min-height: 76px; border-inline-start: 4px solid var(--c); }
   .st:hover { transform: none; }
@@ -226,7 +231,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
   </div>
 
   <div class="intro">
-    <img src="tracks/assets/bio.jpg" alt="">
+    <button type="button" class="mascot me" data-mascot="tracks/assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button>
     <div>
       <h1 data-i18n="name">Hisham Abuella</h1>
       <p class="idline" data-i18n="idLine">Muslim | Cellular Systems Engineer</p>
@@ -238,7 +243,10 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
     </div>
   </div>
 
-  <h2 class="ask" id="content" tabindex="-1" data-skip-target data-i18n="ask">Tune in. What brings you here?</h2>
+  <div class="ask-row">
+    <h2 class="ask" id="content" tabindex="-1" data-skip-target data-i18n="ask">Tune in. What brings you here?</h2>
+    <button type="button" class="mascot" data-mascot="tracks/assets/mascot/radio" aria-label="Boop the radio" data-i18n-aria="mascot"></button>
+  </div>
   <div class="timer" id="timer" hidden>
     <span id="timerText"></span>
     <span class="track" aria-hidden="true"><span class="fill" id="timerFill"></span></span>
@@ -331,12 +339,13 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
   "hello": "اسمع ترحيب بصوتي", "helloNote": "· متعمل بالـ AI",
   "idName": "هشام أبو العلا", "idLine": "مسلم | مهندس أنظمة خلوية", "idLoc": "كاليفورنيا، أمريكا",
   "idCopy": "انسخ الإيميل", "idCv": "اعرض الـ CV",
-  "idS1": "سنين في البحث اللاسلكي", "idS2": "سنين في الصناعة", "idS3": "ورقة تقنية منشورة", "idS4": "براءة اختراع أمريكية", "ariaPick": "اختار صفحة", "ariaContact": "التواصل", "ariaSocial": "حساباتي على السوشيال ميديا"
+  "idS1": "سنين في البحث اللاسلكي", "idS2": "سنين في الصناعة", "idS3": "ورقة تقنية منشورة", "idS4": "براءة اختراع أمريكية", "ariaPick": "اختار صفحة", "ariaContact": "التواصل", "ariaSocial": "حساباتي على السوشيال ميديا", "mascot": "اضغط على الراديو", "mascotMe": "دوس على هشام الصغير"
 }
 </script>
 <script src="tracks/assets/i18n.js"></script>
 <script src="tracks/assets/theme.js"></script>
 <script src="tracks/assets/ident.js?v=2"></script>
+<script src="tracks/assets/mascot.js?v=3"></script>
 <script>
 (function () {
   var KEY = 'reader-path';
