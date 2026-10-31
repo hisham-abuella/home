@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+    <title>Texting My Own AI, End to End Encrypted - Hisham Abuella</title>
+    <meta name="description" content="I wanted to text the AI on my Mac Studio like a friend, from anywhere, with every message encrypted. A self-hosted Matrix server, Element X on the phone, and a bot that talks like my Egyptian friend.">
+    <meta property="og:title" content="Texting My Own AI, End to End Encrypted - Hisham Abuella">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="A self-hosted Matrix server, Element X on the phone, and an encrypted bot in front of my local AI.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/texting-my-ai.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/texting-my-ai.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/texting-my-ai.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/texting-my-ai.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/texting-my-ai.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../css/skins/constellation.css">
+    <link rel="stylesheet" href="../css/skins/terminal.css">
+    <link rel="stylesheet" href="../css/skins/journal.css">
+    <link rel="stylesheet" href="../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <style>
+        /* Four pieces: two by two, never three plus an orphan */
+        .feature-grid { grid-template-columns: repeat(2, 1fr); }
+
+        /* System block diagram: inline SVG on the theme's own tokens */
+        .diagram-figure { margin: 2rem 0 2.5rem; }
+        .diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 0 auto; }
+        .diagram text { font-family: inherit; text-anchor: middle; }
+        .diagram .dg-t { font-size: 16px; font-weight: 700; fill: var(--text-primary); }
+        .diagram .dg-s { font-size: 14px; fill: var(--text-secondary); }
+        .diagram .dg-s2 { font-size: 13px; fill: var(--text-secondary); }
+        .diagram .dg-g { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--text-secondary); }
+        .diagram .dg-p { font-size: 12px; font-weight: 600; fill: var(--text-primary); }
+        .diagram .dg-l { font-size: 13.5px; text-anchor: start; fill: var(--text-secondary); }
+        .diagram .dg-l-rtl { text-anchor: end; }
+        .dg-group { fill: none; stroke: var(--text-tertiary); stroke-opacity: 0.45; stroke-width: 1.5; }
+        .dg-sub { fill: none; stroke: var(--text-tertiary); stroke-opacity: 0.45; stroke-dasharray: 4 4; }
+        .dg-box { fill: var(--bg-elevated); stroke: var(--text-tertiary); stroke-opacity: 0.6; stroke-width: 1.25; }
+        .dg-key { stroke: var(--accent); stroke-opacity: 1; stroke-width: 1.75; }
+        .dg-cloud { stroke-dasharray: 5 4; }
+        .dg-band { fill: var(--accent-subtle); stroke: var(--accent); stroke-width: 1.5; }
+        .dg-pill { fill: var(--bg-primary); stroke: var(--accent); stroke-width: 1.25; }
+        .dg-a { fill: none; stroke: var(--accent); stroke-width: 2; }
+        .dg-m { fill: none; stroke: var(--text-secondary); stroke-width: 1.75; }
+        .dg-dash { stroke-dasharray: 5 4; }
+        .dg-head-a { fill: var(--accent); stroke: none; }
+        .dg-head-m { fill: var(--text-secondary); stroke: none; }
+        /* On a phone the diagram takes the full screen width, gutters included */
+        @media (max-width: 480px) {
+            .diagram-figure { margin-inline: -18px; }
+            .diagram-figure figcaption { padding-inline: 18px; }
+        }
+        .diagram-figure figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* The path one message takes, phone to Mac and back */
+        .article-content .flow {
+            list-style: none;
+            margin: 2rem 0;
+            margin-inline-start: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .flow li {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 1rem;
+            align-items: start;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .flow .step {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .flow strong {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        /* A short exchange with the bot */
+        .chat-sample {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 2rem 0;
+            padding: 1.25rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+        }
+
+        .chat-sample p {
+            margin: 0;
+            max-width: 80%;
+            padding: 0.6rem 0.9rem;
+            border-radius: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-sample .me {
+            align-self: flex-end;
+            background: var(--accent);
+            color: var(--accent-ink);
+        }
+
+        .chat-sample .bot {
+            align-self: flex-start;
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+        }
+
+        .chat-sample .who {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.75;
+            margin-bottom: 0.1rem;
+        }
+
+        @media (max-width: 560px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .chat-sample p { max-width: 92%; }
+            .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../index.html?choose" aria-label="Hisham Abuella, front page"><img src="../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&larr; Back</summary>
+                <ul>
+                    <li><a href="../tracks/recruiter.html">Recruiter</a></li>
+                    <li><a href="../tracks/engineer.html">Engineer</a></li>
+                    <li><a href="../tracks/vibe.html">Vibe coder</a></li>
+                    <li><a href="../tracks/learner.html">Learner</a></li>
+                    <li><a href="../home.html">Full website</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">Texting My Own AI, End to End Encrypted</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> October 29, 2026</span>
+                <span><i class="fas fa-clock"></i> 9 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+                <a class="lang-switch" href="ar/texting-my-ai.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
+            </div>
+            <p class="article-subtitle enter delay-3">My AI lived in a browser tab. I wanted to text it like a friend, from anywhere, with every message encrypted and nothing stored on someone else&rsquo;s server. Here is how one long session with Claude Code got me there, and what broke along the way.</p>
+        </div>
+
+        <div class="listen" data-src="../audio/articles/texting-my-ai.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>H_AI, the <a href="building-ai-server.html">personal AI engine</a> on my Mac Studio, has a good dashboard. But a dashboard is something you open. A friend is someone you text. Most of what I ask an assistant is small: a quick sum, a word I forgot, &ldquo;read this to me&rdquo;. For that, I don&rsquo;t want a tab. I want a chat thread on my phone, next to my family and friends, that answers in a line or two.</p>
+
+            <p>I gave myself three rules. It had to be <strong>end-to-end encrypted</strong>. The chats had to live on <strong>my own hardware</strong>. And it had to work <strong>from anywhere</strong>, not only on the home Wi-Fi.</p>
+
+            <h2>Why Matrix</h2>
+            <p>My first thought was an open-source Slack, so I looked at Rocket.Chat. It ruled itself out on the one rule that mattered: in its encrypted rooms, bots can&rsquo;t read the messages. A bot that can&rsquo;t read is not much of an assistant.</p>
+
+            <p><span class="highlight">Matrix</span> works differently. Encryption happens on each device, and a bot is just another device in the room, with its own keys. It decrypts what I send, and encrypts what it replies. The server in the middle only ever stores ciphertext.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🏠</div>
+                    <div>
+                        <strong>Synapse</strong>
+                        <span>The Matrix server, on the Mac itself. Sign-ups off, federation off, encryption on for every room</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <div>
+                        <strong>Element X</strong>
+                        <span>The Matrix app on my iPhone. Nothing custom to install</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div>
+                        <strong>hishambot</strong>
+                        <span>A small Python bot (matrix-nio with the vodozemac crypto library) that sits between Matrix and H_AI</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div>
+                        <strong>Tailscale</strong>
+                        <span>The private network that lets my phone reach the Mac from anywhere, without opening it to the internet</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>The Whole System</h2>
+            <figure class="diagram-figure">
+                <svg class="diagram" viewBox="0 0 480 830" role="img" aria-labelledby="dg-title" direction="ltr" xmlns="http://www.w3.org/2000/svg">
+                <title id="dg-title">Block diagram of the system: the iPhone reaches the Mac Studio only through Tailscale. Element X talks to the Matrix server, the bot decrypts and asks the AI server, which uses local services and, only on request, Claude in the cloud.</title>
+                <defs><marker id="dg-head-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-head-a"/></marker><marker id="dg-head-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-head-m"/></marker></defs>
+                <rect x="10" y="10" width="460" height="126" rx="16" class="dg-group"/>
+                <text x="240" y="34" class="dg-g">iPhone</text>
+                <rect x="30" y="48" width="195" height="72" rx="10" class="dg-box dg-key"/>
+                <text x="127.5" y="82" class="dg-t">Element X</text>
+                <text x="127.5" y="100" class="dg-s">Matrix chat with hishambot</text>
+                <rect x="255" y="48" width="195" height="72" rx="10" class="dg-box"/>
+                <text x="352.5" y="82" class="dg-t">H_AI dashboard</text>
+                <text x="352.5" y="100" class="dg-s">browser, saved as an app</text>
+                <path d="M127.5 120 L127.5 168" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <path d="M352.5 120 L352.5 168" class="dg-m" marker-end="url(#dg-head-m)"/>
+                <rect x="10" y="170" width="460" height="44" rx="22" class="dg-band"/>
+                <text x="240" y="197" class="dg-t">Tailscale · private network, my devices only</text>
+                <rect x="10" y="246" width="460" height="482" rx="16" class="dg-group"/>
+                <text x="240" y="272" class="dg-g">Mac Studio M4 Max</text>
+                <path d="M127.5 214 L127.5 288" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <rect x="57" y="220" width="141" height="20" rx="10" class="dg-pill"/>
+                <text x="127.5" y="235" class="dg-p">end-to-end encrypted</text>
+                <path d="M352.5 214 L352.5 392" class="dg-m" marker-end="url(#dg-head-m)"/>
+                <rect x="332" y="220" width="42" height="20" rx="10" class="dg-pill"/>
+                <text x="352.5" y="235" class="dg-p">HTTPS</text>
+                <rect x="30" y="290" width="195" height="80" rx="10" class="dg-box dg-key"/>
+                <text x="127.5" y="319" class="dg-t">Synapse</text>
+                <text x="127.5" y="338" class="dg-s">Matrix server,</text>
+                <text x="127.5" y="354" class="dg-s">stores only ciphertext</text>
+                <path d="M127.5 370 L127.5 392" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <rect x="30" y="394" width="195" height="80" rx="10" class="dg-box dg-key"/>
+                <text x="127.5" y="423" class="dg-t">hishambot</text>
+                <text x="127.5" y="442" class="dg-s">decrypts, asks H_AI,</text>
+                <text x="127.5" y="458" class="dg-s">encrypts the reply</text>
+                <rect x="255" y="394" width="195" height="80" rx="10" class="dg-box dg-key"/>
+                <text x="352.5" y="423" class="dg-t">AI_server · H_AI</text>
+                <text x="352.5" y="442" class="dg-s">FastAPI: chat, skills,</text>
+                <text x="352.5" y="458" class="dg-s">persona, voice humanizer</text>
+                <path d="M225 434 L253 434" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <text x="240" y="427" class="dg-p">TLS</text>
+                <path d="M352.5 474 L352.5 500" class="dg-m" marker-end="url(#dg-head-m)"/>
+                <rect x="24" y="502" width="432" height="176" rx="12" class="dg-sub"/>
+                <text x="240" y="524" class="dg-g">Local services</text>
+                <rect x="36" y="538" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="102.0" y="564" class="dg-t">Ollama</text>
+                <text x="102.0" y="584" class="dg-s2">Qwen models</text>
+                <rect x="180" y="538" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="246.0" y="564" class="dg-t">Draw Things</text>
+                <text x="246.0" y="584" class="dg-s2">images</text>
+                <rect x="324" y="538" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="390.0" y="564" class="dg-t">Voicebox</text>
+                <text x="390.0" y="584" class="dg-s2">my cloned voice</text>
+                <rect x="36" y="606" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="102.0" y="632" class="dg-t">SearXNG</text>
+                <text x="102.0" y="652" class="dg-s2">web search</text>
+                <rect x="180" y="606" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="246.0" y="632" class="dg-t">Obsidian vault</text>
+                <text x="246.0" y="652" class="dg-s2">chats as notes</text>
+                <rect x="324" y="606" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="390.0" y="632" class="dg-t">Claude Code</text>
+                <text x="390.0" y="652" class="dg-s2">power mode</text>
+                <text x="190" y="706" class="dg-s2">Starts at login · a menu-bar light watches it all</text>
+                <path d="M390.0 664 L390.0 752" class="dg-m dg-dash" marker-end="url(#dg-head-m)"/>
+                <rect x="308.0" y="754" width="164" height="62" rx="10" class="dg-box dg-cloud"/>
+                <text x="390.0" y="782" class="dg-t">Claude · cloud</text>
+                <text x="390.0" y="802" class="dg-s">only when I type /claude</text>
+                <path d="M20 768 L52 768" class="dg-a"/>
+                <text x="60" y="772" class="dg-l">Chat path, encrypted end to end</text>
+                <path d="M20 792 L52 792" class="dg-m"/>
+                <text x="60" y="796" class="dg-l">Dashboard, HTTPS</text>
+                <path d="M20 816 L52 816" class="dg-m dg-dash"/>
+                <text x="60" y="820" class="dg-l">Leaves the Mac, only on request</text>
+                </svg>
+                <figcaption>Everything runs on one Mac. The phone reaches it only through my private network, and only <code>/claude</code> ever leaves the house.</figcaption>
+            </figure>
+
+            <h2>One Message, Start to Finish</h2>
+            <ol class="flow">
+                <li><span class="step">01</span><div><strong>I type on the phone</strong>Element X encrypts the message before it leaves the device.</div></li>
+                <li><span class="step">02</span><div><strong>It crosses Tailscale</strong>Only devices signed into my own private network can reach the server at all. It is never published to the open internet.</div></li>
+                <li><span class="step">03</span><div><strong>Synapse stores ciphertext</strong>The server listens only on the Mac itself, and Tailscale hands it the traffic. It can&rsquo;t read what it stores.</div></li>
+                <li><span class="step">04</span><div><strong>hishambot decrypts and asks H_AI</strong>Over a pinned TLS connection, with one separate conversation per chat room.</div></li>
+                <li><span class="step">05</span><div><strong>The answer streams back</strong>The bot edits its own message as the words arrive, so it feels like someone typing, and every edit is encrypted again.</div></li>
+            </ol>
+
+            <p>I also decided against using a public Matrix server for the account. My chats with my AI are exactly the kind of thing I don&rsquo;t want on anyone else&rsquo;s server, even encrypted. So everything stays on the Mac, and federation is switched off.</p>
+
+            <h2>Failures That Looked Like Success, Again</h2>
+            <p>In the <a href="building-ai-server.html">AI engine article</a> I wrote that failures there announce themselves as successes. This project kept proving it.</p>
+
+            <p><strong>The bot answered, and I saw nothing.</strong> The logs said every reply was sent and encrypted. My phone showed an empty room. The reason: Element X hides messages from devices their owner hasn&rsquo;t <em>verified</em>, and a bot has no second screen to tap &ldquo;verify&rdquo; on. The fix was a small script that does the cross-signing by hand, once, so the bot vouches for its own device the way a person would.</p>
+
+            <p><strong>New rooms were silent.</strong> I created a chat, wrote to it, and waited. The bot had never been invited. Now a tiny module inside the server notices when I create a room and invites the bot into it a couple of seconds later.</p>
+
+            <p><strong>Voice notes were two words long.</strong> I asked for a long text read aloud and got back a clip that said &ldquo;voice equals Alloy&rdquo;. The tool parser took only the first line of the request, which was the voice setting, and dropped the text under it. It also picked the wrong voice, because an old line in the system prompt still called Alloy the default.</p>
+
+            <p><strong>Everything waited for the slowest thing.</strong> While an image or a recording was rendering, the bot answered nothing else. The Matrix library runs its handlers one at a time, so one slow job held up the whole chat. Now every message runs as its own background task. When I ask for a picture, I get &ldquo;On it, keep chatting&rdquo;, and I can ask what 2+2 is and get &ldquo;4&rdquo; while the image is still being drawn.</p>
+
+            <h2>Making It Sound Like a Friend</h2>
+            <p>The dashboard&rsquo;s system prompt is written for long, careful answers. In a chat app, that reads like an essay in a text bubble. So the bot tells H_AI it is the messaging client, and H_AI adds a short <strong>persona</strong> for that request only: answer in a line or two, no headings, no preamble, no &ldquo;great question!&rdquo;.</p>
+
+            <p>I asked Claude to study the system prompts of OpenCode, an open-source coding agent known for being terse, and borrow what works: a few short example exchanges instead of long rules, hard line limits, and an explicit ban on openers and wrap-ups. Then I asked for one more thing: <em>act like my Egyptian friend</em>.</p>
+
+            <div class="chat-sample" aria-label="An example exchange with the bot">
+                <p class="me"><span class="who">me</span>ezayak ya basha</p>
+                <p class="bot"><span class="who">hishambot</span>Tamam, el7amdulillah! How&rsquo;s your day going?</p>
+                <p class="me"><span class="who">me</span>15% of 240?</p>
+                <p class="bot"><span class="who">hishambot</span>36.</p>
+            </div>
+
+            <p>That took some tuning. The first version answered in full Franco, Arabic written in Latin letters, which is fun for a line and tiring for a paragraph. Now it speaks <strong>mainly English</strong> with at most a couple of Egyptian words, and switches to Egyptian Arabic only if I write in Arabic script. It is <strong>never rude</strong> to me; teasing is fine only when it is clearly warm. And when the news is sad or serious, the jokes stop completely.</p>
+
+            <p>The persona also kept losing to the much longer main prompt, so two things fixed it. A one-line reminder now rides on my latest message only (it is never saved in the history), and I asked Claude to cut the persona from about 940 tokens to 450. Shorter worked better.</p>
+
+            <h2>Fast Enough to Feel Like Texting</h2>
+            <p>A friend who takes a minute to reply to &ldquo;hi&rdquo; isn&rsquo;t much of a friend. The bot uses <strong>Qwen 3.6 35B-A3B</strong>, a mixture-of-experts model that ran about <strong>96 tokens per second</strong> on the Mac, against about 21 for the larger Qwen 3.8 I use on the dashboard. For a two-line answer, that is the difference between instant and waiting.</p>
+
+            <p>Every chat room is its own conversation. A new room starts with no memory of the others, and <code>!new</code> starts a fresh thread in the same room. The dashboard&rsquo;s own conversation is never touched.</p>
+
+            <h2>Power Mode</h2>
+            <p>Sometimes the local model isn&rsquo;t enough. Starting a message with <code>/claude</code> sends just that one message to Claude instead, through the same server, in the same thread. <code>!power on</code> keeps a whole room on Claude until I turn it off. Local stays the default, and the cloud is something I choose.</p>
+
+            <h2>A Voice That Sounds Like Me</h2>
+            <p>When I ask for something read aloud, the bot answers with a voice note in my own cloned voice. Before it&rsquo;s spoken, the text goes through the same <strong>humanize</strong> step as my <a href="bedtime-stories.html">bedtime stories</a>: the Markdown comes out, lists become sentences, &ldquo;%&rdquo; becomes &ldquo;percent&rdquo;, and the fast model adds a few delivery cues like <em>warmly</em> for the voice to perform.</p>
+
+            <p>I noticed the voice changed a little from one clip to the next. The voice model clones afresh on every render, so each clip sounded like a slightly different me. A fixed seed solved it. I checked the result with a transcription model too: none of the cues were read out as words.</p>
+
+            <h2>Running It Without Thinking About It</h2>
+            <p>Everything starts by itself when the Mac logs in. A small light in the menu bar turns green, yellow or red, and shows each piece on its own (the AI engine, Matrix, the bot, Tailscale, the models, search and voice) with start and stop buttons. Voice used to be the one thing that was always down, because nothing ever started it. Now it starts with the AI engine.</p>
+
+            <h2>Keeping It Private</h2>
+            <p>Being private was the whole point, so I treated it as a feature to test, not a hope:</p>
+
+            <p><strong>Nothing public.</strong> Only my own devices can reach the server, through Tailscale. No sign-ups, no federation, and it is never exposed to the open internet.</p>
+
+            <p><strong>No secrets in the code.</strong> Passwords and keys stay in local files that git ignores. I had Claude check every file and the whole git history for them. It found none, but it did find a rotated log file that had slipped into a commit. There were no passwords in it, only device addresses, and it came out of the history before anything was shared.</p>
+
+            <p><strong>No passwords on the command line.</strong> A security review flagged that my password-change script passed the password as an argument, which any program on the Mac can see. It now uses a hidden prompt instead.</p>
+
+            <p><strong>Approvals that can&rsquo;t be mixed up.</strong> Once the bot could do several things at once, a plain &ldquo;yes&rdquo; could have approved the wrong action. Now it only approves the one waiting request, or the one I reply to.</p>
+
+            <div class="quote">
+                The best assistant is the one already in your pocket, in the app you open fifty times a day.
+            </div>
+
+            <h2>What&rsquo;s Next</h2>
+            <p>Sending voice notes <em>to</em> the bot, not only getting them back. Sending it a photo and asking about it. A short morning brief that arrives by itself. And the usual work: finding the places where it fails quietly, and making them speak up.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>The server, the bot and this article were built with <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="slides-in-html.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">One HTML File, a Whole Keynote</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/listen.js" defer></script>
+    <script src="../js/back-menu.js" defer></script>
+    <script src="../js/appearance.js?v=3" defer></script>
+    <script src="../js/reader-bar.js?v=3" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

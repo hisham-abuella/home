@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="../../favicon.ico" sizes="32x32">
+<title>Landing skill options</title>
+<meta name="robots" content="noindex">
+<script>
+(function () { var p = null; try { p = localStorage.getItem('reader-theme'); } catch (e) {}
+  if (['light', 'dark'].indexOf(p) < 0) p = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', p); })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* Exploration: what the landing-page-design skill could add, one card per
+   option, each with a working preview. Gateway tokens, not linked from the site. */
+:root {
+  --night: #0A0E17; --panel: #121A28; --edge: #243044; --ink: #ECEFF4; --soft: #A4AEBD;
+  --rec: #FF7A45; --eng: #FFD58A; --vibe: #8AB0FF; --learn: #8FD19E;
+  --code: #0B111A;
+  --display: 'Barlow Condensed', sans-serif; --body: 'Barlow', system-ui, sans-serif;
+  --ar: 'IBM Plex Sans Arabic', system-ui, sans-serif; --mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+:root[data-theme="light"] {
+  --night: #F3F5F8; --panel: #FFFFFF; --edge: #D3DAE4; --ink: #0E1726; --soft: #4A5568;
+  --rec: #C2410C; --eng: #8A570C; --vibe: #0040FF; --learn: #2F7D4A; --code: #EEF2F6;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--night); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--eng); outline-offset: 3px; }
+.skip { position: absolute; inset-inline-start: -9999px; }
+.skip:focus { inset-inline-start: 16px; top: 16px; z-index: 9; background: var(--ink); color: var(--night); border-radius: 8px; padding: 10px 14px; font-weight: 600; }
+
+.page { max-width: 1080px; margin: 0 auto; padding: 0 24px 64px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0; font-size: 15px; color: var(--soft); }
+.top b { color: var(--ink); }
+.theme { font: 600 14px/1 var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--edge); border-radius: 999px; padding: 10px 14px; cursor: pointer; min-height: 40px; }
+h1 { margin: clamp(16px, 5vh, 48px) 0 0; font: 700 clamp(2.2rem, 5vw, 3.6rem)/1.05 var(--display); }
+.lede { margin: 12px 0 0; color: var(--soft); max-width: 62ch; }
+
+.opt { margin-top: 28px; padding: 24px; border-radius: 14px; background: var(--panel); border: 1px solid var(--edge); }
+.opt-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 16px; }
+.opt-head .n { font: 600 14px/1 var(--display); letter-spacing: .04em; color: var(--c, var(--eng)); }
+.opt h2 { margin: 0; font: 700 clamp(1.5rem, 3vw, 2rem)/1.1 var(--display); flex: 1 1 260px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 13px; color: var(--soft); border: 1px solid var(--edge); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.opt > p { margin: 10px 0 0; color: var(--soft); max-width: 70ch; }
+.opt ul.where { margin: 12px 0 0; padding-inline-start: 20px; color: var(--soft); font-size: 15px; }
+.opt ul.where code { font: 400 14px/1 var(--mono); color: var(--ink); }
+
+.preview { margin-top: 18px; border: 1px solid var(--edge); border-radius: 12px; overflow: hidden; background: var(--night); }
+.preview .cap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 8px 14px; font-size: 13px; color: var(--soft); border-bottom: 1px solid var(--edge); }
+.preview .cap a { color: var(--ink); font-weight: 600; }
+.preview iframe { display: block; width: 100%; height: 520px; border: 0; }
+pre { margin: 0; padding: 16px; background: var(--code); overflow-x: auto; font: 400 13.5px/1.6 var(--mono); color: var(--ink); }
+.k { color: var(--vibe); } .s { color: var(--learn); } .c { color: var(--soft); }
+
+/* Option 2 demo */
+.tabdemo { padding: 20px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.tabdemo .fake-skip { background: var(--ink); color: var(--night); border-radius: 8px; padding: 10px 14px; font-weight: 600; font-size: 15px; }
+.tabdemo .row { display: flex; gap: 8px; flex-wrap: wrap; }
+.tabdemo .row span { border: 1px solid var(--edge); border-radius: 8px; padding: 8px 12px; font-size: 14px; color: var(--soft); }
+.tabdemo .row span.hit { border-color: var(--eng); color: var(--ink); }
+
+/* Option 3: search result mock */
+.serp { padding: 18px; display: grid; grid-template-columns: 1fr 260px; gap: 16px; }
+.serp .res small { color: var(--soft); font-size: 13px; }
+.serp .res b { display: block; color: var(--vibe); font-size: 19px; font-weight: 500; margin-top: 2px; }
+.serp .res p { margin: 4px 0 0; font-size: 14px; color: var(--soft); }
+.kp { border: 1px solid var(--edge); border-radius: 10px; padding: 14px; font-size: 14px; }
+.kp b { font: 700 20px/1.1 var(--display); display: block; }
+.kp span { color: var(--soft); display: block; }
+.kp .links { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.kp .links i { font-style: normal; font-size: 12px; border: 1px solid var(--edge); border-radius: 999px; padding: 2px 8px; }
+
+/* Option 4: track first screen */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.split > div { padding: 18px; }
+.split > div + div { border-inline-start: 1px solid var(--edge); }
+.split h3 { margin: 0 0 10px; font: 600 14px/1 var(--display); letter-spacing: .04em; color: var(--soft); }
+.mini { --c: var(--eng); border: 1px solid var(--edge); border-radius: 10px; padding: 16px; background: var(--panel); }
+.mini .band { font: 600 13px/1 var(--display); color: var(--c); }
+.mini b.h { display: block; font: 700 24px/1.1 var(--display); margin-top: 6px; }
+.mini p { margin: 6px 0 0; font-size: 14px; color: var(--soft); }
+.mini .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.mini .btns span { font-size: 14px; border: 1px solid var(--edge); border-radius: 8px; padding: 8px 12px; }
+.mini .btns span.p { background: var(--c); color: var(--night); border-color: var(--c); font-weight: 600; }
+.mini .proof { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--edge); font-size: 13px; color: var(--soft); }
+.mini .proof b { color: var(--ink); }
+.mini.many .btns span { color: var(--soft); }
+.tracks4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 18px; }
+
+/* Option 5: FAQ */
+.faq { display: grid; grid-template-columns: 1fr 1fr; }
+.faq > div { padding: 18px; }
+.faq > div + div { border-inline-start: 1px solid var(--edge); }
+.faq [dir="rtl"] { font-family: var(--ar); line-height: 1.8; }
+.faq details { border-top: 1px solid var(--edge); padding: 10px 0; }
+.faq details:last-child { border-bottom: 1px solid var(--edge); }
+.faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 12px; min-height: 32px; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; color: var(--soft); font-weight: 400; }
+.faq details[open] summary::after { content: '−'; }
+.faq details p { margin: 6px 0 0; color: var(--soft); font-size: 15px; }
+
+/* Option 6: states */
+.states { display: flex; gap: 12px; flex-wrap: wrap; padding: 20px; align-items: center; }
+.stbtn { display: inline-flex; gap: 10px; align-items: center; min-height: 44px; padding: 10px 14px; border: 1px solid var(--edge); border-radius: 10px; background: var(--panel); color: var(--ink); font: 600 15px/1 var(--body); }
+.stbtn.hover { border-color: var(--soft); }
+.stbtn.focus { outline: 2px solid var(--eng); outline-offset: 3px; }
+.stbtn.done { border-color: var(--learn); color: var(--learn); }
+.stbtn.fail { border-color: var(--rec); color: var(--rec); }
+.states small { display: block; font-size: 12px; color: var(--soft); margin-top: 6px; text-align: center; }
+
+.skipped { margin-top: 28px; padding: 20px 24px; border: 1px dashed var(--edge); border-radius: 14px; color: var(--soft); font-size: 15px; }
+.skipped h2 { margin: 0 0 6px; font: 700 1.4rem/1.1 var(--display); color: var(--ink); }
+.skipped ul { margin: 6px 0 0; padding-inline-start: 20px; }
+
+@media (max-width: 720px) {
+  .page { padding: 0 16px 40px; }
+  .opt { padding: 16px; }
+  .preview iframe { height: 640px; }
+  .serp, .split, .faq { grid-template-columns: 1fr; }
+  .split > div + div, .faq > div + div { border-inline-start: 0; border-top: 1px solid var(--edge); }
+  .tracks4 { grid-template-columns: 1fr; padding: 12px; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="page">
+  <header class="top"><span><b>Exploration</b> · not linked from the site</span><button class="theme" type="button" id="theme">Light / dark</button></header>
+
+  <main id="main">
+  <h1>Six things the landing skill could add</h1>
+  <p class="lede">Each card is one option you can take or leave. Previews use the gateway's own colours and fonts. Nothing here changes the live pages yet.</p>
+
+  <!-- 1 -->
+  <section class="opt" style="--c: var(--eng)">
+    <div class="opt-head"><span class="n">01</span><h2>A branded 404, in both languages</h2><div class="tags"><span class="tag">new file</span><span class="tag">small</span></div></div>
+    <p>Today a broken link shows GitHub's grey page. This one keeps the tuner idea ("no signal on this frequency") and sends people back to the gateway, the full site or the articles, in English and Egyptian Arabic side by side. It needs no language guess.</p>
+    <ul class="where"><li>Adds <code>404.html</code> at the root (draft is <code>different_designs/landing-skill/404.html</code>).</li><li>Uses root-absolute links, because GitHub Pages serves it at any missing path. Marked <code>noindex</code>.</li></ul>
+    <div class="preview"><div class="cap"><span>Live preview · try Tab to see the skip link</span><a href="404.html">Open full page</a></div><iframe src="404.html" title="404 page preview" loading="lazy"></iframe></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="opt" style="--c: var(--vibe)">
+    <div class="opt-head"><span class="n">02</span><h2>Skip links on the gateway and the tracks</h2><div class="tags"><span class="tag">invisible</span><span class="tag">tiny</span></div></div>
+    <p>Only <code>home.html</code> has one today. Keyboard and screen-reader users have to tab through the language button, theme pill and track chip before reaching content. A skip link stays hidden until the first Tab press.</p>
+    <ul class="where"><li><code>index.html</code> skips to the four stations; each track skips to its <code>&lt;main&gt;</code>.</li><li>Label in both languages ("Skip to content" / "روح للمحتوى") via <code>data-i18n</code>.</li></ul>
+    <div class="preview"><div class="cap"><span>What the first Tab press shows</span><span>press Tab on this page to try it</span></div>
+      <div class="tabdemo"><span class="fake-skip">Skip to content</span><div class="row"><span>Hisham Abuella</span><span>Auto · Light · Dark</span><span>عربي</span><span class="hit">I'm hiring →</span></div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="opt" style="--c: var(--learn)">
+    <div class="opt-head"><span class="n">03</span><h2>Tell search and AI engines who you are</h2><div class="tags"><span class="tag">invisible</span><span class="tag">small</span></div></div>
+    <p>No page has structured data yet. One <code>Person</code> block tells Google and AI answer engines your name, role, employer and profiles, so "Hisham Abuella" resolves to you with the right links. All facts come from <code>cv.html</code>.</p>
+    <ul class="where"><li>Goes in the <code>&lt;head&gt;</code> of <code>index.html</code> and <code>home.html</code> (and <code>ar/home.html</code> with Arabic name).</li></ul>
+    <div class="preview">
+      <div class="cap"><span>The block</span></div>
+<pre><span class="k">&lt;script type="application/ld+json"&gt;</span>
+{
+  <span class="s">"@context"</span>: "https://schema.org",
+  <span class="s">"@type"</span>: "Person",
+  <span class="s">"name"</span>: "Hisham Abuella",
+  <span class="s">"alternateName"</span>: "هشام أبو العلا",
+  <span class="s">"jobTitle"</span>: "Cellular Systems Engineer",
+  <span class="s">"worksFor"</span>: { "@type": "Organization", "name": "Apple" },
+  <span class="s">"alumniOf"</span>: "Oklahoma State University",
+  <span class="s">"address"</span>: { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" },
+  <span class="s">"url"</span>: "https://www.hishamabuella.com/",
+  <span class="s">"image"</span>: "https://www.hishamabuella.com/tracks/assets/bio.jpg",
+  <span class="s">"knowsAbout"</span>: ["5G baseband", "RF digital front-end", "Signal processing", "Machine learning", "Visible light sensing"],
+  <span class="s">"sameAs"</span>: [
+    "https://www.linkedin.com/in/hisham-abuella-808b91171/",
+    "https://github.com/hisham-abuella",
+    "https://scholar.google.com/citations?user=51HWj54AAAAJ"
+  ]
+}
+<span class="k">&lt;/script&gt;</span></pre>
+      <div class="cap" style="border-top:1px solid var(--edge)"><span>Roughly what it can lead to in search (illustration, not a promise)</span></div>
+      <div class="serp">
+        <div class="res"><small>www.hishamabuella.com</small><b>Hisham Abuella</b><p>Hisham Abuella is a cellular systems engineer in California working on 5G baseband, RF digital front-end, signal processing and machine learning.</p></div>
+        <div class="kp"><b>Hisham Abuella</b><span>Cellular Systems Engineer · Apple</span><span>California, USA</span><div class="links"><i>LinkedIn</i><i>GitHub</i><i>Scholar</i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="opt" style="--c: var(--rec)">
+    <div class="opt-head"><span class="n">04</span><h2>One main button per track</h2><div class="tags"><span class="tag">visible</span><span class="tag">medium</span><span class="tag">EN + AR copy</span></div></div>
+    <p>The skill's core rule: one audience, one action. The gateway keeps its five choices, but each track's first screen gets one filled button and one real piece of proof next to it. The recruiter track already does this (View CV is the only filled button), so the change mostly applies to the other three.</p>
+    <div class="preview">
+      <div class="split">
+        <div><h3>TODAY (A TRACK, SIMPLIFIED)</h3>
+          <div class="mini many"><span class="band">n78 · 3.5 GHz</span><b class="h">Research, papers, patent, stack</b><p>The only filled button is View CV, in the identity block. The research has no main button.</p><div class="btns"><span>Papers</span><span>Patent</span><span>Stack</span><span class="p" style="--c: var(--soft)">View CV</span></div></div>
+        </div>
+        <div><h3>WITH THE SKILL</h3>
+          <div class="mini"><span class="band">n78 · 3.5 GHz</span><b class="h">Research, papers, patent, stack</b><p>Wireless research from channel estimation to visible light sensing.</p><div class="btns"><span class="p">Read the papers</span><span>Scholar</span></div><div class="proof"><b>10+</b> technical publications · <b>1</b> US patent (ViLDAR)</div></div>
+        </div>
+      </div>
+      <div class="cap" style="border-top:1px solid var(--edge)"><span>Suggested main action per track</span></div>
+      <div class="tracks4">
+        <div class="mini" style="--c: var(--rec)"><span class="band">recruiter · n71</span><div class="btns"><span class="p">View CV</span></div><div class="proof">Already done. Keep as is.</div></div>
+        <div class="mini" style="--c: var(--eng)"><span class="band">engineer · n78</span><div class="btns"><span class="p">Read the papers</span></div><div class="proof">Proof: publications and the ViLDAR patent</div></div>
+        <div class="mini" style="--c: var(--vibe)"><span class="band">vibe · n257</span><div class="btns"><span class="p">Read the latest build log</span></div><div class="proof">Proof: tools, sites and books built with Claude</div></div>
+        <div class="mini" style="--c: var(--learn)"><span class="band">learner · n260</span><div class="btns"><span class="p">Start at entry one</span></div><div class="proof">Proof: the journal, entry by entry</div></div>
+      </div>
+    </div>
+    <ul class="where"><li>Checked in the code: on <code>engineer.html</code>, <code>vibe.html</code> and <code>learner.html</code> the only <code>.primary</code> button is View CV. The fix: keep View CV as an outline button there, and give the filled style to the track's own action.</li></ul>
+  </section>
+
+  <!-- 5 -->
+  <section class="opt" style="--c: var(--vibe)">
+    <div class="opt-head"><span class="n">05</span><h2>A short FAQ, in both languages</h2><div class="tags"><span class="tag">visible</span><span class="tag">medium</span><span class="tag">EN + AR copy</span></div></div>
+    <p>Plain questions people actually ask, near the bottom of <code>home.html</code> and <code>ar/home.html</code>. It helps search and AI answer engines (with a matching <code>FAQPage</code> block), and gives a learner an easy way in. Answers only use facts from the CV and the site. The Arabic is a first draft for the Arabic review.</p>
+    <div class="preview">
+      <div class="faq">
+        <div lang="en">
+          <details open><summary>What does a cellular systems engineer do?</summary><p>I design how a phone's modem receives and cleans up a radio signal. At Apple I work on AGC (automatic gain control) for cellular modems, and before that on the 5G receive front-end and channel estimation at Qualcomm.</p></details>
+          <details><summary>What do you build with Claude?</summary><p>I love creating UIs with Claude. I build tools, sites and books, mostly in Claude Code sessions, and write build logs along the way.</p></details>
+          <details><summary>I'm new to wireless. Where do I start?</summary><p>Open the learner track. It's my journal of what I learned, entry by entry, with free resources.</p></details>
+          <details><summary>How do I reach you?</summary><p>Copy my email from any track, or open my CV.</p></details>
+        </div>
+        <div lang="ar" dir="rtl">
+          <details open><summary>يعني إيه cellular systems engineer؟</summary><p>بصمم إزاي الـ modem في الموبايل بيستقبل إشارة الراديو وينضفها. في Apple بشتغل على الـ AGC (automatic gain control) للـ cellular modems، وقبلها في Qualcomm كنت بشتغل على الـ 5G receive front-end والـ channel estimation.</p></details>
+          <details><summary>بتعمل إيه بـ Claude؟</summary><p>بحب أعمل UIs مع Claude. بعمل tools ومواقع وكتب، أغلبها في sessions على Claude Code، وبكتب build logs في السكة.</p></details>
+          <details><summary>أنا جديد في الـ wireless. أبدأ منين؟</summary><p>افتح track المتعلّم. ده الـ journal بتاعي باللي اتعلمته، entry ورا entry، ومعاه مصادر ببلاش.</p></details>
+          <details><summary>أكلمك إزاي؟</summary><p>انسخ الإيميل بتاعي من أي track، أو افتح الـ CV.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="opt" style="--c: var(--learn)">
+    <div class="opt-head"><span class="n">06</span><h2>Every button state, checked</h2><div class="tags"><span class="tag">audit</span><span class="tag">small</span></div></div>
+    <p>The skill asks for hover, focus, success and error states on every control. The one most likely to be missing is copy failing (clipboard blocked in some in-app browsers). An audit would check "Copy email" and "Copy CV text" on every page, in both languages.</p>
+    <div class="preview"><div class="states">
+      <div><span class="stbtn">Copy email</span><small>idle</small></div>
+      <div><span class="stbtn hover">Copy email</span><small>hover</small></div>
+      <div><span class="stbtn focus">Copy email</span><small>focus</small></div>
+      <div><span class="stbtn done">Copied ✓</span><small>success</small></div>
+      <div><span class="stbtn fail">Select it below to copy</span><small>blocked</small></div>
+    </div></div>
+  </section>
+
+  <section class="skipped">
+    <h2>What I'd leave out of the skill</h2>
+    <ul>
+      <li>Its fixed fonts, type scale, spacing and radius tokens. Each track has its own look.</li>
+      <li>No gradients, no italics, no one-sided borders. The tuner dial and the phone station bars use them on purpose.</li>
+      <li>The required "words light up on scroll" tagline. It's a template trick, and it would fight the tuner idea and reduced motion.</li>
+      <li>A single call to action on the gateway. Choosing a track is the whole point of the front page.</li>
+    </ul>
+  </section>
+  </main>
+</div>
+<script>
+document.getElementById('theme').addEventListener('click', function () {
+  var r = document.documentElement, t = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  r.setAttribute('data-theme', t);
+});
+</script>
+</body>
+</html>

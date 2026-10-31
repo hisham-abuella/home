@@ -1,0 +1,51 @@
+{
+ "title": "Texting My Own AI, End to End Encrypted",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Texting My Own AI, End to End Encrypted. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> Aitch ay eye, the personal AI engine on my Mac Studio, has a good dashboard. But a dashboard is something you open. A friend is someone you text. Most of what I ask an assistant is small: a quick sum, a word I forgot, read this to me. For that, I don't want a tab. I want a chat thread on my phone, next to my family and friends, that answers in a line or two. <break time=\"0.4s\" /> I gave myself three rules. It had to be end to end encrypted. The chats had to live on my own hardware. And it had to work from anywhere, not only on the home Wi-Fi."
+  },
+  {
+   "id": "s01",
+   "title": "Why Matrix",
+   "transcript": "Why Matrix. <break time=\"0.5s\" /> My first thought was an open source Slack, so I looked at Rocket Chat. It ruled itself out on the one rule that mattered: in its encrypted rooms, bots can't read the messages. A bot that can't read is not much of an assistant. <break time=\"0.4s\" /> Matrix works differently. Encryption happens on each device, and a bot is just another device in the room, with its own keys. It decrypts what I send, and encrypts what it replies. The server in the middle only ever stores ciphertext. <break time=\"0.4s\" /> The pieces: Synapse, the Matrix server, on the Mac itself, with sign-ups and federation off. Element X, the Matrix app on my iPhone. Hishambot, a small Python bot between Matrix and my AI. And Tailscale, the private network that lets my phone reach the Mac from anywhere, without opening it to the internet."
+  },
+  {
+   "id": "s02",
+   "title": "One message",
+   "transcript": "One message, start to finish. <break time=\"0.5s\" /> I type on the phone, and Element X encrypts it before it leaves. It crosses Tailscale, where only my own devices can reach the server at all. Synapse stores it, but can't read it. Hishambot decrypts it and asks my AI, with one separate conversation per chat room. And the answer streams back, the bot editing its own message as the words arrive, encrypted again every time. <break time=\"0.4s\" /> I also decided against a public Matrix server for the account. My chats with my AI are exactly the kind of thing I don't want on anyone else's server, even encrypted."
+  },
+  {
+   "id": "s03",
+   "title": "Failures",
+   "transcript": "Failures that looked like success, again. <break time=\"0.5s\" /> [sighs] The bot answered, and I saw nothing. The logs said every reply was sent and encrypted. My phone showed an empty room. Element X hides messages from devices their owner hasn't verified, and a bot has no second screen to tap verify on. A small script now does the cross-signing by hand, once. <break time=\"0.4s\" /> New rooms were silent, because the bot was never invited. Now a tiny module inside the server invites it a couple of seconds after I create a room. <break time=\"0.4s\" /> [playfully] Voice notes were two words long. I asked for a long text read aloud and got a clip that said, voice equals Alloy. The parser kept only the first line of the request. <break time=\"0.4s\" /> And everything waited for the slowest thing. While an image was rendering, the bot answered nothing else. Now every message runs as its own background task. I can ask what two plus two is, and get four, while the picture is still being drawn."
+  },
+  {
+   "id": "s04",
+   "title": "A friend",
+   "transcript": "Making it sound like a friend. <break time=\"0.5s\" /> The dashboard's prompt is written for long, careful answers. In a chat app, that reads like an essay in a text bubble. So for messages, my AI adds a short persona: a line or two, no headings, no preamble. I asked Claude to study the prompts of OpenCode, a famously terse coding agent, and borrow what works: short examples instead of long rules, hard line limits, and no openers or wrap-ups. Then I asked for one more thing. [cheerful] Act like my Egyptian friend. <break time=\"0.4s\" /> The first version answered in full Franco, Arabic written in Latin letters, which is fun for a line and tiring for a paragraph. Now it speaks mainly English with a couple of Egyptian words. It is never rude to me. And when the news is sad or serious, the jokes stop completely. <break time=\"0.4s\" /> The persona kept losing to the much longer main prompt, so a one-line reminder now rides on my latest message only, and Claude cut the persona from about nine hundred and forty tokens to four hundred and fifty. Shorter worked better."
+  },
+  {
+   "id": "s05",
+   "title": "Speed and power",
+   "transcript": "Fast enough to feel like texting. <break time=\"0.5s\" /> The bot uses Kwen three point six, a mixture of experts model that ran about ninety six tokens a second on the Mac, against about twenty one for the bigger model I use on the dashboard. Every chat room is its own conversation, and a new command starts a fresh thread. <break time=\"0.4s\" /> And when the local model isn't enough, starting a message with slash Claude sends just that message to Claude. Local stays the default, and the cloud is something I choose."
+  },
+  {
+   "id": "s06",
+   "title": "Voice",
+   "transcript": "A voice that sounds like me. <break time=\"0.5s\" /> When I ask for something read aloud, the bot sends a voice note in my own cloned voice. Before it's spoken, the text goes through the same humanize step as my bedtime stories: the formatting comes out, lists become sentences, and the fast model adds a few delivery cues for the voice to perform. <break time=\"0.4s\" /> I noticed the voice changed a little from one clip to the next, so each one sounded like a slightly different me. A fixed seed solved it."
+  },
+  {
+   "id": "s07",
+   "title": "Private",
+   "transcript": "Running it, and keeping it private. <break time=\"0.5s\" /> Everything starts by itself when the Mac logs in, and a small light in the menu bar shows each piece, with start and stop buttons. <break time=\"0.4s\" /> Privacy was the whole point, so I tested it like a feature. Only my own devices can reach the server. Passwords and keys stay in local files that git ignores, and Claude checked every file and the whole history for them. A security review moved my password-change script off the command line, where any program could see it. And once the bot could do several things at once, a plain yes now approves only the one request that's waiting. <break time=\"0.6s\" /> [warmly] The best assistant is the one already in your pocket, in the app you open fifty times a day."
+  },
+  {
+   "id": "s08",
+   "title": "Next",
+   "transcript": "What's next. <break time=\"0.5s\" /> Sending voice notes to the bot, not only getting them back. Sending it a photo and asking about it. A short morning brief that arrives by itself. And the usual work: finding the places where it fails quietly, and making them speak up. <break time=\"0.6s\" /> [warmly] Thanks for listening."
+  }
+ ]
+}

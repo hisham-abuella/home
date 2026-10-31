@@ -203,6 +203,7 @@ ul.log .add { color: var(--add); }
     <h2 id="log" data-i18n="logH">Changelog</h2>
     <p class="sub" data-i18n="logS">Build logs, newest first, in English and Arabic.</p>
     <ul class="log">
+      <li><span><span class="add">+</span> <a href="../Articles/texting-my-ai.html?via=vibe" data-i18n="a10">Texting my own AI, end to end encrypted</a></span><time>2026-10</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/slides-in-html.html?via=vibe" data-i18n="a0">One HTML file, a whole Keynote</a></span><time>2026-10</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/two-nails-two-assistants.html?via=vibe" data-i18n="a1">Two nails, two assistants</a></span><time>2026-10</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/bedtime-stories.html?via=vibe" data-i18n="a2">Bedtime stories for a three-month-old</a></span><time>2026-10</time></li>
@@ -286,6 +287,7 @@ ul.log .add { color: var(--add); }
  "s4x": "HTML وCSS وJavaScript عادي، من غير build step، على GitHub Pages",
  "logH": "سجل التغييرات",
  "logS": "سجلات البناء من الأحدث للأقدم، بالإنجليزي والعربي.",
+ "a10": "بكلّم الـ AI بتاعي على الموبايل، ومتشفّر من الأول للآخر",
  "a0": "ملف HTML واحد، Keynote كامل",
  "a1": "مسمارين ومساعدين",
  "a2": "حواديت قبل النوم لطفل عنده تلات شهور",
@@ -330,7 +332,8 @@ ul.log .add { color: var(--add); }
       ? 'الـ agent: Claude Code، ومعاه skills للشغل اللي بكرره\nمحلي: Mac Studio M4 Max، وOllama، وDraw Things، وVoicebox\nالتعليق الصوتي: ElevenLabs Eleven v4، وبقارنه بمحركات محلية\nالموقع: HTML وCSS وJavaScript عادي، من غير build step، على GitHub Pages\n' + more('stack')
       : 'agent       Claude Code, plus skills for jobs I repeat\nlocal       Mac Studio M4 Max: Ollama, Draw Things, Voicebox\nnarration   ElevenLabs Eleven v4, local engines compared\nsite        vanilla HTML/CSS/JS, no build step, GitHub Pages\n' + more('stack'); },
     log: function () {
-      var e = [['slides-in-html', 'One HTML file, a whole Keynote', 'ملف HTML واحد، Keynote كامل', '2026-10'],
+      var e = [['texting-my-ai', 'Texting my own AI', 'بكلّم الـ AI بتاعي', '2026-10'],
+               ['slides-in-html', 'One HTML file, a whole Keynote', 'ملف HTML واحد، Keynote كامل', '2026-10'],
                ['two-nails-two-assistants', 'Two nails, two assistants', 'مسمارين ومساعدين', '2026-10'],
                ['bedtime-stories', 'Bedtime stories', 'حواديت قبل النوم', '2026-10'],
                ['building-wireless101', 'Building Wireless 101', 'بناء Wireless 101', '2026-03'],

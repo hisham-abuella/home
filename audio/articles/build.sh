@@ -18,7 +18,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 TOOLS="$HOME/Work/Elevenlabs-voice"
 CLIPS_ROOT="$(cd "$HERE/../../.." && pwd)/article-audio"
 VOICE="pusofH2Ro5Ny4RH6qBEO"   # Hisham (cloned)
-ORDER=(slides-in-html ar/slides-in-html two-nails-two-assistants bedtime-stories local-voice-generation building-ai-server
+ORDER=(texting-my-ai slides-in-html ar/slides-in-html two-nails-two-assistants bedtime-stories local-voice-generation building-ai-server
        building-wireless101 building-islamic-kids building-wirelesshub journey)
 
 [ -n "${ELEVENLABS_API_KEY:-}" ] || source "$HOME/.zshrc" >/dev/null 2>&1 || true

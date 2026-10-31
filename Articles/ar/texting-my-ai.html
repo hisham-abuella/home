@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>بكلّم الـ AI بتاعي على الموبايل، ومتشفّر من الأول للآخر - هشام أبو العلا</title>
+    <meta name="description" content="كنت عايز أبعت رسايل للـ AI اللي على الـ Mac Studio بتاعي زي ما بكلّم صاحبي، من أي حتة، وكل رسالة متشفّرة. Matrix server على جهازي، وElement X على الموبايل، وbot بيتكلم زي صاحبي المصري.">
+    <meta property="og:title" content="بكلّم الـ AI بتاعي على الموبايل، ومتشفّر من الأول للآخر - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Matrix server على جهازي، وElement X على الموبايل، وbot متشفّر قدام الـ AI المحلي بتاعي.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/texting-my-ai.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/texting-my-ai.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/texting-my-ai.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/texting-my-ai.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/texting-my-ai.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <style>
+        /* Four pieces: two by two, never three plus an orphan */
+        .feature-grid { grid-template-columns: repeat(2, 1fr); }
+
+        /* System block diagram: inline SVG on the theme's own tokens */
+        .diagram-figure { margin: 2rem 0 2.5rem; }
+        .diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 0 auto; }
+        .diagram text { font-family: inherit; text-anchor: middle; }
+        .diagram .dg-t { font-size: 16px; font-weight: 700; fill: var(--text-primary); }
+        .diagram .dg-s { font-size: 14px; fill: var(--text-secondary); }
+        .diagram .dg-s2 { font-size: 13px; fill: var(--text-secondary); }
+        .diagram .dg-g { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--text-secondary); }
+        .diagram .dg-p { font-size: 12px; font-weight: 600; fill: var(--text-primary); }
+        .diagram .dg-l { font-size: 13.5px; text-anchor: start; fill: var(--text-secondary); }
+        .diagram .dg-l-rtl { text-anchor: end; }
+        .dg-group { fill: none; stroke: var(--text-tertiary); stroke-opacity: 0.45; stroke-width: 1.5; }
+        .dg-sub { fill: none; stroke: var(--text-tertiary); stroke-opacity: 0.45; stroke-dasharray: 4 4; }
+        .dg-box { fill: var(--bg-elevated); stroke: var(--text-tertiary); stroke-opacity: 0.6; stroke-width: 1.25; }
+        .dg-key { stroke: var(--accent); stroke-opacity: 1; stroke-width: 1.75; }
+        .dg-cloud { stroke-dasharray: 5 4; }
+        .dg-band { fill: var(--accent-subtle); stroke: var(--accent); stroke-width: 1.5; }
+        .dg-pill { fill: var(--bg-primary); stroke: var(--accent); stroke-width: 1.25; }
+        .dg-a { fill: none; stroke: var(--accent); stroke-width: 2; }
+        .dg-m { fill: none; stroke: var(--text-secondary); stroke-width: 1.75; }
+        .dg-dash { stroke-dasharray: 5 4; }
+        .dg-head-a { fill: var(--accent); stroke: none; }
+        .dg-head-m { fill: var(--text-secondary); stroke: none; }
+        /* On a phone the diagram takes the full screen width, gutters included */
+        @media (max-width: 480px) {
+            .diagram-figure { margin-inline: -18px; }
+            .diagram-figure figcaption { padding-inline: 18px; }
+        }
+        .diagram-figure figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* The path one message takes, phone to Mac and back */
+        .article-content .flow {
+            list-style: none;
+            margin: 2rem 0;
+            margin-inline-start: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .flow li {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 1rem;
+            align-items: start;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .flow .step {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .flow strong {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        /* A short exchange with the bot */
+        .chat-sample {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 2rem 0;
+            padding: 1.25rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+        }
+
+        .chat-sample p {
+            margin: 0;
+            max-width: 80%;
+            padding: 0.6rem 0.9rem;
+            border-radius: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-sample .me {
+            align-self: flex-end;
+            background: var(--accent);
+            color: var(--accent-ink);
+        }
+
+        .chat-sample .bot {
+            align-self: flex-start;
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+        }
+
+        .chat-sample .who {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.75;
+            margin-bottom: 0.1rem;
+        }
+
+        @media (max-width: 560px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .chat-sample p { max-width: 92%; }
+            .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../../index.html?choose&lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../ar/home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">بكلّم الـ AI بتاعي على الموبايل، ومتشفّر من الأول للآخر</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 29 أكتوبر 2026</span>
+                <span><i class="fas fa-clock"></i> 9 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../texting-my-ai.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">الـ AI بتاعي كان عايش في tab في المتصفح. كنت عايز أبعتله رسايل زي ما بكلّم صاحبي، من أي حتة، وكل رسالة متشفّرة، ومفيش حاجة متخزّنة على server حد تاني. دي الحكاية إزاي جلسة واحدة طويلة مع Claude Code وصّلتني لكده، وإيه اللي باظ في السكة.</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/texting-my-ai.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <div class="article-content">
+            <p>H_AI، <a href="building-ai-server.html">محرك الـ AI الشخصي</a> اللي على الـ Mac Studio بتاعي، عنده dashboard كويسة. بس الـ dashboard حاجة بتفتحها، والصاحب حد بتبعتله رسالة. أغلب اللي بسأله لأي مساعد حاجات صغيرة: حسبة سريعة، كلمة نسيتها، &laquo;اقرالي ده&raquo;. للحاجات دي مش عايز tab. عايز محادثة على الموبايل، جنب العيلة والصحاب، بترد في سطر ولا اتنين.</p>
+
+            <p>حطّيت لنفسي تلات شروط. لازم يبقى <strong>متشفّر من الأول للآخر</strong>. والمحادثات لازم تفضل على <strong>جهازي أنا</strong>. ولازم يشتغل <strong>من أي حتة</strong>، مش على الـ Wi-Fi بتاع البيت بس.</p>
+
+            <h2>ليه Matrix</h2>
+            <p>أول حاجة جت في بالي كانت بديل open-source لـ Slack، فبصّيت على Rocket.Chat. طلع برّه من أول شرط مهم: في الأوض المتشفّرة بتاعته، الـ bots مش بتقدر تقرا الرسايل. وbot مش بيقرا مش هيبقى مساعد أوي.</p>
+
+            <p><span class="highlight">Matrix</span> شغله مختلف. التشفير بيحصل على كل جهاز، والـ bot مجرد جهاز تاني في الأوضة، وليه مفاتيحه. بيفك تشفير اللي ببعته، وبيشفّر رده. والـ server اللي في النص عمره ما بيخزّن غير كلام متشفّر.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🏠</div>
+                    <div>
+                        <strong>Synapse</strong>
+                        <span>الـ Matrix server، على الـ Mac نفسه. التسجيل مقفول، والـ federation مقفولة، والتشفير شغال في كل أوضة</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <div>
+                        <strong>Element X</strong>
+                        <span>الـ app بتاع Matrix على الـ iPhone بتاعي. مفيش حاجة مخصوص أنزّلها</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div>
+                        <strong>hishambot</strong>
+                        <span>bot صغير بالـ Python (matrix-nio مع مكتبة التشفير vodozemac) قاعد بين Matrix وH_AI</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div>
+                        <strong>Tailscale</strong>
+                        <span>الشبكة الخاصة اللي بتخلّي الموبايل يوصل للـ Mac من أي حتة، من غير ما أفتحه على الإنترنت</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>النظام كله</h2>
+            <figure class="diagram-figure">
+                <svg class="diagram" viewBox="0 0 480 830" role="img" aria-labelledby="dg-title" direction="ltr" xmlns="http://www.w3.org/2000/svg">
+                <title id="dg-title">رسم للنظام: الـ iPhone بيوصل للـ Mac Studio عن طريق Tailscale بس. Element X بيكلّم الـ Matrix server، والـ bot بيفك التشفير ويسأل الـ AI server، اللي بيستخدم خدمات محلية، وClaude على الـ cloud لما أطلب بس.</title>
+                <defs><marker id="dg-head-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-head-a"/></marker><marker id="dg-head-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-head-m"/></marker></defs>
+                <rect x="10" y="10" width="460" height="126" rx="16" class="dg-group"/>
+                <text x="240" y="34" class="dg-g" direction="rtl">iPhone</text>
+                <rect x="30" y="48" width="195" height="72" rx="10" class="dg-box dg-key"/>
+                <text x="127.5" y="82" class="dg-t" direction="rtl">Element X</text>
+                <text x="127.5" y="100" class="dg-s" direction="rtl">محادثة Matrix مع hishambot</text>
+                <rect x="255" y="48" width="195" height="72" rx="10" class="dg-box"/>
+                <text x="352.5" y="82" class="dg-t" direction="rtl">H_AI dashboard</text>
+                <text x="352.5" y="100" class="dg-s" direction="rtl">في المتصفح، متثبّتة كـ app</text>
+                <path d="M127.5 120 L127.5 168" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <path d="M352.5 120 L352.5 168" class="dg-m" marker-end="url(#dg-head-m)"/>
+                <rect x="10" y="170" width="460" height="44" rx="22" class="dg-band"/>
+                <text x="240" y="197" class="dg-t" direction="rtl">Tailscale · شبكة خاصة، لأجهزتي بس</text>
+                <rect x="10" y="246" width="460" height="482" rx="16" class="dg-group"/>
+                <text x="240" y="272" class="dg-g" direction="rtl">Mac Studio M4 Max</text>
+                <path d="M127.5 214 L127.5 288" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <rect x="54" y="220" width="148" height="20" rx="10" class="dg-pill"/>
+                <text x="127.5" y="235" class="dg-p" direction="rtl">متشفّر من الأول للآخر</text>
+                <path d="M352.5 214 L352.5 392" class="dg-m" marker-end="url(#dg-head-m)"/>
+                <rect x="332" y="220" width="42" height="20" rx="10" class="dg-pill"/>
+                <text x="352.5" y="235" class="dg-p" direction="rtl">HTTPS</text>
+                <rect x="30" y="290" width="195" height="80" rx="10" class="dg-box dg-key"/>
+                <text x="127.5" y="319" class="dg-t" direction="rtl">Synapse</text>
+                <text x="127.5" y="338" class="dg-s" direction="rtl">الـ Matrix server،</text>
+                <text x="127.5" y="354" class="dg-s" direction="rtl">بيخزّن كلام متشفّر بس</text>
+                <path d="M127.5 370 L127.5 392" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <rect x="30" y="394" width="195" height="80" rx="10" class="dg-box dg-key"/>
+                <text x="127.5" y="423" class="dg-t" direction="rtl">hishambot</text>
+                <text x="127.5" y="442" class="dg-s" direction="rtl">بيفك التشفير ويسأل H_AI،</text>
+                <text x="127.5" y="458" class="dg-s" direction="rtl">وبيشفّر الرد</text>
+                <rect x="255" y="394" width="195" height="80" rx="10" class="dg-box dg-key"/>
+                <text x="352.5" y="423" class="dg-t" direction="rtl">AI_server · H_AI</text>
+                <text x="352.5" y="442" class="dg-s" direction="rtl">FastAPI: محادثة وskills،</text>
+                <text x="352.5" y="458" class="dg-s" direction="rtl">وpersona، وأنسنة الصوت</text>
+                <path d="M225 434 L253 434" class="dg-a" marker-end="url(#dg-head-a)"/>
+                <text x="240" y="427" class="dg-p" direction="rtl">TLS</text>
+                <path d="M352.5 474 L352.5 500" class="dg-m" marker-end="url(#dg-head-m)"/>
+                <rect x="24" y="502" width="432" height="176" rx="12" class="dg-sub"/>
+                <text x="240" y="524" class="dg-g" direction="rtl">خدمات محلية</text>
+                <rect x="36" y="538" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="102.0" y="564" class="dg-t" direction="rtl">Ollama</text>
+                <text x="102.0" y="584" class="dg-s2" direction="rtl">models من Qwen</text>
+                <rect x="180" y="538" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="246.0" y="564" class="dg-t" direction="rtl">Draw Things</text>
+                <text x="246.0" y="584" class="dg-s2" direction="rtl">صور</text>
+                <rect x="324" y="538" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="390.0" y="564" class="dg-t" direction="rtl">Voicebox</text>
+                <text x="390.0" y="584" class="dg-s2" direction="rtl">صوتي المستنسخ</text>
+                <rect x="36" y="606" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="102.0" y="632" class="dg-t" direction="rtl">SearXNG</text>
+                <text x="102.0" y="652" class="dg-s2" direction="rtl">بحث على الويب</text>
+                <rect x="180" y="606" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="246.0" y="632" class="dg-t" direction="rtl">Obsidian vault</text>
+                <text x="246.0" y="652" class="dg-s2" direction="rtl">كل محادثة كنوتة</text>
+                <rect x="324" y="606" width="132" height="58" rx="10" class="dg-box dg-small"/>
+                <text x="390.0" y="632" class="dg-t" direction="rtl">Claude Code</text>
+                <text x="390.0" y="652" class="dg-s2" direction="rtl">الـ power mode</text>
+                <text x="190" y="706" class="dg-s2" direction="rtl">بيشتغل أول ما الـ Mac يفتح · ولمبة في الـ menu bar بتراقبه</text>
+                <path d="M390.0 664 L390.0 752" class="dg-m dg-dash" marker-end="url(#dg-head-m)"/>
+                <rect x="308.0" y="754" width="164" height="62" rx="10" class="dg-box dg-cloud"/>
+                <text x="390.0" y="782" class="dg-t" direction="rtl">Claude · cloud</text>
+                <text x="390.0" y="802" class="dg-s" direction="rtl">لما أكتب /claude بس</text>
+                <path d="M20 768 L52 768" class="dg-a"/>
+                <text x="60" y="772" class="dg-l dg-l-rtl" direction="rtl">طريق المحادثة، متشفّر من الأول للآخر</text>
+                <path d="M20 792 L52 792" class="dg-m"/>
+                <text x="60" y="796" class="dg-l dg-l-rtl" direction="rtl">الـ dashboard، HTTPS</text>
+                <path d="M20 816 L52 816" class="dg-m dg-dash"/>
+                <text x="60" y="820" class="dg-l dg-l-rtl" direction="rtl">بيخرج من الـ Mac، لما أطلب بس</text>
+                </svg>
+                <figcaption>كل حاجة شغالة على Mac واحد. الموبايل بيوصله عن طريق شبكتي الخاصة بس، والحاجة الوحيدة اللي بتخرج من البيت هي <code>/claude</code>.</figcaption>
+            </figure>
+
+            <h2>رسالة واحدة، من الأول للآخر</h2>
+            <ol class="flow">
+                <li><span class="step">01</span><div><strong>بكتب على الموبايل</strong>Element X بيشفّر الرسالة قبل ما تخرج من الجهاز.</div></li>
+                <li><span class="step">02</span><div><strong>بتعدّي على Tailscale</strong>مفيش غير الأجهزة اللي داخلة على شبكتي الخاصة تقدر توصل للـ server أصلاً. عمره ما بيتنشر على الإنترنت المفتوح.</div></li>
+                <li><span class="step">03</span><div><strong>Synapse بيخزّن كلام متشفّر</strong>الـ server بيسمع على الـ Mac نفسه بس، وTailscale هو اللي بيسلّمه الرسايل. ومش بيقدر يقرا اللي بيخزّنه.</div></li>
+                <li><span class="step">04</span><div><strong>hishambot بيفك التشفير ويسأل H_AI</strong>على اتصال TLS متثبّت على شهادة واحدة، ومحادثة منفصلة لكل أوضة.</div></li>
+                <li><span class="step">05</span><div><strong>الرد بيرجع وهو بيتكتب</strong>الـ bot بيعدّل رسالته وهي بتوصل كلمة كلمة، فتحس إن حد بيكتب، وكل تعديل بيتشفّر من جديد.</div></li>
+            </ol>
+
+            <p>وقررت كمان مستخدمش Matrix server عام للحساب. محادثاتي مع الـ AI بتاعي هي بالظبط النوع اللي مش عايزه على server حد تاني، حتى لو متشفّر. فكل حاجة فاضلة على الـ Mac، والـ federation مقفولة.</p>
+
+            <h2>أعطال شكلها نجاح، تاني</h2>
+            <p>في <a href="building-ai-server.html">مقال محرك الـ AI</a> كتبت إن الأعطال هناك بتيجي متنكرة في شكل نجاح. المشروع ده فضل يثبت الكلام ده.</p>
+
+            <p><strong>الـ bot رد، وأنا مشفتش حاجة.</strong> الـ logs بتقول إن كل رد اتبعت واتشفّر. والموبايل بيوريني أوضة فاضية. السبب: Element X بيخبّي الرسايل اللي جاية من أجهزة صاحبها <em>موثّقهاش</em>، والـ bot ملوش شاشة تانية يدوس فيها &laquo;verify&raquo;. الحل كان script صغير بيعمل الـ cross-signing بإيده، مرة واحدة، فالـ bot يضمن جهازه بنفسه زي ما أي حد بيعمل.</p>
+
+            <p><strong>الأوض الجديدة كانت ساكتة.</strong> عملت محادثة، كتبت فيها، واستنيت. الـ bot عمره ما اتعزم. دلوقتي فيه module صغير جوه الـ server بياخد باله لما أعمل أوضة، ويعزم الـ bot فيها بعدها بثانيتين.</p>
+
+            <p><strong>الـ voice notes كانت كلمتين.</strong> طلبت نص طويل يتقري بصوت، ورجعلي تسجيل بيقول &laquo;voice equals Alloy&raquo;. الـ parser بتاع الأدوات كان بياخد أول سطر بس من الطلب، اللي هو إعداد الصوت، ويرمي النص اللي تحته. وكمان اختار الصوت الغلط، عشان سطر قديم في الـ system prompt كان لسه بيقول إن Alloy هو الافتراضي.</p>
+
+            <p><strong>كل حاجة كانت مستنية أبطأ حاجة.</strong> وصورة أو تسجيل بيترندروا، الـ bot مكانش بيرد على أي حاجة تانية. مكتبة Matrix بتشغّل الـ handlers واحد ورا التاني، فشغلانة بطيئة واحدة كانت بتوقف المحادثة كلها. دلوقتي كل رسالة بتشتغل لوحدها في الخلفية. لما أطلب صورة، بيقولي &laquo;شغال عليها، كمّل كلام&raquo;، وأقدر أسأله 2+2 بكام ويقولي &laquo;4&raquo; والصورة لسه بتترسم.</p>
+
+            <h2>إزاي خليته يتكلم زي صاحبي</h2>
+            <p>الـ system prompt بتاع الـ dashboard معمول لإجابات طويلة ومظبوطة. في app رسايل، ده بيبان كأنه مقال جوه فقاعة. فالـ bot بيقول لـ H_AI إنه app الرسايل، وH_AI بيزوّد <strong>persona</strong> قصيرة للطلب ده بس: رد في سطر ولا اتنين، من غير عناوين، ومن غير مقدمات، ومن غير &laquo;سؤال حلو!&raquo;.</p>
+
+            <p>طلبت من Claude يدرس الـ system prompts بتاعة OpenCode، وهو coding agent مفتوح المصدر معروف إنه مختصر، وياخد منها اللي بيشتغل: كام مثال قصير بدل قواعد طويلة، وحد أقصى صريح لعدد السطور، ومنع صريح للمقدمات والخاتمات. وبعدين طلبت حاجة كمان: <em>اتكلم زي صاحبي المصري</em>.</p>
+
+            <div class="chat-sample" aria-label="مثال لمحادثة مع الـ bot">
+                <p class="me" lang="en"><span class="who">me</span>ezayak ya basha</p>
+                <p class="bot" lang="en"><span class="who">hishambot</span>Tamam, el7amdulillah! How&rsquo;s your day going?</p>
+                <p class="me" lang="en"><span class="who">me</span>15% of 240?</p>
+                <p class="bot" lang="en"><span class="who">hishambot</span>36.</p>
+            </div>
+
+            <p>ده خد شوية ظبط. أول نسخة كانت بترد Franco كامل، يعني عربي مكتوب بحروف إنجليزي، وده لطيف في سطر ومتعب في فقرة. دلوقتي بيتكلم <strong>إنجليزي في الأساس</strong> ومعاه كلمة ولا اتنين مصري بالكتير، وبيتحول للعربي المصري بس لو أنا كتبت بحروف عربي. و<strong>عمره ما بيبقى قليل الذوق</strong> معايا؛ الهزار مسموح بس لما يبقى واضح إنه من القلب. ولما الخبر يبقى حزين أو جد، الهزار بيقف خالص.</p>
+
+            <p>الـ persona كمان كانت بتخسر قدام الـ prompt الأساسي الأطول منها بكتير، فحاجتين صلّحوها. فيه تذكير في سطر واحد بيتبعت مع آخر رسالة ليا بس (وعمره ما بيتحفظ في التاريخ)، وطلبت من Claude يقصّر الـ persona من حوالي 940 token لـ 450. الأقصر اشتغل أحسن.</p>
+
+            <h2>سريع كفاية إنه يحسّسك إنها رسايل</h2>
+            <p>صاحب بياخد دقيقة عشان يرد على &laquo;hi&raquo; مش صاحب أوي. الـ bot بيستخدم <strong>Qwen 3.6 35B-A3B</strong>، وده model من نوع mixture-of-experts طلّع حوالي <strong>96 token في الثانية</strong> على الـ Mac، قصاد حوالي 21 لـ Qwen 3.8 الأكبر اللي بستخدمه في الـ dashboard. لإجابة في سطرين، ده الفرق بين على طول وإنك تستنى.</p>
+
+            <p>كل أوضة محادثة هي محادثة لوحدها. أوضة جديدة بتبدأ وهي مش فاكرة حاجة من التانيين، و<code>!new</code> بتبدأ محادثة جديدة في نفس الأوضة. ومحادثة الـ dashboard نفسها محدش بيلمسها.</p>
+
+            <h2>الـ Power Mode</h2>
+            <p>ساعات الـ model المحلي مش بيكفي. لو بدأت الرسالة بـ <code>/claude</code>، الرسالة دي بس بتروح لـ Claude بداله، من نفس الـ server، وفي نفس المحادثة. و<code>!power on</code> بتخلّي الأوضة كلها على Claude لحد ما أقفلها. المحلي هو الافتراضي، والـ cloud حاجة أنا اللي بختارها.</p>
+
+            <h2>صوت شبهي</h2>
+            <p>لما أطلب حاجة تتقري بصوت، الـ bot بيرد بـ voice note بصوتي المستنسخ. وقبل ما يتقال، النص بيعدّي على نفس خطوة <strong>الأنسنة</strong> اللي بتعدّي عليها <a href="bedtime-stories.html">حواديت قبل النوم</a>: الـ Markdown بيتشال، والقوايم بتبقى جمل، و&laquo;%&raquo; بتبقى &laquo;في المية&raquo;، والـ model السريع بيزوّد كام إشارة للأداء زي <em>warmly</em> عشان الصوت يمثّلها.</p>
+
+            <p>لاحظت إن الصوت بيتغير شوية من تسجيل للتاني. الـ model بتاع الصوت بيستنسخ من الأول في كل مرة، فكل تسجيل كان طالع بنسخة مختلفة شوية مني. seed ثابت حل المشكلة. وراجعت النتيجة بـ model تفريغ صوت كمان: ولا إشارة من الإشارات اتقرت ككلمة.</p>
+
+            <h2>شغال من غير ما أفكر فيه</h2>
+            <p>كل حاجة بتشتغل لوحدها أول ما الـ Mac يفتح. فيه لمبة صغيرة في الـ menu bar بتنوّر أخضر أو أصفر أو أحمر، وبتوري كل حتة لوحدها (محرك الـ AI، وMatrix، والـ bot، وTailscale، والـ models، والبحث، والصوت) ومعاها زراير تشغيل وإيقاف. الصوت كان الحاجة الوحيدة اللي دايماً واقعة، عشان محدش كان بيشغّله. دلوقتي بيشتغل مع محرك الـ AI.</p>
+
+            <h2>إزاي فضل خاص</h2>
+            <p>الخصوصية كانت الهدف كله، فتعاملت معاها كـ feature لازم تتختبر، مش أمنية:</p>
+
+            <p><strong>مفيش حاجة عامة.</strong> مفيش غير أجهزتي أنا اللي توصل للـ server، عن طريق Tailscale. مفيش تسجيل، ومفيش federation، وعمره ما بيبقى مفتوح على الإنترنت.</p>
+
+            <p><strong>مفيش أسرار في الـ code.</strong> الـ passwords والمفاتيح فاضلة في ملفات محلية الـ git بيتجاهلها. خليت Claude يدوّر عليها في كل ملف وفي تاريخ الـ git كله. ملقاش حاجة، بس لقى ملف log قديم كان دخل في commit. مكانش فيه أي password، فيه عناوين أجهزة بس، واتشال من التاريخ قبل ما أي حاجة تتشارك.</p>
+
+            <p><strong>مفيش passwords في الـ command line.</strong> مراجعة أمنية لقت إن الـ script بتاع تغيير الـ password كان بيبعته كـ argument، وده أي برنامج على الـ Mac يقدر يشوفه. دلوقتي بيسأل عنه من غير ما يظهر.</p>
+
+            <p><strong>موافقات متتلخبطش.</strong> لما الـ bot بقى يعمل كذا حاجة في نفس الوقت، كلمة &laquo;yes&raquo; لوحدها كان ممكن توافق على الحاجة الغلط. دلوقتي بتوافق بس على الطلب الوحيد اللي مستني، أو اللي أنا بارد عليه.</p>
+
+            <div class="quote">
+                أحسن مساعد هو اللي في جيبك أصلاً، في الـ app اللي بتفتحه خمسين مرة في اليوم.
+            </div>
+
+            <h2>اللي جاي</h2>
+            <p>إني أبعت voice notes <em>للـ</em> bot، مش بس أستلمها منه. إني أبعتله صورة وأسأله عنها. ملخص صباحي قصير يوصل لوحده. والشغل المعتاد: إني ألاقي الأماكن اللي بيبوظ فيها من غير ما يقول، وأخليها تتكلم.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>الـ server والـ bot والمقال ده اتبنوا بـ <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="slides-in-html.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">ملف HTML واحد، Keynote كامل</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/back-menu.js" defer></script>
+    <script src="../../js/appearance.js?v=3" defer></script>
+    <script src="../../js/reader-bar.js?v=3" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
