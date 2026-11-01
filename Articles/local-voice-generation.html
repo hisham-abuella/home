@@ -135,6 +135,9 @@
                 grid-template-columns: 1fr;
             }
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -214,6 +217,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../Articles/img/local-voice-hero.jpg" alt="Illustration: a vintage microphone and a small aluminium computer, an amber sound wave flowing between them over an open picture book" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>I've been building a <a href="building-ai-server.html" class="site-link">personal AI engine</a> that runs entirely on my Mac Studio M4 Max. Text generation was the first step. The natural next question was: can I generate <span class="highlight">voice</span> locally too? Turns out, yes &mdash; and the results are surprisingly good.</p>
@@ -358,6 +365,10 @@
             <p>The catch for my projects is <strong>Arabic</strong>. None of the local engines ship an Arabic preset voice; only the cloning engines speak it, so Arabic narration needs a clean 15&ndash;30 second recording to clone from &mdash; ideally of someone speaking Arabic. In the cloud, I just pick an Arabic voice.</p>
 
             <h2>My Own Voice, Locally: Fish S2-Pro</h2>
+
+            <figure class="art">
+                <img src="../Articles/img/local-voice-bedtime.jpg" alt="Illustration: headphones resting on an open bedtime picture book on a quilt, a night light and a crescent moon in the window" width="1344" height="768" loading="lazy">
+            </figure>
             <p>Cloning my own voice was at the top of my &ldquo;what&rsquo;s next&rdquo; list, so I held a bake-off. I took the newest and most-liked open-source voice models on Hugging Face and gave each one the same short recording of my voice. Each then read the same bedtime book, page by page, and I ran every page back through speech-to-text to count the words it got wrong.</p>
 
             <table class="model-table">

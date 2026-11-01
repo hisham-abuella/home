@@ -136,6 +136,9 @@
                 grid-template-columns: 1fr;
             }
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -215,6 +218,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../../Articles/img/local-voice-hero.jpg" alt="رسمة: مايك قديم وكمبيوتر ألومنيوم صغير، وبينهم موجة صوت لونها كهرماني فوق كتاب صور مفتوح" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>أنا ببني <a href="building-ai-server.html" class="site-link">محرك AI شخصي</a> بيشتغل بالكامل على الـ Mac Studio M4 Max بتاعي. توليد النص كان أول خطوة. والسؤال الطبيعي بعده: أقدر أولّد <span class="highlight">صوت</span> محليًا كمان؟ طلع آه &mdash; والنتايج حلوة بشكل مكنتش متوقعه.</p>
@@ -359,6 +366,10 @@
             <p>المشكلة في مشاريعي هي <strong>العربي</strong>. ولا محرك محلي جاي بصوت عربي جاهز؛ محركات الاستنساخ بس هي اللي بتتكلم عربي، فالسرد بالعربي محتاج تسجيل نضيف مدته من 15 لـ 30 ثانية أستنسخ منه &mdash; ويفضّل يكون لحد بيتكلم عربي. في الـ cloud بختار صوت عربي وخلاص.</p>
 
             <h2>صوتي أنا، محليًا: Fish S2-Pro</h2>
+
+            <figure class="art">
+                <img src="../../Articles/img/local-voice-bedtime.jpg" alt="رسمة: سماعات على كتاب حواديت مفتوح فوق لحاف، ونور سهّاري وهلال في الشباك" width="1344" height="768" loading="lazy">
+            </figure>
             <p>استنساخ صوتي كان أول حاجة في قايمة &laquo;الخطوة الجاية&raquo;، فعملت مسابقة. خدت أحدث الـ models المفتوحة المصدر وأكترها إعجابًا على Hugging Face، وإدّيت كل واحد نفس التسجيل القصير لصوتي. وكل واحد قرا نفس كتاب النوم صفحة صفحة، وعدّيت كل صفحة تاني على speech‑to‑text عشان أعدّ الكلمات اللي غلط فيها.</p>
 
             <table class="model-table">

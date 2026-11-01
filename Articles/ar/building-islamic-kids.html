@@ -63,6 +63,9 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -141,6 +144,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../../Articles/img/islamic-kids-hero.jpg" alt="رسمة: tablet على مخدة على الأرض منورة بنجمة تمانية، جنبها فانوس نحاس وشباك مقوّس فيه هلال" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>كأب ومهندس، كنت عايز أعمل حاجة ليها قيمة للأطفال المسلمين &mdash; مكان يتعلموا فيه عن الأنبياء والقرآن والقيم الإسلامية من خلال <span class="highlight">حكي تفاعلي</span> بدل نص جامد. الفكرة دي بقت <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">Islamic Kids Stories</a>، وClaude Code ساعدني أطلّعها للنور.</p>
@@ -241,6 +248,10 @@
             </div>
 
             <h2>البناء مع Claude Code</h2>
+
+            <figure class="art">
+                <img src="../../Articles/img/islamic-kids-build.jpg" alt="رسمة: لابتوب على مكتب خشب جنب كومة كتب أطفال ملوّنة وفانوس نحاس، وعلى الحيطة نقوش هندسية" width="1344" height="768" loading="lazy">
+            </figure>
             <p>المشروع ده كان أكبر من مدونة عادية. كل صفحة قصة تجربة تفاعلية قايمة على شرايح، فيها animations واختبارات وأنشطة drag&#8209;and&#8209;drop وتشغيل صوت ومحتوى بلغتين. وClaude Code شال ده كله كـ pair programmer.</p>
 
             <p>الشغل كان كله دردشة. كنت بوصف اللي عايزه &mdash; &laquo;&#8294;make a story about Prophet Nuh with slides, a quiz at the end, and audio narration&#8297;&raquo; &mdash; وClaude يولّد صفحة HTML كاملة بالـ inline styles، ونظام الشرايح، والـ logic بتاع الاختبار، وتوصيل الصوت. ولما كنت عايز تعديلات &mdash; &laquo;&#8294;add a drag-and-drop activity to slide 5&#8297;&raquo; &mdash; كان Claude يقرا الملف الموجود، ويفهم الـ structure، ويحط الـ feature في مكانه الصح.</p>

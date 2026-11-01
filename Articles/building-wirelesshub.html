@@ -67,6 +67,9 @@
             font-size: 0.95rem;
             color: var(--text-secondary);
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -146,6 +149,10 @@
             <audio controls preload="none"></audio>
         </div>
 
+        <figure class="art hero">
+            <img src="../Articles/img/wirelesshub-hero.jpg" alt="Illustration: an engineer's desk at night with a laptop and a monitor showing glowing waveforms, a small cell-tower model and a desk lamp" width="1536" height="768">
+        </figure>
+
         <div class="article-content">
             <p>A few months ago, my friend <span class="highlight">Ahmed Elshafie</span> &mdash; a Wireless Systems Engineer at Apple and IEEE Senior Member &mdash; wanted a place to share his deep knowledge of wireless communications, signal processing, and mathematics. He had the expertise and the articles. What he needed was a home for them on the web. That's where I came in, and that's where <span class="highlight">Claude Code</span> became my co-builder.</p>
 
@@ -155,6 +162,10 @@
             <p>Ahmed already had 25+ articles covering everything from <strong>FFT in everyday life</strong> to <strong>MIMO beamforming</strong> to <strong>quantum wireless communication</strong>. The site needed to organize all of that with search, filtering, categorization, dark mode, and even embedded podcast episodes.</p>
 
             <h2>Working with Claude Code</h2>
+
+            <figure class="art">
+                <img src="../Articles/img/wirelesshub-pair.jpg" alt="Illustration: two desk lamps lighting one shared table of antenna and wave sketches, with a laptop at the side" width="1344" height="768" loading="lazy">
+            </figure>
             <p>Claude Code was not just an autocomplete tool on this project. It was a genuine pair programmer. Here's how the workflow looked in practice:</p>
 
             <div class="tech-list stagger">

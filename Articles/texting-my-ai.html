@@ -149,6 +149,9 @@
             .chat-sample p { max-width: 92%; }
             .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -228,6 +231,10 @@
             <audio controls preload="none"></audio>
         </div>
 
+        <figure class="art hero">
+            <img src="../Articles/img/texting-hero.jpg" alt="Illustration: a phone on a bedside table showing blank message bubbles under a glowing padlock, a thin amber thread running out to a distant lit house" width="1536" height="768">
+        </figure>
+
         <div class="article-content">
             <p>H_AI, the <a href="building-ai-server.html">personal AI engine</a> on my Mac Studio, has a good dashboard. But a dashboard is something you open. A friend is someone you text. Most of what I ask an assistant is small: a quick sum, a word I forgot, &ldquo;read this to me&rdquo;. For that, I don&rsquo;t want a tab. I want a chat thread on my phone, next to my family and friends, that answers in a line or two.</p>
 
@@ -270,6 +277,10 @@
             </div>
 
             <h2>The Whole System</h2>
+
+            <figure class="art">
+                <img src="../Articles/img/texting-system.jpg" alt="Illustration: a phone, a wax-sealed envelope and a small aluminium home server on one glowing path" width="1344" height="768" loading="lazy">
+            </figure>
             <figure class="diagram-figure">
                 <svg class="diagram" viewBox="0 0 480 830" role="img" aria-labelledby="dg-title" direction="ltr" xmlns="http://www.w3.org/2000/svg">
                 <title id="dg-title">Block diagram of the system: the iPhone reaches the Mac Studio only through Tailscale. Element X talks to the Matrix server, the bot decrypts and asks the AI server, which uses local services and, only on request, Claude in the cloud.</title>

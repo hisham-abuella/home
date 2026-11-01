@@ -68,6 +68,9 @@
             font-size: 0.95rem;
             color: var(--text-secondary);
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -147,6 +150,10 @@
             <audio controls preload="none"></audio>
         </div>
 
+        <figure class="art hero">
+            <img src="../../Articles/img/wirelesshub-hero.jpg" alt="رسمة: مكتب مهندس بالليل عليه لابتوب وشاشة فيها موجات منورة، ومجسّم صغير لبرج محمول ولمبة مكتب" width="1536" height="768">
+        </figure>
+
         <div class="article-content">
             <p>من كام شهر، صاحبي <span class="highlight">أحمد الشافعي</span> (Ahmed Elshafie) &mdash; Wireless Systems Engineer في Apple وIEEE Senior Member &mdash; كان عايز مكان يشارك فيه علمه الكبير في الاتصالات اللاسلكية ومعالجة الإشارات والرياضيات. كان عنده الخبرة والمقالات. اللي كان ناقصه مكان ليها على النت. وهنا جه دوري، وهنا <span class="highlight">Claude Code</span> بقى شريكي في البنا.</p>
 
@@ -156,6 +163,10 @@
             <p>أحمد كان عنده أصلًا أكتر من 25 مقال بتغطي كل حاجة من <strong>الـ FFT في الحياة اليومية</strong> لـ <strong>MIMO beamforming</strong> لـ <strong>quantum wireless communication</strong>. والموقع لازم ينظّم ده كله، مع بحث وfiltering وتصنيف وdark mode، وحتى حلقات podcast مدمجة.</p>
 
             <h2>الشغل مع Claude Code</h2>
+
+            <figure class="art">
+                <img src="../../Articles/img/wirelesshub-pair.jpg" alt="رسمة: لمبتين مكتب منوّرين ترابيزة واحدة مشتركة عليها رسومات antenna وموجات، ولابتوب على الجنب" width="1344" height="768" loading="lazy">
+            </figure>
             <p>Claude Code ماكانش مجرد أداة autocomplete في المشروع ده. كان شريك برمجة بجد. ده شكل الشغل عمليًا:</p>
 
             <div class="tech-list stagger">

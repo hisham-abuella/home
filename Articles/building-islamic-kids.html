@@ -62,6 +62,9 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -140,6 +143,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../Articles/img/islamic-kids-hero.jpg" alt="Illustration: a tablet on a floor cushion glowing with an eight-pointed star, beside a brass lantern and an arched window with a crescent moon" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>As a father and engineer, I wanted to create something meaningful for Muslim kids &mdash; a place where they could learn about the prophets, the Quran, and Islamic values through <span class="highlight">interactive storytelling</span> rather than static text. That idea became <a href="https://hisham-abuella.github.io/Interactive-Islamic-kids-website/" target="_blank" class="site-link">Islamic Kids Stories</a>, and Claude Code helped me bring it to life.</p>
@@ -240,6 +247,10 @@
             </div>
 
             <h2>Building with Claude Code</h2>
+
+            <figure class="art">
+                <img src="../Articles/img/islamic-kids-build.jpg" alt="Illustration: a laptop on a wooden desk beside a stack of colourful children's books and a brass lantern, with geometric tiles on the wall" width="1344" height="768" loading="lazy">
+            </figure>
             <p>This was a bigger project than a typical blog. Each story page is an interactive slide-based experience with animations, quizzes, drag-and-drop activities, audio playback, and bilingual content. Claude Code handled it all as a pair programmer.</p>
 
             <p>The workflow was conversational. I'd describe what I wanted &mdash; "make a story about Prophet Nuh with slides, a quiz at the end, and audio narration" &mdash; and Claude would generate the complete HTML page with inline styles, the slide system, quiz logic, and audio integration. When I wanted changes &mdash; "add a drag-and-drop activity to slide 5" &mdash; Claude would read the existing file, understand the structure, and insert the feature in the right place.</p>

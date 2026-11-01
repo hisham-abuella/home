@@ -83,6 +83,9 @@
         @media (max-width: 768px) {
             .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -161,6 +164,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../Articles/img/tv-calendar-hero.jpg" alt="Illustration: a living room in the evening, the TV showing coloured blocks like a weekly planner, a tiny circuit board on the shelf below" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>I wanted one calendar that my wife and I could both see: on both our phones, and on one screen in the house that shows the day without anyone opening anything.</p>

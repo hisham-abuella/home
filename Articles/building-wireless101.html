@@ -113,6 +113,9 @@
             transform: translateY(-1px);
             border-bottom: none;
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -191,6 +194,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../Articles/img/wireless101-hero.jpg" alt="Illustration: a slender antenna mast on a hill at dawn, with faint radio rings spreading into the sky above a distant city" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>After years of working in wireless engineering &mdash; from my PhD in visible light communications to roles at companies building cellular systems &mdash; one thing has always bothered me: <span class="highlight">the knowledge gap</span>. Too many excellent resources in this field are locked behind paywalls, buried in dense textbooks, or only available in English. I wanted to change that.</p>
@@ -272,6 +279,10 @@
             </p>
 
             <h2>The Approach: Story-Style Learning</h2>
+
+            <figure class="art">
+                <img src="../Articles/img/wireless101-story.jpg" alt="Illustration: an open notebook with an ink-drawn wave and dotted constellation points, a fountain pen and a glass of tea beside it" width="1344" height="768" loading="lazy">
+            </figure>
 
             <p>Traditional textbooks present information in dense blocks of text with equations. That works for some people, but for many learners &mdash; especially those encountering these concepts for the first time &mdash; it can feel overwhelming.</p>
 

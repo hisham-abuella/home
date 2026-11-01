@@ -84,6 +84,9 @@
         @media (max-width: 768px) {
             .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -162,6 +165,10 @@
             <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
             <audio controls preload="none"></audio>
         </div>
+
+        <figure class="art hero">
+            <img src="../../Articles/img/tv-calendar-hero.jpg" alt="رسمة: أوضة معيشة بالليل، التلفزيون عليه مربعات ملوّنة زي planner أسبوعي، وboard إلكترونية صغيرة على الرف تحته" width="1536" height="768">
+        </figure>
 
         <div class="article-content">
             <p>كنت عايز calendar واحد أنا ومراتي نشوفه احنا الاتنين: على موبايلاتنا، وعلى شاشة واحدة في البيت بتعرض اليوم من غير ما حد يفتح أي حاجة.</p>

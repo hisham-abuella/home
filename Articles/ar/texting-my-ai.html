@@ -150,6 +150,9 @@
             .chat-sample p { max-width: 92%; }
             .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
         }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -229,6 +232,10 @@
             <audio controls preload="none"></audio>
         </div>
 
+        <figure class="art hero">
+            <img src="../../Articles/img/texting-hero.jpg" alt="رسمة: موبايل على كومودينو فيه فقاعات رسايل فاضية تحت قفل منوّر، وخيط كهرماني رفيع طالع لبيت بعيد منوّر" width="1536" height="768">
+        </figure>
+
         <div class="article-content">
             <p>H_AI، <a href="building-ai-server.html">محرك الـ AI الشخصي</a> اللي على الـ Mac Studio بتاعي، عنده dashboard كويسة. بس الـ dashboard حاجة بتفتحها، والصاحب حد بتبعتله رسالة. أغلب اللي بسأله لأي مساعد حاجات صغيرة: حسبة سريعة، كلمة نسيتها، &laquo;اقرالي ده&raquo;. للحاجات دي مش عايز tab. عايز محادثة على الموبايل، جنب العيلة والصحاب، بترد في سطر ولا اتنين.</p>
 
@@ -271,6 +278,10 @@
             </div>
 
             <h2>النظام كله</h2>
+
+            <figure class="art">
+                <img src="../../Articles/img/texting-system.jpg" alt="رسمة: موبايل، وجواب مقفول بختم شمع، وserver صغير ألومنيوم للبيت، على طريق واحد منوّر" width="1344" height="768" loading="lazy">
+            </figure>
             <figure class="diagram-figure">
                 <svg class="diagram" viewBox="0 0 480 830" role="img" aria-labelledby="dg-title" direction="ltr" xmlns="http://www.w3.org/2000/svg">
                 <title id="dg-title">رسم للنظام: الـ iPhone بيوصل للـ Mac Studio عن طريق Tailscale بس. Element X بيكلّم الـ Matrix server، والـ bot بيفك التشفير ويسأل الـ AI server، اللي بيستخدم خدمات محلية، وClaude على الـ cloud لما أطلب بس.</title>
