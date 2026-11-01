@@ -268,7 +268,7 @@ li::before {
 
 @media (max-width: 660px) {
   .container { padding: 0 18px 40px; }
-  .back-btn, .print-btn, .copy-btn { top: 14px; padding: 8px 14px; font-size: 0.8125rem; }
+  .back-btn, .print-btn, .copy-btn { top: 14px; padding: 8px 14px; font-size: 0.8125rem; min-height: 44px; display: inline-flex; align-items: center; }
   .back-btn { left: 14px; }
   .cv-actions { top: 14px; right: 14px; gap: 6px; }
   /* A solid white strip behind the floating buttons, so text scrolls under it, not under them. */

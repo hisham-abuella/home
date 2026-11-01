@@ -668,6 +668,8 @@ html.js .stagger.in > *:nth-child(6) { transition-delay: 0.40s; }
   .footer { flex-direction: column; align-items: flex-start; }
   .appearance { margin-inline-start: 0; }
   .appearance-set button { padding: 6px 12px; font-size: 0.75rem; }
+  /* 44px tap targets; the pill keeps its look, only its height grows. */
+  .appearance-set button { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
