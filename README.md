@@ -181,3 +181,10 @@ python3 -m http.server
 
 Browsers cache `css/` and `js/` aggressively — hard-reload after editing them, or the
 page will keep rendering the previous stylesheet.
+
+## CV
+
+`cv.md` is the CV source. Edit it, then run `python3 tools/build_cv.py` to rebuild the CV block of `cv.html`
+(between the `CV:START` / `CV:END` markers; buttons, print styles and scripts are untouched).
+`python3 tools/build_cv.py --check` reports whether `cv.html` is out of date. The page also offers
+"Copy Markdown" and "View Markdown" from the same source.

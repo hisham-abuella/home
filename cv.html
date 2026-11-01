@@ -42,6 +42,28 @@
         .section-title { text-transform: uppercase; letter-spacing: 0.32em; word-spacing: 0.45em; }
         .section-title::before { content: "- "; }
         .section-title::after { content: " -"; }
+
+        /* Markdown menu: copy or view the CV as Markdown (the source the page is built from). */
+        .md-menu { position: relative; }
+        .md-menu > summary { list-style: none; cursor: pointer; }
+        .md-menu > summary::-webkit-details-marker { display: none; }
+        .md-pop {
+            position: absolute; top: calc(100% + 6px); right: 0; z-index: 30;
+            display: flex; flex-direction: column; min-width: 190px; padding: 6px;
+            background: #FFFFFF; border: 1px solid var(--hairline, #E5E5E5); border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        .md-pop button {
+            min-height: 44px; padding: 0 12px; border: 0; border-radius: 8px; background: none;
+            font: inherit; font-size: 0.875rem; color: #1A1A1A; text-align: left; cursor: pointer;
+        }
+        .md-pop button:hover, .md-pop button:focus-visible { background: #F2F2F2; }
+        @media (max-width: 640px) {
+            /* Icon only on phones, so the four buttons fit beside Back; the menu opens to the right. */
+            .md-btn { min-width: 44px; justify-content: center; }
+            .md-btn svg { margin: 0; }
+            .md-pop { left: 0; right: auto; }
+        }
     </style>
 </head>
 <body>
@@ -53,6 +75,18 @@
     </a>
 
     <div class="cv-actions">
+        <details class="md-menu">
+            <summary class="copy-btn md-btn" aria-label="Markdown: copy or view the CV as Markdown">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm2.5 9V9l2.5 3 2.5-3v6m4-2l2 2 2-2m-2 2V9" />
+                </svg>
+                <span class="wide-only">Markdown</span>
+            </summary>
+            <div class="md-pop" role="group" aria-label="Markdown">
+                <button type="button" id="copy-md">Copy Markdown</button>
+                <button type="button" id="view-md">View Markdown</button>
+            </div>
+        </details>
         <button class="copy-btn" type="button" id="copy-cv" aria-live="polite">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -68,7 +102,7 @@
     </div>
 
     <div class="container">
-        <!-- Header -->
+        <!-- CV:START: generated from cv.md by tools/build_cv.py. Edit cv.md, not this block. -->
         <header class="header">
             <h1>Hisham Abuella</h1>
             <div class="contact-info">
@@ -79,7 +113,6 @@
             </div>
         </header>
 
-        <!-- Summary -->
         <section>
             <div class="section-title">Summary of Qualifications</div>
             <ul>
@@ -92,10 +125,8 @@
             </ul>
         </section>
 
-        <!-- Work Experience -->
         <section>
             <div class="section-title">Work Experience</div>
-
             <div class="job">
                 <div class="job-title">Cellular System Engineer</div>
                 <div class="job-company">Apple Inc., San Diego, USA | <strong>June 2025 – now</strong></div>
@@ -109,7 +140,6 @@
                     <li>Wrote and delivered a GenAI and Claude 101 crash course for Apple internal users across the company, visited by <strong>6,000+ people</strong>.</li>
                 </ul>
             </div>
-
             <div class="job">
                 <div class="job-title">Senior Modem System Engineer</div>
                 <div class="job-company">Qualcomm Inc., San Diego, USA | <strong>June 2021 – June 2025</strong></div>
@@ -124,7 +154,6 @@
                     <li>Optimized noise estimation algorithm by minimizing signal leakage, enhancing overall signal to noise estimation improving channel estimation in some channel scenarios.</li>
                 </ul>
             </div>
-
             <div class="job">
                 <div class="job-title">Graduate Research and Teaching Assistant</div>
                 <div class="job-company">Oklahoma State University (OSU), USA | <strong>Jan 2017 – May 2021</strong></div>
@@ -136,7 +165,6 @@
                     <li>Helped in preparing SDR lab session for Digital and Wireless communication courses.</li>
                 </ul>
             </div>
-
             <div class="job">
                 <div class="job-title">Modem System Engineer (Summer Intern)</div>
                 <div class="job-company">Qualcomm Inc., San Diego, USA (Virtual) | <strong>May – Aug. 2020</strong></div>
@@ -148,7 +176,6 @@
                     <li>Won best project award in Qualcomm Interns Hackathon for developing a visible light sensing system to wirelessly control restaurant screens using sensors, enabling touchless interaction during COVID-19.</li>
                 </ul>
             </div>
-
             <div class="job">
                 <div class="job-title">Modem System Engineer (Summer Intern)</div>
                 <div class="job-company">Qualcomm Inc., San Diego, USA | <strong>May – Aug. 2019</strong></div>
@@ -158,7 +185,6 @@
                     <li>Worked on new algorithm to minimize the complexity of the Digital Pre-Distortion (DPD) block using novel signal processing and machine learning techniques.</li>
                 </ul>
             </div>
-
             <div class="job">
                 <div class="job-title">Research and Teaching Assistant</div>
                 <div class="job-company">Istanbul Sehir University, Turkey | <strong>Sept. 2014 – Dec. 2016</strong></div>
@@ -168,7 +194,6 @@
                     <li>Participated in various other projects related to courses like implementing FFT algorithm in C++ and Automatic Modulation Classification based on KDE.</li>
                 </ul>
             </div>
-
             <div class="job">
                 <div class="job-title">System Design (DSP) Engineer</div>
                 <div class="job-company">Wasiela (Varkon Semiconductors), Egypt | <strong>Oct. 2013 – July 2014</strong></div>
@@ -180,35 +205,27 @@
             </div>
         </section>
 
-        <!-- Publications -->
         <section>
             <div class="section-title">Selected Publications and Patents</div>
-
             <div class="publication">
                 1. H. Abuella and M. K. Ozdemir, <a href="https://ieeexplore.ieee.org/document/7517452/" target="_blank">"Automatic Modulation Classification Based on Kernel Density Estimation,"</a> IEEE Canadian Journal of Electrical and Computer Engineering, vol. 39, no. 3, pp. 203-209, Summer 2016.
             </div>
-
             <div class="publication">
                 2. H. Abuella, F. Miramirkhani, S. Ekin, M. Uysal, and S. Ahmed <a href="https://ieeexplore.ieee.org/document/8839857/" target="_blank">"ViLDAR – Visible Light Sensing Based Speed Estimation using Vehicle's Headlamps,"</a> in IEEE Transactions on Vehicular Technology, vol. 68, no.11, pp. 10406-10417, Nov. 2019.
             </div>
-
             <div class="publication">
                 3. H. Abuella and S. Ekin, <a href="https://ieeexplore.ieee.org/document/8935383/" target="_blank">"Non-Contact Vital Signs Monitoring Through Visible Light Sensing,"</a> in IEEE Sensors Journal, vol. 20, no. 7, pp. 3859-3870, April, 2020.
             </div>
-
             <div class="publication">
                 4. H. Abuella, S. Ekin, M. Uysal "System and Method for Speed Estimation, Detection and Ranging using Visible Light in Vehicles", U.S. Patent No. 10,768,194 B2.
             </div>
-
             <div class="publication">
                 5. H. Abuella et al., <a href="https://ieeexplore.ieee.org/document/9618923/" target="_blank">"Hybrid RF/VLC Systems: A Comprehensive Survey on Network Topologies, Performance Analyses, Applications, and Future Directions,"</a> in IEEE Access, vol. 9, pp. 160402-160436, 2021.
             </div>
         </section>
 
-        <!-- Education -->
         <section>
             <div class="section-title">Education</div>
-
             <div class="education-item">
                 <div class="degree">Ph.D. at Oklahoma State University (OSU), USA</div>
                 <div class="school">School of Electrical and Computer Engineering (GPA: 4.0/4.0) | <strong>Jan. 2017 – May 2021</strong></div>
@@ -218,7 +235,6 @@
                     <strong>Courses:</strong> Stochastic Processes, Wireless Communication, Linear Systems, Intelligent Systems.
                 </div>
             </div>
-
             <div class="education-item">
                 <div class="degree">M.Sc. at Istanbul Sehir University, Turkey</div>
                 <div class="school">Electronics and Computer Engineering Department (GPA: 3.95/4.0) | <strong>Sept. 2014 – Dec. 2016</strong></div>
@@ -228,7 +244,6 @@
                     <strong>Courses:</strong> DSP, Digital Communications, Estimation Theory, Machine Learning.
                 </div>
             </div>
-
             <div class="education-item">
                 <div class="degree">Pre-Master at Ain-Shams University, Egypt</div>
                 <div class="school">Communication and Electronics Eng. Department (GPA: 4.0/4.0) | <strong>Sept. 2013 – June 2014</strong></div>
@@ -236,18 +251,16 @@
                     <strong>Courses:</strong> DSP Intro., Advanced Math.
                 </div>
             </div>
-
             <div class="education-item">
                 <div class="degree">B.Sc. at Ain-Shams University, Egypt</div>
                 <div class="school">Communication Systems Engineering Program (GPA: 3.4/4.0) | <strong>Sept. 2008 – June 2013</strong></div>
                 <div class="edu-details">
-                    <strong>Thesis:</strong> "Simulating ADHOC Cognitive Radio Network & MAC layer protocols."<br>
+                    <strong>Thesis:</strong> "Simulating ADHOC Cognitive Radio Network &amp; MAC layer protocols."<br>
                     <strong>Courses:</strong> Image Processing, Intro. to Machine Learning, Network Communication, Information Theory.
                 </div>
             </div>
         </section>
 
-        <!-- Awards -->
         <section>
             <div class="section-title">Scholarships, Awards, and Grants</div>
             <div class="award-item">
@@ -257,7 +270,7 @@
                 <span class="award-date">Nov. 2017:</span> Earned a Travel grant ($500) from GPSGA at OSU in USA.
             </div>
             <div class="award-item">
-                <span class="award-date">May 2018:</span> Awarded Dr. Rao Yarlagadda Graduate Fellowship ($1000) in Electrical & Computer Engineering for 2018/2019.
+                <span class="award-date">May 2018:</span> Awarded Dr. Rao Yarlagadda Graduate Fellowship ($1000) in Electrical &amp; Computer Engineering for 2018/2019.
             </div>
             <div class="award-item">
                 <span class="award-date">Aug. 2020:</span> Awarded best hack in Qualcomm Interns Hackathon.
@@ -267,7 +280,6 @@
             </div>
         </section>
 
-        <!-- Activities -->
         <section>
             <div class="section-title">Activities</div>
             <div class="award-item">
@@ -290,7 +302,6 @@
             </div>
         </section>
 
-        <!-- Computer Skills -->
         <section>
             <div class="section-title">Computer Skills</div>
             <ul>
@@ -300,7 +311,6 @@
             </ul>
         </section>
 
-        <!-- Languages -->
         <section>
             <div class="section-title">Languages</div>
             <ul>
@@ -310,7 +320,6 @@
             </ul>
         </section>
 
-        <!-- Personal Skills -->
         <section>
             <div class="section-title">Personal Skills</div>
             <ul>
@@ -322,10 +331,155 @@
             </ul>
         </section>
 
-        <!-- Footer -->
         <div class="footer">
             <span>References can be provided upon request</span>
         </div>
+
+        <script type="text/markdown" id="cv-md">
+# Hisham Abuella
+
+California, USA
+[hisham.abuella1@gmail.com](mailto:hisham.abuella1@gmail.com)
+DOB: 1992 | LinkedIn: [@hisham-abuella](https://www.linkedin.com/in/hisham-abuella-808b91171/)
+Permanent Resident (Green Card holder valid till Feb. 2035)
+
+## Summary of Qualifications
+
+- 10+ years of research and engineering experience in wireless systems (includes PhD/MSc/Qualcomm/Apple)
+- 5+ years of industry experience in simulation, fixed-point implementation of wireless systems, RF digital front-end, Digital Pre-Distortion, channel parameter estimation, lab bringup issues and debugging scripts.
+- 10+ technical publications (including 1 U.S. patent).
+- Knowledge of visible light sensing and communications, OFDM, wireless prototyping using software defined radio and raspberry-Pi, digital signal processing, RF frontend impairments, 5G baseband channel estimation, and machine learning algorithms for wireless communication.
+- GenAI champion at Apple: built GenAI-based engineering tools, published a presentation skill with **2,200+ downloads** on the internal Claude marketplace, and authored a GenAI crash course visited by **6,000+** internal users.
+- Skills on MATLAB, C, C++, LabVIEW, Python, GitHub, Visio, LaTeX, GenAI, Claude Code, WebApps and Vibe Coding.
+
+## Work Experience
+
+### Cellular System Engineer
+Apple Inc., San Diego, USA | **June 2025 – now**
+- Working in the AGC (Automatic Gain Control) team on cellular modem systems.
+- Helping in Lab bringup issues and debugging.
+- Serving as a GenAI champion and subject-matter expert for the wireless systems organization, advising engineers on where generative AI genuinely helps their work.
+- Built multiple GenAI-based tools that analyze bringup and lab issues, simulator output, and system design documents.
+- Used GenAI and Claude Code to improve debugging tools for bringup and lab issues, and to mine historical logs for data supporting diff studies and design decisions.
+- Created a presentation-building skill published on Apple's internal Claude marketplace, passing **2,200+ downloads**.
+- Wrote and delivered a GenAI and Claude 101 crash course for Apple internal users across the company, visited by **6,000+ people**.
+
+### Senior Modem System Engineer
+Qualcomm Inc., San Diego, USA | **June 2021 – June 2025**
+- Worked with the mmWave and Sub6 Rx Digital Frontend (RxFE) teams, and contributed to channel parameter estimation for NR (New Radio) team.
+- Developed scripts and tools for debugging RxFE lab issues and maintained parsers for legacy targets.
+- Contributed to system documentation for the Rx Digital Frontend (RxFE) and channel parameter estimation.
+- Supported FW, RF Sys, and SW teams during chip bring-up and assisted in debugging RxFE lab/field issues.
+- Studied Rel18 DMRS (etype1/etype2) feature, integrated it into the system simulator (Csim) in channel estimation block to analyze gains and limitations, and enabled other teams to test it in their features.
+- Developed an algorithm to optimize memory usage in channel estimation by implementing online downsampling on key parameter used in MMSE tap calculation
+- Verified hardware changes and firmware instructions used in various channel estimation subblocks.
+- Optimized noise estimation algorithm by minimizing signal leakage, enhancing overall signal to noise estimation improving channel estimation in some channel scenarios.
+
+### Graduate Research and Teaching Assistant
+Oklahoma State University (OSU), USA | **Jan 2017 – May 2021**
+- Investigated visible light in wireless comm., detection and sensing systems ideas as: (Vehicle speed estimation, Human vitals estimation, Gesture recognition, Occupancy estimation, Bridge vibration analysis)
+- Developed hardware prototypes for visible light comm. and sensing projects.
+- Implemented a prototype for vitals monitoring based on visible light sensing.
+- Participated in preparing proposals and patents applications for visible light sensing applications.
+- Helped in preparing SDR lab session for Digital and Wireless communication courses.
+
+### Modem System Engineer (Summer Intern)
+Qualcomm Inc., San Diego, USA (Virtual) | **May – Aug. 2020**
+- Optimized Volterra series parameters used in DPD without affecting the performance of the DPD.
+- Utilized the Laguerre Expansion technique (LET) for DPD and PA modeling parameter space reduction.
+- Compared LET with legacy algorithms in terms of complexity and performance.
+- Tested different ANN designs for PA modeling.
+- Won best project award in Qualcomm Interns Hackathon for developing a visible light sensing system to wirelessly control restaurant screens using sensors, enabling touchless interaction during COVID-19.
+
+### Modem System Engineer (Summer Intern)
+Qualcomm Inc., San Diego, USA | **May – Aug. 2019**
+- Worked on online Digital Pre-Distortion (DPD) block to remove the power amplifier non-linearity.
+- Developed and simulated different approaches to improve the legacy algorithms used in the system.
+- Worked on new algorithm to minimize the complexity of the Digital Pre-Distortion (DPD) block using novel signal processing and machine learning techniques.
+
+### Research and Teaching Assistant
+Istanbul Sehir University, Turkey | **Sept. 2014 – Dec. 2016**
+- Built a fading channel emulator for OFDM systems on MATLAB and LabVIEW.
+- Verified the software USRP-based channel emulator with the theoretical limits.
+- Participated in various other projects related to courses like implementing FFT algorithm in C++ and Automatic Modulation Classification based on KDE.
+
+### System Design (DSP) Engineer
+Wasiela (Varkon Semiconductors), Egypt | **Oct. 2013 – July 2014**
+- Learned designing and development of OFDM systems using MATLAB and C++.
+- Participated in LTE system Sub-blocks modelling.
+- Developed fixed-point code and architecture of the LTE system physical layer sub-blocks.
+
+## Selected Publications and Patents
+
+1. H. Abuella and M. K. Ozdemir, ["Automatic Modulation Classification Based on Kernel Density Estimation,"](https://ieeexplore.ieee.org/document/7517452/) IEEE Canadian Journal of Electrical and Computer Engineering, vol. 39, no. 3, pp. 203-209, Summer 2016.
+2. H. Abuella, F. Miramirkhani, S. Ekin, M. Uysal, and S. Ahmed ["ViLDAR – Visible Light Sensing Based Speed Estimation using Vehicle's Headlamps,"](https://ieeexplore.ieee.org/document/8839857/) in IEEE Transactions on Vehicular Technology, vol. 68, no.11, pp. 10406-10417, Nov. 2019.
+3. H. Abuella and S. Ekin, ["Non-Contact Vital Signs Monitoring Through Visible Light Sensing,"](https://ieeexplore.ieee.org/document/8935383/) in IEEE Sensors Journal, vol. 20, no. 7, pp. 3859-3870, April, 2020.
+4. H. Abuella, S. Ekin, M. Uysal "System and Method for Speed Estimation, Detection and Ranging using Visible Light in Vehicles", U.S. Patent No. 10,768,194 B2.
+5. H. Abuella et al., ["Hybrid RF/VLC Systems: A Comprehensive Survey on Network Topologies, Performance Analyses, Applications, and Future Directions,"](https://ieeexplore.ieee.org/document/9618923/) in IEEE Access, vol. 9, pp. 160402-160436, 2021.
+
+## Education
+
+### Ph.D. at Oklahoma State University (OSU), USA
+School of Electrical and Computer Engineering (GPA: 4.0/4.0) | **Jan. 2017 – May 2021**
+**Thesis:** "Wireless Visible Light Sensing Systems: Applications, Opportunities, and Limitations"
+**Advisor:** Assistant Prof. Sabit Ekin
+**Courses:** Stochastic Processes, Wireless Communication, Linear Systems, Intelligent Systems.
+
+### M.Sc. at Istanbul Sehir University, Turkey
+Electronics and Computer Engineering Department (GPA: 3.95/4.0) | **Sept. 2014 – Dec. 2016**
+**Thesis:** "Study on selected common wireless communication issues: Software channel emulators and Automatic Modulation Classification."
+**Advisor:** Assistant Prof. Kemal Özdemir
+**Courses:** DSP, Digital Communications, Estimation Theory, Machine Learning.
+
+### Pre-Master at Ain-Shams University, Egypt
+Communication and Electronics Eng. Department (GPA: 4.0/4.0) | **Sept. 2013 – June 2014**
+**Courses:** DSP Intro., Advanced Math.
+
+### B.Sc. at Ain-Shams University, Egypt
+Communication Systems Engineering Program (GPA: 3.4/4.0) | **Sept. 2008 – June 2013**
+**Thesis:** "Simulating ADHOC Cognitive Radio Network & MAC layer protocols."
+**Courses:** Image Processing, Intro. to Machine Learning, Network Communication, Information Theory.
+
+## Scholarships, Awards, and Grants
+
+**Aug. 2017:** Acquired Research grant ($2,100) from Green Student Initiative (GSI) grant for a project: "A Focus on Enhancing Energy Conservation through Occupancy Estimation" from OSU Student Government Association (SGA).
+**Nov. 2017:** Earned a Travel grant ($500) from GPSGA at OSU in USA.
+**May 2018:** Awarded Dr. Rao Yarlagadda Graduate Fellowship ($1000) in Electrical & Computer Engineering for 2018/2019.
+**Aug. 2020:** Awarded best hack in Qualcomm Interns Hackathon.
+**Oct. 2026:** Awarded Best Cellular System Team Project in GenAI Hackathon.
+
+## Activities
+
+**Fall 2017:** Presented a Poster: (H. Abuella, S. Ekin, M. Uysal, and S. Ahmed, "Vehicle Sensing and Communications Using LED Headlamps for ITS," Oklahoma Transportation Research Day, Oct. 2017, Oklahoma City, OK).
+**Fall 2017, 2018:** Participated in National Lab Day as a student volunteer (LiFi demo).
+**Summer 2018:** Participated in preparing wireless and data communication new lab at OSU (CEAT Endeavor Labs).
+**Fall 2018:** Presented a poster: (H. Abuella, S. Ekin, "Visible Light Communication and Sensing --Applications for Aerospace Industry--," Boeing Innovation Week, Nov. 2018, Oklahoma City, OK)
+**Summer 2020:** Participated in Qualcomm PhD series to discuss my PhD research.
+**Mar. 2026:** Helped organize the GenAI 101 workshops for the Cellular System team in San Diego and prepared some of the slides.
+
+## Computer Skills
+
+- **Basic Knowledge:** Linux bash, Assembly, Embedded C, Swift (Apple native app design)
+- **Good Knowledge:** LabVIEW, NS2, Visio, LaTeX, GitHub, WebApps, Vibe Coding
+- **Excellent Knowledge:** C/C++, Python, MATLAB, GenAI, Claude Code
+
+## Languages
+
+- **Native or bilingual proficiency:** Arabic
+- **Professional working proficiency:** English
+- **Basic Knowledge:** French, Turkish
+
+## Personal Skills
+
+- Efficient problem solver especially in hardware implementation issues.
+- Quick learner and determined to improve myself.
+- Not afraid to learn new topics or tools, or to explore new fields.
+- Experienced researcher, with more than six years of research.
+- Living in foreign countries and traveling experience (2+ years in Turkey and 9+ years in USA).
+
+> References can be provided upon request
+        </script>
+        <!-- CV:END -->
     </div>
 
     <script>
@@ -414,6 +568,38 @@
                 }
             }
         });
+    </script>
+    <script>
+        // Markdown menu: the CV's Markdown is embedded in the page by tools/build_cv.py.
+        (function () {
+            var src = document.getElementById('cv-md');
+            var menu = document.querySelector('.md-menu');
+            if (!src || !menu) return;
+            var md = src.textContent.replace(/^\n+/, '');
+            var copyBtn = document.getElementById('copy-md');
+            function done(label) {
+                copyBtn.textContent = label;
+                setTimeout(function () { copyBtn.textContent = 'Copy Markdown'; menu.open = false; }, 1400);
+            }
+            copyBtn.addEventListener('click', function () {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(md).then(function () { done('Copied'); }, function () { done('Copy failed'); });
+                } else {
+                    var t = document.createElement('textarea');
+                    t.value = md; document.body.appendChild(t); t.select();
+                    try { document.execCommand('copy'); done('Copied'); } catch (e) { done('Copy failed'); }
+                    t.remove();
+                }
+            });
+            document.getElementById('view-md').addEventListener('click', function () {
+                var url = URL.createObjectURL(new Blob([md], { type: 'text/plain;charset=utf-8' }));
+                window.open(url, '_blank');
+                setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+                menu.open = false;
+            });
+            document.addEventListener('click', function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
+        })();
     </script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
