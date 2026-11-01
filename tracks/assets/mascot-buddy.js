@@ -3,7 +3,9 @@
    the full site, with a short speech bubble in the page's language. Needs
    mascot.js loaded first. Click him for another line; the × hides him for
    good (localStorage 'mascot-buddy' = 'off'). Phones keep him above the
-   docked bars; printing hides him.
+   docked bars, wait for the first real scroll before he appears, and only
+   show the bubble when he is tapped (it hides again on scroll), so it never
+   sits over the article's opening or its "Listen" player. Printing hides him.
    ========================================================================== */
 
 (function () {
@@ -100,10 +102,27 @@
         box.remove();
     });
 
-    setTimeout(function () {
+    var phone = window.matchMedia('(max-width: 899px)').matches;
+    function appear() {
         document.body.appendChild(box);
         window.Mascot.mount(btn);
-        btn.setAttribute('aria-label', LABEL[ar() ? 1 : 0]);
-        speak(7000);
-    }, 2500);
+        var isAr = ar();
+        btn.setAttribute('aria-label', LABEL[isAr ? 1 : 0]);
+        x.setAttribute('aria-label', HIDE[isAr ? 1 : 0]);
+        if (!phone) speak(7000);
+    }
+
+    if (!phone) { setTimeout(appear, 2500); return; }
+
+    // Phone: appear after the first real scroll; a scroll also tucks the bubble away.
+    var startY = window.scrollY, shown = false;
+    window.addEventListener('scroll', function () {
+        if (!shown) {
+            if (Math.abs(window.scrollY - startY) < 80) return;
+            shown = true;
+            appear();
+            return;
+        }
+        if (!say.classList.contains('off')) { clearTimeout(hideTimer); say.classList.add('off'); }
+    }, { passive: true });
 })();

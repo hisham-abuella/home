@@ -1,5 +1,5 @@
 {
- "title": "My Journey",
+ "title": "My Journey, from Cairo to California",
  "language": "en",
  "slides": [
   {
@@ -15,12 +15,12 @@
   {
    "id": "s02",
    "title": "Academic Research",
-   "transcript": "Academic research. <break time=\"0.5s\" /> My academic journey took me deep into visible light communications and sensing. [excited] One of my most memorable projects during the doctorate was a system that used a Raspberry Pi to control a photodetector, detecting vital signs, heartbeats and breathing, using nothing but visible light. <break time=\"0.4s\" /> That work led to publications at I triple E conferences, and showed what optical sensing could do for healthcare. Along the way came more than ten technical publications, on visible light communications, O F D M systems, wireless prototyping, and machine learning for wireless. And a United States patent, bridging academic research and practical engineering."
+   "transcript": "Academic research. <break time=\"0.5s\" /> My academic journey took me deep into visible light communications and sensing. [excited] One of my most memorable projects during the doctorate was a system that used a Raspberry Pi to control a photodetector, detecting vital signs, heartbeats and breathing, using nothing but visible light. <break time=\"0.4s\" /> That work led to publications, including a paper in the I triple E Sensors Journal, and showed what optical sensing could do for healthcare. Along the way came more than ten technical publications, on visible light communications, O F D M systems, wireless prototyping, and machine learning for wireless. And a United States patent, for the Vildar work: vehicle speed estimation, detection and ranging with visible light. It bridged academic research and practical engineering."
   },
   {
    "id": "s03",
    "title": "Industry",
-   "transcript": "Moving into industry. <break time=\"0.5s\" /> [curious] The move from academia to industry brought new challenges, and new opportunities. Over more than five years in industry, I've worked across the whole chain. Simulation and modeling of wireless systems. Fixed point implementation for hardware. The R F digital front end, and digital pre distortion to make power amplifiers more efficient. And channel estimation, including five gee baseband channel estimation."
+   "transcript": "Moving into industry. <break time=\"0.5s\" /> [curious] The move from academia to industry brought new challenges, and new opportunities. Over more than four years in industry, I've worked across the whole chain. Simulation and modeling of wireless systems. Fixed point implementation for hardware. The R F digital front end, and digital pre distortion to make power amplifiers more efficient. And channel estimation, including five gee baseband channel estimation."
   },
   {
    "id": "s04",

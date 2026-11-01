@@ -7,7 +7,7 @@
     <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
     <title>Building a Personal AI Engine - Hisham Abuella</title>
-    <meta name="description" content="A private AI assistant on a Mac Studio M4 Max: local LLMs through Ollama, on-device image generation and voice, and an Obsidian vault of every conversation, reachable from any device at home.">
+    <meta name="description" content="A private AI assistant on a Mac Studio M4 Max: local LLMs through Ollama, on-device image generation and voice, and an Obsidian vault of every conversation, reachable from my own devices, at home or away.">
     <meta property="og:title" content="Building a Personal AI Engine - Hisham Abuella">
     <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/base.css?v=2">
     <link rel="stylesheet" href="../css/themes/midnight.css">
     <link rel="stylesheet" href="../css/themes/daylight.css">
     <link rel="stylesheet" href="../css/themes/contrast.css">
@@ -108,6 +108,8 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        .app-mark { display: flex; align-items: center; gap: 14px; margin-bottom: 0.9rem; }
+        .app-mark img { width: 64px; height: 64px; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.28)); }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -172,7 +174,7 @@
 
     <div class="article-container">
         <div class="article-header">
-            <div class="wip-badge">WORK IN PROGRESS</div>
+            <div class="app-mark"><img src="../Articles/img/h-ai-icon.png" alt="The H_AI app icon: a graphite vault door with AI at its centre" width="64" height="64"><div class="wip-badge">WORK IN PROGRESS</div></div>
             <h1 class="article-title enter delay-1">Building a Personal AI Engine</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> February 16, 2026</span>
@@ -181,7 +183,7 @@
                 <span><i class="fas fa-user"></i> Hisham Abuella</span>
                 <a class="lang-switch" href="ar/building-ai-server.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
             </div>
-            <p class="article-subtitle enter delay-3">Local LLMs, on-device image generation and voice, and a private notes vault &mdash; all running on a Mac Studio M4 Max and reachable from any device at home</p>
+            <p class="article-subtitle enter delay-3">Local LLMs, on-device image generation and voice, and a private notes vault &mdash; all running on a Mac Studio M4 Max and reachable from my own devices, at home or away</p>
         </div>
 
         <div class="listen" data-src="../audio/articles/building-ai-server.mp3" hidden>
@@ -190,7 +192,7 @@
         </div>
 
         <div class="article-content">
-            <p>I got tired of depending on cloud APIs for everything. The latency, the cost, the privacy concerns &mdash; I wanted my own AI that runs locally, responds instantly, and stays completely private. So I built one. A <span class="highlight">personal AI engine</span> running on my Mac Studio M4 Max, accessible from any device in my house through a custom web interface I call <strong>H_AI</strong>.</p>
+            <p>I got tired of depending on cloud APIs for everything. The latency, the cost, the privacy concerns &mdash; I wanted my own AI that runs locally, responds instantly, and stays completely private. So I built one. A <span class="highlight">personal AI engine</span> running on my Mac Studio M4 Max, accessible from my own devices, at home or away, through a custom web interface I call <strong>H_AI</strong>.</p>
 
             <div class="update-note">
                 <strong>Update, October 2026.</strong> When I first wrote this in February, H_AI was a chat window with some tools. Since then it has learned to see, draw, listen and speak &mdash; all on the same machine &mdash; and it keeps every conversation in an Obsidian vault it can search. It also went through a series of code reviews by a small team of AI agents, which taught me more about failure than any feature did. This article has been rewritten to match.
@@ -409,7 +411,7 @@
             <img src="../Pictures/ai-server-2026-services.png" alt="The Local Services panel: Ollama, Voicebox, Draw Things, the Claude CLI and the vault, each with the skills it powers" style="max-width:320px;width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem auto;display:block;">
 
             <div class="quote">
-                The best AI setup is the one you actually use every day. By making it accessible from every device at home, it became a natural part of my workflow.
+                The best AI setup is the one you actually use every day. By making it reachable from every device I own, it became a natural part of my workflow.
             </div>
 
             <h2>What&rsquo;s Next</h2>
@@ -425,7 +427,7 @@
         <div class="article-nav reveal-up">
             <a href="building-islamic-kids.html" class="article-nav-link prev">
                 <span class="nav-label">&larr; Previous Article</span>
-                <span class="nav-title">Building an Islamic Kids Website</span>
+                <span class="nav-title">Building an Interactive Islamic Kids Website</span>
             </a>
             <a href="local-voice-generation.html" class="article-nav-link next">
                 <span class="nav-label">Next Article &rarr;</span>
@@ -438,7 +440,7 @@
         <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
     </footer>
 
-    <script src="../js/listen.js" defer></script>
+    <script src="../js/listen.js?v=2" defer></script>
     <script src="../js/back-menu.js" defer></script>
     <script src="../js/appearance.js?v=3" defer></script>
     <script src="../js/reader-bar.js?v=3" defer></script>
@@ -447,6 +449,6 @@
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 <script src="../tracks/assets/mascot.js?v=3" defer></script>
-<script src="../tracks/assets/mascot-buddy.js?v=3" defer></script>
+<script src="../tracks/assets/mascot-buddy.js?v=4" defer></script>
 </body>
 </html>

@@ -56,6 +56,7 @@ def norm_home(link):
     link = re.sub(r'^(\.\./)+', '', link)
     link = link.replace('Articles/ar/', 'Articles/').replace('ar/home.html', 'home.html')
     link = re.sub(r'^(projects/[\w-]+/)ar/$', r'\1', link)  # Arabic pages open a project's Arabic page
+    link = re.sub(r'\.ar\.html$', '.html', link)            # ...and a paper's Arabic version (article.ar.html)
     return re.sub(r'[?&]lang=ar$', '', link)
 
 def norm_project(link):

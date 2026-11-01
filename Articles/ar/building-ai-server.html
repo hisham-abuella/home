@@ -7,7 +7,7 @@
     <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
     <title>بناء محرك AI شخصي - هشام أبو العلا</title>
-    <meta name="description" content="مساعد AI خاص على Mac Studio M4 Max: LLMs محلية عن طريق Ollama، وتوليد صور وصوت على الجهاز نفسه، وvault في Obsidian فيه كل محادثة، وبوصله من أي جهاز في البيت.">
+    <meta name="description" content="مساعد AI خاص على Mac Studio M4 Max: LLMs محلية عن طريق Ollama، وتوليد صور وصوت على الجهاز نفسه، وvault في Obsidian فيه كل محادثة، وبوصله من أجهزتي، في البيت أو برّه.">
     <meta property="og:title" content="بناء محرك AI شخصي - هشام أبو العلا">
     <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/base.css?v=2">
     <link rel="stylesheet" href="../../css/themes/midnight.css">
     <link rel="stylesheet" href="../../css/themes/daylight.css">
     <link rel="stylesheet" href="../../css/themes/contrast.css">
@@ -109,6 +109,8 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        .app-mark { display: flex; align-items: center; gap: 14px; margin-bottom: 0.9rem; }
+        .app-mark img { width: 64px; height: 64px; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.28)); }
     </style>
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
@@ -173,7 +175,7 @@
 
     <div class="article-container">
         <div class="article-header">
-            <div class="wip-badge">لسه بشتغل عليه</div>
+            <div class="app-mark"><img src="../../Articles/img/h-ai-icon.png" alt="أيقونة H_AI: باب خزنة رمادي في نصه AI" width="64" height="64"><div class="wip-badge">لسه بشتغل عليه</div></div>
             <h1 class="article-title enter delay-1">بناء محرك AI شخصي</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> 16 فبراير 2026</span>
@@ -182,7 +184,7 @@
                 <span><i class="fas fa-user"></i> هشام أبو العلا</span>
                 <a class="lang-switch" href="../building-ai-server.html" lang="en" hreflang="en">Read in English</a>
             </div>
-            <p class="article-subtitle enter delay-3">LLMs محلية، وتوليد صور وصوت على الجهاز نفسه، وvault خاص للملاحظات &mdash; كله شغّال على Mac Studio M4 Max وبوصله من أي جهاز في البيت</p>
+            <p class="article-subtitle enter delay-3">LLMs محلية، وتوليد صور وصوت على الجهاز نفسه، وvault خاص للملاحظات &mdash; كله شغّال على Mac Studio M4 Max وبوصله من أجهزتي، في البيت أو برّه</p>
         </div>
 
         <div class="listen" data-src="../../audio/articles/ar/building-ai-server.mp3" hidden>
@@ -191,7 +193,7 @@
         </div>
 
         <div class="article-content">
-            <p>زهقت من إني أعتمد على الـ cloud APIs في كل حاجة. التأخير، والتكلفة، وقلق الخصوصية &mdash; كنت عايز AI بتاعي يشتغل محلي، ويرد فوراً، ويفضل private تماماً. فبنيت واحد. <span class="highlight">محرك AI شخصي</span> شغّال على الـ Mac Studio M4 Max بتاعي، وبوصله من أي جهاز في البيت عن طريق واجهة ويب عملتها بنفسي اسمها <strong>H_AI</strong>.</p>
+            <p>زهقت من إني أعتمد على الـ cloud APIs في كل حاجة. التأخير، والتكلفة، وقلق الخصوصية &mdash; كنت عايز AI بتاعي يشتغل محلي، ويرد فوراً، ويفضل private تماماً. فبنيت واحد. <span class="highlight">محرك AI شخصي</span> شغّال على الـ Mac Studio M4 Max بتاعي، وبوصله من أجهزتي، في البيت أو برّه، عن طريق واجهة ويب عملتها بنفسي اسمها <strong>H_AI</strong>.</p>
 
             <div class="update-note">
                 <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، كان H_AI شباك chat ومعاه شوية أدوات. من ساعتها اتعلم يشوف ويرسم ويسمع ويتكلم &mdash; كله على نفس الجهاز &mdash; وبيحتفظ بكل محادثة في vault في Obsidian يقدر يدوّر فيه. وكمان عدّى على سلسلة code reviews عملها فريق صغير من الـ AI agents، وده علّمني عن الفشل أكتر من أي feature. وعشان كده أعدت كتابة المقال.
@@ -410,7 +412,7 @@
             <img src="../../Pictures/ai-server-2026-services.png" alt="لوحة الخدمات المحلية: Ollama وVoicebox وDraw Things والـ Claude CLI والـ vault، وقدام كل واحدة الـ skills اللي بتشغّلها" style="max-width:320px;width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem auto;display:block;">
 
             <div class="quote">
-                أحسن setup للـ AI هو اللي بتستخدمه فعلاً كل يوم. لما خليته متاح من كل جهاز في البيت، بقى جزء طبيعي من الـ workflow بتاعي.
+                أحسن setup للـ AI هو اللي بتستخدمه فعلاً كل يوم. لما خليته متاح من كل أجهزتي، بقى جزء طبيعي من الـ workflow بتاعي.
             </div>
 
             <h2>الخطوة الجاية</h2>
@@ -439,7 +441,7 @@
         <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
     </footer>
 
-    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/listen.js?v=2" defer></script>
     <script src="../../js/back-menu.js" defer></script>
     <script src="../../js/appearance.js?v=3" defer></script>
     <script src="../../js/reader-bar.js?v=3" defer></script>
@@ -448,6 +450,6 @@
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 <script src="../../tracks/assets/mascot.js?v=3" defer></script>
-<script src="../../tracks/assets/mascot-buddy.js?v=3" defer></script>
+<script src="../../tracks/assets/mascot-buddy.js?v=4" defer></script>
 </body>
 </html>

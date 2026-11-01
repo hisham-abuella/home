@@ -16,10 +16,14 @@ Live at **https://www.hishamabuella.com** (GitHub Pages, deployed from `main`).
   phone layout: `recruiter.html` (catalogue, n71), `engineer.html` (constellation, n78),
   `vibe.html` (terminal, n257), `learner.html` (journal, n260). Shared assets in
   `tracks/assets/` (`i18n.js`, `theme.js`, `ident.css`, `ident.js`, `bio.jpg`)
-- `cv.html` — CV, deliberately a plain white document and print-ready
-- `Articles/` — eight long-form posts, each with an optional narrated version;
+- `cv.html` — CV, deliberately a plain white document and print-ready; English only
+- `Articles/` — 12 long-form posts, each with an optional narrated version;
   `Articles/ar/` holds their Egyptian Arabic pages
 - `projects/presentation-skill/` — slide-deck demo (`template.html`, my personal skill)
+- `projects/bedtime-stories/` — the narrated bilingual bedtime books (each book one HTML file
+  in `books/` plus its audio folder)
+- `projects/local-model-performance/` — the local-model study, English + Egyptian Arabic
+  (`ar/`); its paper, `paper/paper-ieee.html`, stays English only, like the CV
 - `different_designs/` — explorations only (mockups, logo concepts, older pages), not linked from the live site
 - `Pictures/`, `audio/` — media; `audio/articles/` holds the article narration
 
@@ -52,8 +56,9 @@ theme. Auto follows the system light/dark setting and keeps following it.
 
 The preference is shared with the tracks: tracks store `reader-theme` (auto/light/dark), the
 site stores `appearance` (auto/midnight/daylight/contrast), and each writes both. Tracks have
-their own palettes and styles (`tracks/assets/`); they do not use `base.css`. The "Back to
-Portfolio" link on articles and the CV back button go to `home.html`.
+their own palettes and styles (`tracks/assets/`); they do not use `base.css`. The CV back
+button goes to `home.html`; each article's header has a "Back" menu (the four tracks and the
+full website, in the article's language).
 
 **Typefaces are tokens** (`--font-body`, `--font-mono` in `base.css`), so a skin can swap them.
 
@@ -109,7 +114,9 @@ Copy the newest one as a starting point, then:
 
 ## Article narration
 
-Every article can be listened to in my own cloned voice, generated with ElevenLabs.
+Every article can be listened to in my own cloned voice. English narration is rendered
+locally with Fish S2-Pro (the "Hisham" voice) by `~/Work/Whisper-audio/bakeoff/narrate.py`;
+`audio/articles/build.sh` (ElevenLabs) is now used only for Arabic narration.
 
 ```
 audio/articles/source/<slug>.json   spoken transcript, one entry per section (source of truth)
@@ -121,6 +128,20 @@ audio/articles/build.sh             lint, generate, QA and join, one article at 
 The player is a `.listen` block under the article header with
 `data-src="../audio/articles/<slug>.mp3"`. `js/listen.js` checks for the file and keeps
 the player hidden until it exists, so an article can ship before its audio does.
+Arabic narration in `audio/articles/ar/` is only probed when its slug is listed in
+`audio/articles/ar/available.json`: add the slug there when you add its mp3.
+
+English (local, goes through the RAM gate; every sentence is Whisper-checked):
+
+```sh
+cd ~/Work/Whisper-audio/bakeoff
+uv run narrate.py article ~/Work/personal_website/home/audio/articles/source/<slug>.json
+uv run narrate.py article <same path> --only s02 s03   # re-render changed sections only
+```
+
+then copy `~/Work/Whisper-audio/site-audio/articles/<slug>.mp3` into `audio/articles/`.
+
+Arabic (ElevenLabs):
 
 ```sh
 ./audio/articles/build.sh <slug>   # one article
@@ -128,7 +149,7 @@ the player hidden until it exists, so an article can ship before its audio does.
 ./audio/articles/build.sh all      # every missing one, newest first; stops at the first failure
 ```
 
-The script uses voice `pusofH2Ro5Ny4RH6qBEO` (Hisham, cloned) on `eleven_v4` with
+`build.sh` uses voice `pusofH2Ro5Ny4RH6qBEO` (Hisham, cloned) on `eleven_v4` with
 stability 0.5 and similarity 0.8, the recipe used for the bedtime books, and prints the
 quota before and after. It needs `ELEVENLABS_API_KEY` in `~/.zshrc` and the tools in
 `~/Work/Elevenlabs-voice/` (`generate.js`, `lint-transcript.js`, `qa-audio.py`).
@@ -145,10 +166,10 @@ Transcripts are written for the ear, not copied from the page:
 Run `node ~/Work/Elevenlabs-voice/lint-transcript.js audio/articles/source/<slug>.json`
 after any edit. Warnings for `AI` and `PC` are expected; the model reads them correctly.
 
-Cost: ElevenLabs bills `eleven_v4` at roughly an eighth of the script length on this
-account (the Two Nails article, 6,881 characters, needed 840 credits). All eight
-articles come to about 6,200 credits. After editing a transcript, regenerate only the
-changed section: delete its clip in `../article-audio/<slug>/` and rerun the script.
+Cost (Arabic, ElevenLabs): `eleven_v4` bills roughly an eighth of the script length on this
+account (6,881 characters needed 840 credits). After editing a transcript, regenerate only the
+changed section: for English, `narrate.py --only sNN`; for Arabic, delete its clip in
+`../article-audio/<slug>/` and rerun `build.sh`.
 
 ## Development
 
