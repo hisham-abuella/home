@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+    <title>From a Chat Window to a Home Hub - Hisham Abuella</title>
+    <meta name="description" content="Part 2 of my personal AI engine: what a month of changes turned it into. Receipts, calendars, the smart home and my own Claude Code sessions, all from one private chat on my Mac Studio, with tools that plug in.">
+    <meta property="og:title" content="From a Chat Window to a Home Hub - Hisham Abuella">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Part 2: my local AI engine became a home hub, with new everyday uses and tools that plug in.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/building-ai-server-part-2.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/building-ai-server-part-2.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/building-ai-server-part-2.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-2.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/building-ai-server-part-2.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../css/skins/constellation.css">
+    <link rel="stylesheet" href="../css/skins/terminal.css">
+    <link rel="stylesheet" href="../css/skins/journal.css">
+    <link rel="stylesheet" href="../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../css/article.css">
+    <style>
+        .shot { margin: 2rem 0 2.5rem; }
+
+        /* Example requests: what I type, and what happens */
+        .usecase {
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.25rem 1.4rem;
+            margin: 1.5rem 0;
+        }
+        .usecase h3 { margin: 0 0 0.85rem; font-size: 1.05rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.6rem; }
+        .usecase h3 i { color: var(--accent); font-size: 0.95em; width: 1.2em; text-align: center; }
+
+        /* Illustrations */
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+        .art.hero { margin-top: 0; }
+        .usecase .ask {
+            display: block;
+            width: fit-content;
+            max-width: 88%;
+            margin: 0 0 0.85rem auto;
+            padding: 0.6rem 0.95rem;
+            border-radius: 16px 16px 4px 16px;
+            background: var(--accent);
+            color: var(--bg-primary, #0b0f14);
+            font-weight: 600;
+            line-height: 1.45;
+        }
+        .usecase .ask + .ask { margin-top: -0.4rem; }
+        .usecase p { margin: 0.4rem 0 0; color: var(--text-secondary); }
+        .usecase .tool {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        /* The engine and its add-ons, drawn in real type */
+        .hub-map { margin: 2rem 0 2.5rem; display: grid; gap: 0.6rem; }
+        .hub-row { display: grid; gap: 0.6rem; }
+        .hub-row.entries { grid-template-columns: repeat(3, 1fr); }
+        .hub-row.addons { grid-template-columns: repeat(4, 1fr); }
+        .hub-box {
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.75rem 0.9rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .hub-box strong { display: block; color: var(--text-primary); font-size: 0.98rem; }
+        .hub-box.engine { border-color: var(--accent); }
+        .hub-box.layer { border-style: dashed; }
+        .hub-box .state {
+            display: inline-block;
+            margin-top: 0.35rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+        .hub-arrow { text-align: center; color: var(--text-secondary); font-size: 0.9rem; line-height: 1; }
+        .hub-map figcaption { margin-top: 0.4rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        @media (max-width: 640px) {
+            .hub-row.addons { grid-template-columns: repeat(2, 1fr); }
+            .hub-row.entries { grid-template-columns: 1fr 1fr 1fr; }
+            .hub-box { padding: 0.65rem 0.6rem; font-size: 0.85rem; }
+            .usecase { padding: 1rem 1.05rem; }
+            .usecase .ask { max-width: 100%; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../index.html?choose" aria-label="Hisham Abuella, front page"><img src="../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&larr; Back</summary>
+                <ul>
+                    <li><a href="../tracks/recruiter.html">Recruiter</a></li>
+                    <li><a href="../tracks/engineer.html">Engineer</a></li>
+                    <li><a href="../tracks/vibe.html">Vibe coder</a></li>
+                    <li><a href="../tracks/learner.html">Learner</a></li>
+                    <li><a href="../home.html">Full website</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <div class="wip-badge">WORK IN PROGRESS</div>
+            <h1 class="article-title enter delay-1">From a Chat Window to a Home Hub</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> November 1, 2026</span>
+                <span><i class="fas fa-clock"></i> 9 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+                <a class="lang-switch" href="ar/building-ai-server-part-2.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
+            </div>
+            <p class="article-subtitle enter delay-3">Part 2 of my personal AI engine. In one month it went from a chat window on my Mac Studio to the place where receipts, calendars, the smart home and my own coding sessions meet &mdash; and its tools started to plug in from outside.</p>
+        </div>
+
+        <div class="listen" data-src="../audio/articles/building-ai-server-part-2.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <figure class="art hero">
+            <img src="../Articles/img/ai-hub-hero.jpg" alt="Illustration: a small glowing aluminium computer on a desk at dusk, with fine amber threads running to a phone; a television and a wall calendar wait in the room behind" width="1536" height="768">
+        </figure>
+
+        <div class="article-content">
+            <p><a href="building-ai-server.html">Part 1</a> ended in early October. H_AI could chat, see, draw, listen and speak, and it kept every conversation in a notes vault on my Mac. The goal was one sentence: <em>a local AI assistant good enough to replace the outside AI tools I pay for and send my data to.</em></p>
+
+            <p>The goal hasn&rsquo;t changed. What changed is <strong>what I ask it</strong>. In October I stopped opening it only to ask questions, and started using it to do small jobs around the house. That needed new tools, a second person, and a better way to add tools without touching the engine every time.</p>
+
+            <h2>The Month in Short</h2>
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-house" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>A hub, not just a chat</strong>
+                        <span>A Hub view next to the chat: the calendar, the smart home, the shopping tracker, the server&rsquo;s health, and my Claude Code sessions</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>Reachable from anywhere</strong>
+                        <span>Through Tailscale, from my own devices only, HTTPS only, never opened to the public internet</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-group" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>Two people at home</strong>
+                        <span>My wife has her own sign-in and her own conversations, on the web and in the chat app on her phone</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-puzzle-piece" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>Tools that plug in</strong>
+                        <span>More than fifty tools, now listed in one place, and a plug-in layer so new ones arrive as add-ons</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microphone-lines" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>It answers in my voice</strong>
+                        <span>Spoken answers use my own cloned voice, rendered on the Mac, the same voice that reads these articles</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>Its own search engine</strong>
+                        <span>Web search runs through a private search engine on the Mac, and every result comes back as a link I can tap</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Things I Ask It Now</h2>
+            <p>The best way to show the change is by example. These are the kinds of requests I make in a normal week. The wording is made up for this page; the tools behind them are real.</p>
+
+            <figure class="art">
+                <img src="../Articles/img/ai-hub-usecases.jpg" alt="Illustration: a phone, a folded sheet, a small calendar pad, a TV remote, two light switches and a notebook on a table, joined by fine amber lines to a small glowing cube" width="1344" height="768" loading="lazy">
+            </figure>
+
+            <div class="usecase">
+                <h3><i class="fas fa-receipt" aria-hidden="true"></i>A receipt, from a photo</h3>
+                <span class="ask">[a photo of a shop receipt]</span>
+                <p>I send the photo in the chat, from the web app or from my phone. A small, fast router sees that it is a receipt, not a question, and sends it straight to my <strong>shopping tracker</strong>, another small app on the same Mac. A local OCR model reads the items and prices. Nothing is saved until I confirm it, and the same receipt sent twice is caught and refused.</p>
+                <span class="ask" style="margin-top:0.9rem">How much did we spend on groceries this month? Has the price of eggs gone up?</span>
+                <p>Weeks later the receipts become answers. The model asks the tracker with tools like <span class="tool">shopping_summary</span> and <span class="tool">shopping_price_history</span>, and answers from the numbers it gets back, not from memory.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-calendar-days" aria-hidden="true"></i>The family calendar</h3>
+                <span class="ask">Find us a free hour on Thursday evening.</span>
+                <span class="ask">Add a dentist appointment on Tuesday at 3.</span>
+                <p>The <a href="tv-calendar.html">calendar I built for us</a> has its own tools: <span class="tool">calendar_free</span> finds the gaps, <span class="tool">calendar_add</span> makes the event. Reading runs at once. Anything that adds or changes an event shows a card first, with exactly what will be saved, and waits for a tap.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-tv" aria-hidden="true"></i>The smart home</h3>
+                <span class="ask">Which devices are online? Turn the TV off.</span>
+                <p>A smart-home app on the Mac knows the TV, the Raspberry Pi that runs the calendar screen, and a few SwitchBot devices. The model can list them and ask for an action. The risky actions need a real person to approve them: an API key alone isn&rsquo;t enough. This part is still being finished.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-file-lines" aria-hidden="true"></i>A long document</h3>
+                <span class="ask">[a 40-page PDF] What are the three decisions in this?</span>
+                <p>PDF, Word, PowerPoint, Excel and EPUB files are read on the Mac. Scans go through a small OCR model called GLM-OCR; Arabic pages go to the vision model, which reads Arabic better. A long file is condensed first, so it fits in the model&rsquo;s memory. Also still being finished.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-gauge-high" aria-hidden="true"></i>The Mac itself</h3>
+                <span class="ask">How is the Mac doing?</span>
+                <p>The <span class="tool">server_status</span> tool reads memory, CPU, GPU and which AI services are up, and the answer comes back in plain words. Next to it, a System panel can free memory or restart a service that stopped, and it is only shown to me.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-laptop-code" aria-hidden="true"></i>My coding sessions, from the sofa</h3>
+                <span class="ask">[the Claude sessions page, on my phone]</span>
+                <p>I run several Claude Code sessions on the Mac. A page in the Hub shows each one &mdash; <em>working</em>, <em>waiting for you</em>, <em>done</em> &mdash; with its last lines of output, and lets me answer it. A second page reads the project&rsquo;s to-do list and can start a job from it.</p>
+            </div>
+
+            <h2>A Second Person at Home</h2>
+            <p>Part 1 said &ldquo;for one person&rdquo;. In October my wife started using it too, mostly through the chat app on her phone, which I wrote about in <a href="texting-my-ai.html">Texting My Own AI</a>. That turned out to be more work than any tool.</p>
+
+            <p>Each sign-in now has its <strong>own list of conversations</strong>. The model knows who it is talking to. Changing projects, the coding-agent mode and anything that can touch code are <strong>mine only</strong>. Whether the shared notes vault should be visible to every sign-in is still an open question, written down and waiting for a decision.</p>
+
+            <p>The last piece is <strong>single sign-on</strong>. The calendar, the smart home and the shopping tracker each had their own way in. Now the AI app is the one place with a password, and the other apps let you in through it. The code is built and reviewed, and waiting for me to switch it on.</p>
+
+            <h2>Tools That Plug In</h2>
+            <figure class="art">
+                <img src="../Articles/img/ai-hub-plugins.jpg" alt="Illustration: aluminium and brass blocks fitted together with small connectors, like add-ons docking into one system" width="1344" height="768" loading="lazy">
+            </figure>
+
+            <p>By the end of October the engine had more than fifty tools, and each one was registered in about ten places: which tools run without asking, which ones write, which ones can run side by side, which ones are trusted. Adding a calendar tool meant changing the engine in all of them, and forgetting one was a security bug waiting to happen.</p>
+
+            <p>So the plan now is to take the tools <strong>out of the engine</strong>. Every add-on &mdash; the calendar, the smart home, the shopping tracker &mdash; ships a small file that describes its tools, and the engine loads it through one plug-in layer. A plug-in can only <em>ask</em> for permissions; my own settings decide what it actually gets.</p>
+
+            <figure class="hub-map">
+                <div class="hub-row entries">
+                    <div class="hub-box"><strong>Web app</strong>laptop, phone</div>
+                    <div class="hub-box"><strong>Chat app</strong>Element X</div>
+                    <div class="hub-box"><strong>Voice</strong>in and out</div>
+                </div>
+                <div class="hub-arrow" aria-hidden="true">&darr;</div>
+                <div class="hub-box engine"><strong>The engine</strong>local models, Claude when I pick it, the tool loop, the notes vault</div>
+                <div class="hub-arrow" aria-hidden="true">&darr;</div>
+                <div class="hub-box layer"><strong>Plug-in layer</strong>each add-on describes its tools &middot; it asks, my settings decide &middot; changes need my tap</div>
+                <div class="hub-arrow" aria-hidden="true">&darr;</div>
+                <div class="hub-row addons">
+                    <div class="hub-box"><strong>Calendar</strong><span class="state">first, in progress</span></div>
+                    <div class="hub-box"><strong>Smart home</strong><span class="state">next</span></div>
+                    <div class="hub-box"><strong>Shopping tracker</strong><span class="state">next</span></div>
+                    <div class="hub-box"><strong>Claude sessions</strong><span class="state">later</span></div>
+                </div>
+                <figcaption>Where I ask, the engine, and the add-ons it loads.</figcaption>
+            </figure>
+
+            <p>It goes in phases, and each one has to behave exactly like before. The first step listed every tool in <strong>one registry</strong>, checked against a snapshot of the old behaviour. The second built the plug-in loader, with nothing switched on. The calendar is the pilot: today&rsquo;s behaviour was frozen into a test first, so the new version can be compared with it, answer for answer.</p>
+
+            <h2>One Rule for Memory</h2>
+            <p>The Mac has 64 GB, shared by everything. One evening the voice server was holding <strong>48 GB</strong> and had pushed 9 GB into swap, and the whole machine crawled. Nothing had failed. Every part was just keeping its model loaded, in case.</p>
+
+            <p>Now there is one rule, enforced in one place: <strong>no model starts unless a quarter of the memory is free</strong>; image and voice models run one at a time; and whatever loads a model frees it when it is done. Every call in the engine goes through the same gate, and so do my own scripts. The gate also learned not to be a new way to fail: if it has a problem, the chat turn still goes through.</p>
+
+            <h2>Failures That Look Like Success, Again</h2>
+            <p>Part 1&rsquo;s lesson was that failures here announce themselves as successes. October found new ones:</p>
+
+            <p><strong>Long chats lost their beginning.</strong> The engine told the local models to use about 32,000 tokens of memory while it assumed four times that. The model quietly dropped the start of long conversations and answered anyway. The engine now asks each model what it supports, counts real tokens, and summarizes the conversation before it overflows.</p>
+
+            <p><strong>The vault forgot turns.</strong> After a summary, the next save rewrote the conversation&rsquo;s note from what was left, and the summarized part was gone. Now the note is rebuilt from the full history, with the summary shown where it happened.</p>
+
+            <p><strong>Locking the phone left an answer with no question.</strong> If the phone locked in the middle of an answer, the server saved the answer but not the question. The app now survives a lock, and the server sends a small heartbeat during long tool runs, so a dead connection can be told apart from a slow tool.</p>
+
+            <p><strong>&ldquo;Done&rdquo; when nothing was done.</strong> An early version of the receipt flow could say a receipt was saved when it wasn&rsquo;t. It now reports only what the tracker confirms.</p>
+
+            <h2>Running It Without Thinking About It</h2>
+            <p>There are now about a dozen services: the engine, the models, the voice server, the search engine, the chat server and its bridge, the calendar, the smart home, the shopping tracker. One command starts, stops and checks all of them, and macOS starts them by itself when I log in. A menu-bar icon shows which ones are up.</p>
+
+            <p>The work itself is tracked the same way. Every tool, feature and open task is one line in a single <strong>contract file</strong>, with an owner and a status. A Claude Code command takes one line through the team: planned by Opus, built by Sonnet, reviewed by Opus, then a security check, then a commit. On demand, a full security audit reads the whole project; the last one found nine issues, and all nine were fixed the same day.</p>
+
+            <h2>Keeping It Private</h2>
+            <p><strong>Only my devices.</strong> Everything listens on the Mac and is reached through Tailscale. Nothing is open to the internet.</p>
+
+            <p><strong>Photos don&rsquo;t pile up.</strong> A photo sent in the chat goes to a short-lived private file and then to the app that needs it. It is not copied into the notes vault.</p>
+
+            <p><strong>Less detail than possible.</strong> Receipts keep a place name, not a location. Logs hide secrets before they are written.</p>
+
+            <p><strong>People approve, keys don&rsquo;t.</strong> Risky actions &mdash; in the house, in code, in shared links &mdash; need a person to tap approve. A stolen key alone can&rsquo;t do them.</p>
+
+            <div class="quote">
+                It stopped being an app I open, and became the place where the house&rsquo;s small jobs get done.
+            </div>
+
+            <h2>What&rsquo;s Next</h2>
+            <p>Finishing the plug-in move: the calendar first, then the smart home and the shopping tracker. Weekly shopping notes, posted by the AI in the chat. Search over all my past conversations, not only the vault. Answers that keep going when the phone locks, and pick up where they left off. And the same old work: closing the gap between the local models and Claude, and finding the places where it fails quietly.</p>
+
+            <p>Still no subscription for the local models, and still nothing leaves the house unless I choose the cloud.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>The engine, its add-ons and this article were built with <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="tv-calendar.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">A Shared Calendar on the TV</span>
+            </a>
+            <a href="building-ai-server.html" class="article-nav-link next">
+                <span class="nav-label">Read Part 1 &rarr;</span>
+                <span class="nav-title">Building a Personal AI Engine</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/listen.js" defer></script>
+    <script src="../js/back-menu.js" defer></script>
+    <script src="../js/appearance.js?v=3" defer></script>
+    <script src="../js/reader-bar.js?v=3" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+<script src="../tracks/assets/mascot.js?v=3" defer></script>
+<script src="../tracks/assets/mascot-buddy.js?v=3" defer></script>
+</body>
+</html>

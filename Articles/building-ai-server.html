@@ -176,7 +176,7 @@
             <h1 class="article-title enter delay-1">Building a Personal AI Engine</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> February 16, 2026</span>
-                <span><i class="fas fa-sync-alt"></i> Updated October 2, 2026</span>
+                <span><i class="fas fa-sync-alt"></i> Updated November 1, 2026</span>
                 <span><i class="fas fa-clock"></i> 12 min read</span>
                 <span><i class="fas fa-user"></i> Hisham Abuella</span>
                 <a class="lang-switch" href="ar/building-ai-server.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
@@ -194,6 +194,7 @@
 
             <div class="update-note">
                 <strong>Update, October 2026.</strong> When I first wrote this in February, H_AI was a chat window with some tools. Since then it has learned to see, draw, listen and speak &mdash; all on the same machine &mdash; and it keeps every conversation in an Obsidian vault it can search. It also went through a series of code reviews by a small team of AI agents, which taught me more about failure than any feature did. This article has been rewritten to match.
+                <br><br><strong>Update, November 2026.</strong> This is now part one: the story from February to October. A few facts below were refreshed (the default model, remote access, the tool count). What came next &mdash; the hub, a second person at home, and tools that plug in &mdash; is in <a href="building-ai-server-part-2.html">Part 2: From a Chat Window to a Home Hub</a>.
             </div>
 
             <p>The goal is now written down at the top of the project&rsquo;s to-do list: <em>a local AI assistant, for one person, good enough to replace the external AI tools I currently pay for and send my data to.</em> Every change is measured against that sentence.</p>
@@ -234,47 +235,47 @@
             <table class="model-table">
                 <tr>
                     <th>Model</th>
-                    <th>Context Window</th>
+                    <th>Context Used</th>
                     <th>Best For</th>
                 </tr>
                 <tr>
-                    <td><strong>Claude Sonnet</strong></td>
-                    <td>~150,000 words</td>
-                    <td>Default for hard questions &mdash; with an automatic local fallback</td>
-                </tr>
-                <tr>
                     <td><strong>Qwen 3.8 27B (MLX)</strong></td>
-                    <td>~100,000 words</td>
-                    <td>Main local model, vision, the fallback when Claude is unavailable</td>
+                    <td>~49,000 tokens</td>
+                    <td>The default: main local model, vision, and the fallback for Claude</td>
                 </tr>
                 <tr>
                     <td><strong>Qwen 3.6 35B-A3B</strong></td>
-                    <td>~100,000 words</td>
-                    <td>Mixture-of-experts &mdash; large model, small per-token cost</td>
+                    <td>~32,000 tokens</td>
+                    <td>Mixture-of-experts &mdash; large model, small per-token cost; the fast helper</td>
                 </tr>
                 <tr>
                     <td><strong>Gemma 4 26B / 31B</strong></td>
-                    <td>~100,000 words</td>
+                    <td>~32,000 tokens</td>
                     <td>General reasoning and writing</td>
                 </tr>
                 <tr>
                     <td><strong>Gemma 4 (small)</strong></td>
-                    <td>~50,000 words</td>
+                    <td>~32,000 tokens</td>
                     <td>Quick everyday questions</td>
                 </tr>
                 <tr>
                     <td><strong>gpt-oss 20B</strong></td>
-                    <td>~6,000 words</td>
+                    <td>~32,000 tokens</td>
                     <td>Short, focused tasks</td>
                 </tr>
                 <tr>
-                    <td><strong>DeepSeek-OCR</strong></td>
+                    <td><strong>GLM-OCR</strong></td>
                     <td>&mdash;</td>
-                    <td>Reading text out of images and scans</td>
+                    <td>Reading text out of scans, photos and documents</td>
+                </tr>
+                <tr>
+                    <td><strong>Claude</strong> (optional)</td>
+                    <td>much larger</td>
+                    <td>Picked by hand for hard questions, with an automatic local fallback</td>
                 </tr>
             </table>
 
-            <p>I can still switch models mid-conversation from the header. What&rsquo;s new is that the default is <strong>Claude</strong>, reached through the Claude Code CLI, and the server checks it before every turn. If the CLI is missing, logged out or rate-limited, the turn quietly moves to Qwen 3.8 &mdash; but never <em>silently</em>: the chat shows a notice with Claude&rsquo;s own error, because a hidden downgrade would just read as Claude answering badly. Claude is a convenience, not a pillar; the real work is closing the gap until the local models don&rsquo;t need it.</p>
+            <p>I can still switch models mid-conversation from the header. For about a month from early September the default was <strong>Claude</strong>, reached through the Claude Code CLI; since October the default is local again: <strong>Qwen 3.8</strong>, with Claude one tap away in the header (and the default itself can be changed from the dashboard). When Claude is picked, the server checks it before every turn. If the CLI is missing, logged out or rate-limited, the turn moves to Qwen 3.8 &mdash; but never <em>silently</em>: the chat shows a notice with Claude&rsquo;s own error, because a hidden downgrade would just read as Claude answering badly. Claude is a convenience, not a pillar; the real work is closing the gap until the local models don&rsquo;t need it.</p>
 
             <h2>The Web Interface</h2>
             <p>The heart of the project is still the webapp: <span class="highlight">FastAPI</span> on the back end, vanilla HTML/CSS/JS on the front, served over HTTPS to my laptop, phone and tablet. In March it got a full redesign, and in September a phone pass: the input box went from 48% of a phone&rsquo;s width to 64%, and every button now meets the touch-target minimum.</p>
@@ -327,8 +328,8 @@
                 <div class="feature-card">
                     <div class="feature-icon">🛠️</div>
                     <div>
-                        <strong>30 Built-in Skills</strong>
-                        <span>Files, git, web search, web fetch, grep, calculator, images, audio, and a search of my own notes</span>
+                        <strong>50+ Built-in Tools</strong>
+                        <span>Files, git, web search, web fetch, grep, calculator, images, audio, a search of my own notes &mdash; and, since October, a calendar, a shopping tracker and the smart home</span>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -347,9 +348,9 @@
 
             <img src="../Pictures/ai-server-2026-image.jpg" alt="Asking H_AI for a lighthouse at dusk: the image is rendered locally by Draw Things and saved to the vault" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
 
-            <p><strong>Vision and OCR.</strong> Qwen 3.8 can look at a pasted photo or screenshot; DeepSeek-OCR reads text out of scans. You can generate an image and then ask the vision model to describe it &mdash; a round trip I use as a smoke test (&ldquo;a single blue marble&rdquo; came back as &ldquo;a glossy blue stone sphere&rdquo;).</p>
+            <p><strong>Vision and OCR.</strong> Qwen 3.8 can look at a pasted photo or screenshot; GLM-OCR reads text out of scans and documents (Arabic goes back to Qwen 3.8, which reads it better). You can generate an image and then ask the vision model to describe it &mdash; a round trip I use as a smoke test (&ldquo;a single blue marble&rdquo; came back as &ldquo;a glossy blue stone sphere&rdquo;).</p>
 
-            <p><strong>Voice.</strong> Speech-to-text and text-to-speech go through <span class="highlight">Voicebox</span>, running locally &mdash; the same setup I wrote about in <a href="local-voice-generation.html">Generating Voice from Text Using Local Models</a>. Voice input was the first item on my &ldquo;what&rsquo;s next&rdquo; list in February. It&rsquo;s done.</p>
+            <p><strong>Voice.</strong> Speech-to-text and text-to-speech go through <span class="highlight">Voicebox</span>, running locally, and the answers it reads aloud are in my own cloned voice &mdash; the same setup I wrote about in <a href="local-voice-generation.html">Generating Voice from Text Using Local Models</a>. Voice input was the first item on my &ldquo;what&rsquo;s next&rdquo; list in February. It&rsquo;s done.</p>
 
             <h2>A Memory That Stays Home</h2>
             <p>Every conversation is now written to an <strong>Obsidian vault</strong> as a Markdown note: the exchange, any code it produced, and links to the images and audio it made. Conversations can branch, and the branch keeps a link back to its parent, so the vault reads as a graph of how my thinking went, not just a pile of logs.</p>
@@ -357,7 +358,7 @@
             <p>More importantly, the assistant can <em>search</em> that vault. &ldquo;What did we decide about the database?&rdquo; or &ldquo;Search my notes for the gold price&rdquo; runs a search over my own notes and answers from what&rsquo;s there. This is the one capability no external tool can match, because the notes only exist on this machine. And when nothing matches, it says so &mdash; before this was wired up, asking a local model about my notes made it cheerfully invent one called &ldquo;Gold Price History.&rdquo;</p>
 
             <h2>The Skills System</h2>
-            <p>The AI isn&rsquo;t just a chatbot &mdash; it can <span class="highlight">take actions</span>. There are now 30 skills: reading and writing files, searching code, git, fetching web pages, web search, calculations, generating images and speech, moving between projects, and searching the vault.</p>
+            <p>The AI isn&rsquo;t just a chatbot &mdash; it can <span class="highlight">take actions</span>. By October there were 30 skills: reading and writing files, searching code, git, fetching web pages, web search, calculations, generating images and speech, moving between projects, and searching the vault. (There are more than fifty now; <a href="building-ai-server-part-2.html">Part 2</a> covers the new ones.)</p>
 
             <p>The model asks for a tool by writing a short fenced block. The server runs it, and then &mdash; this was the big fix of the summer &mdash; hands the result <em>back</em> to the model and has it answer from that evidence. Before, the model would call a web search and then answer from memory anyway; now answers are <strong>grounded</strong> in what the tool actually returned.</p>
 
@@ -388,7 +389,7 @@
             <p>Their first security review found a real chain: text from a fetched web page could reach the page as HTML, which could then drive the tools &mdash; a path from a malicious page to running commands on my Mac. It was closed within the day. Later reviews turned up dozens of quieter bugs, including a feature whose conversation history had <em>never</em> worked because an error was silently swallowed. The rule that came out of it: every finding is reproduced before it&rsquo;s fixed, and nothing is self-certified.</p>
 
             <h2>Security</h2>
-            <p>H_AI is <strong>LAN-only by design</strong> &mdash; a deliberate choice, revisited when there&rsquo;s a reason to reach further. Inside that boundary:</p>
+            <p>H_AI started <strong>LAN-only by design</strong>. In October it got a reason to reach further, and now it is also reachable from my own devices anywhere, through <strong>Tailscale</strong> &mdash; a private network between my devices, HTTPS only, never opened to the public internet. Inside that boundary:</p>
 
             <p><strong>Access:</strong> HTTPS everywhere with a self-signed certificate, API keys compared as hashes in constant time, bcrypt-hashed dashboard passwords, and rate limits on both the API and the login page. Images and audio use short-lived signed links instead of exposing the key. The dashboard page no longer carries the API key at all &mdash; the browser authenticates with its login session instead, and only from the server&rsquo;s own pages.</p>
 
@@ -414,7 +415,9 @@
             <h2>What&rsquo;s Next</h2>
             <p>Voice is done. So are images, vision, and long-term memory. What remains:</p>
 
-            <p><strong>Closing the gap with Claude</strong> &mdash; making the local models good enough at tool use that the cloud default becomes optional. Claude is still noticeably better at deciding <em>when</em> to reach for a tool. <strong>Remote access</strong>, probably through an overlay network like Tailscale, once there&rsquo;s a reason for it &mdash; the prerequisites are written down, and taking the API key out of the page was one of them. And more of the same work that turned out to matter most: finding the places where it fails quietly, and making them speak up.</p>
+            <p><strong>Closing the gap with Claude</strong> &mdash; making the local models good enough at tool use that Claude becomes optional. Claude is still noticeably better at deciding <em>when</em> to reach for a tool. <strong>Remote access</strong> was next on this list, and it is done: Tailscale, from my own devices only. And more of the same work that turned out to matter most: finding the places where it fails quietly, and making them speak up.</p>
+
+            <p>The rest of the story &mdash; a hub, a second person at home, receipts, calendars and tools that plug in &mdash; is in <a href="building-ai-server-part-2.html">Part 2: From a Chat Window to a Home Hub</a>.</p>
 
             <p>No subscription for the local models. No data leaving my network unless I pick the cloud model. Just my own hardware, good software, and complete ownership.</p>
         </div>

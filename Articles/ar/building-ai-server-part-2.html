@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>من شباك chat لـ hub للبيت - هشام أبو العلا</title>
+    <meta name="description" content="الجزء التاني من محرك الـ AI الشخصي بتاعي: شهر تغييرات حوّله لإيه. إيصالات، وcalendars، والبيت الذكي، والـ Claude Code sessions بتاعتي، كله من chat خاص واحد على الـ Mac Studio بتاعي، بأدوات بتتركّب كـ plug-ins.">
+    <meta property="og:title" content="من شباك chat لـ hub للبيت - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="الجزء التاني: محرك الـ AI المحلي بتاعي بقى hub للبيت، باستخدامات جديدة كل يوم وأدوات بتتركّب كـ plug-ins.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-2.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-2.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/building-ai-server-part-2.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-2.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/building-ai-server-part-2.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css">
+    <style>
+        .shot { margin: 2rem 0 2.5rem; }
+
+        /* Example requests: what I type, and what happens */
+        .usecase {
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.25rem 1.4rem;
+            margin: 1.5rem 0;
+        }
+        .usecase h3 { margin: 0 0 0.85rem; font-size: 1.05rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.6rem; }
+        .usecase h3 i { color: var(--accent); font-size: 0.95em; width: 1.2em; text-align: center; }
+
+        /* Illustrations */
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+        .art.hero { margin-top: 0; }
+        .usecase .ask {
+            display: block;
+            width: fit-content;
+            max-width: 88%;
+            margin: 0 auto 0.85rem 0;
+            padding: 0.6rem 0.95rem;
+            border-radius: 16px 16px 16px 4px;
+            background: var(--accent);
+            color: var(--bg-primary, #0b0f14);
+            font-weight: 600;
+            line-height: 1.45;
+        }
+        .usecase .ask + .ask { margin-top: -0.4rem; }
+        .usecase p { margin: 0.4rem 0 0; color: var(--text-secondary); }
+        .usecase .tool {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        /* The engine and its add-ons, drawn in real type */
+        .hub-map { margin: 2rem 0 2.5rem; display: grid; gap: 0.6rem; }
+        .hub-row { display: grid; gap: 0.6rem; }
+        .hub-row.entries { grid-template-columns: repeat(3, 1fr); }
+        .hub-row.addons { grid-template-columns: repeat(4, 1fr); }
+        .hub-box {
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.75rem 0.9rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .hub-box strong { display: block; color: var(--text-primary); font-size: 0.98rem; }
+        .hub-box.engine { border-color: var(--accent); }
+        .hub-box.layer { border-style: dashed; }
+        .hub-box .state {
+            display: inline-block;
+            margin-top: 0.35rem;
+            font-family: 'IBM Plex Sans Arabic', var(--font-body, sans-serif);
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+        .hub-arrow { text-align: center; color: var(--text-secondary); font-size: 0.9rem; line-height: 1; }
+        .hub-map figcaption { margin-top: 0.4rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        @media (max-width: 640px) {
+            .hub-row.addons { grid-template-columns: repeat(2, 1fr); }
+            .hub-row.entries { grid-template-columns: 1fr 1fr 1fr; }
+            .hub-box { padding: 0.65rem 0.6rem; font-size: 0.85rem; }
+            .usecase { padding: 1rem 1.05rem; }
+            .usecase .ask { max-width: 100%; }
+        }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../../index.html?choose&lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../ar/home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <div class="wip-badge">لسه بشتغل عليه</div>
+            <h1 class="article-title enter delay-1">من شباك chat لـ hub للبيت</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 1 نوفمبر 2026</span>
+                <span><i class="fas fa-clock"></i> 9 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../building-ai-server-part-2.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">الجزء التاني من محرك الـ AI الشخصي بتاعي. في شهر واحد اتحوّل من شباك chat على الـ Mac Studio بتاعي للمكان اللي بتتقابل فيه الإيصالات، والـ calendars، والبيت الذكي، والـ coding sessions بتاعتي &mdash; وأدواته بقت بتتركّب فيه من برّه.</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/building-ai-server-part-2.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <figure class="art hero">
+            <img src="../../Articles/img/ai-hub-hero.jpg" alt="رسمة: كمبيوتر ألومنيوم صغير منوّر على مكتب وقت المغرب، وطالعة منه خيوط رفيعة لونها كهرماني رايحة لموبايل؛ وفي الأوضة ورا تلفزيون ونتيجة حيطة" width="1536" height="768">
+        </figure>
+
+        <div class="article-content">
+            <p><a href="building-ai-server.html">الجزء الأول</a> خلص أول أكتوبر. H_AI كان بيعرف يعمل chat، ويشوف، ويرسم، ويسمع، ويتكلم، وكان بيحتفظ بكل محادثة في notes vault على الـ Mac بتاعي. الهدف كان جملة واحدة: <em>مساعد AI محلي كويس كفاية إنه يستبدل أدوات الـ AI الخارجية اللي بدفعلها فلوس وببعتلها بياناتي.</em></p>
+
+            <p>الهدف ما اتغيّرش. اللي اتغيّر هو <strong>أنا بطلب منه إيه</strong>. في أكتوبر بطّلت أفتحه عشان أسأل أسئلة وبس، وبقيت أستخدمه أخلّص بيه شغلانات صغيرة في البيت. وده كان محتاج أدوات جديدة، وشخص تاني، وطريقة أحسن أضيف بيها أدوات من غير ما ألمس المحرك كل مرة.</p>
+
+            <h2>الشهر باختصار</h2>
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-house" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>hub، مش chat وبس</strong>
+                        <span>شاشة Hub جنب الـ chat: الـ calendar، والبيت الذكي، والـ shopping tracker، وحالة الـ server، والـ Claude Code sessions بتاعتي</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>بوصله من أي مكان</strong>
+                        <span>عن طريق Tailscale، من أجهزتي أنا بس، HTTPS بس، وعمره ما بيتفتح على الإنترنت العام</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-group" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>اتنين في البيت</strong>
+                        <span>مراتي ليها حساب خاص بيها ومحادثاتها هي، على الويب وفي الـ chat app على موبايلها</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-puzzle-piece" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>أدوات بتتركّب كـ plug-ins</strong>
+                        <span>أكتر من خمسين أداة، متسجّلة دلوقتي في مكان واحد، وطبقة plug-ins عشان الجديد منها ييجي كـ add-ons</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microphone-lines" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>بيرد بصوتي</strong>
+                        <span>الردود المسموعة بصوتي أنا المستنسخ، بتتولّد على الـ Mac، ونفس الصوت اللي بيقرا المقالات دي</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></div>
+                    <div>
+                        <strong>search engine خاص بيه</strong>
+                        <span>البحث على الويب بيعدّي على search engine خاص شغال على الـ Mac، وكل نتيجة بترجع لينك أقدر أدوس عليه</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>حاجات بطلبها منه دلوقتي</h2>
+            <p>أحسن طريقة أوري بيها التغيير هي الأمثلة. دي نوعية الطلبات اللي بطلبها في أي أسبوع عادي. الكلام نفسه متألّف للصفحة دي؛ إنما الأدوات اللي وراه حقيقية.</p>
+
+            <figure class="art">
+                <img src="../../Articles/img/ai-hub-usecases.jpg" alt="رسمة: موبايل، وورقة مطبّقة، ونتيجة صغيرة، وريموت تلفزيون، ومفتاحين نور، وكشكول على ترابيزة، متوصلين بخطوط رفيعة لونها كهرماني بمكعب صغير منوّر" width="1344" height="768" loading="lazy">
+            </figure>
+
+            <div class="usecase">
+                <h3><i class="fas fa-receipt" aria-hidden="true"></i>إيصال، من صورة</h3>
+                <span class="ask">[صورة إيصال من محل]</span>
+                <p>ببعت الصورة في الـ chat، من الـ web app أو من موبايلي. router صغير وسريع بيعرف إنها إيصال مش سؤال، ويبعتها على طول للـ <strong>shopping tracker</strong> بتاعي، وده app صغير تاني على نفس الـ Mac. OCR model محلي بيقرا الحاجات وأسعارها. مفيش حاجة بتتحفظ غير لما أأكد، ولو نفس الإيصال اتبعت مرتين بيتمسك ويترفض.</p>
+                <span class="ask" style="margin-top:0.9rem">صرفنا كام على البقالة الشهر ده؟ والبيض غلي؟</span>
+                <p>بعد أسابيع الإيصالات بتتحول لإجابات. الـ model بيسأل الـ tracker بأدوات زي <span class="tool">shopping_summary</span> و<span class="tool">shopping_price_history</span>، وبيرد من الأرقام اللي بترجعله، مش من ذاكرته.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-calendar-days" aria-hidden="true"></i>calendar العيلة</h3>
+                <span class="ask">شوفلنا ساعة فاضية يوم الخميس بالليل.</span>
+                <span class="ask">ضيف ميعاد دكتور سنان يوم التلات الساعة 3.</span>
+                <p>الـ <a href="tv-calendar.html">calendar اللي عملته لينا</a> ليه أدواته: <span class="tool">calendar_free</span> بتلاقي الأوقات الفاضية، و<span class="tool">calendar_add</span> بتعمل الميعاد. القراية بتحصل على طول. إنما أي حاجة بتضيف ميعاد أو بتغيّره بتعرض كارت الأول، فيه بالظبط اللي هيتحفظ، وتستنى دوسة مني.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-tv" aria-hidden="true"></i>البيت الذكي</h3>
+                <span class="ask">إيه الأجهزة اللي online؟ اقفل التلفزيون.</span>
+                <p>فيه app للبيت الذكي على الـ Mac عارف التلفزيون، والـ Raspberry Pi اللي مشغّل شاشة الـ calendar، وشوية أجهزة SwitchBot. الـ model يقدر يعرضهم ويطلب إن جهاز منهم يعمل حاجة. الحاجات اللي فيها خطورة لازم بني آدم حقيقي يوافق عليها: الـ API key لوحده مش كفاية. الجزء ده لسه بخلّصه.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-file-lines" aria-hidden="true"></i>مستند طويل</h3>
+                <span class="ask">[PDF من 40 صفحة] إيه القرارات التلاتة اللي فيه؟</span>
+                <p>ملفات PDF وWord وPowerPoint وExcel وEPUB بتتقري على الـ Mac. الـ scans بتعدّي على OCR model صغير اسمه GLM&#8209;OCR؛ والصفحات العربي بتروح للـ vision model، لأنه بيقرا عربي أحسن. والملف الطويل بيتلخّص الأول، عشان ييجي على قد ذاكرة الـ model. وده كمان لسه بخلّصه.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-gauge-high" aria-hidden="true"></i>الـ Mac نفسه</h3>
+                <span class="ask">الـ Mac عامل إيه؟</span>
+                <p>أداة <span class="tool">server_status</span> بتقرا الذاكرة والـ CPU والـ GPU وأنهي خدمات AI شغالة، والرد بيرجع بكلام بسيط. وجنبها فيه لوحة System تقدر تفضّي ذاكرة أو تعيد تشغيل خدمة وقفت، ودي بتظهر ليّا أنا بس.</p>
+            </div>
+
+            <div class="usecase">
+                <h3><i class="fas fa-laptop-code" aria-hidden="true"></i>الـ coding sessions بتاعتي، من على الكنبة</h3>
+                <span class="ask">[صفحة الـ Claude sessions، على موبايلي]</span>
+                <p>بشغّل كذا Claude Code session على الـ Mac. صفحة في الـ Hub بتعرض كل واحدة &mdash; <em>شغالة</em>، <em>مستنياك</em>، <em>خلصت</em> &mdash; مع آخر سطور طلعت منها، وبتخليني أرد عليها. وصفحة تانية بتقرا الـ to&#8209;do list بتاعة المشروع وتقدر تبدأ منها شغلانة.</p>
+            </div>
+
+            <h2>شخص تاني في البيت</h2>
+            <p>الجزء الأول كان بيقول &laquo;لشخص واحد&raquo;. في أكتوبر مراتي بدأت تستخدمه هي كمان، غالباً من الـ chat app على موبايلها، اللي كتبت عنه في <a href="texting-my-ai.html">بكلّم الـ AI بتاعي على الموبايل</a>. وده طلع شغل أكتر من أي أداة.</p>
+
+            <p>كل حساب دلوقتي ليه <strong>قايمة محادثات خاصة بيه</strong>. والـ model عارف هو بيكلّم مين. تغيير المشاريع، ووضع الـ coding agent، وأي حاجة ممكن تلمس الـ code، دول <strong>ليّا أنا بس</strong>. أما الـ notes vault المشترك، يبان لكل الحسابات ولا لأ؟ ده لسه سؤال مفتوح، مكتوب ومستني قرار.</p>
+
+            <p>آخر حتة هي <strong>الـ single sign&#8209;on</strong>. الـ calendar والبيت الذكي والـ shopping tracker كان كل واحد فيهم ليه طريقة دخول لوحده. دلوقتي الـ AI app هو المكان الوحيد اللي فيه password، والـ apps التانية بتدخّلك عن طريقه. الـ code اتبنى واتراجع، ومستنيني أشغّله.</p>
+
+            <h2>أدوات بتتركّب كـ plug-ins</h2>
+            <figure class="art">
+                <img src="../../Articles/img/ai-hub-plugins.jpg" alt="رسمة: مكعبات ألومنيوم ونحاس متركّبة في بعض بوصلات صغيرة، زي إضافات بتتركّب في نظام واحد" width="1344" height="768" loading="lazy">
+            </figure>
+
+            <p>مع آخر أكتوبر المحرك كان فيه أكتر من خمسين أداة، وكل واحدة متسجّلة في حوالي عشرة أماكن: أنهي أدوات بتشتغل من غير ما تستأذن، وأنهي بتكتب، وأنهي ينفع تشتغل جنب بعض، وأنهي موثوق فيها. إني أضيف أداة للـ calendar كان معناه أغيّر المحرك في الأماكن دي كلها، ولو نسيت مكان واحد يبقى security bug مستني يحصل.</p>
+
+            <p>فالخطة دلوقتي إني أطلّع الأدوات <strong>برّه المحرك</strong>. كل add-on &mdash; الـ calendar، والبيت الذكي، والـ shopping tracker &mdash; بييجي معاه ملف صغير بيوصف أدواته، والمحرك بيحمّله عن طريق طبقة plug-ins واحدة. الـ plug-in يقدر بس <em>يطلب</em> صلاحيات؛ الـ settings بتاعتي أنا هي اللي بتقرر ياخد إيه فعلاً.</p>
+
+            <figure class="hub-map">
+                <div class="hub-row entries">
+                    <div class="hub-box"><strong>الـ web app</strong>لابتوب، موبايل</div>
+                    <div class="hub-box"><strong>الـ chat app</strong>Element X</div>
+                    <div class="hub-box"><strong>الصوت</strong>رايح وجاي</div>
+                </div>
+                <div class="hub-arrow" aria-hidden="true">&darr;</div>
+                <div class="hub-box engine"><strong>المحرك</strong>models محلية، وClaude لما أختاره، ولفّة الأدوات، والـ notes vault</div>
+                <div class="hub-arrow" aria-hidden="true">&darr;</div>
+                <div class="hub-box layer"><strong>طبقة الـ plug-ins</strong>كل add-on بيوصف أدواته &middot; هو يطلب، والـ settings بتاعتي تقرر &middot; أي تغيير محتاج دوسة مني</div>
+                <div class="hub-arrow" aria-hidden="true">&darr;</div>
+                <div class="hub-row addons">
+                    <div class="hub-box"><strong>الـ calendar</strong><span class="state">الأول، شغال عليه</span></div>
+                    <div class="hub-box"><strong>البيت الذكي</strong><span class="state">اللي بعده</span></div>
+                    <div class="hub-box"><strong>الـ shopping tracker</strong><span class="state">اللي بعده</span></div>
+                    <div class="hub-box"><strong>الـ Claude sessions</strong><span class="state">بعدين</span></div>
+                </div>
+                <figcaption>أنا بطلب منين، والمحرك، والـ add-ons اللي بيحمّلها.</figcaption>
+            </figure>
+
+            <p>الشغل ماشي على مراحل، وبعد كل مرحلة لازم كل حاجة تشتغل بالظبط زي الأول. أول خطوة سجّلت كل الأدوات في <strong>registry واحد</strong>، والقايمة اتقارنت بـ snapshot للسلوك القديم. التانية بنت الـ plug-in loader، ومفيش حاجة فيه متشغّلة. والـ calendar هو أول تجربة: سلوكه النهارده اتجمّد في test الأول، عشان النسخة الجديدة تتقارن بيه، إجابة بإجابة.</p>
+
+            <h2>قاعدة واحدة للذاكرة</h2>
+            <p>الـ Mac فيه 64 GB، وكل حاجة بتتقاسمهم. في ليلة، الـ voice server كان ماسك <strong>48 GB</strong> وزق 9 GB على الـ swap، والجهاز كله بقى بيزحف. مفيش حاجة كانت عطلانة. كل جزء كان بس سايب الـ model بتاعه محمّل، يمكن يحتاجه.</p>
+
+            <p>دلوقتي فيه قاعدة واحدة، ومتطبّقة في مكان واحد: <strong>مفيش model بيبدأ غير لو ربع الذاكرة فاضي</strong>؛ والـ image models والـ voice models بتشتغل واحد واحد؛ وأي حاجة بتحمّل model بتفضّيه لما تخلص. كل call في المحرك بيعدّي على نفس البوابة، والـ scripts بتاعتي كمان. والبوابة نفسها اتعلّمت ما تبقاش سبب جديد للعطل: لو حصلها مشكلة، الرد في الـ chat بيكمّل عادي.</p>
+
+            <h2>فشل شكله نجاح، تاني</h2>
+            <p>درس الجزء الأول كان إن الفشل هنا بيقدّم نفسه على إنه نجاح. وأكتوبر طلّع حالات جديدة:</p>
+
+            <p><strong>المحادثات الطويلة كانت بتضيّع أولها.</strong> المحرك كان بيقول للـ models المحلية تستخدم حوالي 32,000 token ذاكرة، وهو فاكر إنها أربع أضعاف كده. فالـ model كان بيرمي أول المحادثات الطويلة من غير ما يقول، ويرد عادي. دلوقتي المحرك بيسأل كل model بيستحمل قد إيه، وبيعدّ الـ tokens الحقيقية، وبيلخّص المحادثة قبل ما تفيض.</p>
+
+            <p><strong>الـ vault كان بينسى أجزاء من المحادثة.</strong> بعد التلخيص، الحفظ اللي بعده كان بيكتب ملاحظة المحادثة من جديد من اللي فاضل، والجزء اللي اتلخّص كان بيضيع. دلوقتي الملاحظة بتتبني من المحادثة كلها، والملخص بيبان في المكان اللي حصل فيه.</p>
+
+            <p><strong>قفل الموبايل كان بيسيب إجابة من غير سؤال.</strong> لو الموبايل اتقفل في نص الإجابة، الـ server كان بيحفظ الإجابة ومش بيحفظ السؤال. دلوقتي الـ app بيستحمل القفل، والـ server بيبعت heartbeat صغير وقت الأدوات اللي بتطوّل، عشان يبقى فيه فرق بين اتصال مات وأداة بطيئة.</p>
+
+            <p><strong>&laquo;خلصت&raquo; ومفيش حاجة اتعملت.</strong> نسخة بدري من خطوات الإيصالات كانت ممكن تقول إن الإيصال اتحفظ وهو ما اتحفظش. دلوقتي بتقول بس اللي الـ tracker يأكده.</p>
+
+            <h2>شغال من غير ما أفكر فيه</h2>
+            <p>دلوقتي فيه حوالي 12 خدمة: المحرك، والـ models، والـ voice server، والـ search engine، والـ chat server والـ bridge بتاعه، والـ calendar، والبيت الذكي، والـ shopping tracker. أمر واحد بيشغّلهم ويوقّفهم ويتأكد منهم كلهم، وmacOS بيشغّلهم لوحده أول ما أعمل login. وفيه أيقونة في الـ menu bar بتوريني أنهي واحدة شغالة.</p>
+
+            <p>والشغل نفسه بيتتابع بنفس الطريقة. كل أداة وfeature ومهمة مفتوحة ليها سطر واحد في <strong>contract file</strong> واحد، فيه مين مسؤول عنها وحالتها إيه. وفيه Claude Code command بياخد السطر ويعدّيه على الفريق: Opus يخطط، وSonnet يبني، وOpus يراجع، وبعدين security check، وبعدين commit. ولما أطلب، فيه security audit كامل بيقرا المشروع كله؛ آخر واحد لقى تسع مشاكل، والتسعة اتصلحوا في نفس اليوم.</p>
+
+            <h2>إزاي فاضل خاص</h2>
+            <p><strong>أجهزتي بس.</strong> كل حاجة شغالة على الـ Mac وبتتوصل عن طريق Tailscale. مفيش حاجة مفتوحة على الإنترنت.</p>
+
+            <p><strong>الصور مش بتتكوّم.</strong> الصورة اللي بتتبعت في الـ chat بتروح لملف خاص عمره قصير، وبعدين للـ app اللي محتاجها. ومش بتتنسخ في الـ notes vault.</p>
+
+            <p><strong>أقل تفاصيل ممكنة.</strong> الإيصالات بتحتفظ باسم المكان، مش بموقعه. والـ logs بتخبّي الأسرار قبل ما تتكتب.</p>
+
+            <p><strong>الناس هي اللي بتوافق، مش الـ keys.</strong> الحاجات اللي فيها خطورة &mdash; في البيت، أو في الـ code، أو في اللينكات المشتركة &mdash; محتاجة حد يدوس موافقة. والـ key المسروق لوحده ما يقدرش يعملها.</p>
+
+            <div class="quote">
+                بطّل يبقى app بفتحه، وبقى المكان اللي شغلانات البيت الصغيرة بتخلص فيه.
+            </div>
+
+            <h2>اللي جاي</h2>
+            <p>إني أخلّص نقل الأدوات للـ plug-ins: الـ calendar الأول، وبعدين البيت الذكي والـ shopping tracker. ملاحظات مشتريات كل أسبوع، الـ AI ينزّلها في الـ chat. بحث في كل محادثاتي القديمة، مش في الـ vault بس. إجابات بتفضل شغالة لما الموبايل يتقفل، وتكمّل من مكان ما وقفت. ونفس الشغل القديم: إني أقفل الفجوة بين الـ models المحلية وClaude، وألاقي الأماكن اللي بيفشل فيها من غير صوت.</p>
+
+            <p>لسه مفيش اشتراك للـ models المحلية، ولسه مفيش حاجة بتخرج من البيت إلا لو اخترت الـ cloud.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>المحرك والـ add-ons بتاعته والمقال ده اتبنوا بـ <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="tv-calendar.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">calendar مشترك على التلفزيون</span>
+            </a>
+            <a href="building-ai-server.html" class="article-nav-link next">
+                <span class="nav-label">اقرا الجزء الأول &larr;</span>
+                <span class="nav-title">بناء محرك AI شخصي</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/listen.js" defer></script>
+    <script src="../../js/back-menu.js" defer></script>
+    <script src="../../js/appearance.js?v=3" defer></script>
+    <script src="../../js/reader-bar.js?v=3" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+<script src="../../tracks/assets/mascot.js?v=3" defer></script>
+<script src="../../tracks/assets/mascot-buddy.js?v=3" defer></script>
+</body>
+</html>

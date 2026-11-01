@@ -177,7 +177,7 @@
             <h1 class="article-title enter delay-1">بناء محرك AI شخصي</h1>
             <div class="article-meta enter delay-2">
                 <span><i class="fas fa-calendar-alt"></i> 16 فبراير 2026</span>
-                <span><i class="fas fa-sync-alt"></i> اتحدّث 2 أكتوبر 2026</span>
+                <span><i class="fas fa-sync-alt"></i> اتحدّث 1 نوفمبر 2026</span>
                 <span><i class="fas fa-clock"></i> 12 دقيقة قراية</span>
                 <span><i class="fas fa-user"></i> هشام أبو العلا</span>
                 <a class="lang-switch" href="../building-ai-server.html" lang="en" hreflang="en">Read in English</a>
@@ -195,6 +195,7 @@
 
             <div class="update-note">
                 <strong>تحديث، أكتوبر 2026.</strong> لما كتبت المقال ده أول مرة في فبراير، كان H_AI شباك chat ومعاه شوية أدوات. من ساعتها اتعلم يشوف ويرسم ويسمع ويتكلم &mdash; كله على نفس الجهاز &mdash; وبيحتفظ بكل محادثة في vault في Obsidian يقدر يدوّر فيه. وكمان عدّى على سلسلة code reviews عملها فريق صغير من الـ AI agents، وده علّمني عن الفشل أكتر من أي feature. وعشان كده أعدت كتابة المقال.
+                <br><br><strong>تحديث، نوفمبر 2026.</strong> المقال ده بقى الجزء الأول: الحكاية من فبراير لأكتوبر. شوية معلومات تحت اتحدّثت (الـ model الافتراضي، والوصول من بعيد، وعدد الأدوات). اللي جه بعد كده &mdash; الـ hub، وشخص تاني في البيت، وأدوات بتتركّب كـ plug-ins &mdash; موجود في <a href="building-ai-server-part-2.html">الجزء التاني: من شباك chat لـ hub للبيت</a>.
             </div>
 
             <p>الهدف دلوقتي مكتوب في أول الـ to&#8209;do list بتاعة المشروع: <em>مساعد AI محلي، لشخص واحد، كويس كفاية إنه يستبدل أدوات الـ AI الخارجية اللي بدفعلها فلوس وببعتلها بياناتي.</em> كل تغيير بيتقاس على الجملة دي.</p>
@@ -235,47 +236,47 @@
             <table class="model-table">
                 <tr>
                     <th>الـ model</th>
-                    <th>الـ Context Window</th>
+                    <th>الـ Context المستخدم</th>
                     <th>أنسب لـ</th>
                 </tr>
                 <tr>
-                    <td><strong>Claude Sonnet</strong></td>
-                    <td>~150,000 كلمة</td>
-                    <td>الـ default للأسئلة الصعبة &mdash; ومعاه fallback محلي automatic</td>
-                </tr>
-                <tr>
                     <td><strong>Qwen 3.8 27B (MLX)</strong></td>
-                    <td>~100,000 كلمة</td>
-                    <td>الـ model المحلي الأساسي، والـ vision، والـ fallback لما Claude مش متاح</td>
+                    <td>~49,000 token</td>
+                    <td>الـ default: الـ model المحلي الأساسي، والـ vision، والـ fallback لـ Claude</td>
                 </tr>
                 <tr>
                     <td><strong>Qwen 3.6 35B-A3B</strong></td>
-                    <td>~100,000 كلمة</td>
-                    <td>Mixture&#8209;of&#8209;experts &mdash; model كبير وتكلفة صغيرة لكل token</td>
+                    <td>~32,000 token</td>
+                    <td>Mixture&#8209;of&#8209;experts &mdash; model كبير وتكلفة صغيرة لكل token؛ المساعد السريع</td>
                 </tr>
                 <tr>
                     <td><strong>Gemma 4 26B / 31B</strong></td>
-                    <td>~100,000 كلمة</td>
+                    <td>~32,000 token</td>
                     <td>reasoning وكتابة بشكل عام</td>
                 </tr>
                 <tr>
                     <td><strong>Gemma 4 (small)</strong></td>
-                    <td>~50,000 كلمة</td>
+                    <td>~32,000 token</td>
                     <td>أسئلة اليوم العادية السريعة</td>
                 </tr>
                 <tr>
                     <td><strong>gpt-oss 20B</strong></td>
-                    <td>~6,000 كلمة</td>
+                    <td>~32,000 token</td>
                     <td>مهام قصيرة ومحددة</td>
                 </tr>
                 <tr>
-                    <td><strong>DeepSeek-OCR</strong></td>
+                    <td><strong>GLM-OCR</strong></td>
                     <td>&mdash;</td>
-                    <td>قراية النص من الصور والـ scans</td>
+                    <td>قراية النص من الـ scans والصور والمستندات</td>
+                </tr>
+                <tr>
+                    <td><strong>Claude</strong> (اختياري)</td>
+                    <td>أكبر بكتير</td>
+                    <td>بختاره بإيدي للأسئلة الصعبة، ومعاه fallback محلي automatic</td>
                 </tr>
             </table>
 
-            <p>لسه أقدر أبدّل الـ model في نص المحادثة من الـ header. الجديد إن الـ default بقى <strong>Claude</strong>، بوصله عن طريق الـ Claude Code CLI، والـ server بيتأكد منه قبل كل رد. لو الـ CLI مش موجود أو عامل logout أو وصل للـ rate limit، الرد بيتحوّل بهدوء لـ Qwen 3.8 &mdash; بس عمره ما بيحصل <em>من غير ما أعرف</em>: الـ chat بيعرض تنبيه فيه رسالة الخطأ بتاعة Claude نفسه، لأن لو الـ model نزل لـ model أضعف من غير ما أعرف، هيبان كأن Claude هو اللي بيرد وحش. Claude مريّح، بس مش هو الأساس؛ الشغل الحقيقي هو إني أقفل الفجوة لحد ما الـ models المحلية ما تبقاش محتاجاه.</p>
+            <p>لسه أقدر أبدّل الـ model في نص المحادثة من الـ header. لمدة شهر تقريباً من أول سبتمبر كان الـ default هو <strong>Claude</strong>، بوصله عن طريق الـ Claude Code CLI؛ ومن أكتوبر الـ default رجع محلي: <strong>Qwen 3.8</strong>، وClaude موجود بدوسة واحدة في الـ header (والـ default نفسه بيتغيّر من الـ dashboard). لما بختار Claude، الـ server بيتأكد منه قبل كل رد. لو الـ CLI مش موجود أو عامل logout أو وصل للـ rate limit، الرد بيتحوّل لـ Qwen 3.8 &mdash; بس عمره ما بيحصل <em>من غير ما أعرف</em>: الـ chat بيعرض تنبيه فيه رسالة الخطأ بتاعة Claude نفسه، لأن لو الـ model نزل لـ model أضعف من غير ما أعرف، هيبان كأن Claude هو اللي بيرد وحش. Claude مريّح، بس مش هو الأساس؛ الشغل الحقيقي هو إني أقفل الفجوة لحد ما الـ models المحلية ما تبقاش محتاجاه.</p>
 
             <h2>واجهة الويب</h2>
             <p>قلب المشروع لسه هو الـ webapp: <span class="highlight">FastAPI</span> في الـ back end، وvanilla HTML/CSS/JS في الـ front end، ومتاح على HTTPS للابتوب والموبايل والتابلت. في مارس اتعمله redesign كامل، وفي سبتمبر لفّة تظبيط للموبايل: خانة الكتابة كانت 48% من عرض الموبايل وبقت 64%، وكل زرار بقى قد الحد الأدنى للـ touch target.</p>
@@ -328,8 +329,8 @@
                 <div class="feature-card">
                     <div class="feature-icon">🛠️</div>
                     <div>
-                        <strong>30 skill جاهزين</strong>
-                        <span>ملفات، وgit، وبحث على الويب، وتحميل صفحات ويب، وgrep، وآلة حاسبة، وصور، وصوت، وبحث في ملاحظاتي أنا</span>
+                        <strong>أكتر من 50 أداة جاهزة</strong>
+                        <span>ملفات، وgit، وبحث على الويب، وتحميل صفحات ويب، وgrep، وآلة حاسبة، وصور، وصوت، وبحث في ملاحظاتي أنا &mdash; ومن أكتوبر كمان calendar، وshopping tracker، والبيت الذكي</span>
                     </div>
                 </div>
                 <div class="feature-card">
@@ -348,9 +349,9 @@
 
             <img src="../../Pictures/ai-server-2026-image.jpg" alt="بطلب من H_AI فنار وقت المغرب: الصورة اترسمت محلي بـ Draw Things واتحفظت في الـ vault" style="width:100%;border-radius:12px;box-shadow:var(--card-shadow);margin:1.5rem 0;">
 
-            <p><strong>الـ Vision والـ OCR.</strong> Qwen 3.8 يقدر يبص على صورة أو screenshot ملصوقة؛ وDeepSeek&#8209;OCR بيقرا النص من الـ scans. تقدر تولّد صورة وبعدين تطلب من الـ vision model يوصفها &mdash; لفّة رايح جاي بستخدمها كـ smoke test (&laquo;&#8294;a single blue marble&#8297;&raquo; رجعت &laquo;&#8294;a glossy blue stone sphere&#8297;&raquo;).</p>
+            <p><strong>الـ Vision والـ OCR.</strong> Qwen 3.8 يقدر يبص على صورة أو screenshot ملصوقة؛ وGLM&#8209;OCR بيقرا النص من الـ scans والمستندات (والعربي بيرجع لـ Qwen 3.8، لأنه بيقراه أحسن). تقدر تولّد صورة وبعدين تطلب من الـ vision model يوصفها &mdash; لفّة رايح جاي بستخدمها كـ smoke test (&laquo;&#8294;a single blue marble&#8297;&raquo; رجعت &laquo;&#8294;a glossy blue stone sphere&#8297;&raquo;).</p>
 
-            <p><strong>الصوت.</strong> تحويل الكلام لنص والعكس بيعدّوا على <span class="highlight">Voicebox</span>، شغّال محلي &mdash; نفس الـ setup اللي كتبت عنه في <a href="local-voice-generation.html">توليد الصوت من النص بـ models محلية</a>. الإدخال الصوتي كان أول بند في قايمة &laquo;الخطوة الجاية&raquo; بتاعتي في فبراير. وخلصت.</p>
+            <p><strong>الصوت.</strong> تحويل الكلام لنص والعكس بيعدّوا على <span class="highlight">Voicebox</span>، شغّال محلي، والردود اللي بيقراها بصوت عالي بتطلع بصوتي أنا المستنسخ &mdash; نفس الـ setup اللي كتبت عنه في <a href="local-voice-generation.html">توليد الصوت من النص بـ models محلية</a>. الإدخال الصوتي كان أول بند في قايمة &laquo;الخطوة الجاية&raquo; بتاعتي في فبراير. وخلصت.</p>
 
             <h2>ذاكرة بتفضل في البيت</h2>
             <p>كل محادثة دلوقتي بتتكتب في <strong>Obsidian vault</strong> كملاحظة Markdown: الكلام اللي اتقال، وأي code اتولّد، وروابط للصور والصوت اللي اتعملوا. المحادثات ممكن تتفرّع، والفرع بيحتفظ برابط لأصله، فالـ vault بيبان كـ graph لتفكيري مشي إزاي، مش مجرد كومة logs.</p>
@@ -358,7 +359,7 @@
             <p>والأهم إن المساعد يقدر <em>يدوّر</em> في الـ vault ده. &laquo;&#8294;What did we decide about the database?&#8297;&raquo; أو &laquo;&#8294;Search my notes for the gold price&#8297;&raquo; بيعملوا بحث في ملاحظاتي أنا، والرد بيطلع من اللي موجود فيها. دي الحاجة الوحيدة اللي مفيش أداة خارجية تقدر تعملها زيها، لأن الملاحظات موجودة على الجهاز ده بس. ولما مفيش حاجة تطابق، بيقول كده &mdash; قبل ما أوصّل ده، لما كنت أسأل model محلي عن ملاحظاتي كان بيألّف واحدة بكل ثقة اسمها &laquo;&#8294;Gold Price History&#8297;&raquo;.</p>
 
             <h2>نظام الـ Skills</h2>
-            <p>الـ AI مش مجرد chatbot &mdash; يقدر <span class="highlight">يعمل حاجات بنفسه</span>. فيه دلوقتي 30 skill: قراية الملفات وكتابتها، والبحث في الـ code، وgit، وتحميل صفحات الويب، والبحث على الويب، والحسابات، وتوليد الصور والكلام، والتنقل بين المشاريع، والبحث في الـ vault.</p>
+            <p>الـ AI مش مجرد chatbot &mdash; يقدر <span class="highlight">يعمل حاجات بنفسه</span>. لحد أكتوبر كان فيه 30 skill: قراية الملفات وكتابتها، والبحث في الـ code، وgit، وتحميل صفحات الويب، والبحث على الويب، والحسابات، وتوليد الصور والكلام، والتنقل بين المشاريع، والبحث في الـ vault. (دلوقتي بقوا أكتر من خمسين؛ و<a href="building-ai-server-part-2.html">الجزء التاني</a> بيحكي عن الجداد.)</p>
 
             <p>الـ model بيطلب أداة بإنه يكتب fenced block قصير. الـ server بيشغّله، وبعدين &mdash; وده كان الإصلاح الكبير في الصيف &mdash; بيدّي النتيجة <em>للـ model تاني</em> ويخليه يرد من الدليل ده. قبل كده الـ model كان بينده بحث على الويب وبعدين يرد من ذاكرته برضو؛ دلوقتي الإجابات <strong>مبنية</strong> على اللي الأداة رجّعته فعلاً.</p>
 
@@ -389,7 +390,7 @@
             <p>أول security review عملوه لقى سلسلة حقيقية: نص من صفحة ويب اتحمّلت ممكن يوصل للصفحة كـ HTML، وده ممكن بعدين يشغّل الأدوات &mdash; طريق من صفحة خبيثة لتشغيل أوامر على الـ Mac بتاعي. اتقفل في نفس اليوم. المراجعات اللي بعدها طلّعت عشرات الـ bugs اللي مش باينة أوي، منها feature تاريخ المحادثات بتاعها <em>عمره ما اشتغل</em> لأن خطأ كان بيتبلع في السكوت. القاعدة اللي طلعت من ده: كل finding لازم يتعمله reproduce قبل ما يتصلّح، ومحدش بيمضي على شغله بنفسه.</p>
 
             <h2>الأمان</h2>
-            <p>H_AI <strong>معمول من الأساس للـ LAN بس</strong> &mdash; قرار مقصود، هراجعه لما يبقى فيه سبب أوصل أبعد. جوه الحدود دي:</p>
+            <p>H_AI بدأ <strong>للـ LAN بس، عن قصد</strong>. في أكتوبر بقى فيه سبب أوصل أبعد، ودلوقتي كمان أجهزتي أنا (وبس) تقدر توصله من أي مكان، عن طريق <strong>Tailscale</strong> &mdash; شبكة خاصة بين أجهزتي، HTTPS بس، وعمرها ما بتتفتح على الإنترنت العام. جوه الحدود دي:</p>
 
             <p><strong>الوصول:</strong> HTTPS في كل مكان بشهادة self&#8209;signed، ومفاتيح الـ API بتتقارن كـ hashes في constant time، وpasswords الـ dashboard متخزّنة بـ bcrypt، وrate limits على الـ API وصفحة تسجيل الدخول الاتنين. الصور والصوت بيستخدموا signed links عمرها قصير بدل ما المفتاح يبان. وصفحة الـ dashboard مبقتش تشيل مفتاح الـ API خالص &mdash; المتصفح بيعمل authentication بالـ login session بتاعته بدل كده، ومن صفحات الـ server نفسه بس.</p>
 
@@ -415,9 +416,11 @@
             <h2>الخطوة الجاية</h2>
             <p>الصوت خلص. وكمان الصور والرؤية والذاكرة طويلة المدى. اللي فاضل:</p>
 
-            <p><strong>قفل الفجوة مع Claude</strong> &mdash; إني أخلّي الـ models المحلية كويسة كفاية في استخدام الأدوات لدرجة إن الافتراضي بتاع الـ cloud يبقى اختياري. Claude لسه أحسن بشكل واضح في إنه يعرف <em>إمتى</em> يستخدم أداة. <strong>الوصول من بعيد</strong>، غالباً عن طريق overlay network زي Tailscale، لما يبقى فيه سبب له &mdash; المتطلبات مكتوبة، وشيل مفتاح الـ API من الصفحة كان واحد منها. وكمان أكتر من الشغل اللي طلع هو الأهم: إني ألاقي الأماكن اللي بيفشل فيها من غير صوت، وأخليها تتكلم.</p>
+            <p><strong>قفل الفجوة مع Claude</strong> &mdash; إني أخلّي الـ models المحلية كويسة كفاية في استخدام الأدوات لدرجة إن Claude يبقى اختياري. Claude لسه أحسن بشكل واضح في إنه يعرف <em>إمتى</em> يستخدم أداة. <strong>الوصول من بعيد</strong> كان الخطوة الجاية في القايمة دي، وخلص: Tailscale، ومن أجهزتي بس. وكمان أكتر من الشغل اللي طلع هو الأهم: إني ألاقي الأماكن اللي بيفشل فيها من غير صوت، وأخليها تتكلم.</p>
 
-            <p>مفيش اشتراك للـ models المحلية. ومفيش بيانات بتخرج من الشبكة بتاعتي إلا لو اخترت الـ cloud. model بس الـ hardware بتاعي، وsoftware كويس، وكل حاجة ملكي أنا.</p>
+            <p>باقي الحكاية &mdash; hub، وشخص تاني في البيت، والإيصالات، والـ calendars، وأدوات بتتركّب كـ plug-ins &mdash; موجودة في <a href="building-ai-server-part-2.html">الجزء التاني: من شباك chat لـ hub للبيت</a>.</p>
+
+            <p>مفيش اشتراك للـ models المحلية. ومفيش بيانات بتخرج من الشبكة بتاعتي إلا لو اخترت الـ cloud. بس الـ hardware بتاعي، وsoftware كويس، وكل حاجة ملكي أنا.</p>
         </div>
 
         <div class="article-nav reveal-up">

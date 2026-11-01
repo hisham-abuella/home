@@ -1,0 +1,51 @@
+{
+ "title": "From a Chat Window to a Home Hub",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] From a Chat Window to a Home Hub. <break time=\"0.4s\" /> Part two of my personal AI engine. By Hisham Abu ella. <break time=\"0.8s\" /> Part one ended in early October. Aitch ay eye could chat, see, draw, listen, and speak, and it kept every conversation in a notes vault on my Mac. The goal was one sentence. A local AI assistant, good enough to replace the outside AI tools I pay for and send my data to. <break time=\"0.4s\" /> The goal hasn't changed. What changed is what I ask it. In October I stopped opening it only to ask questions, and started using it to do small jobs around the house. That needed new tools, a second person, and a better way to add tools without touching the engine every time. <break time=\"0.4s\" /> In one month, it got a hub next to the chat. It became reachable from anywhere, but only from my own devices, through Tailscale. My wife got her own sign in. It passed fifty tools. It answers out loud in my own cloned voice. And web search now runs through a private search engine on the Mac."
+  },
+  {
+   "id": "s01",
+   "title": "Things I Ask It Now",
+   "transcript": "Things I ask it now. <break time=\"0.5s\" /> The best way to show the change is by example. The wording here is made up, but the tools behind it are real. <break time=\"0.4s\" /> First, a receipt. I send a photo of a shop receipt in the chat. A small, fast router sees that it's a receipt, not a question, and sends it straight to my shopping tracker, another small app on the same Mac. A local model reads the items and prices. Nothing is saved until I confirm it, and the same receipt sent twice is refused. <break time=\"0.4s\" /> Weeks later, the receipts become answers. How much did we spend on groceries this month? Has the price of eggs gone up? The model asks the tracker, and answers from the numbers it gets back, not from memory. <break time=\"0.4s\" /> Second, the family calendar. Find us a free hour on Thursday evening. Add a dentist appointment on Tuesday at three. Reading happens at once. Anything that adds or changes an event shows a card first, with exactly what will be saved, and waits for my tap."
+  },
+  {
+   "id": "s02",
+   "title": "More Things I Ask It",
+   "transcript": "Third, the smart home. Which devices are online? Turn the TV off. The model can list the devices and ask for an action, but the risky actions need a real person to approve them. A key alone isn't enough. That part is still being finished. <break time=\"0.4s\" /> Fourth, long documents. I give it a forty page PDF, and ask for the three decisions in it. Word files, slides, spreadsheets and e books are read on the Mac too, and a long file is condensed first so it fits. Also still being finished. <break time=\"0.4s\" /> Fifth, the Mac itself. How is the Mac doing? A status tool reads the memory, the processor, the graphics chip, and which AI services are up, and the answer comes back in plain words. <break time=\"0.4s\" /> And last, my coding sessions, from the sofa. I run several Claude Code sessions on the Mac. A page in the hub shows each one, working, waiting for me, or done, with its last lines of output, and lets me answer it from my phone."
+  },
+  {
+   "id": "s03",
+   "title": "A Second Person at Home",
+   "transcript": "A second person at home. <break time=\"0.5s\" /> Part one said, for one person. In October my wife started using it too, mostly through the chat app on her phone. That turned out to be more work than any tool. <break time=\"0.4s\" /> Each sign in now has its own list of conversations, and the model knows who it's talking to. Changing projects, the coding agent, and anything that can touch code, are mine only. Whether the shared notes vault should be visible to everyone is still an open question, written down and waiting for a decision. <break time=\"0.4s\" /> The last piece is single sign on. The calendar, the smart home, and the shopping tracker each had their own way in. Now the AI app is the one place with a password, and the other apps let you in through it. It's built and reviewed, and waiting for me to switch it on."
+  },
+  {
+   "id": "s04",
+   "title": "Tools That Plug In",
+   "transcript": "Tools that plug in. <break time=\"0.5s\" /> By the end of October the engine had more than fifty tools, and each one was registered in about ten places. Which tools run without asking, which ones write, which ones can run side by side, which ones are trusted. Adding one calendar tool meant changing the engine in all of them. [serious] And forgetting one was a security bug waiting to happen. <break time=\"0.4s\" /> So the plan now is to take the tools out of the engine. Every add on, the calendar, the smart home, the shopping tracker, ships a small file that describes its tools, and the engine loads it through one plug in layer. A plug in can only ask for permissions. My own settings decide what it actually gets. <break time=\"0.4s\" /> It goes in phases, and each one has to behave exactly like before. First, every tool was listed in one registry, checked against a snapshot of the old behaviour. Then the plug in loader was built, with nothing switched on. The calendar is the pilot. Its behaviour today was frozen into a test first, so the new version can be compared with it, answer for answer."
+  },
+  {
+   "id": "s05",
+   "title": "One Rule for Memory",
+   "transcript": "One rule for memory. <break time=\"0.5s\" /> The Mac has sixty four gigabytes, shared by everything. One evening the voice server was holding forty eight of them, and had pushed nine more into swap, and the whole machine crawled. [sighs] Nothing had failed. Every part was just keeping its model loaded, in case. <break time=\"0.4s\" /> Now there is one rule, enforced in one place. No model starts unless a quarter of the memory is free. Image and voice models run one at a time. And whatever loads a model frees it when it's done. Every call in the engine goes through the same gate, and so do my own scripts. The gate also learned not to become a new way to fail. If it has a problem, the chat still goes through."
+  },
+  {
+   "id": "s06",
+   "title": "Failures That Look Like Success, Again",
+   "transcript": "Failures that look like success, again. <break time=\"0.5s\" /> Part one's lesson was that failures here announce themselves as successes. October found new ones. <break time=\"0.4s\" /> Long chats lost their beginning. The engine told the local models to use about thirty two thousand tokens of memory, while it assumed four times that. The model quietly dropped the start of long conversations, and answered anyway. Now it asks each model what it supports, counts real tokens, and summarizes before it overflows. <break time=\"0.4s\" /> The vault forgot turns. After a summary, the next save rewrote the note from what was left, and the summarized part was gone. Now the note is rebuilt from the full history. <break time=\"0.4s\" /> Locking the phone left an answer with no question. The app now survives a lock, and the server sends a small heartbeat during long tool runs, so a dead connection can be told apart from a slow tool. <break time=\"0.4s\" /> And one early version of the receipt flow could say a receipt was saved when it wasn't. Now it only reports what the tracker confirms."
+  },
+  {
+   "id": "s07",
+   "title": "Running It, and Keeping It Private",
+   "transcript": "Running it without thinking about it. <break time=\"0.5s\" /> There are now about a dozen services. The engine, the models, the voice server, the search engine, the chat server, the calendar, the smart home, the shopping tracker. One command starts, stops, and checks all of them, and the Mac starts them by itself when I log in. <break time=\"0.4s\" /> The work is tracked the same way. Every tool, feature, and open task is one line in a single contract file, with an owner and a status. A Claude Code command takes one line through the team. Planned by Opus, built by Sonnet, reviewed by Opus, then a security check, then a commit. On demand, a full security audit reads the whole project. The last one found nine issues, and all nine were fixed the same day. <break time=\"0.4s\" /> Keeping it private. Everything is reached only from my own devices. A photo sent in the chat goes to a short lived private file, and is not copied into the vault. Receipts keep a place name, not a location. Logs hide secrets before they're written. And risky actions need a person to approve them. A stolen key alone can't do them."
+  },
+  {
+   "id": "s08",
+   "title": "What's Next",
+   "transcript": "What's next. <break time=\"0.5s\" /> [warmly] It stopped being an app I open, and became the place where the house's small jobs get done. <break time=\"0.4s\" /> Next is finishing the plug in move. The calendar first, then the smart home and the shopping tracker. Weekly shopping notes, posted by the AI in the chat. Search over all my past conversations. Answers that keep going when the phone locks. And the same old work. Closing the gap between the local models and Claude, and finding the places where it fails quietly. <break time=\"0.5s\" /> Still no subscription for the local models. And still, nothing leaves the house unless I choose the cloud."
+  }
+ ]
+}
