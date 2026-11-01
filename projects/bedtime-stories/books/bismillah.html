@@ -10,6 +10,7 @@
 <meta property="og:title" content="Bismillah">
 <meta property="og:description" content="One small moment on every page, each one opened with the same word.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://www.hishamabuella.com/projects/bedtime-stories/images-bismillah/cover.png">
 <title>Bismillah</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,9 +22,10 @@
     --red:#D7263D;
     --surround:#1C1B17;
     --surround-2:#262519;
-    --quiet:#8E8A7D;
+    --quiet:#6E6A5E;
     --rule:rgba(17,16,16,.14);
     --accent:var(--red);
+    --accent-text:#B81E33;
     --tint:transparent;
     --display:"Fraunces","Iowan Old Style",Georgia,serif;
     --story:"Fredoka","Avenir Next Rounded","Trebuchet MS",system-ui,sans-serif;
@@ -122,7 +124,7 @@
   .line{font-size:clamp(1.1rem,4.2vw,1.45rem);font-weight:500;line-height:1.4;text-wrap:balance;margin:0}
   .sound{
     font-family:var(--display);font-style:italic;font-weight:600;
-    font-size:clamp(1.25rem,5vw,1.7rem);color:var(--accent);margin:0;
+    font-size:clamp(1.25rem,5vw,1.7rem);color:var(--accent-text);margin:0;
   }
   [lang|="ar"] .sound{font-style:normal;font-weight:700}
 
@@ -140,7 +142,7 @@
   [lang|="ar"] .eyebrow{letter-spacing:0;font-size:.85rem}
 .dedication{
     font-family:var(--display);font-style:italic;font-weight:600;
-    font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--accent);margin:0;
+    font-size:clamp(1.05rem,3.6vw,1.3rem);color:var(--accent-text);margin:0;
   }
   [lang|="ar"] .dedication{font-style:normal}
   .cover-rule{height:6px;background:var(--ink);width:72px;margin:2px auto;border-radius:4px}
@@ -789,6 +791,20 @@ function pages(){ return BOOK[ch].pages; }
 
 function nameOr(fallback){ return babyName || fallback; }
 
+
+// The accent as text: the same hue, darkened until it reads at 5:1 on the page.
+// The bright accent stays for artwork, rules and buttons.
+function textInk(hex) {
+  var c = hex.replace('#', '').match(/../g).map(function (h) { return parseInt(h, 16); });
+  function lum(v) { return v.map(function (x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); })
+    .reduce(function (s, x, i) { return s + x * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+  var page = lum([252, 251, 246]), k = 1, v = c;
+  while ((page + 0.05) / (lum(v) + 0.05) < 5 && k > 0.2) {
+    k -= 0.02;
+    v = c.map(function (x) { return Math.round(x * k); });
+  }
+  return 'rgb(' + v.join(',') + ')';
+}
 function render(){
   var page = pages()[at];
   var copy = page[lang];
@@ -800,6 +816,7 @@ function render(){
   document.body.setAttribute('dir', ui.dir);
 
   document.documentElement.style.setProperty('--accent', BOOK[ch].accent);
+  document.documentElement.style.setProperty('--accent-text', textInk(BOOK[ch].accent));
   spread.className = 'spread' + (page.cover ? ' cover' : '');
   spread.parentNode.style.setProperty('--tint', page.tint ? page.tint + '26' : 'transparent');
 

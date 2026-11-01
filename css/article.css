@@ -417,6 +417,7 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
 .listen-label i { color: var(--accent); margin-inline-end: 8px; }
 .listen-label span { font-size: 0.8125rem; font-weight: 400; color: var(--text-tertiary); }
 .listen audio { flex: 1 1 260px; min-width: 0; height: 40px; }
+audio:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ==========================================================================
    Responsive
@@ -430,7 +431,12 @@ pre code { padding: 0; border: none; background: none; font-size: 0.875rem; }
   /* Four choices (Auto, Dark, Light, Contrast) fit a phone once the label goes
      and the buttons tighten; the buttons name themselves. */
   .nav-container #appearance-label { display: none; }
-  .nav-container .appearance-set button { padding: 6px 10px; }
+  .nav-container .appearance-set button { padding: 6px 10px; min-height: 44px; min-width: 44px; }
+  /* 44px tap targets: the logo gains invisible padding (its tile and ring stay
+     36px), Back gains height. */
+  .logo { width: 48px; height: 48px; padding: 6px; margin: -6px; overflow: visible; box-shadow: none; border-radius: 15px; }
+  .logo img { border-radius: 9px; box-shadow: 0 0 0 1px var(--card-border); }
+  .back-menu summary { min-height: 44px; }
   .article-container { padding: 0 18px 32px; }
   .article-content { font-size: 1rem; }
   .article-nav-link.next { text-align: start; }

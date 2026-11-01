@@ -3,3 +3,15 @@
 2026-10-13 [DONE] Review fixes (content-review + qa-review): narration claims removed from tracks (EN+AR); .listen[hidden]; table scroll box <=680px; engineer light gold #8A570C (tracks/engineer.html, index.html --eng/--trace); recruiter/vibe/engineer/learner/gateway should-fix copy and Arabic wording; reduced-motion gateway timer + .grain off; vibe input focus ring; Arabic countdown plurals; track meta/og/favicon; 44px full-site link; reader pill shows Contrast state. Verified: 40 article loads (no overflow, Listen hidden), index+4 tracks x 390/1440 x light/dark x EN/AR (80 loads) 0 errors, 0 overflow, 0 contrast failures; i18n keys complete.
 2026-10-13 frontend-lead: article RTL pass. article.css (logical props, .lang-switch, html[dir=rtl] typography/overrides), base.css (skip-link, nav-links, .appearance logical). 320 page/viewport/skin/scheme combos: 0 overflow, 0 console errors, lang-switch contrast min 4.73, height 44px. Handed to qa-lead.
 2026-11-01 09:56:30 listen.js AR manifest (audio/articles/ar/available.json) + listen.js?v=2 on 24 articles; base.css?v=2 everywhere; AR deck data-narration -> data-narration-pending; canonical/og:url on bedtime-stories + local-model-performance paper pages, hreflang + ar-EG on paper article pair; mascot-buddy phone: appear after first scroll, bubble tap-only, v=4; vibe input :focus-visible. Verified 24 articles at 390px: 0 errors, 0 hscroll, EN players visible.
+
+[2026-11-01] Approved fixes D, 19-27 (not committed).
+- D: i18n.js sets document.title from "docTitle" (restores English on toggle); docTitle in index + 4 tracks; i18n.js ?v=2.
+- 19: mascot-buddy.js fades out while scrolling, then takes the side clear of controls (rect overlap) and text (caret line boxes, RTL-safe), else stays hidden; rechecks after reveals; focusin under him re-places; .mb-x 44x44 (22px glyph circle); ?v=5 on 30 pages.
+- 20: base.css phone nav: links/landing 44px tall (links min 44 wide), logo 44px hit area, nav height unchanged (65px); ?v=3 on 29 pages.
+- 21: cv.css phone white strip (64px) behind the buttons, hidden in print; cv.css ?v=2.
+- 22: texting-my-ai EN+AR .me .who opacity 1: 3.75 -> 5.31 light, 9.26 dark.
+- 23: books --quiet #8E8A7D -> #6E6A5E (5.22); dedication/name/sound use --accent-text (accent darkened to 5:1 in JS): bismillah 2.97 -> 5.01, susu 3.81 -> 5.11, alhamdulillah/nabina 4.0 -> 5.12; index .fact #7E7A6E -> #6A665A (5.54).
+- 24: article.css phone: logo 48px hit (36 tile), Back 44, header pills 44 tall/min 44 wide. reader-bar.css already 44 on phone, unchanged.
+- 25: audio:focus-visible ring; article.css ?v=2 on 26 pages.
+- 26: head tags on 12 presentation pages + claude101, hreflang on the 2 pairs, noindex on 10 decks, og:image on bedtime + books + paper (+ description on paper-ieee).
+- 27: 4 PNGs -> JPEG q82 (1.1 MB -> 78-131 KB), refs updated, PNGs deleted.

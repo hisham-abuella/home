@@ -715,3 +715,21 @@ html[dir="rtl"] .figure-value { direction: ltr; unicode-bidi: isolate; }
   .wrap, .nav-inner { padding-left: 16px; padding-right: 16px; }
   .nav-links a, .nav-landing { font-size: 0.8125rem; }
 }
+
+/* Phone: nav links, the landing link and the logo are 44px tap targets.
+   The extra hit area is padding (the logo's ring and spacing are unchanged),
+   and the bar's own padding shrinks so it keeps its height. */
+@media (max-width: 660px) {
+  .nav-inner { padding-top: 10px; padding-bottom: 10px; }
+  .nav .nav-inner .nav-links { gap: 0; margin-inline-end: -9px; }
+  .nav-links a, .nav-landing { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+  .nav-links a { min-width: 44px; padding-inline: 9px; }
+  .nav-logo { width: 44px; height: 44px; padding: 6px; margin: -6px; overflow: visible; box-shadow: none; border-radius: 12px; }
+  .nav-logo img { border-radius: 8px; box-shadow: 0 0 0 1px var(--card-border); }
+  html[dir="rtl"] .nav .nav-inner .nav-links { margin-inline-end: -7px; }
+  html[dir="rtl"] .nav-links a { padding-inline: 7px; }
+}
+@media (max-width: 400px) {
+  .nav .nav-inner .nav-links, html[dir="rtl"] .nav .nav-inner .nav-links { margin-inline-end: -5px; }
+  .nav-links a, html[dir="rtl"] .nav-links a { padding-inline: 5px; }
+}

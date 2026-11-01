@@ -20,11 +20,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/base.css?v=2">
+    <link rel="stylesheet" href="css/base.css?v=3">
     <link rel="stylesheet" href="css/themes/midnight.css">
     <link rel="stylesheet" href="css/themes/daylight.css">
     <link rel="stylesheet" href="css/themes/contrast.css">
-    <link rel="stylesheet" href="css/cv.css">
+    <link rel="stylesheet" href="css/cv.css?v=2">
     <script>
         // Adopt the stored appearance before first paint, so no page flashes.
         (function () {
@@ -37,6 +37,12 @@
             document.documentElement.setAttribute('data-appearance', name);
         })();
     </script>
+    <style>
+        /* Section titles are real words; the spaced capitals come from CSS, so phones wrap whole words and screen readers read words. */
+        .section-title { text-transform: uppercase; letter-spacing: 0.32em; word-spacing: 0.45em; }
+        .section-title::before { content: "- "; }
+        .section-title::after { content: " -"; }
+    </style>
 </head>
 <body>
     <a href="home.html" class="back-btn">
@@ -67,7 +73,7 @@
             <h1>Hisham Abuella</h1>
             <div class="contact-info">
                 California, USA<br>
-                +1 (619)929-5730 | <a href="mailto:hisham.abuella1@gmail.com">hisham.abuella1@gmail.com</a><br>
+                <a href="mailto:hisham.abuella1@gmail.com">hisham.abuella1@gmail.com</a><br>
                 DOB: 1992 | LinkedIn: <a href="https://www.linkedin.com/in/hisham-abuella-808b91171/" target="_blank">@hisham-abuella</a><br>
                 Permanent Resident (Green Card holder valid till Feb. 2035)
             </div>
@@ -75,7 +81,7 @@
 
         <!-- Summary -->
         <section>
-            <div class="section-title">- S U M M A R Y &nbsp; O F &nbsp; Q U A L I F I C A T I O N S -</div>
+            <div class="section-title">Summary of Qualifications</div>
             <ul>
                 <li>10+ years of research and engineering experience in wireless systems (includes PhD/MSc/Qualcomm/Apple)</li>
                 <li>5+ years of industry experience in simulation, fixed-point implementation of wireless systems, RF digital front-end, Digital Pre-Distortion, channel parameter estimation, lab bringup issues and debugging scripts.</li>
@@ -88,7 +94,7 @@
 
         <!-- Work Experience -->
         <section>
-            <div class="section-title">- W O R K &nbsp; E X P E R I E N C E -</div>
+            <div class="section-title">Work Experience</div>
 
             <div class="job">
                 <div class="job-title">Cellular System Engineer</div>
@@ -176,10 +182,10 @@
 
         <!-- Publications -->
         <section>
-            <div class="section-title">- S E L E C T E D &nbsp; P U B L I C A T I O N S &nbsp; A N D &nbsp; P A T E N T S -</div>
+            <div class="section-title">Selected Publications and Patents</div>
 
             <div class="publication">
-                1. H. Abuella and M. K. Ozdemir, <a href="https://ieeexplore.ieee.org/document/7517452/" target="_blank">"Automatic Modulation Classification Based on Kernel Density Estimation,"</a> IEEE Canadian Journal of Electrical and Computer Engineering, vol. 39, no. 3, pp. 203-209, Summer2016.
+                1. H. Abuella and M. K. Ozdemir, <a href="https://ieeexplore.ieee.org/document/7517452/" target="_blank">"Automatic Modulation Classification Based on Kernel Density Estimation,"</a> IEEE Canadian Journal of Electrical and Computer Engineering, vol. 39, no. 3, pp. 203-209, Summer 2016.
             </div>
 
             <div class="publication">
@@ -201,7 +207,7 @@
 
         <!-- Education -->
         <section>
-            <div class="section-title">- E D U C A T I O N -</div>
+            <div class="section-title">Education</div>
 
             <div class="education-item">
                 <div class="degree">Ph.D. at Oklahoma State University (OSU), USA</div>
@@ -243,15 +249,15 @@
 
         <!-- Awards -->
         <section>
-            <div class="section-title">- S C H O L A R S H I P S , &nbsp; A W A R D S , &nbsp; A N D &nbsp; G R A N T S -</div>
+            <div class="section-title">Scholarships, Awards, and Grants</div>
             <div class="award-item">
-                <span class="award-date">May 2018:</span> Awarded Dr. Rao Yarlagadda Graduate Fellowship ($1000) in Electrical & Computer Engineering for 2018/2019.
+                <span class="award-date">Aug. 2017:</span> Acquired Research grant ($2,100) from Green Student Initiative (GSI) grant for a project: "A Focus on Enhancing Energy Conservation through Occupancy Estimation" from OSU Student Government Association (SGA).
             </div>
             <div class="award-item">
                 <span class="award-date">Nov. 2017:</span> Earned a Travel grant ($500) from GPSGA at OSU in USA.
             </div>
             <div class="award-item">
-                <span class="award-date">Aug. 2017:</span> Acquired Research grant ($2,100) from Green Student Initiative (GSI) grant for a project: "A Focus on Enhancing Energy Conservation through Occupancy Estimation" from OSU Student Government Association (SGA).
+                <span class="award-date">May 2018:</span> Awarded Dr. Rao Yarlagadda Graduate Fellowship ($1000) in Electrical & Computer Engineering for 2018/2019.
             </div>
             <div class="award-item">
                 <span class="award-date">Aug. 2020:</span> Awarded best hack in Qualcomm Interns Hackathon.
@@ -263,9 +269,9 @@
 
         <!-- Activities -->
         <section>
-            <div class="section-title">- A C T I V I T I E S -</div>
+            <div class="section-title">Activities</div>
             <div class="award-item">
-                <span class="award-date">Fall 2017:</span> Presented a Poster: (H. Abuella, S. Ekin, M. Uysal, and S. Ahmed, ''Vehicle Sensing and Communications Using LED Headlamps for ITS," Oklahoma Transportation Research Day, Oct. 2017, Oklahoma City, OK.
+                <span class="award-date">Fall 2017:</span> Presented a Poster: (H. Abuella, S. Ekin, M. Uysal, and S. Ahmed, "Vehicle Sensing and Communications Using LED Headlamps for ITS," Oklahoma Transportation Research Day, Oct. 2017, Oklahoma City, OK).
             </div>
             <div class="award-item">
                 <span class="award-date">Fall 2017, 2018:</span> Participated in National Lab Day as a student volunteer (LiFi demo).
@@ -274,7 +280,7 @@
                 <span class="award-date">Summer 2018:</span> Participated in preparing wireless and data communication new lab at OSU (CEAT Endeavor Labs).
             </div>
             <div class="award-item">
-                <span class="award-date">Fall 2018:</span> Presented a poster: (H. Abuella, S. Ekin, ''Visible Light Communication and Sensing --Applications for Aerospace Industry--," Boeing Innovation Week, Nov. 2018, Oklahoma City, OK)
+                <span class="award-date">Fall 2018:</span> Presented a poster: (H. Abuella, S. Ekin, "Visible Light Communication and Sensing --Applications for Aerospace Industry--," Boeing Innovation Week, Nov. 2018, Oklahoma City, OK)
             </div>
             <div class="award-item">
                 <span class="award-date">Summer 2020:</span> Participated in Qualcomm PhD series to discuss my PhD research.
@@ -286,7 +292,7 @@
 
         <!-- Computer Skills -->
         <section>
-            <div class="section-title">- C O M P U T E R &nbsp; S K I L L S -</div>
+            <div class="section-title">Computer Skills</div>
             <ul>
                 <li><strong>Basic Knowledge:</strong> Linux bash, Assembly, Embedded C, Swift (Apple native app design)</li>
                 <li><strong>Good Knowledge:</strong> LabVIEW, NS2, Visio, LaTeX, GitHub, WebApps, Vibe Coding</li>
@@ -296,7 +302,7 @@
 
         <!-- Languages -->
         <section>
-            <div class="section-title">- L A N G U A G E S -</div>
+            <div class="section-title">Languages</div>
             <ul>
                 <li><strong>Native or bilingual proficiency:</strong> Arabic</li>
                 <li><strong>Professional working proficiency:</strong> English</li>
@@ -306,13 +312,13 @@
 
         <!-- Personal Skills -->
         <section>
-            <div class="section-title">- P E R S O N A L &nbsp; S K I L L S -</div>
+            <div class="section-title">Personal Skills</div>
             <ul>
                 <li>Efficient problem solver especially in hardware implementation issues.</li>
                 <li>Quick learner and determined to improve myself.</li>
                 <li>Not afraid to learn new topics or tools, or to explore new fields.</li>
                 <li>Experienced researcher, with more than six years of research.</li>
-                <li>Living in foreign countries and traveling experience (3 years in Turkey and 9+ years in USA).</li>
+                <li>Living in foreign countries and traveling experience (2+ years in Turkey and 9+ years in USA).</li>
             </ul>
         </section>
 
@@ -332,11 +338,8 @@
                          '.publication, .degree, .school, .edu-details, .award-item, .footer span';
 
             function cleanTitle(text) {
-                // "- S U M M A R Y  O F ... -" -> "SUMMARY OF ..."
-                return text.replace(/^[\s-]+|[\s-]+$/g, '')
-                           .split(/\s*\u00a0\s*/)
-                           .map(function (word) { return word.replace(/\s+/g, ''); })
-                           .join(' ');
+                // Titles are real words now ("Summary of Qualifications"); the spaced capitals are CSS only.
+                return text.trim().toUpperCase();
             }
 
             function cvText() {

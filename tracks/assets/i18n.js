@@ -7,7 +7,7 @@
    Any button with [data-lang-toggle] flips the language; ?lang=ar opens in
    Arabic. Labels only screen readers hear change too: data-i18n-aria="key"
    swaps aria-label and data-i18n-alt="key" swaps an image's alt, from the
-   same Arabic block. Links to articles (Articles/<slug>.html) open the Arabic
+   same Arabic block, and the key "docTitle" sets the tab title. Links to articles (Articles/<slug>.html) open the Arabic
    version (Articles/ar/<slug>.html) while the page is in Arabic, and a link with
    data-href-ar="…" opens that address instead. Switching sets <html lang dir>, so layout written with logical
    properties (inline-start/end) mirrors itself without per-page RTL rules.
@@ -23,6 +23,7 @@
 
     var attrs = [['data-i18n-aria', 'aria-label'], ['data-i18n-alt', 'alt']];
 
+    var titleEn = document.title;
     nodes.forEach(function (el) { el.dataset.en = el.innerHTML; });
     var articleLinks = Array.prototype.filter.call(document.querySelectorAll('a[href]'), function (a) {
         return /(^|\/)Articles\/[\w-]+\.html/.test(a.getAttribute('href'));
@@ -38,6 +39,7 @@
         var isAr = lang === 'ar';
         root.lang = isAr ? 'ar-EG' : 'en';
         root.dir = isAr ? 'rtl' : 'ltr';
+        document.title = isAr && ar.docTitle ? ar.docTitle : titleEn;
         nodes.forEach(function (el) {
             var text = isAr ? ar[el.dataset.i18n] : el.dataset.en;
             if (text != null) el.innerHTML = text;

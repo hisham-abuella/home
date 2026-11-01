@@ -271,6 +271,17 @@ li::before {
   .back-btn, .print-btn, .copy-btn { top: 14px; padding: 8px 14px; font-size: 0.8125rem; }
   .back-btn { left: 14px; }
   .cv-actions { top: 14px; right: 14px; gap: 6px; }
+  /* A solid white strip behind the floating buttons, so text scrolls under it, not under them. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: calc(14px * 2 + 2.25rem);
+    z-index: 19;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--hairline);
+    pointer-events: none;
+  }
   .wide-only { display: none; }
   .header { padding-top: 84px; }
   .footer { flex-direction: column; align-items: flex-start; }
@@ -289,7 +300,7 @@ li::before {
     color: #000000 !important;
   }
 
-  body::before { display: none !important; }
+  body::before, body::after { display: none !important; }
 
   .container { max-width: none; padding: 0; }
 

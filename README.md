@@ -33,7 +33,7 @@ Structure and colour are separated, so a page picks a look by swapping one file.
 
 ```
 css/base.css          layout and components; holds no colour values
-css/themes/*.css      midnight (default), daylight, contrast — tokens only
+css/themes/*.css      midnight, daylight, contrast — tokens only (Auto, which follows the system, is the default)
 css/article.css       article pages, built on those tokens
 css/cv.css            CV; overrides the tokens to stay white in any appearance
 css/skins/*.css       catalogue, constellation, terminal, journal: article skins matching the four tracks
