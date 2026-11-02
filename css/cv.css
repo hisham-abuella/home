@@ -292,28 +292,47 @@ li::before {
    Print — a CV has to survive being printed, whatever appearance is on screen
    ========================================================================== */
 
+/* ==========================================================================
+   Print / Save as PDF: the same page as on screen, set for paper.
+   Same type, the same amber dates, links, bullets and section rules; page
+   margins come from @page, and long jobs may continue on the next page so
+   no page ends half empty. Headings stay with the lines that follow them.
+   ========================================================================== */
+@page { margin: 15mm 16mm 14mm; }
+
 @media print {
+  html { font-size: 13px; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
   .back-btn, .cv-actions, .appearance, .signal-field, .grain { display: none !important; }
-
-  body {
-    background: #FFFFFF !important;
-    color: #000000 !important;
-  }
-
+  body { background: #FFFFFF !important; color: var(--text-primary) !important; }
   body::before, body::after { display: none !important; }
 
   .container { max-width: none; padding: 0; }
 
-  .header { padding-top: 0; border-bottom: 1px solid #000; }
-  .header h1, .job-title, .degree, .section-title { color: #000 !important; }
-  .contact-info, .job-company, .school, .edu-details,
-  li, .publication, .award-item, .award-date { color: #1A1A1A !important; }
+  /* Header: the site's centred name and contact block, a little tighter. */
+  .header { padding: 0 0 16px; border-bottom: 1px solid var(--hairline); }
+  .header h1 { font-size: 2.3rem; }
+  .contact-info { margin-top: 8px; font-size: 0.95rem; line-height: 1.65; }
 
-  .section-title { border-bottom-color: #000 !important; }
-  .job-company strong { color: #000 !important; }
-  li::before, .award-item::before { background: #000 !important; }
-  .contact-info a, .publication a { color: #000 !important; }
+  /* Sections: same amber rule under each title. */
+  .section-title { margin: 22px 0 12px; padding-bottom: 7px; font-size: 1rem; break-after: avoid; page-break-after: avoid; }
 
-  .job, .education-item { page-break-inside: avoid; }
-  .section-title { page-break-after: avoid; }
+  li, .publication, .award-item { margin-bottom: 5px; font-size: 0.95rem; line-height: 1.5; break-inside: avoid; page-break-inside: avoid; }
+  li::before, .award-item::before { top: 0.6em; }
+  /* A list never leaves its last line alone at the top of a page. */
+  li:nth-last-child(2) { break-after: avoid; page-break-after: avoid; }
+
+  .job { margin-bottom: 14px; }
+  .job-title, .degree { font-size: 1.04rem; break-after: avoid; page-break-after: avoid; }
+  .job-company, .school { margin: 2px 0 6px; font-size: 0.95rem; break-after: avoid; page-break-after: avoid; }
+  .job ul { margin-top: 4px; }
+  .education-item { margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
+  .edu-details { margin-top: 3px; font-size: 0.95rem; line-height: 1.5; }
+  .publication { margin-bottom: 7px; }
+
+  /* Links keep the amber colour; no underline needed on paper. */
+  .contact-info a, .publication a { border-bottom: 0; }
+
+  .footer { margin-top: 18px; padding-top: 10px; break-inside: avoid; }
 }
