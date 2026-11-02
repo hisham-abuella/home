@@ -68,7 +68,7 @@ garble Arabic). See README "Brand".
 - A personal site whose heart is articles about vibe coding and the learning journey.
   Self-descriptions include "I love creating UIs with Claude".
 - Wireless 101 stays low-key.
-- The 2,200+ downloads and 6,000+ visitors are internal Apple versions: never next to a public
+- The 2,500+ downloads and 6,000+ visitors are internal Apple versions: never next to a public
   link, never in a "Built" list.
 - One U.S. patent, and it is the ViLDAR work (vehicle speed estimation, detection and ranging
   with visible light). The vital-signs work has publications but no patent.

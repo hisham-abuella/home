@@ -35,7 +35,7 @@ Permanent Resident (Green Card holder valid till Feb. 2035)
 - 5+ years of industry experience in simulation, fixed-point implementation of wireless systems, RF digital front-end, Digital Pre-Distortion, channel parameter estimation, lab bringup issues and debugging scripts.
 - 10+ technical publications (including 1 U.S. patent).
 - Knowledge of visible light sensing and communications, OFDM, wireless prototyping using software defined radio and raspberry-Pi, digital signal processing, RF frontend impairments, 5G baseband channel estimation, and machine learning algorithms for wireless communication.
-- GenAI champion at Apple: built GenAI-based engineering tools, published a presentation skill with **2,200+ downloads** on the internal Claude marketplace, and authored a GenAI crash course visited by **6,000+** internal users.
+- GenAI champion at Apple: built GenAI-based engineering tools, published a presentation skill with **2,500+ downloads** on the internal Claude marketplace, and authored a GenAI crash course visited by **6,000+** internal users.
 - Skills on MATLAB, C, C++, LabVIEW, Python, GitHub, Visio, LaTeX, GenAI, Claude Code, WebApps and Vibe Coding.
 
 ## Work Experience
@@ -47,7 +47,7 @@ Apple Inc., San Diego, USA | **June 2025 – now**
 - Serving as a GenAI champion and subject-matter expert for the wireless systems organization, advising engineers on where generative AI genuinely helps their work.
 - Built multiple GenAI-based tools that analyze bringup and lab issues, simulator output, and system design documents.
 - Used GenAI and Claude Code to improve debugging tools for bringup and lab issues, and to mine historical logs for data supporting diff studies and design decisions.
-- Created a presentation-building skill published on Apple's internal Claude marketplace, passing **2,200+ downloads**.
+- Created a presentation-building skill published on Apple's internal Claude marketplace, passing **2,500+ downloads**.
 - Wrote and delivered a GenAI and Claude 101 crash course for Apple internal users across the company, visited by **6,000+ people**.
 
 ### Senior Modem System Engineer
