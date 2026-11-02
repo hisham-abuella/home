@@ -19,7 +19,7 @@ instead of adjectives. Sentence case. No filler ("passionate", "innovative", "le
   *"I design 5G baseband and RF front-end systems. In my own time I love creating UIs with Claude:
   AI tools, courses and bedtime books."* Every self-description includes that the owner loves
   creating UIs with Claude (owner, 2026-10-13); Arabic: "بحب أعمل UIs مع Claude". Proof numbers: 10 years research, 5 years industry, 10+ papers, 1 US patent,
-  2,500+ skill downloads, 6,000+ course visitors.
+  2,500+ skill downloads, 25,000+ course visits (6,700+ unique visitors).
 - **Engineer:** name the real thing (DPD, fixed-point, channel estimation), link the writing.
 - **Learner:** this is a personal journal of vibe coding and learning. Point to the latest entry
   and the build logs; frame decks and templates as "made along the way".
@@ -29,7 +29,7 @@ instead of adjectives. Sentence case. No filler ("passionate", "innovative", "le
 ## Rules
 - A button says what happens: "Read my CV", "Email me", "Start learning". Not "Discover my work".
 - Each project: one-sentence description, one primary link, at most one secondary.
-- **Internal numbers stay with internal work.** 2,500+ downloads and 6,000+ visitors belong to the
+- **Internal numbers stay with internal work.** 2,500+ downloads and 25,000+ visits (6,700+ unique visitors) belong to the
   versions built inside Apple, not to the public template and deck the site links to. Never put
   them next to a public link or in a "Built" list; they may appear only as career facts that say
   "inside Apple" (recruiter page, CV). Label public links "public version" (نسخة عامة). (Owner, 2026-10-13.)
