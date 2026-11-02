@@ -10,6 +10,7 @@ and scripts around it are never touched. No dependencies: plain Python 3.
 The line formats are documented at the top of cv.md.
 """
 import html
+import json
 import pathlib
 import re
 import sys
@@ -26,9 +27,11 @@ def inline(text):
     out = html.escape(text, quote=False)
 
     def link(m):
-        label, url = m.group(1), m.group(2)
+        label, url = m.group(1), html.unescape(m.group(2))
+        if not re.match(r'(https?:|mailto:)', url):
+            raise SystemExit(f'cv.md: links must start with https:, http: or mailto: ({url!r})')
         extra = '' if url.startswith('mailto:') else ' target="_blank"'
-        return f'<a href="{url}"{extra}>{label}</a>'
+        return f'<a href="{html.escape(url, quote=True)}"{extra}>{label}</a>'
 
     out = re.sub(r'\[([^\]]+)\]\(([^)\s]+)\)', link, out)
     out = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', out)
@@ -58,6 +61,8 @@ def parse(md):
         elif sec is None:
             contact.append(line.strip())
         elif entry is not None and entry['sub'] is None:
+            if line.startswith('- ') or re.match(r'\d+\.\s', line):
+                raise SystemExit(f'cv.md: "### {entry["title"]}" needs its place and dates line before the bullets')
             entry['sub'] = line.strip()
         elif line.startswith('- '):
             if entry is not None:
@@ -126,17 +131,17 @@ def render(md):
         out += ['', f'{I*2}<div class="footer">', f'{I*3}<span>{inline(footer)}</span>', f'{I*2}</div>']
     # The Markdown itself, for the page's "Copy Markdown" / "View Markdown" menu
     # (embedded so it works offline and without fetching cv.md).
+    # Stored as JSON with "<" escaped, so no CV text can ever end or bend the <script> block.
     clean = re.sub(r'<!--.*?-->', '', md, flags=re.S).strip() + '\n'
-    if '</script' in clean.lower():
-        raise SystemExit('cv.md: "</script" cannot appear in the CV text')
-    out += ['', f'{I*2}<script type="text/markdown" id="cv-md">', clean.rstrip('\n'), f'{I*2}</script>']
+    data = json.dumps(clean, ensure_ascii=False).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
+    out += ['', f'{I*2}<script type="application/json" id="cv-md">{data}</script>']
     return '\n'.join(out)
 
 
 def main():
     page = HTML.read_text(encoding='utf-8')
-    if START not in page or END not in page:
-        raise SystemExit('cv.html: CV:START / CV:END markers not found')
+    if START not in page or END not in page or page.index(START) > page.index(END):
+        raise SystemExit('cv.html: CV:START / CV:END markers not found (or in the wrong order)')
     head, rest = page.split(START, 1)
     _, tail = rest.split(END, 1)
     new = head + START + '\n' + render(MD.read_text(encoding='utf-8')) + '\n        ' + END + tail
