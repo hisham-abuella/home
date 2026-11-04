@@ -21,7 +21,7 @@
   align-items: center;
 }
 .ident-who { display: flex; align-items: center; gap: 16px; min-width: 0; }
-.ident-who img { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--id-line); }
+.ident-who .mascot { width: 72px; height: 72px; margin: 0; flex: none; } /* mini Hisham, as on the front page (mascot.js) */
 .ident-who b { display: block; font-size: 20px; line-height: 1.25; }
 .ident-who span { display: block; font-size: 15px; color: var(--id-soft); }
 .ident-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: flex-end; }

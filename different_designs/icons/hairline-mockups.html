@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mockup: Hairline figures on hishamabuella.com</title>
+<!--
+  Exploration only, not linked from the live site.
+  Hairline (MIT, Lucas Marques): https://hairline.lucasmarkes.com
+  The mockup loads it from esm.sh. If a direction is chosen, the live site would vendor
+  the one ESM file into js/vendor/ (no CDN, no build step), as the site has no external
+  dependencies.
+-->
+<style>
+:root {
+  --night: #0A0E17; --panel: #121A28; --edge: #243044; --ink: #ECEFF4; --soft: #A4AEBD;
+  --rec: #FF7A45; --eng: #FFD58A; --vibe: #8AB0FF; --learn: #8FD19E;
+  font-family: Inter, system-ui, sans-serif;
+}
+[data-theme="light"] {
+  --night: #F3F5F8; --panel: #FFFFFF; --edge: #D3DAE4; --ink: #0E1726; --soft: #4A5568;
+  --rec: #C2410C; --eng: #8A570C; --vibe: #0040FF; --learn: #2F7D4A;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--night); color: var(--ink); line-height: 1.55; }
+main { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
+header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+h1 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin: 0; }
+h2 { margin: 6px 0 6px; font-size: 1.35rem; }
+.lede, .note { color: var(--soft); max-width: 70ch; margin: 6px 0 0; }
+.toggle { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--edge); border-radius: 999px; padding: 10px 18px; cursor: pointer; min-height: 44px; }
+.tag { display: inline-block; font: 600 12px/1 ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); margin-top: 64px; }
+
+/* Every figure sits on its card: --hairline-plate must equal the card colour. */
+.fig { width: 100%; }
+
+/* A. Gateway stations */
+.stations { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 18px; }
+.st { --c: var(--eng); background: var(--panel); border: 1px solid var(--edge); border-radius: 16px; padding: 14px 14px 16px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 4px; transition: border-color .2s; }
+.st:hover, .st:focus-within { border-color: var(--c); }
+.st .fig { --hairline-plate: var(--panel); --hairline-hi: var(--c); --hairline-edge: var(--soft); --hairline-mid: color-mix(in srgb, var(--soft) 55%, var(--panel)); --hairline-lo: var(--edge); }
+.st b { font-size: 1.02rem; }
+.st small { color: var(--soft); font: 500 12px/1.3 ui-monospace, monospace; }
+.st.rec { --c: var(--rec); } .st.eng { --c: var(--eng); } .st.vibe { --c: var(--vibe); } .st.learn { --c: var(--learn); } .st.full { --c: var(--ink); }
+
+/* B. Each track in its own palette */
+.tracks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
+.tk { border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 6px; border: 1px solid transparent; }
+.tk p { margin: 0; font-size: 14px; }
+.tk b { font-size: 1rem; }
+.tk.rec   { background: #F7F7F4; color: #000; border-color: #C4C6BF; --hairline-plate: #F7F7F4; --hairline-hi: #FF5A1F; --hairline-edge: #1a1a1a; --hairline-mid: #8d9088; --hairline-lo: #C4C6BF; }
+.tk.eng   { background: #0B1640; color: #EEF1FF; --hairline-plate: #0B1640; --hairline-hi: #FFD58A; --hairline-edge: #B4BDE0; --hairline-mid: #5B6AA8; --hairline-lo: #26326A; }
+.tk.vibe  { background: #FFFFFF; color: #000; border-color: #000; --hairline-plate: #FFFFFF; --hairline-hi: #000000; --hairline-edge: #333; --hairline-mid: #9C9C9C; --hairline-lo: #E2E2E2; font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+.tk.learn { background: #EEF3E6; color: #1F2A24; --hairline-plate: #EEF3E6; --hairline-hi: #2F7D4A; --hairline-edge: #1F2A24; --hairline-mid: #7E8E83; --hairline-lo: #CCD8C6; }
+[data-theme="dark"] .tk.rec   { background: #222529; color: #F1F1EC; border-color: #3A3E44; --hairline-plate: #222529; --hairline-hi: #FF6A33; --hairline-edge: #F1F1EC; --hairline-mid: #7b7f78; --hairline-lo: #3A3E44; }
+[data-theme="dark"] .tk.vibe  { background: #0F1114; color: #ECECEC; border-color: #ECECEC; --hairline-plate: #0F1114; --hairline-hi: #FFFFFF; --hairline-edge: #ECECEC; --hairline-mid: #6c6c6c; --hairline-lo: #2A2D32; }
+[data-theme="dark"] .tk.learn { background: #111A14; color: #E3ECE1; --hairline-plate: #111A14; --hairline-hi: #8FD19E; --hairline-edge: #E3ECE1; --hairline-mid: #6E7E71; --hairline-lo: #26342A; }
+[data-theme="light"] .tk.eng  { background: #F3F6FF; color: #0B1640; --hairline-plate: #F3F6FF; --hairline-hi: #8A570C; --hairline-edge: #0B1640; --hairline-mid: #7C88B5; --hairline-lo: #D5DDF5; }
+
+/* C. Writing list: small figure beside each article */
+.writing { margin-top: 18px; display: grid; gap: 10px; }
+.row { display: grid; grid-template-columns: 120px 1fr; gap: 18px; align-items: center; background: var(--panel); border: 1px solid var(--edge); border-radius: 14px; padding: 10px 16px 10px 10px; text-decoration: none; color: inherit; }
+.row .fig { --hairline-plate: var(--panel); --hairline-hi: var(--vibe); --hairline-edge: var(--soft); --hairline-mid: color-mix(in srgb, var(--soft) 50%, var(--panel)); --hairline-lo: var(--edge); }
+.row b { display: block; }
+.row span { color: var(--soft); font-size: 14px; }
+.row code { font-size: 12px; color: var(--soft); }
+
+/* D. Article header figure (one per article, under the title) */
+.article { margin-top: 18px; background: var(--panel); border: 1px solid var(--edge); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: center; }
+.article .fig { --hairline-plate: var(--panel); --hairline-hi: var(--eng); --hairline-edge: var(--soft); --hairline-mid: color-mix(in srgb, var(--soft) 50%, var(--panel)); --hairline-lo: var(--edge); }
+.article h3 { font-size: clamp(1.4rem, 3vw, 2rem); margin: 0 0 8px; line-height: 1.2; }
+.article p { margin: 0; color: var(--soft); }
+
+/* Monochrome (Contrast appearance, print, black-and-white pages) */
+.mono { margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.mono > div { background: #fff; border: 2px solid #000; border-radius: 12px; padding: 12px; color: #000; --hairline-plate: #fff; --hairline-hi: #000; --hairline-edge: #000; --hairline-mid: #555; --hairline-lo: #bbb; --hairline-stroke: 1.2; }
+.mono > div:nth-child(even) { background: #000; color: #fff; border-color: #fff; --hairline-plate: #000; --hairline-hi: #fff; --hairline-edge: #fff; --hairline-mid: #aaa; --hairline-lo: #444; }
+.mono p { margin: 4px 0 0; font-size: 13px; }
+
+ul.rules { color: var(--soft); max-width: 78ch; padding-inline-start: 20px; }
+ul.rules li { margin: 6px 0; }
+ul.rules b { color: var(--ink); }
+pre { background: var(--panel); border: 1px solid var(--edge); border-radius: 12px; padding: 14px; overflow-x: auto; font-size: 13px; color: var(--ink); }
+
+@media (max-width: 900px) {
+  .stations { grid-template-columns: repeat(2, 1fr); }
+  .st.full { grid-column: span 2; }
+  .tracks, .mono { grid-template-columns: repeat(2, 1fr); }
+  .article { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .row { grid-template-columns: 84px 1fr; gap: 12px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Hairline figures: how they could work here</h1>
+      <p class="lede">Hairline figures are isometric line drawings that answer the pointer. Below, the same style in four places on the site, each in that page's own colours. Move the pointer over a figure. This is a mockup only; nothing on the live site has changed.</p>
+    </div>
+    <button class="toggle" type="button" id="theme">Switch to light</button>
+  </header>
+
+  <span class="tag">A · Front page (Tune in)</span>
+  <h2>One figure per station</h2>
+  <p class="note">Each band gets a figure that says what is behind it. The lit lines take the station colour, and the needle colour on the dial stays the same.</p>
+  <div class="stations">
+    <a class="st rec" href="#"><div class="fig" data-fig="cabinet" data-label="A rack of drawers: the recruiter dossier"></div><b>Recruiter</b><small>n71 · 600 MHz</small></a>
+    <a class="st eng" href="#"><div class="fig" data-fig="dish" data-label="A dish antenna: the engineer page"></div><b>Engineer</b><small>n78 · 3.5 GHz</small></a>
+    <a class="st vibe" href="#"><div class="fig" data-fig="terminal" data-label="A terminal: the vibe coding page"></div><b>Vibe coder</b><small>n257 · 28 GHz</small></a>
+    <a class="st learn" href="#"><div class="fig" data-fig="loupe" data-label="A loupe on ruled paper: the learner journal"></div><b>Learner</b><small>n260 · 39 GHz</small></a>
+    <a class="st full" href="#"><div class="fig" data-fig="laptop" data-label="An open laptop: the full site"></div><b>Open the full site</b><small>home.html</small></a>
+  </div>
+
+  <span class="tag">B · Tracks</span>
+  <h2>The same figure inside each track's palette</h2>
+  <p class="note">Catalogue aluminium with one orange, constellation gold on deep blue, terminal black and white, and journal green on paper. Only the six <code>--hairline-*</code> colours change.</p>
+  <div class="tracks">
+    <div class="tk rec"><div class="fig" data-fig="lockers" data-label="Lockers"></div><b>Experience</b><p>Twelve lockers, one per role. Hover opens a door.</p></div>
+    <div class="tk eng"><div class="fig" data-fig="router" data-label="A router with antennas"></div><b>Research</b><p>Antennas lean toward the pointer, like beam steering.</p></div>
+    <div class="tk vibe"><div class="fig" data-fig="branches" data-label="A commit graph"></div><b>Build logs</b><p>A commit graph: hover a commit and its history rises.</p></div>
+    <div class="tk learn"><div class="fig" data-fig="sieve" data-label="Three stacked sieves"></div><b>What I learned</b><p>Sieves: pick one layer of what stuck.</p></div>
+  </div>
+
+  <span class="tag">C · Writing list (home.html)</span>
+  <h2>A small figure beside each article</h2>
+  <p class="note">The figure is small and still until the pointer arrives. On a phone it rests, so the list stays quiet.</p>
+  <div class="writing">
+    <a class="row" href="#"><div class="fig" data-fig="cabinet" data-label="Server rack"></div><div><b>Building a personal AI engine</b><span>Local models, on-device images and voice, and a private notes vault on a Mac Studio. </span><code>cabinet</code></div></a>
+    <a class="row" href="#"><div class="fig" data-fig="phone" data-label="Phone in layers"></div><div><b>Texting my own AI, end to end encrypted</b><span>A private Matrix server on my Mac, Element X on the phone. </span><code>phone</code></div></a>
+    <a class="row" href="#"><div class="fig" data-fig="exploded" data-label="A window in layers"></div><div><b>One HTML file, a whole Keynote</b><span>Slides that look like Keynote, made of plain HTML. </span><code>exploded</code></div></a>
+    <a class="row" href="#"><div class="fig" data-fig="riffle" data-label="A tray of cards"></div><div><b>Bedtime stories for a three-month-old</b><span>A high-contrast bilingual board book. </span><code>riffle</code></div></a>
+  </div>
+
+  <span class="tag">D · Article header</span>
+  <h2>A single larger figure under an article title</h2>
+  <div class="article">
+    <div>
+      <h3>Building Wireless 101</h3>
+      <p>Under the title, beside the "Listen" player. In a track skin it takes the skin's colours, the same way the reader bar does.</p>
+    </div>
+    <div class="fig" data-fig="dish" data-label="A dish antenna that follows the pointer"></div>
+  </div>
+
+  <span class="tag">E · Black and white</span>
+  <h2>Monochrome version (Contrast, print, the terminal track)</h2>
+  <p class="note">Same figures, pure black and white with a slightly heavier stroke (<code>--hairline-stroke: 1.2</code>).</p>
+  <div class="mono">
+    <div><div class="fig" data-fig="terminal" data-label="Terminal"></div><p>Terminal on white</p></div>
+    <div><div class="fig" data-fig="terminal" data-label="Terminal"></div><p>Terminal on black</p></div>
+    <div><div class="fig" data-fig="padlock" data-label="Padlock"></div><p>Padlock on white</p></div>
+    <div><div class="fig" data-fig="plug" data-label="Plug"></div><p>Plug on black</p></div>
+  </div>
+
+  <h2>How to use the style here</h2>
+  <ul class="rules">
+    <li><b>One idea per figure.</b> A figure stands for the place it opens (a station, a track section, an article). Never use one as decoration only.</li>
+    <li><b>Plate equals background.</b> Set <code>--hairline-plate</code> to the card it sits on, or the plates show as boxes.</li>
+    <li><b>Lit lines take the page accent.</b> <code>--hairline-hi</code> is the track colour; edge/mid/lo come from the page's grey tokens, in light and dark.</li>
+    <li><b>Quiet by default.</b> No <code>play</code>; figures move only under the pointer or focus. Reduced motion is honoured by the library.</li>
+    <li><b>Arabic.</b> Pass a translated <code>label</code> (from the page's Arabic block); the drawings themselves have no text, so they work in RTL as they are.</li>
+    <li><b>No CDN on the live site.</b> Vendor the ESM file into <code>js/vendor/hairline.js</code> and bump its <code>?v=</code> like the other shared scripts.</li>
+    <li><b>Own figures.</b> The library's <code>/hairline-create</code> skill can draw site-specific ones (a 5G tower, the tuner dial, a mini radio) in the same rules.</li>
+  </ul>
+  <pre>&lt;div class="fig" id="f"&gt;&lt;/div&gt;
+&lt;script type="module"&gt;
+  import { dish } from './js/vendor/hairline.js';
+  dish(document.getElementById('f'), { label: 'A dish antenna', intensity: 0.5 });
+&lt;/script&gt;</pre>
+</main>
+
+<script type="module">
+  import * as H from 'https://esm.sh/@lucasmarkes/hairline@0.5.1';
+  const figures = [];
+  document.querySelectorAll('[data-fig]').forEach((el) => {
+    const make = H[el.dataset.fig];
+    if (typeof make !== 'function') { el.textContent = 'missing: ' + el.dataset.fig; return; }
+    figures.push(make(el, { label: el.dataset.label, theme: document.documentElement.dataset.theme }));
+  });
+  const btn = document.getElementById('theme');
+  btn.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    btn.textContent = next === 'dark' ? 'Switch to light' : 'Switch to dark';
+    figures.forEach((f) => f.update({ theme: next }));
+  });
+</script>
+</body>
+</html>

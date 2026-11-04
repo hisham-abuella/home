@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=2">
+<link rel="stylesheet" href="assets/ident.css?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
@@ -89,7 +89,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
 .hero p { margin: 16px 0 0; max-width: 58ch; color: var(--soft); font-size: 18px; }
 .portrait { margin: 0; background: #fff; padding: 6px 6px 24px; box-shadow: 0 6px 18px rgba(31,42,36,.18); transform: rotate(3deg); position: relative; }
 [dir="rtl"] .portrait { transform: rotate(-3deg); }
-.portrait img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.portrait .mascot { width: 100%; height: auto; aspect-ratio: 1; }
 .portrait span { position: absolute; bottom: 3px; inset-inline: 0; text-align: center; font: 700 16px/1 var(--hand); color: #46554C; }
 
 .latest { margin-top: 34px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; padding: 24px; background: var(--card); border: 1.5px solid var(--ink); box-shadow: 6px 6px 0 var(--shadow); text-decoration: none; color: var(--ink); }
@@ -163,7 +163,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
       <h1 data-i18n="h1">What I learned building with Claude, and where you can learn too.</h1>
       <p data-i18n="lede">I'm Hisham, a cellular systems engineer who loves creating UIs with Claude. In my own time I build things with Claude and local AI models, and I write down what I learned, including what went wrong. Below are those lessons, and a few free things to learn from.</p>
     </div>
-    <figure class="portrait"><img src="assets/bio.jpg" alt=""><span data-i18n="me">me</span></figure>
+    <figure class="portrait"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><span data-i18n="me">me</span></figure>
   </header>
 
   <a class="latest" href="../Articles/building-ai-server-part-2.html?via=learner">
@@ -211,7 +211,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
   </ol>
 
   <section class="ident" aria-label="Contact" data-i18n-aria="ariaContact">
-    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella" data-i18n-alt="idName"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-who"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
     <div class="ident-actions">
       <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
       <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
@@ -239,6 +239,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
 
 <script type="application/json" id="i18n-ar">
 {
+  "mascotMe": "دوس على هشام الصغير",
   "docTitle": "هشام أبو العلا — اليوميات",
   "skip": "روح للمحتوى على طول",
   "viewing": "بتتفرج كمتعلّم · غيّر", "me": "أنا",
@@ -285,7 +286,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
   });
 })();
 </script>
-<script src="assets/mascot.js?v=3" defer></script>
+<script src="assets/mascot.js?v=4" defer></script>
 <script src="assets/mascot-buddy.js?v=6" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>

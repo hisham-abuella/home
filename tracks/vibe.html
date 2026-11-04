@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html data-mascot-tone="mono" lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=2">
+<link rel="stylesheet" href="assets/ident.css?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
@@ -101,7 +101,7 @@ h2::before { content: '## '; color: var(--grey); font-weight: 400; }
 [dir="rtl"] h1::before, [dir="rtl"] h2::before { content: none; }
 .me { display: grid; grid-template-columns: 1fr 110px; gap: 24px; align-items: start; margin-top: 16px; }
 .me p { margin: 0 0 10px; }
-.me img { width: 110px; height: 110px; object-fit: cover; filter: grayscale(1) contrast(1.1); border: 1.5px solid var(--ink); }
+.me .mascot { width: 110px; height: 110px; } /* black-and-white mini Hisham, like the old greyscale photo */
 .sub { color: var(--grey); }
 .tbl { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 15px; }
@@ -127,7 +127,7 @@ ul.log .add { color: var(--add); }
   .prompt label { display: none; }
   .shell .cmds { display: none; }
   .me { grid-template-columns: 1fr; }
-  .me img { order: -1; width: 80px; height: 80px; }
+  .me .mascot { order: -1; width: 80px; height: 80px; }
   table .wide { display: none; }
   ul.log li { grid-template-columns: 1fr; gap: 0; }
   .dock {
@@ -175,7 +175,7 @@ ul.log .add { color: var(--add); }
         <p data-i18n="lede">Cellular systems engineer by day. In my own time I love creating UIs with Claude: I build tools, sites and books, and write build logs along the way.</p>
         <p class="sub" data-i18n="loc">Apple, San Diego. Previously Qualcomm.</p>
       </div>
-      <img src="assets/bio.jpg" alt="">
+      <button type="button" class="mascot mono" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button>
     </div>
 
     <h2 id="built" data-i18n="builtH">Built</h2>
@@ -223,7 +223,7 @@ ul.log .add { color: var(--add); }
       <a href="mailto:hisham.abuella1@gmail.com" data-i18n="email">Email me</a><a href="https://github.com/hisham-abuella">GitHub</a><a href="https://www.linkedin.com/in/hisham-abuella-808b91171/">LinkedIn</a>
     </div>
   <section class="ident" aria-label="Contact" data-i18n-aria="ariaContact">
-    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella" data-i18n-alt="idName"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-who"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
     <div class="ident-actions">
       <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
       <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
@@ -249,6 +249,7 @@ ul.log .add { color: var(--add); }
 
 <script type="application/json" id="i18n-ar">
 {
+  "mascotMe": "دوس على هشام الصغير",
   "docTitle": "هشام أبو العلا — للي بيعملوا vibe coding",
   "skip": "روح للمحتوى على طول",
  "viewing": "بتتفرج كـ vibe coder · غيّر",
@@ -398,7 +399,7 @@ ul.log .add { color: var(--add); }
   }, 90);
 })();
 </script>
-<script src="assets/mascot.js?v=3" defer></script>
+<script src="assets/mascot.js?v=4" defer></script>
 <script src="assets/mascot-buddy.js?v=6" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>

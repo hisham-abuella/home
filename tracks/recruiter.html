@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=2">
+<link rel="stylesheet" href="assets/ident.css?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@ a { color: inherit; }
 
 /* ID card */
 .id { position: sticky; top: 16px; background: var(--panel); border-radius: 22px; padding: 24px; box-shadow: 0 18px 40px rgba(0,0,0,.08); }
-.id img { width: 96px; height: 96px; border-radius: 18px; object-fit: cover; }
+.id .mascot { width: 104px; height: 104px; }
 .id h1 { margin: 16px 0 4px; font-size: 34px; line-height: 1; font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; }
 [dir="rtl"] .id h1 { font-stretch: 100%; line-height: 1.3; letter-spacing: 0; }
 .id .role { font-size: 17px; font-weight: 600; }
@@ -129,7 +129,7 @@ h2 { margin: 0 0 14px; font-size: 22px; font-weight: 800; font-stretch: 112%; le
   .wrap { padding: 0 16px 110px; }
   .layout { grid-template-columns: 1fr; gap: 12px; }
   .id { position: static; padding: 18px; border-radius: 18px; display: grid; grid-template-columns: 64px 1fr; gap: 0 14px; align-items: center; }
-  .id img { width: 64px; height: 64px; border-radius: 14px; grid-row: span 2; }
+  .id .mascot { width: 68px; height: 68px; grid-row: span 2; }
   .id h1 { margin: 0; font-size: 26px; }
   .id .role { font-size: 15px; }
   .id dl { grid-column: 1 / -1; margin-top: 14px; }
@@ -165,7 +165,7 @@ h2 { margin: 0 0 14px; font-size: 22px; font-weight: 800; font-stretch: 112%; le
 
   <div class="layout" id="content" tabindex="-1" data-skip-target>
     <aside class="id">
-      <img src="assets/bio.jpg" alt="Hisham Abuella" data-i18n-alt="idName">
+      <button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button>
       <h1 data-i18n="name">Hisham Abuella</h1>
       <div class="role" data-i18n="idLine">Muslim | Cellular Systems Engineer</div>
       <dl>
@@ -244,7 +244,7 @@ h2 { margin: 0 0 14px; font-size: 22px; font-weight: 800; font-stretch: 112%; le
     </main>
   </div>
   <section class="ident" aria-label="Contact" data-i18n-aria="ariaContact">
-    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella" data-i18n-alt="idName"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-who"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
     <div class="ident-actions">
       <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
       <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
@@ -267,6 +267,7 @@ h2 { margin: 0 0 14px; font-size: 22px; font-weight: 800; font-stretch: 112%; le
 
 <script type="application/json" id="i18n-ar">
 {
+  "mascotMe": "دوس على هشام الصغير",
   "docTitle": "هشام أبو العلا — للتوظيف",
   "skip": "روح للمحتوى على طول",
   "viewing": "بتتفرج كـ recruiter · غيّر", "name": "هشام أبو العلا",
@@ -302,7 +303,7 @@ h2 { margin: 0 0 14px; font-size: 22px; font-weight: 800; font-stretch: 112%; le
   try { localStorage.setItem('reader-path', 'recruiter'); } catch (e) { /* storage unavailable */ }
 })();
 </script>
-<script src="assets/mascot.js?v=3" defer></script>
+<script src="assets/mascot.js?v=4" defer></script>
 <script src="assets/mascot-buddy.js?v=6" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>

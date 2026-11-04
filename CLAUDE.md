@@ -20,7 +20,7 @@ goes to `home.html`; articles have a "Back" menu (four tracks plus the full webs
 print-ready page (only addition: "Copy CV text").
 
 **Tracks** live in `tracks/`; shared assets in `tracks/assets/` (`i18n.js`, `theme.js`,
-`ident.css`, `ident.js`, `bio.jpg`):
+`ident.css`, `ident.js`, `mascot.js`, `mascot-buddy.js`, the `mascot/` sprite sheets, `bio.jpg`):
 - `recruiter.html`: catalogue UI (aluminium plus one orange). One-screen dossier, experience, CV,
   copy email. n71, 600 MHz.
 - `engineer.html`: constellation UI (16-QAM diagram, gold on deep blue). Research, papers, patent,
@@ -31,7 +31,7 @@ print-ready page (only addition: "Copy CV text").
   resources. n260, 39 GHz.
 
 Every track has: English plus Egyptian Arabic (`?lang=ar`); Auto/Light/Dark with both palettes;
-its own phone layout (docked bars in thumb reach); the identity block (photo, name, "Muslim |
+its own phone layout (docked bars in thumb reach); the identity block (mini Hisham, name, "Muslim |
 Cellular Systems Engineer", California USA, copy email, View CV, LinkedIn/GitHub/Scholar/
 Instagram/Facebook); and it stores `localStorage['reader-path']`.
 
@@ -82,7 +82,79 @@ garble Arabic). See README "Brand".
 - Every change is checked on phone (390px) and laptop (1440px), light and dark; contrast at
   least 4.5:1 for body text; no horizontal scroll; reduced motion respected.
 
+**Mini Hisham (the mascot).** The drawn mascot replaces the photo everywhere a face appears: the
+gateway intro and identity block, and every track's hero and identity block. Markup:
+`<button type="button" class="mascot" data-mascot="…/tracks/assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button>`
+(the Arabic `mascotMe` lives in each page's Arabic block); size it with CSS on the slot. The
+floating buddy (`mascot-buddy.js`) appears on the full site, tracks and articles. **Black and
+white:** add class `mono` to one mascot, or `data-mascot-tone="mono"` on `<html>` for a page
+drawn in black and white (the vibe track has it, so its buddy is mono too); Contrast and print
+go mono on their own. `tracks/assets/bio.jpg` stays only as the schema.org `image`.
+
 **Workflow.** Commit when asked; push only after the owner has reviewed.
+
+## Maintaining the site
+
+Run these before every commit; all must pass:
+
+```sh
+python3 claudeteam/tools/site_check.py       # links, anchors, assets, canonical/og:url, hreflang, alt, ?v= consistency
+python3 claudeteam/tools/ar_parity.py        # every article: EN/AR structure and leftover English
+python3 claudeteam/tools/ar_parity.py home   # home.html vs ar/home.html
+python3 claudeteam/tools/ar_style.py         # Arabic style rules
+```
+
+Before every push, run the regression test (about 3 minutes; `--quick` for about 1):
+
+```sh
+uv run claudeteam/tools/regression_test.py
+```
+
+It runs the four checks above, loads every live page at 390px and 1440px in light and dark
+(JS errors, failed requests, horizontal scroll, broken images), and tests the behaviour listed
+below. Add a check to it whenever a new behaviour ships.
+
+To add or change an article, use the `new-article` skill (`.claude/skills/new-article/`): page,
+Arabic page, illustrations, narration, links in every list, checks.
+
+For a visual pass by eye (`python3 -m http.server 8765`, Playwright MCP or the qa-lead agent):
+the gateway, `home.html`, `ar/home.html`, the four tracks (EN and `?lang=ar`), a few articles
+(EN, AR, and `?via=<track>`), at 390px and 1440px, light and dark. Look for console errors,
+failed requests (GoatCounter and the not-yet-recorded `audio/articles/ar/*.mp3` are expected),
+horizontal overflow and contrast. Behaviour worth re-testing after JS changes: the gateway's
+30-second countdown (and that a key press stops it), "Continue …" after a track visit,
+`reader-path` set by tracks and cleared by `home.html`, the article skins, the Back menu, and the
+"Listen" player (shown only when the mp3 exists).
+
+**Shared files and their current `?v=` tags.** When one changes, bump its tag in every page that
+loads it (`grep -rl 'mascot.js?v=4' --include='*.html' .` finds them); `site_check.py` flags a
+page left on an old tag.
+
+| File | Tag | Loaded by |
+| --- | --- | --- |
+| `css/base.css`, `js/appearance.js` | v4, v3 | home, ar/home, articles |
+| `css/article.css`, `js/reader-bar.js`, `js/listen.js` | v2, v3, v2 | articles |
+| `css/cv.css` | v4 | cv.html |
+| `tracks/assets/ident.css`, `ident.js`, `i18n.js` | v3, v2, v2 | gateway, tracks |
+| `tracks/assets/mascot.js`, `mascot-buddy.js` | v4, v6 | gateway (mascot only), home, tracks, articles |
+| `js/vendor/hairline.js` | v1 | gateway only |
+
+**Adding an article.** Write `Articles/<slug>.html` from an existing one (canonical, `og:url`,
+`hreflang` en/ar, `.lang-switch`, Back menu, hidden `.listen` with `data-src`, the shared scripts
+with their current tags, GoatCounter). Write `Articles/ar/<slug>.html` with the same structure
+(egyptian-arabic skill). Add both to the Writing lists in `home.html` and `ar/home.html`, and to
+the prev/next nav of the neighbours. Add the spoken transcript in `audio/articles/source/`.
+Run the checks above.
+
+**Known gotchas.**
+- Shell: zsh treats a word starting with `=` as a command (`echo ====` fails and stops the line).
+- Decks under `projects/presentation-skill/` jump to slides by `data-id` (`#start`, `#live-ui`),
+  not by element `id`.
+- The 404 page uses root-absolute links (GitHub Pages serves it at any path).
+- Hairline figures (MIT, vendored unchanged in `js/vendor/hairline.js`) are used **only** on the
+  gateway's four station cards (cabinet, dish, terminal, loupe), laptop only, lit in the station
+  colour. Keep it that way: don't spread them to other pages. Reference:
+  `different_designs/icons/hairline-mockups.html`.
 
 ## Project Structure
 
@@ -96,9 +168,11 @@ garble Arabic). See README "Brand".
   their narration
 - `css/` - `base.css` (layout, no colour), `themes/*.css` (tokens), `article.css`, `cv.css`,
   `skins/` (catalogue, constellation, terminal, journal, reader-bar)
-- `js/` - `appearance.js`, `reader-bar.js`, `listen.js`, `signal-field.js`, `motion.js`
+- `js/` - `appearance.js`, `reader-bar.js`, `listen.js`, `back-menu.js`, `signal-field.js`,
+  `motion.js`; `js/vendor/` holds third-party code copied in unchanged (only `hairline.js`)
 - `brand/`, `favicon.ico` - logo, share image, favicons
-- `projects/presentation-skill/` - slide-deck demos
+- `projects/` - `bedtime-stories/` (narrated bilingual books), `local-model-performance/`
+  (model comparison, decks and paper), `presentation-skill/` (slide-deck demos)
 - `different_designs/` - explorations only (mockups, logo concepts, older designs), not linked
   from the live site; the chosen directions now live in `tracks/`
 - `claudeteam/`, `.claude/agents/` - the design team
@@ -107,7 +181,8 @@ garble Arabic). See README "Brand".
 
 All pages are static HTML with:
 - CSS custom properties for theming; themes hold tokens only, `base.css` holds layout
-- Vanilla JavaScript, no external dependencies
+- Vanilla JavaScript, no CDN and no npm at runtime; the one third-party library is copied into
+  `js/vendor/`
 - Mobile-first responsive layout (Grid, Flexbox)
 - Tracks are self-contained pages built on `tracks/assets/`; articles reuse the site's tokens
   and add a skin on top
@@ -122,15 +197,16 @@ All pages are static HTML with:
 
 ### Full site (`home.html`) features
 
-- Theme system with Auto (default), Midnight, Daylight and Contrast, and no flash before paint
-- Modular JS classes: ThemeManager, NavigationManager, FormManager, AnimationManager
-- Intersection Observer scroll reveals; floating navbar with backdrop blur
+- Appearances Auto (default), Midnight, Daylight and Contrast (`js/appearance.js`,
+  `css/themes/`), set before first paint so there is no flash
+- Intersection Observer scroll reveals (`js/motion.js`), the signal-field backdrop
+  (`js/signal-field.js`), floating navbar with backdrop blur
 
 ### `different_designs/`
 
 Exploration material only: `mockups/` (five homepage directions), `logo/` (concepts and
-Arabic overlays), and the older `light_v1`, `light_v2` and `dark_version2` pages. Nothing here
-is live.
+Arabic overlays), `icons/` (Hairline figure mockups), `landing-skill/` (gateway and 404 drafts),
+and the older `light_v1`, `light_v2` and `dark_version2` pages. Nothing here is live.
 
 ## Articles and Narration (current conventions)
 
@@ -140,9 +216,12 @@ is live.
   are linked from the Writing list in `home.html` and from each other's prev/next nav.
 - Every article has a hidden `.listen` player shown by `js/listen.js` once
   `audio/articles/<slug>.mp3` exists.
-- Narration is generated with `audio/articles/build.sh` from the spoken transcripts in
-  `audio/articles/source/`. When an article's text changes, update its transcript too,
-  and regenerate only the sections that changed.
+- English narration is rendered locally in Hisham's cloned voice (Fish S2-Pro) by
+  `~/Work/Whisper-audio/bakeoff/narrate.py` from the transcripts in `audio/articles/source/`
+  (`--only sNN` for changed sections), then copied into `audio/articles/`. It is a local model:
+  follow the RAM-gate rules in the user-level CLAUDE.md. `audio/articles/build.sh` (ElevenLabs)
+  is for Arabic narration only. When an article's text changes, update its transcript too and
+  regenerate only the sections that changed.
 - Keep personal details (account or policy numbers, emails, photo GPS data) out of
   articles and images.
 
@@ -155,26 +234,11 @@ them work to "Site strategy (current)" above: the gateway, `home.html`, the four
 article skins and the content rules. Explorations live in `different_designs/` (mockups, logo
 concepts); they are reference, not the plan.
 
-## Development Workflow
+## Local development and deploy
 
-Since this is a static website with no build process:
-
-1. **Local Development**: Open HTML files directly in browser or use a simple HTTP server
-2. **Testing**: Test across different screen sizes and browsers
-3. **Deployment**: Push to GitHub Pages (automatic deployment enabled)
-
-## Common Development Tasks
-
-- **Adding new sections**: Follow the existing card-based layout patterns
-- **Theme modifications**: Update CSS custom properties in the `:root` selector
-- **Responsive adjustments**: Modify existing media queries or add new breakpoints
-- **Animation changes**: Update CSS keyframes or Intersection Observer configurations
-
-## Browser Support
-
-The designs use modern CSS and JavaScript features and target modern browsers that support:
-- CSS Grid and Flexbox
-- CSS Custom Properties
-- Intersection Observer API
-- ES6+ JavaScript features
-- CSS backdrop-filter (for enhanced visual effects)
+- Serve the repo root: `python3 -m http.server 8765`, then open http://127.0.0.1:8765/ (some
+  features, such as the narration check and module scripts, need http, not `file://`).
+- GitHub Pages deploys `main` automatically; there is no build. Commit when asked, push only
+  after the owner has reviewed.
+- Target: current Chrome, Safari and Firefox, desktop and phone. The pages use Grid, custom
+  properties, `color-mix()`, backdrop-filter and ES modules.

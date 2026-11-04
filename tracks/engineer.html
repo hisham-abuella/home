@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=2">
+<link rel="stylesheet" href="assets/ident.css?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Alexandria:wght@400;500;700&display=swap" rel="stylesheet">
@@ -82,7 +82,7 @@ a { color: var(--beam); }
 .idline { margin: 10px 0 0; font-weight: 600; font-size: 18px; }
 .hero p.lede { margin: 16px 0 0; max-width: 46ch; color: var(--soft); font-size: 18px; }
 .who { display: flex; align-items: center; gap: 14px; margin-top: 22px; color: var(--muted); font-size: 15px; }
-.who img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--star); }
+.who .mascot { width: 60px; height: 60px; flex: none; }
 .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .jump a { text-decoration: none; padding: 11px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--plane); color: var(--ink); font-weight: 500; }
 .jump a:hover { border-color: var(--star); }
@@ -186,7 +186,7 @@ h2 { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; lette
       <h1 data-i18n="name">Hisham Abuella</h1>
       <p class="idline" data-i18n="idLine">Muslim | Cellular Systems Engineer</p>
       <p class="lede" data-i18n="lede">Rx digital front-end, channel estimation and AGC for cellular modems, after a doctorate in visible light sensing. Each bright point in the diagram is one piece of that work. Outside work, I love creating UIs with Claude.</p>
-      <div class="who"><img src="assets/bio.jpg" alt=""><span data-i18n="who">Apple, San Diego. Previously Qualcomm.</span></div>
+      <div class="who"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><span data-i18n="who">Apple, San Diego. Previously Qualcomm.</span></div>
       <div class="jump">
         <a class="first" href="#research" data-i18n="j1">Research</a>
         <a href="#papers" data-i18n="j2">Papers</a>
@@ -257,7 +257,7 @@ h2 { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; lette
   </section>
 
   <section class="ident" id="contact" aria-label="Contact" data-i18n-aria="ariaContact">
-    <div class="ident-who"><img src="assets/bio.jpg" alt="Hisham Abuella" data-i18n-alt="idName"><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
+    <div class="ident-who"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><div><b data-i18n="idName">Hisham Abuella</b><span data-i18n="idLine">Muslim | Cellular Systems Engineer</span><span data-i18n="idLoc">California, USA</span></div></div>
     <div class="ident-actions">
       <button type="button" class="mail" data-copy="hisham.abuella1@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-copy-label data-i18n="idCopy">Copy email</span><code>hisham.abuella1@gmail.com</code></button>
       <a class="primary" href="../cv.html" data-i18n="idCv">View CV</a>
@@ -281,6 +281,7 @@ h2 { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; lette
 
 <script type="application/json" id="i18n-ar">
 {
+  "mascotMe": "دوس على هشام الصغير",
   "docTitle": "هشام أبو العلا — للمهندسين",
   "skip": "روح للمحتوى على طول",
   "viewing": "بتتفرج كمهندس · غيّر", "name": "هشام أبو العلا",
@@ -395,7 +396,7 @@ h2 { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; lette
   } else { snr.value = 22; resample(); draw(); }
 })();
 </script>
-<script src="assets/mascot.js?v=3" defer></script>
+<script src="assets/mascot.js?v=4" defer></script>
 <script src="assets/mascot-buddy.js?v=6" defer></script>
     <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>

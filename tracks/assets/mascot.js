@@ -9,6 +9,8 @@
    loads <path>-directions.webp and <path>-reactions.webp: two 3x3 sheets, nine
    head directions and nine expressions. Size comes from CSS (width/height).
    Tracking needs a fine pointer; the squash honours reduced motion.
+   Black and white: class="mascot mono", or data-mascot-tone="mono" on <html>
+   (whole page, buddy included); Contrast appearance and print go mono on their own.
    ========================================================================== */
 
 (function () {
@@ -116,6 +118,19 @@
             // Per-keyframe easing with the effect itself linear, so the bounce is not front-loaded.
             squash.animate(SQUASH, { duration: SQUASH_MS, easing: 'linear' });
         });
+    }
+
+    // Shared base (zero specificity, so page rules win) and the black-and-white
+    // version: class "mono" on one mascot, data-mascot-tone="mono" on <html> for a
+    // page drawn in black and white, the site's Contrast appearance, and print.
+    if (!document.getElementById('mascot-base')) {
+        var css = document.createElement('style');
+        css.id = 'mascot-base';
+        css.textContent =
+            ':where(.mascot){position:relative;display:block;padding:0;border:0;background:none;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}' +
+            '.mascot.mono,[data-mascot-tone="mono"] .mascot,[data-appearance="contrast"] .mascot{filter:grayscale(1) contrast(1.1)}' +
+            '@media print{.mascot{filter:grayscale(1)}}';
+        document.head.appendChild(css);
     }
 
     window.Mascot = { mount: mount };
