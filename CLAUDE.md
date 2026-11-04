@@ -99,6 +99,7 @@ Run these before every commit; all must pass:
 
 ```sh
 python3 claudeteam/tools/site_check.py       # links, anchors, assets, canonical/og:url, hreflang, alt, ?v= consistency
+python3 claudeteam/tools/build_sitemap.py --check   # sitemap.xml lists every indexable page
 python3 claudeteam/tools/ar_parity.py        # every article: EN/AR structure and leftover English
 python3 claudeteam/tools/ar_parity.py home   # home.html vs ar/home.html
 python3 claudeteam/tools/ar_style.py         # Arabic style rules
@@ -110,8 +111,9 @@ Before every push, run the regression test (about 3 minutes; `--quick` for about
 uv run claudeteam/tools/regression_test.py
 ```
 
-It runs the four checks above, loads every live page at 390px and 1440px in light and dark
-(JS errors, failed requests, horizontal scroll, broken images), and tests the behaviour listed
+It runs the checks above, loads every live page at 390px and 1440px in light and dark
+(JS errors, failed requests, horizontal scroll, broken images, text contrast of 4.5:1, or 3:1
+for large text; text on images and gradients is skipped), and tests the behaviour listed
 below. Add a check to it whenever a new behaviour ships.
 
 To add or change an article, use the `new-article` skill (`.claude/skills/new-article/`): page,
@@ -125,6 +127,12 @@ horizontal overflow and contrast. Behaviour worth re-testing after JS changes: t
 30-second countdown (and that a key press stops it), "Continue …" after a track visit,
 `reader-path` set by tracks and cleared by `home.html`, the article skins, the Back menu, and the
 "Listen" player (shown only when the mp3 exists).
+
+**Search engines.** `sitemap.xml` is generated from the pages' own canonical and `hreflang`
+tags: after adding, moving or removing a page run `python3 claudeteam/tools/build_sitemap.py`
+and commit the result. A page with `<meta name="robots" content="noindex">` or no
+self-canonical is left out. `robots.txt` keeps `different_designs/`, `claudeteam/` and
+`.claude/` out of search and points to the sitemap.
 
 **Shared files and their current `?v=` tags.** When one changes, bump its tag in every page that
 loads it (`grep -rl 'mascot.js?v=4' --include='*.html' .` finds them); `site_check.py` flags a
@@ -171,6 +179,7 @@ Run the checks above.
 - `js/` - `appearance.js`, `reader-bar.js`, `listen.js`, `back-menu.js`, `signal-field.js`,
   `motion.js`; `js/vendor/` holds third-party code copied in unchanged (only `hairline.js`)
 - `brand/`, `favicon.ico` - logo, share image, favicons
+- `sitemap.xml` (generated), `robots.txt`, `CNAME`
 - `projects/` - `bedtime-stories/` (narrated bilingual books), `local-model-performance/`
   (model comparison, decks and paper), `presentation-skill/` (slide-deck demos)
 - `different_designs/` - explorations only (mockups, logo concepts, older designs), not linked

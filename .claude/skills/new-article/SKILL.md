@@ -89,6 +89,7 @@ slug to `audio/articles/ar/available.json` (the player stays hidden until it is 
 ## 6. Check, then hand over
 
 ```sh
+python3 claudeteam/tools/build_sitemap.py      # adds both pages to sitemap.xml
 python3 claudeteam/tools/site_check.py
 python3 claudeteam/tools/ar_parity.py <slug>
 uv run claudeteam/tools/regression_test.py      # every page, 390/1440, light/dark, behaviour

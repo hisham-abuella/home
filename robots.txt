@@ -1,0 +1,7 @@
+# hishamabuella.com: everything public may be indexed except design explorations and team notes.
+User-agent: *
+Disallow: /different_designs/
+Disallow: /claudeteam/
+Disallow: /.claude/
+
+Sitemap: https://www.hishamabuella.com/sitemap.xml

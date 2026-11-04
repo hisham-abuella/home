@@ -7,10 +7,12 @@
     uv run claudeteam/tools/regression_test.py            # full run (about 3 minutes)
     uv run claudeteam/tools/regression_test.py --quick    # laptop/dark + phone/light only
 
-1. The static checks: site_check.py, ar_parity.py, ar_parity.py home, ar_style.py.
+1. The static checks: site_check.py, build_sitemap.py --check, ar_parity.py, ar_parity.py home,
+   ar_style.py.
 2. Every live page (gateway, full site EN/AR, CV, 404, the four tracks EN/AR, every article
    EN/AR, a skinned article per track, the project pages) at 390px and 1440px, light and dark:
-   no JS errors, no failed local requests, no horizontal scroll, no broken images.
+   no JS errors, no failed local requests, no horizontal scroll, no broken images, and text
+   contrast of at least 4.5:1 (3:1 for large text).
 3. Behaviour: the gateway countdown and its stop, "Continue" after a track, reader-path set
    and cleared, article skins, the Back menu, the Listen player, the language switch, the
    theme switch, mini Hisham (mono on the vibe track) and the Hairline stations.
@@ -45,7 +47,7 @@ def ok(msg):
 # ---------------------------------------------------------------- 1. static checks
 def static_checks():
     print('== static checks')
-    for cmd in (['site_check.py'], ['ar_parity.py'], ['ar_parity.py', 'home'], ['ar_style.py']):
+    for cmd in (['site_check.py'], ['build_sitemap.py', '--check'], ['ar_parity.py'], ['ar_parity.py', 'home'], ['ar_style.py']):
         r = subprocess.run([sys.executable, os.path.join(ROOT, 'claudeteam/tools', cmd[0]), *cmd[1:]],
                            cwd=ROOT, capture_output=True, text=True)
         last = (r.stdout.strip().splitlines() or ['(no output)'])[-1]
@@ -83,11 +85,58 @@ def live_pages():
     return keep + extra
 
 
+# WCAG text contrast: 4.5:1 for body text, 3:1 for large text (24px, or 18.66px bold). Text on
+# an image or gradient is skipped (its background cannot be read from CSS), as is hidden or
+# faded text. Runs on every page in every view of the sweep.
+CONTRAST_JS = r"""() => {
+  const parse = (c) => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(/[ ,\/]+/).filter(Boolean).map(Number); return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1]; };
+  const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+  const blend = (top, bot) => { const a = top[3]; return [top[0]*a + bot[0]*(1-a), top[1]*a + bot[1]*(1-a), top[2]*a + bot[2]*(1-a), 1]; };
+  function bgOf(el) {
+    const layers = [];
+    for (let e = el; e; e = e.parentElement) {
+      const cs = getComputedStyle(e);
+      if (cs.backgroundImage && cs.backgroundImage !== 'none' && !/^linear-gradient\(rgba?\([^)]*0\)\s*,/.test(cs.backgroundImage)) {
+        if (/url\(|gradient/.test(cs.backgroundImage) && !(cs.backgroundColor && parse(cs.backgroundColor)[3] === 1)) return null; // image or gradient: unknown
+      }
+      const c = parse(cs.backgroundColor);
+      if (c && c[3] > 0) { layers.push(c); if (c[3] >= 1) break; }
+      if (cs.filter !== 'none' || (cs.backdropFilter && cs.backdropFilter !== 'none' && !(c && c[3] >= 0.85))) { if (!(c && c[3] >= 1)) return null; }
+    }
+    let bg = [255, 255, 255, 1];
+    const rootBg = parse(getComputedStyle(document.documentElement).backgroundColor);
+    if (!layers.length || layers[layers.length - 1][3] < 1) { if (rootBg && rootBg[3] === 1) bg = rootBg; else { const b = parse(getComputedStyle(document.body).backgroundColor); if (b && b[3] === 1) bg = b; } }
+    for (let i = layers.length - 1; i >= 0; i--) bg = blend(layers[i], bg);
+    return bg;
+  }
+  const out = [], seen = new Set();
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n; (n = walker.nextNode());) {
+    if (!n.textContent.trim()) continue;
+    const el = n.parentElement; if (!el || seen.has(el)) continue; seen.add(el);
+    if (el.closest('[aria-hidden="true"], script, style, noscript, svg, .sr-only, .visually-hidden, [hidden], pre code')) continue;
+    const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) continue;
+    const cs = getComputedStyle(el);
+    if (cs.visibility === 'hidden' || parseFloat(cs.opacity) < 0.1) continue;
+    let op = 1; for (let e = el; e; e = e.parentElement) op *= parseFloat(getComputedStyle(e).opacity);
+    if (op < 0.95) continue; // mid-animation reveal or deliberately faded: skip
+    if (el.closest('button:disabled, [aria-disabled="true"]')) continue;
+    const fg = parse(cs.color); const bg = bgOf(el); if (!fg || !bg) continue;
+    const f = fg[3] < 1 ? blend(fg, bg) : fg;
+    const L1 = lum(f), L2 = lum(bg); const ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
+    const size = parseFloat(cs.fontSize), bold = parseInt(cs.fontWeight) >= 700;
+    const need = (size >= 24 || (bold && size >= 18.66)) ? 3 : 4.5;
+    if (ratio < need) out.push({ text: n.textContent.trim().slice(0, 40), sel: el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : ''), ratio: Math.round(ratio * 100) / 100, need, fg: cs.color, bg: 'rgb(' + bg.slice(0, 3).map(Math.round).join(',') + ')' });
+  }
+  return out;
+}"""
+
+
 IGNORED = re.compile(r'goatcounter|gc\.zgo\.at|/audio/articles/ar/[^/]+\.mp3')
 
 
-def new_context(browser, w, h, scheme, buddy=True):
-    ctx = browser.new_context(viewport={'width': w, 'height': h}, color_scheme=scheme)
+def new_context(browser, w, h, scheme, buddy=True, motion='no-preference'):
+    ctx = browser.new_context(viewport={'width': w, 'height': h}, color_scheme=scheme, reduced_motion=motion)
     ctx.route(re.compile(r'goatcounter|gc\.zgo\.at'), lambda r: r.abort())
     if not buddy:
         ctx.add_init_script("try{localStorage.setItem('mascot-buddy','off')}catch(e){}")
@@ -101,7 +150,8 @@ def sweep(browser, base):
     pages = live_pages()
     for w, h, scheme in configs:
         print(f'== sweep {w}px {scheme}: {len(pages)} pages')
-        ctx = new_context(browser, w, h, scheme)
+        # Reduced motion shows scroll-reveal content at once, so its contrast can be measured.
+        ctx = new_context(browser, w, h, scheme, motion='reduce')
         bad = 0
         for p in pages:
             pg = ctx.new_page()
@@ -129,6 +179,11 @@ def sweep(browser, base):
                     errs.append(f'horizontal scroll: {info["over"]}px')
                 if info['broken']:
                     errs.append(f'broken images: {info["broken"][:3]}')
+                pg.evaluate('window.scrollTo(0, document.body.scrollHeight)'); pg.wait_for_timeout(150)
+                pg.evaluate('window.scrollTo(0, 0)'); pg.wait_for_timeout(100)
+                for c in pg.evaluate(CONTRAST_JS):
+                    errs.append(f'contrast {c["ratio"]}:1 (needs {c["need"]}) on {c["sel"]} "{c["text"]}" '
+                                f'{c["fg"]} on {c["bg"]}')
             except Exception as e:  # noqa: BLE001
                 errs.append(f'load: {str(e)[:120]}')
             for e in dict.fromkeys(errs):
