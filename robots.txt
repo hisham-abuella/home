@@ -5,3 +5,4 @@ Disallow: /claudeteam/
 Disallow: /.claude/
 
 Sitemap: https://www.hishamabuella.com/sitemap.xml
+# A summary of the site for AI assistants: https://www.hishamabuella.com/llms.txt

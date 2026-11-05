@@ -132,7 +132,10 @@ horizontal overflow and contrast. Behaviour worth re-testing after JS changes: t
 tags: after adding, moving or removing a page run `python3 claudeteam/tools/build_sitemap.py`
 and commit the result. A page with `<meta name="robots" content="noindex">` or no
 self-canonical is left out. `robots.txt` keeps `different_designs/`, `claudeteam/` and
-`.claude/` out of search and points to the sitemap.
+`.claude/` out of search and points to the sitemap. `llms.txt` is a hand-written Markdown
+summary for AI assistants (who Hisham is, the pages, every article with one line); add each
+new article to it, with no internal Apple numbers. `build_sitemap.py --check` fails if one is
+missing.
 
 **Shared files and their current `?v=` tags.** When one changes, bump its tag in every page that
 loads it (`grep -rl 'mascot.js?v=4' --include='*.html' .` finds them); `site_check.py` flags a
@@ -179,7 +182,7 @@ Run the checks above.
 - `js/` - `appearance.js`, `reader-bar.js`, `listen.js`, `back-menu.js`, `signal-field.js`,
   `motion.js`; `js/vendor/` holds third-party code copied in unchanged (only `hairline.js`)
 - `brand/`, `favicon.ico` - logo, share image, favicons
-- `sitemap.xml` (generated), `robots.txt`, `CNAME`
+- `sitemap.xml` (generated), `robots.txt`, `llms.txt` (summary for AI assistants), `CNAME`
 - `projects/` - `bedtime-stories/` (narrated bilingual books), `local-model-performance/`
   (model comparison, decks and paper), `presentation-skill/` (slide-deck demos)
 - `different_designs/` - explorations only (mockups, logo concepts, older designs), not linked

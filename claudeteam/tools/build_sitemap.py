@@ -7,7 +7,8 @@ A page is listed when it is tracked in git, outside different_designs/ and claud
 robots noindex, and its canonical link points at its own address. Its hreflang links become
 <xhtml:link> alternates (so the tracks' ?lang=ar versions are announced without being listed
 twice), and <lastmod> is the date of the file's last commit. Run it after adding, moving or
-removing a page; the regression test runs --check.
+removing a page; the regression test runs --check, which also fails when llms.txt (the
+hand-written summary for AI assistants) is missing an English article.
 """
 import os
 import re
@@ -73,7 +74,14 @@ def main():
         if strip(old) != strip(new):
             print('FAIL sitemap.xml is out of date: run python3 claudeteam/tools/build_sitemap.py')
             sys.exit(1)
-        print(f'OK   sitemap ({new.count("<loc>")} pages)')
+        # llms.txt (the summary for AI assistants) must list every English article
+        llms = open(os.path.join(ROOT, 'llms.txt'), encoding='utf-8').read() if os.path.exists(os.path.join(ROOT, 'llms.txt')) else ''
+        arts = subprocess.check_output(['git', 'ls-files', 'Articles/*.html'], cwd=ROOT, text=True).split()
+        missing = [a for a in arts if '/ar/' not in a and SITE + a not in llms]
+        if missing:
+            print('FAIL llms.txt does not list: ' + ', '.join(missing))
+            sys.exit(1)
+        print(f'OK   sitemap ({new.count("<loc>")} pages), llms.txt lists every article')
         return
     open(path, 'w', encoding='utf-8').write(new)
     print(f'wrote sitemap.xml ({new.count("<loc>")} pages)')

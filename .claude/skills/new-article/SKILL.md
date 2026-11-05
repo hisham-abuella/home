@@ -59,6 +59,7 @@ Sans Arabic font, `.lang-switch` to "Read in English", `data-src` to
 | `tracks/vibe.html` | build-log entry (and the "Built" table if it is a thing built), the JS list near the end (`['<slug>', 'English title', 'Arabic title', 'YYYY-MM']`), Arabic strings in the `i18n-ar` block |
 | `tracks/learner.html` | a journal `entry` with `?via=learner`, EN text + Arabic key |
 | other tracks | only if the article fits them (engineer: research; recruiter: rarely) |
+| `llms.txt` | one line under "Articles", newest first: `[Title](https://www.hishamabuella.com/Articles/<slug>.html): summary (Mon YYYY)` |
 
 Track links carry `?via=<track>`; new `data-i18n` keys need their Arabic in that page's
 `i18n-ar` block.

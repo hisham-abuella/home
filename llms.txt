@@ -1,0 +1,52 @@
+# Hisham Abuella
+
+> Personal site of Hisham Abuella, a cellular systems engineer in San Diego, California (Apple since June 2025, Qualcomm 2021–2025) with a Ph.D. in Electrical and Computer Engineering. At its heart are build logs about vibe coding with Claude and local AI models, and the learning journey behind them. The site and every article are in English and Egyptian Arabic.
+
+Facts on this site come from the CV and the articles. Arabic pages are translations of the English ones; add `?lang=ar` to the front page or a track for its Arabic version. Names: Hisham Abuella, Arabic هشام أبو العلا.
+
+## About
+
+- [Front page](https://www.hishamabuella.com/): a radio-tuner gateway that sends each kind of reader to their page (recruiter, engineer, vibe coder, learner) or to the full site
+- [Full site](https://www.hishamabuella.com/home.html): about, experience, research, projects and the writing list ([Arabic](https://www.hishamabuella.com/ar/home.html))
+- [CV](https://www.hishamabuella.com/cv.html): work, education, publications and the patent (English only)
+- [Recruiter page](https://www.hishamabuella.com/tracks/recruiter.html): experience, CV and contact on one page
+- [Engineer page](https://www.hishamabuella.com/tracks/engineer.html): Rx digital front-end, channel estimation and AGC for cellular modems, and visible light sensing research
+- [Vibe coder page](https://www.hishamabuella.com/tracks/vibe.html): things built with Claude, the workflow and stack, build logs
+- [Learner page](https://www.hishamabuella.com/tracks/learner.html): what I learned building with Claude and local models, and free resources
+
+## Background
+
+- Cellular System Engineer, Apple, San Diego (June 2025 – now): AGC (automatic gain control) for cellular modems
+- Senior Modem System Engineer, Qualcomm, San Diego (June 2021 – June 2025): mmWave and Sub6 Rx digital front-end, channel parameter estimation for NR
+- Ph.D., Electrical and Computer Engineering, Oklahoma State University (2021); thesis on wireless visible light sensing systems
+- M.Sc., Istanbul Sehir University (2016); B.Sc., Ain Shams University, Cairo (2013)
+- One U.S. patent, No. 10,768,194 B2: speed estimation, detection and ranging using visible light in vehicles (ViLDAR)
+
+## Articles
+
+Each article has an Egyptian Arabic version at `/Articles/ar/<same name>` and most have narration in Hisham's own cloned voice.
+
+- [From a chat window to a home hub](https://www.hishamabuella.com/Articles/building-ai-server-part-2.html): Part 2 of the AI engine: receipts, calendars, the smart home and coding sessions, with its tools moving into plug-ins (Nov 2026)
+- [A shared calendar on the TV](https://www.hishamabuella.com/Articles/tv-calendar.html): one calendar for two, on phones and on the TV, shown by a Raspberry Pi (Oct 2026)
+- [Texting my own AI, end to end encrypted](https://www.hishamabuella.com/Articles/texting-my-ai.html): a private Matrix server on a Mac, Element X on the phone, and a bot that talks like an Egyptian friend (Oct 2026)
+- [One HTML file, a whole Keynote](https://www.hishamabuella.com/Articles/slides-in-html.html): Keynote-style slides made of plain HTML, with a live deck on the page (Oct 2026)
+- [Two nails, two assistants](https://www.hishamabuella.com/Articles/two-nails-two-assistants.html): a tire problem, and Claude compared with the AI being built at home (Oct 2026)
+- [Bedtime stories for a three-month-old](https://www.hishamabuella.com/Articles/bedtime-stories.html): a high-contrast bilingual board book, narrated in English and Arabic (Oct 2026)
+- [Building Wireless 101](https://www.hishamabuella.com/Articles/building-wireless101.html): a free bilingual platform for wireless communications and DSP (Mar 2026)
+- [Generating voice from text using local models](https://www.hishamabuella.com/Articles/local-voice-generation.html): local voices on a Mac Studio measured against ElevenLabs on real bedtime stories (Feb 2026, updated Oct 2026)
+- [Building a personal AI engine](https://www.hishamabuella.com/Articles/building-ai-server.html): local models, on-device images and voice, and a private notes vault on a Mac Studio (Feb 2026, updated Nov 2026)
+- [Building an interactive Islamic kids website](https://www.hishamabuella.com/Articles/building-islamic-kids.html): stories, quizzes and bilingual narration for children (Feb 2026)
+- [Building WirelessHub with Claude](https://www.hishamabuella.com/Articles/building-wirelesshub.html): a wireless engineering blog written with an AI pair programmer (Feb 2026)
+- [My journey, from Cairo to California](https://www.hishamabuella.com/Articles/journey.html): wireless engineering, doctoral research and the move into industry (Aug 2025)
+
+## Projects
+
+- [Wireless 101](https://hisham-abuella.github.io/Wireless-101/): a free bilingual platform teaching wireless communications and DSP in English and Arabic ([how it was built](https://www.hishamabuella.com/Articles/building-wireless101.html))
+- [Bedtime stories](https://www.hishamabuella.com/projects/bedtime-stories/): high-contrast bilingual board books, narrated page by page in English and Arabic
+- [Cloud vs. local models](https://www.hishamabuella.com/projects/local-model-performance/): a preliminary cost, time and quality study of cloud and local models building the same lecture deck with an Agent Skill in Claude Code ([article](https://www.hishamabuella.com/projects/local-model-performance/paper/article.html))
+- [Presentation skill](https://www.hishamabuella.com/projects/presentation-skill/how-it-works.html): how the slide-deck skill for Claude works, with the deck itself as the live demo
+
+## Optional
+
+- [Sitemap](https://www.hishamabuella.com/sitemap.xml): every page with its English and Arabic versions
+- [LinkedIn](https://www.linkedin.com/in/hisham-abuella-808b91171/), [Google Scholar](https://scholar.google.com/citations?user=51HWj54AAAAJ), [GitHub](https://github.com/hisham-abuella)
