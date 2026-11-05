@@ -44,7 +44,7 @@ Each article has an Egyptian Arabic version at `/Articles/ar/<same name>` and mo
 - [Wireless 101](https://hisham-abuella.github.io/Wireless-101/): a free bilingual platform teaching wireless communications and DSP in English and Arabic ([how it was built](https://www.hishamabuella.com/Articles/building-wireless101.html))
 - [Bedtime stories](https://www.hishamabuella.com/projects/bedtime-stories/): high-contrast bilingual board books, narrated page by page in English and Arabic
 - [Cloud vs. local models](https://www.hishamabuella.com/projects/local-model-performance/): a preliminary cost, time and quality study of cloud and local models building the same lecture deck with an Agent Skill in Claude Code ([article](https://www.hishamabuella.com/projects/local-model-performance/paper/article.html))
-- [Presentation skill](https://www.hishamabuella.com/projects/presentation-skill/how-it-works.html): how the slide-deck skill for Claude works, with the deck itself as the live demo
+- [present-in-html](https://hisham-abuella.github.io/present-in-html/): a Claude Code plugin that makes, edits, reviews and publishes slide decks as one HTML file, with 32 themes and a template library ([how it works](https://www.hishamabuella.com/projects/presentation-skill/how-it-works.html), a live deck; [the article](https://www.hishamabuella.com/Articles/slides-in-html.html); [source](https://github.com/hisham-abuella/present-in-html))
 
 ## Optional
 
