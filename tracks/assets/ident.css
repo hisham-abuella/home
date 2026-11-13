@@ -38,6 +38,11 @@
   border: 1.5px solid var(--id-line); color: var(--id-ink); text-decoration: none; font-size: 16px;
 }
 .ident-social a:hover, .ident-actions a:hover, .ident-actions button:hover { border-color: var(--id-accent); }
+.ident-actions a, .ident-actions button, .ident-social a { transition: border-color .2s ease, transform .2s ease; }
+/* Press feedback: a quick shrink while held, no bounce. */
+@media (prefers-reduced-motion: no-preference) {
+  .ident-actions a:active, .ident-actions button:active, .ident-social a:active { transform: scale(0.97); transition-duration: 0.08s; }
+}
 .ident-stats { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; border-top: 1.5px solid var(--id-line); padding-top: 16px; }
 .ident-stats b { display: block; font-size: 26px; line-height: 1.1; unicode-bidi: plaintext; }
 /* plaintext keeps 10+ reading correctly but also flips alignment; pin it to the Arabic side */

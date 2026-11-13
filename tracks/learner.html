@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=3">
+<link rel="stylesheet" href="assets/ident.css?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
@@ -103,6 +103,8 @@ a { color: var(--pen); text-underline-offset: 3px; }
 .filters h2 { margin: 0; margin-inline-end: 10px; font-size: 24px; font-weight: 600; }
 .filters button { font: 500 14px/1 var(--body); padding: 9px 13px; min-height: 38px; border: 1.5px solid var(--ink); background: var(--card); color: var(--ink); cursor: pointer; }
 .filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.filters button, .sticky button { transition: transform .2s ease; }
+@media (prefers-reduced-motion: no-preference) { .filters button:active, .sticky button:active { transform: scale(0.97); transition-duration: .08s; } }
 
 .entries { margin: 0; padding: 0; list-style: none; }
 .entry { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1.5px dashed var(--grid-b); }
@@ -160,7 +162,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
   <header class="hero" id="content" tabindex="-1" data-skip-target>
     <div>
       <p class="byline"><b data-i18n="idName">Hisham Abuella</b> · <span data-i18n="idLine">Muslim | Cellular Systems Engineer</span></p>
-      <h1 data-i18n="h1">What I learned building with Claude, and where you can learn too.</h1>
+      <h1 data-i18n="h1">What I learned building with Claude, and where you can learn too</h1>
       <p data-i18n="lede">I'm Hisham, a cellular systems engineer who loves creating UIs with Claude. In my own time I build things with Claude and local AI models, and I write down what I learned, including what went wrong. Below are those lessons, and a few free things to learn from.</p>
     </div>
     <figure class="portrait"><button type="button" class="mascot" data-mascot="assets/mascot/hisham" aria-label="Boop mini Hisham" data-i18n-aria="mascotMe"></button><span data-i18n="me">me</span></figure>
@@ -243,7 +245,7 @@ a { color: var(--pen); text-underline-offset: 3px; }
   "docTitle": "هشام أبو العلا — اليوميات",
   "skip": "روح للمحتوى على طول",
   "viewing": "بتتفرج كمتعلّم · غيّر", "me": "أنا",
-  "h1": "اللي اتعلمته وأنا ببني مع Claude، وفين تقدر تتعلم إنت كمان.",
+  "h1": "اللي اتعلمته وأنا ببني مع Claude، وفين تقدر تتعلم إنت كمان",
   "lede": "أنا هشام، مهندس أنظمة خلوية وبحب أعمل UIs مع Claude. في وقتي الخاص ببني حاجات مع Claude وmodels AI محلية، وبكتب اللي اتعلمته، حتى اللي غلطت فيه. تحت هتلاقي الدروس دي، وحاجات ببلاش تتعلم منها.",
   "latestT": "آخر يومية · نوفمبر 2026", "readL": "اقرا",
   "allH": "اللي اتعلمته، يومية يومية", "fAll": "الكل", "fVibe": "Vibe coding", "fLocal": "AI محلي", "fFam": "العيلة", "fJour": "المشوار",

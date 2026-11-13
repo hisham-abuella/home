@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=3">
+<link rel="stylesheet" href="assets/ident.css?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
@@ -88,6 +88,8 @@ a { color: var(--blue); text-underline-offset: 3px; }
 .cmds { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 18px 16px; border-top: 1.5px solid var(--ink); }
 .cmds button { font: 500 14px/1 'IBM Plex Mono', monospace; padding: 10px 12px; min-height: 40px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; }
 .cmds button:hover { background: var(--mark); }
+.cmds button, .dock button { transition: transform .2s ease; }
+@media (prefers-reduced-motion: no-preference) { .cmds button:active, .dock button:active { transform: scale(0.97); transition-duration: .08s; } }
 /* The one main command: what I've built with Claude */
 .cmds button.main, .dock button.main { background: var(--ink); color: var(--paper); }
 

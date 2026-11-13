@@ -143,10 +143,10 @@ page left on an old tag.
 
 | File | Tag | Loaded by |
 | --- | --- | --- |
-| `css/base.css`, `js/appearance.js` | v4, v3 | home, ar/home, articles |
-| `css/article.css`, `js/reader-bar.js`, `js/listen.js` | v2, v3, v2 | articles |
+| `css/base.css`, `js/appearance.js` | v5, v3 | home, ar/home, articles |
+| `css/article.css`, `js/reader-bar.js`, `js/listen.js`, `js/back-menu.js` | v3, v3, v2, v2 | articles |
 | `css/cv.css` | v4 | cv.html |
-| `tracks/assets/ident.css`, `ident.js`, `i18n.js` | v3, v2, v2 | gateway, tracks |
+| `tracks/assets/ident.css`, `ident.js`, `i18n.js` | v4, v2, v2 | gateway, tracks |
 | `tracks/assets/mascot.js`, `mascot-buddy.js` | v4, v6 | gateway (mascot only), home, tracks, articles |
 | `js/vendor/hairline.js` | v1 | gateway only |
 
@@ -162,6 +162,10 @@ Run the checks above.
 - Decks under `projects/presentation-skill/` jump to slides by `data-id` (`#start`, `#live-ui`),
   not by element `id`.
 - The 404 page uses root-absolute links (GitHub Pages serves it at any path).
+- Motion: entrances ease out, menus open in about 180 ms from 0.95 and close faster, buttons
+  shrink to 0.97 while pressed, no bounce; every animation sits behind reduced motion.
+- Every article carries schema.org `BlogPosting` JSON-LD (headline, date, image, author) in its
+  `<head>`, English and Arabic; copy it when adding an article.
 - Hairline figures (MIT, vendored unchanged in `js/vendor/hairline.js`) are used **only** on the
   gateway's four station cards (cabinet, dish, terminal, loupe), laptop only, lit in the station
   colour. Keep it that way: don't spread them to other pages. Reference:

@@ -24,7 +24,7 @@ Copy the newest article (`ls -t Articles/*.html | head -1`) and replace content 
 canonical + `og:url` (`https://www.hishamabuella.com/Articles/<slug>.html`), `hreflang`
 en/ar/x-default, the logo + Back menu header, `.lang-switch` to `ar/<slug>.html`, the hidden
 `.listen` block with `data-src="../audio/articles/<slug>.mp3"`, prev/next `article-nav`, the
-shared scripts with their current `?v=` tags (table in CLAUDE.md), and GoatCounter.
+shared scripts with their current `?v=` tags (table in CLAUDE.md), the `BlogPosting` JSON-LD in `<head>` (headline, description, `datePublished`, hero image, `inLanguage`), and GoatCounter.
 Voice: first person, plain, a build log a learner can follow; "I love creating UIs with Claude"
 fits; Wireless 101 stays low-key; internal Apple numbers never appear in articles.
 

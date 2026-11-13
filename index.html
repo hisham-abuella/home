@@ -70,7 +70,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="tracks/assets/ident.css?v=3">
+<link rel="stylesheet" href="tracks/assets/ident.css?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -217,6 +217,7 @@ h1 { margin: 0; font: 700 clamp(2.4rem, 6vw, 4.4rem)/1 var(--display); letter-sp
 .timer.stopped .track, .timer.stopped button { display: none; }
 .timer .secs { font-variant-numeric: tabular-nums; }
 @media (prefers-reduced-motion: reduce) { .needle, .st { transition: none; } }
+@media (prefers-reduced-motion: no-preference) { .st:active, .timer button:active { transform: scale(0.97); transition-duration: .08s; } }
 </style>
 </head>
 <body>

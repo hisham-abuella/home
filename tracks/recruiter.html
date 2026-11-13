@@ -27,7 +27,7 @@
   document.documentElement.setAttribute('data-theme', p); })();
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="assets/ident.css?v=3">
+<link rel="stylesheet" href="assets/ident.css?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -86,6 +86,8 @@ a { color: inherit; }
 .btn.copy .done { color: var(--ink); }
 .row { display: flex; gap: 8px; }
 .row .btn { flex: 1; }
+.btn { transition: transform .2s ease; }
+@media (prefers-reduced-motion: no-preference) { .btn:active { transform: scale(0.97); transition-duration: .08s; } }
 
 /* Record */
 .card { background: var(--panel); border-radius: 22px; padding: 26px; }

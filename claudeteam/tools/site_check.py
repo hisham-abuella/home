@@ -1,7 +1,7 @@
-"""Site check: local links, anchors, assets, canonical/og:url, hreflang, alt text and
+"""Site check: local links, anchors, assets, canonical/og:url, hreflang, alt text, article JSON-LD and
 ?v= tag consistency across every live page. Usage: python3 claudeteam/tools/site_check.py
 Exit code 1 when anything is found."""
-import os, re, sys, subprocess, collections
+import os, re, sys, json, subprocess, collections
 from html.parser import HTMLParser
 from urllib.parse import urlparse, unquote
 ROOT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
@@ -93,6 +93,18 @@ for f in files:
     if f.startswith('Articles/'):
         hl=dict(parsed[f].hreflang)
         if 'en' not in hl or 'ar' not in hl: issues[f].append(f'article hreflang incomplete {hl}')
+        # schema.org BlogPosting JSON-LD: parses, has the fields Google uses, url = canonical
+        m = re.search(r'<script type="application/ld\+json">(.*?)</script>', open(f, encoding='utf-8').read(), re.S)
+        try:
+            ld = json.loads(m.group(1)) if m else None
+        except ValueError:
+            ld = 'bad'
+        if not ld: issues[f].append('no BlogPosting JSON-LD')
+        elif ld == 'bad': issues[f].append('JSON-LD does not parse')
+        else:
+            gone = [k for k in ('headline', 'datePublished', 'image', 'author', 'url') if not ld.get(k)]
+            if ld.get('@type') != 'BlogPosting' or gone: issues[f].append(f'JSON-LD incomplete: {gone or ld.get("@type")}')
+            elif ld['url'] != parsed[f].canon: issues[f].append('JSON-LD url != canonical')
 print('== per-file issues')
 for f in sorted(issues):
     for i in issues[f]: print(f'{f}: {i}')
