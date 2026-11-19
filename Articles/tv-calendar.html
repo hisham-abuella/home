@@ -35,9 +35,6 @@
     <link rel="stylesheet" href="../css/skins/reader-bar.css">
     <link rel="stylesheet" href="../css/article.css?v=3">
     <style>
-        /* Four pieces: two by two, never three plus an orphan */
-        .feature-grid { grid-template-columns: repeat(2, 1fr); }
-
         .shot { margin: 2rem 0 2.5rem; }
         .shot img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
         .shot figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
@@ -186,13 +183,6 @@
                     </div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">✉️</div>
-                    <div>
-                        <strong>Invites from email</strong>
-                        <span>Meeting invites are picked up from Mail on the Mac, read only. Nothing is sent, moved or deleted</span>
-                    </div>
-                </div>
-                <div class="feature-card">
                     <div class="feature-icon">🔗</div>
                     <div>
                         <strong>Shared links</strong>
@@ -209,7 +199,7 @@
             </div>
 
             <h2>Two Days, Twenty-Two Commits</h2>
-            <p>The first commit was the whole back end: events, repeat rules, sharing, email sync and tests. Then came review. A security reviewer agent read the code in several rounds, and every finding was fixed before the next one. By the end there were <strong>145 tests</strong>, and a script that opens every screen at every size, in light and dark, and fails on low contrast, clipped text or a button too small to tap.</p>
+            <p>The first commit was the whole back end: events, repeat rules, sharing and tests. Then came review. A security reviewer agent read the code in several rounds, and every finding was fixed before the next one. By the end there were <strong>145 tests</strong>, and a script that opens every screen at every size, in light and dark, and fails on low contrast, clipped text or a button too small to tap.</p>
 
             <p>Repeat rules took more care than I expected. &ldquo;Every Tuesday and Thursday until December 15&rdquo;, &ldquo;the last Friday of the month&rdquo;, and the question every calendar has to ask when you change one meeting in a series: <em>this event, this and following, or all events?</em></p>
 
@@ -219,11 +209,6 @@
             <p>My wife uses a link that sees the full details. Time blocked through a shared link shows up on my calendar hatched and labelled with the person&rsquo;s name, so a plan can be seen before it clashes.</p>
 
             <p><strong>A bug on the Home Screen.</strong> A shared link saved to a phone&rsquo;s Home Screen opened <em>my</em> sign-in page instead of the shared calendar. The app had one manifest for everyone, and it said &ldquo;start at the front page&rdquo;. Now each shared link, and the TV&rsquo;s link, gets its own, so the icon opens the calendar it was saved from.</p>
-
-            <h2>Invites You Can Trust</h2>
-            <p>Every fifteen minutes the app asks Mail on the Mac for recent messages that look like invites, and reads their calendar parts. The interesting part is not reading them. It is deciding who is allowed to change an event by email, because the &ldquo;From&rdquo; line of an email is easy to fake.</p>
-
-            <p>So an invite only counts as coming from its sender when the email provider checked it on arrival, and the app reads that check only from the part of the headers the provider itself wrote. A change or a cancellation is accepted only from the person who sent the original invite. Anything it cannot confirm still appears, once, with a yellow &ldquo;Check this invite&rdquo; note.</p>
 
             <h2>The TV</h2>
             <figure class="shot">
@@ -266,7 +251,7 @@
             </div>
 
             <h2>What&rsquo;s Next</h2>
-            <p>A proper sign-in for my wife, instead of a link. Testing invites from real email providers, not only the ones the tests describe. And trying the drag-to-move gesture on a real iPad, which so far has only been tested in a browser.</p>
+            <p>A proper sign-in for my wife, instead of a link. And trying the drag-to-move gesture on a real iPad, which so far has only been tested in a browser.</p>
 
             <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
                 <p><em>The calendar, the Pi setup and this article were built with <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>

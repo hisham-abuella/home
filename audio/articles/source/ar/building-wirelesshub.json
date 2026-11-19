@@ -1,0 +1,36 @@
+{
+  "title": "بناء WirelessHub مع Claude",
+  "language": "ar",
+  "slides": [
+    {
+      "id": "s00",
+      "title": "Intro",
+      "transcript": "[warmly] بناء WirelessHub مع Claude. <break time=\"0.4s\" /> كتبه هِشام أبو العِلا. <break time=\"0.8s\" /> من كام شهر، صاحبي أحمد الشافعي كان عايز مكان يشارك فيه اللي يعرفه في الاتصالات اللاسلكية ومعالجة الإشارات والرياضيات. أحمد wireless systems engineer في Apple، وsenior member في الـ I triple E. كان عنده الخبرة والمقالات. اللي كان ناقصه بيت ليهم على النت. وهنا جه دوري، وهنا Claude Code بقى شريكي في البنا."
+    },
+    {
+      "id": "s01",
+      "title": "The Vision",
+      "transcript": "الفكرة. <break time=\"0.5s\" /> [cheerful] الهدف كان بسيط. أبني مدونة نضيفة وسريعة، بتركز على المحتوى، اسمها WirelessHub، تخلّي مقالات أحمد التقنية تلمع. من غير frameworks تقيلة. من غير build tools. بس HTML وCSS وJavaScript. موقع static بيفتح على طول، وبيشتغل في أي حتة. <break time=\"0.4s\" /> أحمد كان عنده أصلًا أكتر من خمسة وعشرين مقال، عن كل حاجة. من الـ Fourier transform في الحياة اليومية، لمايمو beamforming، لـ quantum wireless communication. والموقع لازم ينظّم ده كله، ببحث وfiltering وتصنيفات وdark mode، وكمان حلقات podcast."
+    },
+    {
+      "id": "s02",
+      "title": "Working with Claude Code",
+      "transcript": "الشغل مع Claude Code. <break time=\"0.5s\" /> [excited] Claude Code مكانش مجرد autocomplete في المشروع ده. كان شريك برمجة بجد. ساعد في تصميم الـ layout المبني على tabs، وقاعدة بيانات البحث، والـ sidebar. كتب زرار الـ dark mode، ومشغّل podcast بشريط تقدر تقدّم وتأخّر فيه. وبنى بحث live بالكلمات، في العناوين والـ tags والتصنيفات. ولمّع التصميم، بحركات الـ hover، وظلال الـ cards، ونظام ألوان واحد متناسق بين الفاتح والغامق. <break time=\"0.4s\" /> كنت بوصف اللي عايزه، مرة بدقة ومرة بشكل عام، وClaude يلف في الـ code، ويفهم الـ patterns اللي موجودة، ويعمل تغييرات راكبة عليها. لما طلبت منه يضيف analytics لكل الصفحات، عدّل سبعة وعشرين ملف، وعمل template للمقالات، وحدّث التوثيق. كل ده في لفّة واحدة. <break time=\"0.5s\" /> [gently] أحلى حاجة إنه بيقرا قبل ما يكتب."
+    },
+    {
+      "id": "s03",
+      "title": "What We Built",
+      "transcript": "اللي بنيناه. <break time=\"0.5s\" /> الموقع في شكله النهائي static بالكامل، ومستضاف ببلاش على GitHub Pages، ومع كده بيحسّسك إنه منصة محتوى كاملة. tabs للرئيسية والمقالات والـ podcasts وعن الموقع. filtering بالتصنيفات، وترتيب. مقال مميز في الصفحة الرئيسية. مشغّلات podcast في الـ sidebar وفي tab لوحدها. dark mode بيفتكر اختيارك. بحث live في المقالات والـ podcasts. وanalytics بتحترم الخصوصية. <break time=\"0.4s\" /> [happy] كل ده بـ HTML وCSS وJavaScript عادي. من غير build step. من غير dependencies. code نضيف ومقروء وبس."
+    },
+    {
+      "id": "s04",
+      "title": "Lessons Learned",
+      "transcript": "اللي اتعلمته. <break time=\"0.5s\" /> أولًا، الـ AI pair programming حاجة حقيقية. Claude Code مكانش بيطلّع snippets وبس. كان بيقرا الملفات الموجودة، ويمشي على نفس أسلوب الـ code، ويعمل تغييرات ماشية مع بعض على ملفات كتير. مسك حاجات فاتتني، واقترح طرق مكنتش فكرت فيها. <break time=\"0.5s\" /> [playfully] تانيًا، المواقع الـ static لسه بتكسب. مفيش زهق من الـ frameworks، ولا تحديثات dependencies، ولا build بيفشل. الموقع بيفتح بسرعة، وهيفضل شغال سنين من غير صيانة. <break time=\"0.5s\" /> تالتًا، التوثيق بيضاعف الأثر. كان عندنا ملف مفصّل بيوصف كل convention في المشروع، فكل جلسة جديدة مع Claude كانت تكمّل من مكان ما اللي قبلها وقفت. [gently] التوثيق الكويس مش بيساعد الناس بس. ده بيخلّي الشغل مع الـ AI أفيد بمراحل."
+    },
+    {
+      "id": "s05",
+      "title": "Check It Out",
+      "transcript": "شوفه بنفسك. <break time=\"0.5s\" /> WirelessHub شغال على النت، واللينك في المقال. لو بتهتم بالاتصالات اللاسلكية، أو معالجة الإشارات، أو الرياضيات اللي ورا الاتصال الحديث، مقالات أحمد تستاهل وقتك. <break time=\"0.4s\" /> [warmly] ولو انت developer وعندك فضول تبني بالـ AI، أقدر أقولك من تجربتي: Claude Code حاجة بجد. مش كامل، بس شريك شاطر جدًا، بيخلّي المشاريع الكبيرة تحسها في إيدك."
+    }
+  ]
+}

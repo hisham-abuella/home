@@ -36,9 +36,6 @@
     <link rel="stylesheet" href="../../css/skins/reader-bar.css">
     <link rel="stylesheet" href="../../css/article.css?v=3">
     <style>
-        /* Four pieces: two by two, never three plus an orphan */
-        .feature-grid { grid-template-columns: repeat(2, 1fr); }
-
         .shot { margin: 2rem 0 2.5rem; }
         .shot img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
         .shot figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
@@ -187,13 +184,6 @@
                     </div>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">✉️</div>
-                    <div>
-                        <strong>الدعوات من الإيميل</strong>
-                        <span>دعوات الاجتماعات بتتسحب من Mail على الـ Mac، قراية بس. مفيش حاجة بتتبعت أو تتنقل أو تتمسح</span>
-                    </div>
-                </div>
-                <div class="feature-card">
                     <div class="feature-icon">🔗</div>
                     <div>
                         <strong>لينكات مشتركة</strong>
@@ -210,7 +200,7 @@
             </div>
 
             <h2>يومين، و22 commit</h2>
-            <p>أول commit كان الـ back end كله: المواعيد، وقواعد التكرار، والمشاركة، ومزامنة الإيميل، والـ tests. بعدها جت المراجعة. agent بيراجع الأمان قرا الـ code على كذا جولة، وكل ملاحظة اتصلّحت قبل الجولة اللي بعدها. في الآخر كان فيه <strong>145 test</strong>، وscript بيفتح كل شاشة على كل مقاس، فاتح وغامق، وبيفشل لو التباين ضعيف أو النص مقصوص أو فيه زرار أصغر من إنه يتداس عليه.</p>
+            <p>أول commit كان الـ back end كله: المواعيد، وقواعد التكرار، والمشاركة، والـ tests. بعدها جت المراجعة. agent بيراجع الأمان قرا الـ code على كذا جولة، وكل ملاحظة اتصلّحت قبل الجولة اللي بعدها. في الآخر كان فيه <strong>145 test</strong>، وscript بيفتح كل شاشة على كل مقاس، فاتح وغامق، وبيفشل لو التباين ضعيف أو النص مقصوص أو فيه زرار أصغر من إنه يتداس عليه.</p>
 
             <p>قواعد التكرار خدت اهتمام أكتر ما كنت متوقع. &laquo;كل تلات وخميس لحد 15 ديسمبر&raquo;، و&laquo;آخر جمعة في الشهر&raquo;، والسؤال اللي أي calendar لازم يسأله لما تغيّر اجتماع واحد من سلسلة: <em>الميعاد ده بس، ولا ده واللي بعده، ولا كل المواعيد؟</em></p>
 
@@ -220,11 +210,6 @@
             <p>مراتي معاها لينك بيشوف التفاصيل كاملة. أي وقت يتحجز من لينك مشترك بيظهر على الـ calendar بتاعي مخطط ومكتوب عليه اسم الشخص، فالميعاد يبان قبل ما يتعارض مع حاجة.</p>
 
             <p><strong>bug على الـ Home Screen.</strong> لينك مشترك اتحفظ على الـ Home Screen بتاع موبايل كان بيفتح صفحة تسجيل الدخول <em>بتاعتي</em> بدل الـ calendar المشترك. الـ app كان عنده manifest واحد للكل، ومكتوب فيه &laquo;ابدأ من الصفحة الرئيسية&raquo;. دلوقتي كل لينك مشترك، ولينك التلفزيون كمان، ليه واحد خاص بيه، فالأيقونة بتفتح الـ calendar اللي اتحفظت منه.</p>
-
-            <h2>دعوات تقدر تثق فيها</h2>
-            <p>كل ربع ساعة الـ app بيسأل Mail على الـ Mac عن الرسايل الجديدة اللي شكلها دعوات، وبيقرا الجزء بتاع الـ calendar منها. الحتة المهمة مش القراية. الحتة المهمة إنه يقرر مين مسموح له يغيّر ميعاد بالإيميل، لأن سطر &laquo;From&raquo; في الإيميل سهل يتزوّر.</p>
-
-            <p>فالدعوة متتحسبش جاية من صاحبها غير لو مزوّد الإيميل اتأكد منها وهي داخلة، والـ app بيقرا التأكيد ده من الجزء اللي المزوّد نفسه كتبه في الـ headers بس. أي تعديل أو إلغاء بيتقبل بس من الشخص اللي بعت الدعوة الأصلية. وأي حاجة مقدرش يتأكد منها بتظهر برضه، مرة واحدة، وعليها ملاحظة صفرا &laquo;Check this invite&raquo;.</p>
 
             <h2>التلفزيون</h2>
             <figure class="shot">
@@ -267,7 +252,7 @@
             </div>
 
             <h2>اللي جاي</h2>
-            <p>تسجيل دخول حقيقي لمراتي بدل اللينك. تجربة دعوات من مزوّدين إيميل حقيقيين، مش بس اللي الـ tests بتوصفهم. وتجربة السحب لتحريك ميعاد على iPad حقيقي، لأنه لحد دلوقتي اتجرب في browser بس.</p>
+            <p>تسجيل دخول حقيقي لمراتي بدل اللينك. وتجربة السحب لتحريك ميعاد على iPad حقيقي، لأنه لحد دلوقتي اتجرب في browser بس.</p>
 
             <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
                 <p><em>الـ calendar وإعداد الـ Pi والمقال ده اتبنوا بـ <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>

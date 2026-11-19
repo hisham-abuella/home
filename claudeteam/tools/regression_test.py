@@ -245,7 +245,8 @@ def behaviour(browser, base):
     pg.goto(base + 'Articles/journey.html'); pg.wait_for_timeout(1500)
     check('English Listen player shown', pg.evaluate("(() => { const l = document.querySelector('.listen'); return !!l && !l.hidden && getComputedStyle(l).display !== 'none' })()"))
     pg.goto(base + 'Articles/ar/journey.html'); pg.wait_for_timeout(1500)
-    check('Arabic Listen player hidden until its mp3 exists', pg.evaluate("(() => { const l = document.querySelector('.listen'); return !l || l.hidden || getComputedStyle(l).display === 'none' })()"))
+    # Arabic narration exists for every article listed in audio/articles/ar/available.json
+    check('Arabic Listen player shown when listed in available.json', pg.evaluate("(() => { const l = document.querySelector('.listen'); return !!l && !l.hidden && getComputedStyle(l).display !== 'none' })()"))
 
     # Language switch on a track
     pg.goto(base + 'tracks/engineer.html'); pg.wait_for_load_state('load'); pg.wait_for_timeout(300)
