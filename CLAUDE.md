@@ -149,6 +149,7 @@ page left on an old tag.
 | `tracks/assets/ident.css`, `ident.js`, `i18n.js` | v4, v2, v2 | gateway, tracks |
 | `tracks/assets/mascot.js`, `mascot-buddy.js` | v4, v6 | gateway (mascot only), home, tracks, articles |
 | `js/vendor/hairline.js` | v1 | gateway only |
+| `js/ai-demos.js` | v2 | AI engine Part 3 (EN and AR): the demo UIs |
 
 **Adding an article.** Write `Articles/<slug>.html` from an existing one (canonical, `og:url`,
 `hreflang` en/ar, `.lang-switch`, Back menu, hidden `.listen` with `data-src`, the shared scripts

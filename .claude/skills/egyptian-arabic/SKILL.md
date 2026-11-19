@@ -95,7 +95,7 @@ Current titles to copy exactly:
 - بناء Wireless 101 · بناء محرك AI شخصي · بناء WirelessHub مع Claude
 - بناء موقع إسلامي تفاعلي للأطفال · مسمارين ومساعدين · ملف HTML واحد، Keynote كامل
 - رحلتي من القاهرة لكاليفورنيا · سوسو القطة (the book) · مدوّنة (blog, not بلوج)
-- من شباك chat لـ hub للبيت · calendar مشترك على التلفزيون
+- من شباك chat لـ hub للبيت · محرك الـ AI بتاعي شغال إزاي دلوقتي · calendar مشترك على التلفزيون
 - بكلّم الـ AI بتاعي على الموبايل، ومتشفّر من الأول للآخر
 - The local-model study: full title «LLM agents على الـ cloud ولا محلية، لعمل slides المحاضرات بـ
   Agent Skill»; short label «LLM agents على الـ cloud ولا محلية لـ slides المحاضرات» (its `<title>`)

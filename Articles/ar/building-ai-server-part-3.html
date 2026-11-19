@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ar-EG" dir="rtl" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../../brand/apple-touch-icon.png">
+    <title>محرك الـ AI بتاعي شغال إزاي دلوقتي - هشام أبو العلا</title>
+    <meta name="description" content="الجزء التالت من محرك الـ AI الشخصي بتاعي: النظام كله على Mac Studio واحد، مرسوم، مع demos صغيرة لأحدث الأدوات: buddy بكلّمه من غير ما ألمس حاجة، وstudio للصور، وpanel من زباين متخيّلين، وapp للفلوس الـ cloud عمره ما بيشوفه.">
+    <meta property="og:title" content="محرك الـ AI بتاعي شغال إزاي دلوقتي - هشام أبو العلا">
+    <meta property="og:image" content="https://www.hishamabuella.com/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="الجزء التالت: محرك الـ AI المحلي بتاعي شغال إزاي دلوقتي، برسومات وdemos لأحدث أدواته.">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="ar_EG">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-3.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-3.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/building-ai-server-part-3.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/building-ai-server-part-3.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/building-ai-server-part-3.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/base.css?v=5">
+    <link rel="stylesheet" href="../../css/themes/midnight.css">
+    <link rel="stylesheet" href="../../css/themes/daylight.css">
+    <link rel="stylesheet" href="../../css/themes/contrast.css">
+    <link rel="stylesheet" href="../../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../../css/skins/constellation.css">
+    <link rel="stylesheet" href="../../css/skins/terminal.css">
+    <link rel="stylesheet" href="../../css/skins/journal.css">
+    <link rel="stylesheet" href="../../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../../css/article.css?v=3">
+    <style>
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
+        .app-mark { display: flex; align-items: center; gap: 14px; margin-bottom: 0.9rem; }
+        .app-mark img { width: 64px; height: 64px; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.28)); }
+        .tool { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--accent); }
+
+        /* Lane colours: phone (blue), Mac (green), cloud (amber), local only (red).
+           Colour is a tint and a dot only; text keeps the theme's own colours. */
+        :root { --lane-phone: #4f8df7; --lane-mac: #2fae74; --lane-cloud: #e09a2c; --lane-local: #e5534b; }
+        .lane-tag { display: inline-flex; align-items: center; gap: 0.4em; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); }
+        .lane-tag::before { content: ""; width: 0.6em; height: 0.6em; border-radius: 50%; background: var(--dot, var(--accent)); }
+        .lane-phone { --dot: var(--lane-phone); }
+        .lane-mac { --dot: var(--lane-mac); }
+        .lane-cloud { --dot: var(--lane-cloud); }
+        .lane-local { --dot: var(--lane-local); }
+
+        /* ---------- Diagrams, drawn in real type ---------- */
+        .diagram { margin: 2rem 0 2.5rem; }
+        .diagram figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+        .band {
+            border-radius: 14px;
+            padding: 0.8rem;
+            border: 1px solid color-mix(in srgb, var(--dot) 40%, var(--card-border));
+            background: color-mix(in srgb, var(--dot) 8%, var(--bg-elevated));
+        }
+        .band + .band, .band + .link-row, .link-row + .band { margin-top: 0.35rem; }
+        .band > .lane-tag { margin: 0 0 0.6rem; margin-inline-start: 0.2rem; }
+        .boxes { display: grid; gap: 0.5rem; }
+        .boxes.c3 { grid-template-columns: repeat(3, 1fr); }
+        .boxes.c4 { grid-template-columns: repeat(4, 1fr); }
+        .box {
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 0.55rem 0.65rem;
+            font-size: 0.85rem;
+            line-height: 1.35;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        .box strong { display: block; color: var(--text-primary); font-size: 0.92rem; }
+        .box.hot { border-color: var(--accent); }
+        .box.local { border-color: var(--lane-local); }
+        .box.dashed { border-style: dashed; }
+        .mac-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 0.6rem; align-items: start; }
+        .hub { border: 1px solid var(--accent); border-radius: 12px; padding: 0.6rem; background: color-mix(in srgb, var(--accent) 6%, var(--bg-primary)); }
+        .hub-title, .side-title { font-weight: 700; color: var(--text-primary); font-size: 0.9rem; margin: 0 0 0.5rem; margin-inline-start: 0.15rem; }
+        .side .box { text-align: start; }
+        .side .boxes { gap: 0.4rem; }
+        .gate { margin-top: 0.6rem; border: 1px dashed var(--text-tertiary, var(--card-border)); border-radius: 10px; padding: 0.4rem 0.6rem; text-align: center; font-size: 0.82rem; color: var(--text-primary); font-weight: 600; }
+        .gate + .boxes { margin-top: 0.5rem; }
+        .link-row { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-secondary); padding: 0.1rem 0; }
+        .link-row span::before { content: "\2195\00a0"; color: var(--text-tertiary, var(--text-secondary)); }
+
+        /* Flow: what one chat message can touch */
+        .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1.2fr auto 1fr auto 1fr; align-items: center; gap: 0.35rem; }
+        .flow .arrow { color: var(--text-secondary); text-align: center; font-size: 1rem; }
+        .flow .fork { display: grid; gap: 0.4rem; }
+        .flow-note { margin-top: 0.6rem; text-align: center; font-size: 0.82rem; color: var(--text-secondary); }
+
+        /* Thinking Buddy: six steps in three lanes */
+        .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; counter-reset: step; }
+        .steps li {
+            counter-increment: step;
+            display: grid; grid-template-columns: 2rem 7.5rem 1fr; align-items: center; gap: 0.6rem;
+            padding: 0.55rem 0.7rem; border-radius: 10px;
+            background: color-mix(in srgb, var(--dot) 8%, var(--bg-elevated));
+            border: 1px solid color-mix(in srgb, var(--dot) 35%, var(--card-border));
+            color: var(--text-secondary); font-size: 0.92rem; line-height: 1.45;
+        }
+        .steps li::before { content: counter(step); width: 1.6rem; height: 1.6rem; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; background: var(--text-primary); color: var(--bg-primary); }
+        .steps li strong { color: var(--text-primary); }
+        .steps .side-note { font-size: 0.82rem; opacity: 0.95; }
+
+        /* Who answers */
+        .who { width: 100%; border-collapse: collapse; margin: 1.25rem 0 2rem; font-size: 0.92rem; }
+        .who th, .who td { text-align: start; padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--card-border); vertical-align: top; }
+        .who th { color: var(--text-secondary); font-weight: 600; font-size: 0.82rem; }
+        .who td { color: var(--text-primary); }
+
+        /* ---------- Demo UIs (made-up data) ---------- */
+        .demo {
+            margin: 1.75rem 0 2.25rem;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            background: var(--bg-elevated);
+            overflow: hidden;
+        }
+        .demo [hidden] { display: none !important; }
+        .demo-bar { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--card-border); font-size: 0.82rem; color: var(--text-secondary); }
+        .demo-bar strong { color: var(--text-primary); font-size: 0.9rem; }
+        .demo-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.15rem 0.45rem; border: 1px solid var(--card-border); border-radius: 999px; white-space: nowrap; }
+        .demo-body { padding: 1rem; }
+        .demo-btn {
+            font: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer;
+            padding: 0.5rem 0.95rem; border-radius: 999px; min-height: 40px;
+            border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink, var(--bg-primary));
+            transition: transform 0.12s ease-out;
+        }
+        .demo-btn.ghost { background: transparent; color: var(--text-primary); border-color: var(--card-border); }
+        .demo-btn:active { transform: scale(0.97); }
+        .demo-btn:focus-visible, .chip:focus-visible, .demo input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .demo .on { animation: demo-in 0.24s ease-out both; }
+        @keyframes demo-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+        .demo-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.85rem; }
+
+        .bubble { width: fit-content; max-width: 88%; padding: 0.55rem 0.85rem; border-radius: 14px; line-height: 1.45; font-size: 0.92rem; margin: 0 0 0.6rem; }
+        .bubble.me { margin-inline-start: auto; background: var(--accent); color: var(--accent-ink, var(--bg-primary)); border-end-end-radius: 4px; font-weight: 600; }
+        .bubble.ai { background: var(--bg-primary); border: 1px solid var(--card-border); color: var(--text-primary); border-end-start-radius: 4px; }
+        .bubble .tool { color: inherit; opacity: 0.85; }
+        .sys { font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 0.6rem; font-family: 'JetBrains Mono', monospace; }
+
+        /* Hub tiles */
+        .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.45rem; margin-bottom: 1rem; }
+        .tile { background: var(--bg-primary); border: 1px solid var(--card-border); border-radius: 12px; padding: 0.6rem 0.4rem; text-align: center; font-size: 0.8rem; color: var(--text-secondary); }
+        .tile i { display: block; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.3rem; }
+        .tile strong { display: block; color: var(--text-primary); font-size: 0.85rem; }
+        .tile.local i { color: var(--lane-local); }
+
+        /* Approval card */
+        .card { border: 1px solid var(--accent); border-radius: 12px; padding: 0.8rem 0.9rem; background: var(--bg-primary); max-width: 26rem; margin-bottom: 0.6rem; }
+        .card h4 { margin: 0 0 0.45rem; font-size: 0.95rem; color: var(--text-primary); }
+        .card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 0.8rem; font-size: 0.88rem; }
+        .card dt { color: var(--text-secondary); }
+        .card dd { margin: 0; color: var(--text-primary); }
+        .demo[data-ready] .after-approve, .demo[data-ready] .after-cancel { display: none; }
+        .demo[data-choice="approve"] .after-approve, .demo[data-choice="cancel"] .after-cancel { display: block; }
+        .demo[data-choice] .card .demo-actions { display: none; }
+
+        /* Buddy */
+        .buddy { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; align-items: start; }
+        .orb { width: 7.5rem; height: 7.5rem; margin: 0.5rem auto; border-radius: 50%; display: grid; place-items: center; text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--text-primary); border: 2px solid var(--card-border); background: var(--bg-primary); padding: 0.5rem; }
+        .demo[data-state="listen"] .orb { border-color: var(--lane-phone); }
+        .demo[data-state="think"] .orb { border-color: var(--lane-cloud); }
+        .demo[data-state="speak"] .orb { border-color: var(--lane-mac); }
+        .orb-label { display: none; }
+        .demo:not([data-ready]) .orb-label[data-orb="idle"], .demo[data-ready]:not([data-state]) .orb-label[data-orb="idle"],
+        .demo[data-state="listen"] .orb-label[data-orb="listen"], .demo[data-state="think"] .orb-label[data-orb="think"],
+        .demo[data-state="speak"] .orb-label[data-orb="speak"] { display: block; }
+        @media (prefers-reduced-motion: no-preference) {
+            .demo[data-state="listen"] .orb { animation: pulse 1.2s ease-in-out infinite; }
+            @keyframes pulse { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--lane-phone) 25%, transparent); } }
+        }
+        .clock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem; margin: 0.2rem 0 0.9rem; font-size: 0.75rem; color: var(--text-secondary); }
+        .clock span { border-top: 3px solid var(--card-border); padding-top: 0.3rem; }
+        .clock span.on { border-top-color: var(--accent); color: var(--text-primary); }
+        .clock b { display: block; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
+
+        /* Image Studio */
+        .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.4rem; }
+        .chip { font: inherit; font-size: 0.85rem; cursor: pointer; padding: 0.4rem 0.75rem; min-height: 36px; border-radius: 999px; border: 1px solid var(--card-border); background: var(--bg-primary); color: var(--text-primary); }
+        .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-subtle); font-weight: 700; }
+        .hint { font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 0.8rem; }
+        .queue { font-size: 0.82rem; color: var(--text-secondary); margin: 0.8rem 0 0; font-family: 'JetBrains Mono', monospace; }
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-top: 0.8rem; }
+        .shot-tile { border-radius: 12px; overflow: hidden; border: 1px solid var(--card-border); background: var(--bg-primary); }
+        .shot-tile .pic { aspect-ratio: 4 / 3; position: relative; }
+        .shot-tile .pic img { display: block; width: 100%; height: 100%; object-fit: cover; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+        .shot-tile.rendering .pic img { visibility: hidden; }
+        .shot-tile.rendering .pic { background: repeating-linear-gradient(45deg, var(--bg-elevated) 0 10px, var(--bg-primary) 10px 20px) !important; }
+        .shot-tile .cap { padding: 0.45rem 0.6rem; font-size: 0.8rem; color: var(--text-secondary); }
+        .shot-tile .cap strong { color: var(--text-primary); display: block; font-size: 0.85rem; }
+        .shot-tile .issue { color: var(--text-primary); font-weight: 600; }
+        .shot-tile .issue::before { content: "\26A0\00a0"; }
+        .fix-card { margin-top: 0.8rem; }
+        .demo[data-ready] .fix-yes, .demo[data-ready] .fix-no { display: none; }
+        .demo[data-fix="yes"] .fix-yes, .demo[data-fix="no"] .fix-no { display: block; }
+        .demo[data-fix] .fix-card .demo-actions { display: none; }
+
+        /* crowd-check */
+        .bars { display: grid; gap: 0.55rem; margin-top: 0.4rem; }
+        .bar { display: grid; grid-template-columns: 9rem 1fr 3rem; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-primary); }
+        .bar .track { height: 0.7rem; border-radius: 999px; background: var(--bg-primary); border: 1px solid var(--card-border); overflow: hidden; }
+        .bar .fill { display: block; height: 100%; width: var(--v); background: var(--accent); border-radius: 999px; }
+        .bar .num { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); text-align: end; }
+        @media (prefers-reduced-motion: no-preference) {
+            .demo[data-ready] .bars .fill { width: 0; transition: width 0.9s ease-out; }
+            .demo[data-ready] .bars.on .fill { width: var(--v); }
+        }
+        .quotes { margin: 0.9rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.4rem; font-size: 0.88rem; color: var(--text-secondary); }
+        .quotes li { padding: 0.45rem 0.7rem; border-inline-start: 3px solid var(--card-border); background: var(--bg-primary); border-radius: 6px; }
+        .caveat { font-size: 0.82rem; color: var(--text-secondary); margin: 0.9rem 0 0; }
+
+        /* Finance */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+        .lockbox { max-width: 22rem; margin: 0.3rem auto; text-align: center; }
+        .lockbox i { font-size: 1.6rem; color: var(--lane-local); }
+        .lockbox p { color: var(--text-secondary); font-size: 0.88rem; margin: 0.5rem 0 0.8rem; }
+        .lockbox input { width: 100%; font: inherit; padding: 0.55rem 0.75rem; min-height: 42px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-primary); color: var(--text-primary); margin-bottom: 0.6rem; box-sizing: border-box; }
+        .demo[data-ready] .fin-open { display: none; }
+        .demo[data-ready][data-state="open"] .fin-open { display: block; }
+        .demo[data-ready][data-state="open"] .fin-locked { display: none; }
+        .fin-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+        .fin-head strong { color: var(--text-primary); }
+        .fin-head [data-after-unlock]:focus { outline: none; }
+        .fin-head span { font-size: 0.82rem; color: var(--text-secondary); }
+        .fin-rows { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .fin-rows td { padding: 0.4rem 0.3rem; border-bottom: 1px solid var(--card-border); color: var(--text-primary); }
+        .fin-rows td:last-child { text-align: end; font-family: 'JetBrains Mono', monospace; }
+        .fin-rows .muted { color: var(--text-secondary); font-size: 0.8rem; }
+        .demo[data-ready] .ans-local, .demo[data-ready] .ans-cloud { display: none; }
+        .demo[data-ask="local"] .ans-local, .demo[data-ask="cloud"] .ans-cloud { display: block; }
+
+        @media (max-width: 720px) {
+            .boxes.c4 { grid-template-columns: repeat(2, 1fr); }
+            .boxes.c3 { grid-template-columns: repeat(2, 1fr); }
+            .hub .boxes.c3 { grid-template-columns: repeat(2, 1fr); }
+            .mac-grid { grid-template-columns: 1fr; }
+            .flow { grid-template-columns: 1fr; }
+            .flow .arrow { transform: rotate(90deg); }
+            .steps li { grid-template-columns: 1.8rem 1fr; }
+            .steps li .lane-tag { grid-column: 2; }
+            .steps li > span:last-child { grid-column: 2; }
+            .tiles { grid-template-columns: repeat(3, 1fr); }
+            .buddy { grid-template-columns: 1fr; }
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+            .bar { grid-template-columns: 6.5rem 1fr 2.6rem; }
+            .who { font-size: 0.85rem; }
+        }
+        [dir="rtl"] .flow .arrow { transform: scaleX(-1); }
+        /* Monospace stretches Arabic letters: Arabic text in these labels uses the body font */
+        [dir="rtl"] .sys, [dir="rtl"] .demo-tag, [dir="rtl"] .queue { font-family: inherit; }
+        @media (max-width: 720px) { [dir="rtl"] .flow .arrow { transform: rotate(90deg); } }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "محرك الـ AI بتاعي شغال إزاي دلوقتي", "description": "الجزء التالت من محرك الـ AI الشخصي بتاعي: النظام كله على Mac Studio واحد، مرسوم، مع demos صغيرة لأحدث الأدوات: buddy بكلّمه من غير ما ألمس حاجة، وstudio للصور، وpanel من زباين متخيّلين، وapp للفلوس الـ cloud عمره ما بيشوفه.", "datePublished": "2026-11-19", "inLanguage": "ar-EG", "url": "https://www.hishamabuella.com/Articles/ar/building-ai-server-part-3.html", "mainEntityOfPage": "https://www.hishamabuella.com/Articles/ar/building-ai-server-part-3.html", "image": "https://www.hishamabuella.com/Articles/img/ai-engine-now-hero.jpg", "author": {"@type": "Person", "@id": "https://www.hishamabuella.com/#person", "name": "Hisham Abuella", "url": "https://www.hishamabuella.com/"}}
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../../index.html?choose&lang=ar" aria-label="هشام أبو العلا، الصفحة الرئيسية"><img src="../../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&rarr; رجوع</summary>
+                <ul>
+                    <li><a href="../../tracks/recruiter.html?lang=ar">مسار التوظيف</a></li>
+                    <li><a href="../../tracks/engineer.html?lang=ar">مسار المهندسين</a></li>
+                    <li><a href="../../tracks/vibe.html?lang=ar">مسار الـ vibe coding</a></li>
+                    <li><a href="../../tracks/learner.html?lang=ar">مسار التعلّم</a></li>
+                    <li><a href="../../ar/home.html">الموقع كامل</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">المظهر</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">تلقائي</button>
+                    <button type="button" role="radio" data-appearance="midnight">غامق</button>
+                    <button type="button" role="radio" data-appearance="daylight">فاتح</button>
+                    <button type="button" role="radio" data-appearance="contrast">تباين عالي</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <div class="app-mark"><img src="../../Articles/img/h-ai-icon.png" alt="أيقونة H_AI: باب خزنة رمادي في نصه AI" width="64" height="64"><div class="wip-badge">لسه شغال عليه</div></div>
+            <h1 class="article-title enter delay-1">محرك الـ AI بتاعي شغال إزاي دلوقتي</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> 19 نوفمبر 2026</span>
+                <span><i class="fas fa-clock"></i> 10 دقايق قراية</span>
+                <span><i class="fas fa-user"></i> هشام أبو العلا</span>
+                <a class="lang-switch" href="../building-ai-server-part-3.html" lang="en" hreflang="en">Read in English</a>
+            </div>
+            <p class="article-subtitle enter delay-3">الجزء التالت من محرك الـ AI الشخصي بتاعي. النظام كله على Mac Studio واحد، مرسوم قدامك، وdemos صغيرة لأحدث الأدوات: buddy بكلّمه من غير ما ألمس حاجة، وstudio للصور، وpanel من زباين متخيّلين، وapp للفلوس الـ cloud عمره ما بيشوفه.</p>
+        </div>
+
+        <div class="listen" data-src="../../audio/articles/ar/building-ai-server-part-3.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>اسمع المقال</strong><span>بصوتي</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <figure class="art hero">
+            <img src="../../Articles/img/ai-engine-now-hero.jpg" alt="رسمة: كمبيوتر صغير من الألومنيوم المصنفر على ترابيزة واطية في أوضة معيشة ضلمة، وطالعة منه خيوط رفيعة منوّرة رايحة لموبايل على الكنبة؛ وجنبهم تلفزيون وجهاز ذكي صغير مستنيين" width="1536" height="768">
+        </figure>
+
+        <div class="article-content">
+            <p><a href="building-ai-server.html">الجزء الأول</a> كان شباك chat على الـ Mac Studio بتاعي. <a href="building-ai-server-part-2.html">الجزء التاني</a> حوّله لـ hub للبيت: الإيصالات، والـ calendar، والبيت الذكي، والـ coding sessions بتاعتي. وبعد تلات أسابيع كبر تاني، وبقيت مش عارف أشرحه في فقرة واحدة. فالمرة دي رسمته.</p>
+
+            <p>الجزء ده عن <strong>هو شغال إزاي دلوقتي</strong>: النظام كله في صورة واحدة، والسكة اللي بتمشيها رسالة واحدة، وdemos صغيرة للأدوات اللي اتضافت الشهر ده. الـ demos شغالة في الـ browser عندك ببيانات متألّفة. إنما الأدوات اللي وراها حقيقية.</p>
+
+            <h2>النظام كله</h2>
+            <p>كل حاجة شغالة على Mac Studio واحد في البيت: M4 Max بذاكرة 64 GB. الموبايلات بتوصله عن طريق شبكة خاصة، ومحرك الـ AI هو الـ hub اللي كل حاجة تانية متعلّقة فيه.</p>
+
+            <figure class="diagram">
+                <div class="band lane-phone">
+                    <span class="lane-tag lane-phone">أجهزتي</span>
+                    <div class="boxes c3">
+                        <div class="box"><strong>Element X</strong>chat مع الـ bot، ورسايل صوتية</div>
+                        <div class="box"><strong>الـ web app</strong>الـ Home Screen على الموبايل، والـ Mac</div>
+                        <div class="box"><strong>TV Pi</strong>شاشة الـ calendar على الحيطة</div>
+                    </div>
+                </div>
+                <div class="link-row"><span>Tailscale: خاص، HTTPS، وعمره ما بيتفتح للإنترنت</span></div>
+                <div class="band lane-mac">
+                    <span class="lane-tag lane-mac">Mac Studio، M4 Max، 64 GB</span>
+                    <div class="mac-grid">
+                        <div class="hub">
+                            <p class="hub-title">محرك الـ AI، الـ hub</p>
+                            <div class="boxes c3">
+                                <div class="box"><strong>الـ chat ولفّة الأدوات</strong>أدوات، وكروت موافقة</div>
+                                <div class="box"><strong>مشغّل الـ plug-ins</strong>الـ apps الجانبية كأدوات</div>
+                                <div class="box"><strong>دخول واحد</strong>password واحد</div>
+                                <div class="box hot"><strong>Thinking Buddy</strong>كتابة، أو كلام من غير إيدين</div>
+                                <div class="box hot"><strong>Image Studio</strong>styles، وتعديلات، وgallery</div>
+                                <div class="box"><strong>الـ vault</strong>ملاحظات، وذاكرة، وملفات</div>
+                                <div class="box"><strong>المستندات</strong>PDF، وOffice، وصور</div>
+                                <div class="box"><strong>الـ Claude sessions</strong>متابعة الـ coding agents</div>
+                                <div class="box"><strong>مشغّل المهام</strong>من الـ to&#8209;do list لشغل الـ agents</div>
+                            </div>
+                        </div>
+                        <div class="side">
+                            <p class="side-title">apps جانبية، كل واحد بالـ database بتاعته</p>
+                            <div class="boxes">
+                                <div class="box"><strong>الـ calendar</strong>مشاركة، وشاشة الحيطة</div>
+                                <div class="box"><strong>البيت الذكي</strong>التلفزيون، والفيش، والأجهزة</div>
+                                <div class="box"><strong>الـ shopping</strong>إيصالات، وأسعار، ومصاريف</div>
+                                <div class="box local hot"><strong>Finance</strong>محلي بس، ومتشفّر</div>
+                                <div class="box hot"><strong>crowd-check</strong>panel بيختبر الأفكار</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gate">بوابة الـ RAM: model تقيل واحد بس في المرة، والذاكرة الفاضية عمرها ما تقل عن الربع</div>
+                    <div class="boxes c4">
+                        <div class="box"><strong>Ollama</strong>Qwen، وGemma، وOCR models</div>
+                        <div class="box"><strong>Voicebox</strong>Whisper وصوتي المستنسخ</div>
+                        <div class="box"><strong>Draw Things</strong>image models</div>
+                        <div class="box"><strong>SearXNG</strong>بحث خاص</div>
+                    </div>
+                </div>
+                <div class="link-row"><span>نص بس، وFinance لأ خالص</span></div>
+                <div class="band lane-cloud">
+                    <span class="lane-tag lane-cloud">الـ cloud</span>
+                    <div class="boxes c3">
+                        <div class="box"><strong>Claude</strong>نص بس</div>
+                        <div class="box"><strong>الـ search engines</strong>SearXNG هو اللي بيسألها</div>
+                        <div class="box"><strong>الـ clouds بتاعة الأجهزة</strong>للبيت الذكي</div>
+                    </div>
+                </div>
+                <figcaption>الطلبات بتدخل من فوق وبتتفرّع من المحرك. المربعات اللي متعلّم عليها جديدة من بعد الجزء التاني.</figcaption>
+            </figure>
+
+            <p>تلات أفكار ماسكة الحكاية كلها. <strong>الـ apps الجانبية برامج منفصلة</strong>، كل واحد بالـ database بتاعته، والـ chat بيستخدمها كأدوات. <strong>أي حاجة محتاجة model محلي بتستنى على بوابة الـ RAM</strong>، القاعدة اللي من الجزء التاني واللي بتمنع الـ Mac إنه يغرق في الـ models بتاعته. و<strong>الـ cloud بياخد نص بس</strong>: تحويل الكلام لنص، والصوت، والصور، والـ chat model الاحتياطي، كلهم شغالين على الـ Mac.</p>
+
+            <h2>رسالة واحدة ممكن توصل لإيه</h2>
+            <p>الـ model عمره ما بيلمس app بنفسه. هو بيطلب أداة. والمحرك هو اللي بيقرر الأداة دي تشتغل لوحدها ولا محتاجة دوسة مني، ورد الـ app بيرجع متعلّم عليه إنه <em>بيانات</em>، مش أوامر.</p>
+
+            <figure class="diagram">
+                <div class="flow">
+                    <div class="box"><strong>بسأل</strong>&laquo;عندنا إيه يوم الجمعة؟&raquo;</div>
+                    <div class="arrow" aria-hidden="true">&rarr;</div>
+                    <div class="box"><strong>الـ model</strong>بيكتب طلب أداة</div>
+                    <div class="arrow" aria-hidden="true">&rarr;</div>
+                    <div class="fork">
+                        <div class="box"><strong>أداة قراية بس</strong>بتشتغل لوحدها</div>
+                        <div class="box hot"><strong>تغيير حاجة</strong>كارت موافقة الأول</div>
+                    </div>
+                    <div class="arrow" aria-hidden="true">&rarr;</div>
+                    <div class="box"><strong>app جانبي</strong>بالـ database بتاعته</div>
+                    <div class="arrow" aria-hidden="true">&rarr;</div>
+                    <div class="box"><strong>الإجابة</strong>من النتيجة بس</div>
+                </div>
+                <p class="flow-note">بعد ما الـ model يقرا صفحة ويب أو مستند، حتى الأدوات &laquo;الآمنة&raquo; بتستأذن الأول.</p>
+            </figure>
+
+            <p>ودي نفس السكة في الـ Hub. قراية الـ calendar بتحصل على طول؛ إنما الإضافة عليه بتستنى دوسة.</p>
+
+            <div class="demo" data-demo="approval">
+                <div class="demo-bar"><strong>الـ Hub</strong><span class="demo-tag">demo، بيانات متألّفة</span></div>
+                <div class="demo-body">
+                    <div class="tiles">
+                        <div class="tile"><i class="fas fa-calendar-days" aria-hidden="true"></i><strong>الـ calendar</strong>2 النهارده</div>
+                        <div class="tile"><i class="fas fa-house" aria-hidden="true"></i><strong>البيت</strong>كله online</div>
+                        <div class="tile"><i class="fas fa-receipt" aria-hidden="true"></i><strong>الـ shopping</strong>الأسبوع ده</div>
+                        <div class="tile local"><i class="fas fa-lock" aria-hidden="true"></i><strong>Finance</strong>مقفول</div>
+                        <div class="tile"><i class="fas fa-users" aria-hidden="true"></i><strong>crowd-check</strong>فكرة واحدة</div>
+                    </div>
+                    <div data-at="0" class="bubble me">عندنا إيه يوم الجمعة؟</div>
+                    <p data-at="600" class="sys">calendar_list &middot; قراية بس &middot; اشتغلت لوحدها</p>
+                    <div data-at="1100" class="bubble ai">يوم الجمعة فيه حاجتين: مكالمة الفريق الساعة 10، ودكتور السنان الساعة 3.</div>
+                    <div data-at="2100" class="bubble me">انقل دكتور السنان ليوم السبت الساعة 11.</div>
+                    <p data-at="2700" class="sys">calendar_update &middot; بتغيّر حاجة &middot; بتستأذن الأول</p>
+                    <div data-at="3200" class="card" role="group" aria-label="كارت موافقة">
+                        <h4><i class="fas fa-pen-to-square" aria-hidden="true"></i> نغيّر الميعاد؟</h4>
+                        <dl>
+                            <dt>الميعاد</dt><dd>دكتور السنان</dd>
+                            <dt>كان</dt><dd>الجمعة 3:00 العصر</dd>
+                            <dt>هيبقى</dt><dd>السبت 11:00 الصبح</dd>
+                        </dl>
+                        <div class="demo-actions">
+                            <button type="button" class="demo-btn" data-choice="approve" data-js hidden>موافق</button>
+                            <button type="button" class="demo-btn ghost" data-choice="cancel" data-js hidden>إلغاء</button>
+                        </div>
+                    </div>
+                    <div class="bubble ai after-approve">تمام. دكتور السنان بقى يوم السبت الساعة 11.</div>
+                    <div class="bubble ai after-cancel">ماشي، مفيش حاجة اتغيّرت.</div>
+                    <div class="demo-actions"><button type="button" class="demo-btn ghost" data-play data-js hidden>&#9654; تشغيل</button></div>
+                </div>
+            </div>
+
+            <p>وفيه قاعدتين كمان فوق دول. الـ voice note عمرها ما تقدر توافق على كارت. وكل واحد في البيت ليه محادثاته: محادثات مراتي بتاعتها، وبتوعي بتوعي، وتسجيل دخول واحد بيفتح الـ calendar والبيت الذكي والـ shopping app لينا إحنا الاتنين.</p>
+
+            <h2>Thinking Buddy: بكلّمه من غير ما ألمس حاجة</h2>
+            <p>أجدد حتة، واللي بستخدمها أكتر من أي حاجة، هي buddy أقدر <strong>أكلّمه</strong>. بفتح صفحة على موبايلي، وأسيبه على جنب، وأفكّر بصوت عالي. وهو بيرد بصوتي أنا المستنسخ. صوتي عمره ما بيخرج من الـ Mac؛ اللي بيروح لـ Claude نص بس.</p>
+
+            <figure class="diagram">
+                <ol class="steps">
+                    <li class="lane-phone"><span class="lane-tag lane-phone">الموبايل</span><span><strong>بسكت.</strong> speech detector صغير جداً في الـ browser بياخد باله من السكوت.</span></li>
+                    <li class="lane-phone"><span class="lane-tag lane-phone">الموبايل</span><span><strong>الصوت بيروح للـ Mac</strong> بعد ثانية سكوت واحدة. لو رجعت اتكلمت قبلها، بيستنى.</span></li>
+                    <li class="lane-mac"><span class="lane-tag lane-mac">الـ Mac</span><span><strong>Whisper بيكتب اللي قلته</strong> وبأنهي لغة، في حوالي ربع ثانية. <span class="side-note">لو مش متأكد من كلمة، ممكن خطوة تنضيف تصلّح الكلام المكتوب.</span></span></li>
+                    <li class="lane-cloud"><span class="lane-tag lane-cloud">الـ cloud</span><span><strong>Claude بياخد كلامي كنص</strong>، ومعاه قواعد &laquo;خليك مختصر&raquo;، وكل أدوات الـ chat شغالة هنا. <span class="side-note">لو Claude واقع، Qwen المحلي بيرد بداله.</span></span></li>
+                    <li class="lane-mac"><span class="lane-tag lane-mac">الـ Mac</span><span><strong>كل جملة بتخلص بتتقال بصوتي المستنسخ</strong> وبتتنضف من الوشّ. الجمل العربي بتظهر على الشاشة، مش بتتقال.</span></li>
+                    <li class="lane-phone"><span class="lane-tag lane-phone">الموبايل</span><span><strong>الموبايل بيشغّلهم واحدة واحدة.</strong> لو اتكلمت وهو بيتكلم، بيسكت ويسمع.</span></li>
+                </ol>
+                <figcaption>الجملة الأولى بتكون شغالة وClaude لسه بيكتب التانية، فبسمع الإجابة قبل ما تخلص.</figcaption>
+            </figure>
+
+            <div class="demo" data-demo="buddy">
+                <div class="demo-bar"><strong>Thinking Buddy</strong><span class="demo-tag">demo، بيانات متألّفة</span></div>
+                <div class="demo-body">
+                    <div class="buddy">
+                        <div class="orb" aria-live="polite">
+                            <span class="orb-label" data-orb="idle">دوس تشغيل</span>
+                            <span class="orb-label" data-orb="listen">بيسمع&hellip;</span>
+                            <span class="orb-label" data-orb="think">بيفكّر&hellip;</span>
+                            <span class="orb-label" data-orb="speak">بيتكلم</span>
+                        </div>
+                        <div>
+                            <div class="clock" aria-hidden="true">
+                                <span data-at="3500"><b>0 s</b>بسكت</span>
+                                <span data-at="3800"><b>0.3 s</b>بيكتب الكلام</span>
+                                <span data-at="4500"><b>1.0 s</b>الإجابة بتبدأ</span>
+                                <span data-at="5500"><b>2.0 s</b>&laquo;ثانية واحدة.&raquo;</span>
+                            </div>
+                            <span data-at="0" data-state="listen" hidden></span>
+                            <div data-at="300" class="bubble me">ملاحظة المشتريات الأسبوعية تيجي يوم الحد ولا الاتنين؟</div>
+                            <span data-at="4500" data-state="think" hidden></span>
+                            <div data-at="5500" class="bubble ai"><i class="fas fa-volume-high" aria-hidden="true"></i> ثانية واحدة.</div>
+                            <span data-at="6900" data-state="speak" hidden></span>
+                            <div data-at="6900" class="bubble ai"><i class="fas fa-volume-high" aria-hidden="true"></i> الحد بالليل.</div>
+                            <div data-at="8400" class="bubble ai"><i class="fas fa-volume-high" aria-hidden="true"></i> ساعتها بتخطط للأسبوع، وإيصالات السبت بتكون وصلت.</div>
+                            <span data-at="12500" data-state="listen" hidden></span>
+                        </div>
+                    </div>
+                    <audio data-demo-audio src="../../audio/demos/ai-engine-now-buddy.mp3" preload="none"></audio>
+                    <div class="demo-actions"><button type="button" class="demo-btn ghost" data-play data-js hidden>&#9654; شغّل بالصوت</button></div>
+                    <p class="caveat">الصوت ده صوتي، متعمله clone ومتسجّل على الـ Mac بتاعي. وهو بالإنجليزي، لأن الـ buddy لسه بيكتب الردود العربي على الشاشة ومبيقولهاش.</p>
+                </div>
+            </div>
+
+            <p>أصعب حاجة ما كانتش السرعة. كانت <strong>مين يتكلم إمتى</strong>: buddy بينط في الكلام وأنا لسه بفكّر أوحش من واحد بطيء. فبيستنى ثانية سكوت كاملة قبل ما يبدأ، ولو الإجابة ما جهزتش بعد ثانيتين بيقول &laquo;ثانية واحدة.&raquo; بصوتي، عشان أعرف إنه سمعني. والوقتين دول ينفع يتغيّروا من شاشة Talk.</p>
+
+            <table class="who">
+                <thead><tr><th>إمتى</th><th>مين بيرد</th><th>فين</th></tr></thead>
+                <tbody>
+                    <tr><td>وأنا بتكلم</td><td>Claude Haiku</td><td><span class="lane-tag lane-cloud">الـ cloud، نص بس</span></td></tr>
+                    <tr><td>وأنا بكتب في صفحة الـ Buddy</td><td>Claude Sonnet</td><td><span class="lane-tag lane-cloud">الـ cloud، نص بس</span></td></tr>
+                    <tr><td>Claude واقع أو عدّى الحد الشهري</td><td>Qwen المحلي، 27B</td><td><span class="lane-tag lane-mac">الـ Mac بتاعي</span></td></tr>
+                    <tr><td>chat لمس Finance</td><td>محلي بس، دايماً</td><td><span class="lane-tag lane-mac">الـ Mac بتاعي</span></td></tr>
+                    <tr><td>إنه يسمعني ويرد بالكلام</td><td>Whisper وصوتي المستنسخ</td><td><span class="lane-tag lane-mac">الـ Mac بتاعي</span></td></tr>
+                </tbody>
+            </table>
+
+            <h2>Image Studio</h2>
+            <p>المحرك كان بيعرف يرسم من قبل كده. Image Studio بيدّيله مكان بجد: صفحة على الموبايل بختار منها الـ style، والجودة، والشكل، وكام صورة، وأتفرج على المهام وهي بتترسم. <strong>مهمة واحدة في المرة</strong>، كل واحدة بتعدّي على بوابة الـ RAM، ومفيش حاجة بتكمّل لوحدها بعد إعادة التشغيل.</p>
+
+            <p>ووراه، كل طلب بيعدّي على تلات خطوات. model بيكتب لحد تلات <strong>نسخ بـ styles مختلفة</strong> من الـ prompt. كل نسخة بتترسم. وبعدين <strong>vision check</strong> بيقرا كل صورة يدوّر على كلام ملخبط، أو إيدين غريبة، أو عيوب في الرسم، أو إن الحاجة الأساسية مش موجودة. الصورة اللي عليها علامة بتفضل محفوظة، وبيتعرض تصليح ليها، والتصليح <strong>دايماً بيستأذن الأول</strong>. والأصلية عمرها ما بتترمي.</p>
+
+            <div class="demo" data-demo="studio">
+                <div class="demo-bar"><strong>Image Studio</strong><span class="demo-tag">demo، بيانات متألّفة</span></div>
+                <div class="demo-body">
+                    <p class="hint"><strong>فنار وقت المغرب</strong> &middot; لحد تلات styles، أو ولا واحد وهو يختار لوحده.</p>
+                    <div class="chips">
+                        <button type="button" class="chip" data-style-chip="watercolor" aria-pressed="false">ألوان مائية</button>
+                        <button type="button" class="chip" data-style-chip="anime" aria-pressed="false">أنمي</button>
+                        <button type="button" class="chip" data-style-chip="poster" aria-pressed="false">بوستر</button>
+                        <button type="button" class="chip" data-style-chip="photo" aria-pressed="false">صورة حقيقية</button>
+                        <button type="button" class="chip" data-style-chip="ink" aria-pressed="false">حبر</button>
+                        <button type="button" class="chip" data-style-chip="pixel" aria-pressed="false">Pixel art</button>
+                    </div>
+                    <div class="demo-actions"><button type="button" class="demo-btn" data-generate data-js hidden>يلا نرسم</button></div>
+                    <p class="queue" data-queue>الطابور: مهمة واحدة في المرة &middot; بوابة الـ RAM: تمام</p>
+                    <div class="gallery">
+                        <div class="shot-tile" data-tile="watercolor"><div class="pic"><img src="../../Articles/img/ai-engine-now-studio-watercolor.jpg" alt="فنار بالألوان المائية على صخور وقت الغروب" width="640" height="480" loading="lazy"></div><div class="cap"><strong>ألوان مائية</strong>الفحص: نضيفة</div></div>
+                        <div class="shot-tile" data-tile="anime"><div class="pic"><img src="../../Articles/img/ai-engine-now-studio-anime.jpg" alt="فنار مرسوم زي الـ anime تحت سما بمبي بالليل" width="640" height="480" loading="lazy"></div><div class="cap"><strong>أنمي</strong>الفحص: نضيفة</div></div>
+                        <div class="shot-tile" data-tile="poster"><div class="pic"><img src="../../Articles/img/ai-engine-now-studio-poster.jpg" alt="فنار على بوستر سفر، وفوقه كلمة ملخبطة ملهاش معنى" width="640" height="480" loading="lazy"></div><div class="cap"><strong>بوستر</strong><span class="issue">كلام ملخبط</span></div></div>
+                        <div class="shot-tile" data-tile="photo"><div class="pic"><img src="../../Articles/img/ai-engine-now-studio-photo.jpg" alt="صورة فوتوغرافيا لفنار على شط صخري وقت المغرب" width="640" height="480" loading="lazy"></div><div class="cap"><strong>صورة حقيقية</strong>الفحص: نضيفة</div></div>
+                        <div class="shot-tile" data-tile="ink"><div class="pic"><img src="../../Articles/img/ai-engine-now-studio-ink.jpg" alt="رسمة بالحبر الأسود لفنار على صخور" width="640" height="480" loading="lazy"></div><div class="cap"><strong>حبر</strong>الفحص: نضيفة</div></div>
+                        <div class="shot-tile" data-tile="pixel"><div class="pic"><img src="../../Articles/img/ai-engine-now-studio-pixel.jpg" alt="فنار pixel art على جزيرة صغيرة" width="640" height="480" loading="lazy"></div><div class="cap"><strong>Pixel art</strong>الفحص: نضيفة</div></div>
+                    </div>
+                    <div class="card fix-card" role="group" aria-label="عرض تصليح" data-fix-card>
+                        <h4><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i> نصلّح البوستر؟</h4>
+                        <dl><dt>المشكلة</dt><dd>كلام ملخبط</dd><dt>إزاي</dt><dd>edit model، لحد مرتين، وبيتفحص من جديد كل مرة</dd><dt>الأصلية</dt><dd>بتفضل محفوظة دايماً</dd></dl>
+                        <div class="demo-actions">
+                            <button type="button" class="demo-btn" data-fix-choice="yes" data-js hidden>صلّحه</button>
+                            <button type="button" class="demo-btn ghost" data-fix-choice="no" data-js hidden>سيبه زي ما هو</button>
+                        </div>
+                    </div>
+                    <div class="bubble ai fix-yes">بصلّح البوستر. الأصلي فاضل في الـ gallery.</div>
+                    <div class="bubble ai fix-no">سبته زي ما هو.</div>
+                </div>
+            </div>
+
+            <p>كل واحد ليه الـ gallery بتاعته، وفيه حد يومي للكل ما عدا أنا. ونفس الـ studio بيرد كمان في الـ chat: &laquo;ارسملي فنار&raquo; في Element X بيحط الصور في الـ gallery بتاعتي برضه.</p>
+
+            <h2>crowd-check: بسأل ألف شخص متخيّل</h2>
+            <p>دي تجربة. قبل ما أبني حاجة، عايز أسمع الاعتراضات بدري. <strong>crowd-check</strong> بيعمل panel من أكتر من ألف شخص <em>متخيّل</em>، بأعمار وخلفيات وعادات مختلفة، ويسألهم رأيهم في فكرة.</p>
+
+            <p>Claude Opus بيكتب الأشخاص والتقرير النهائي، بحد صرف ثابت على كل تشغيلة وعلى كل شهر. والـ models المحلية بتعمل الجزء التقيل، الاستبيان والمقابلات، عن طريق بوابة الـ RAM. كل خطوة script ليه رقم وبيكتب نتايجه في ملف، فأي رقم في أي تقرير أقدر أرجّعه للناس اللي قالوه.</p>
+
+            <div class="demo" data-demo="crowd">
+                <div class="demo-bar"><strong>crowd-check</strong><span class="demo-tag">demo، بيانات متألّفة</span></div>
+                <div class="demo-body">
+                    <div class="bubble me">فكرة: ملاحظة كل أسبوع من الـ AI بتاعي فيها صرفنا كام على البقالة، وإيه اللي غلي.</div>
+                    <p data-at="300" class="sys">خطوة 5 &middot; model محلي بيكتب الفكرة من جديد بكلام محايد &middot; أنا بوافق عليها</p>
+                    <p data-at="1300" class="sys">خطوة 6 &middot; استبيان: 50 شخص من panel فيه 1,000 &middot; محلي، ببلاش</p>
+                    <p data-at="2600" class="sys">خطوة 7 &middot; النتايج</p>
+                    <div data-at="2600" class="bars">
+                        <div class="bar"><span>هستخدمها</span><span class="track"><span class="fill" style="--v:58%"></span></span><span class="num">58%</span></div>
+                        <div class="bar"><span>مش متأكد</span><span class="track"><span class="fill" style="--v:26%"></span></span><span class="num">26%</span></div>
+                        <div class="bar"><span>مش هستخدمها</span><span class="track"><span class="fill" style="--v:16%"></span></span><span class="num">16%</span></div>
+                    </div>
+                    <ul data-at="3600" class="quotes">
+                        <li>&laquo;بس لو مش هضطر أكتب الإيصالات بإيدي.&raquo;</li>
+                        <li>&laquo;مرة في الشهر كفاية عليّا.&raquo;</li>
+                    </ul>
+                    <div class="demo-actions"><button type="button" class="demo-btn ghost" data-play data-js hidden>&#9654; شغّل</button></div>
+                    <p class="caveat">الناس المتخيّلين مش زباين. النتايج بتقولي أنهي اعتراضات أختبرها مع ناس حقيقيين، مش إن حد هيشتري ولا لأ.</p>
+                </div>
+            </div>
+
+            <p>شغال على الـ Mac بس، ولسه مش على الشبكة الخاصة. الاستبيان وصفحة النتايج شغالين؛ والمراجعين والتقرير النهائي هم اللي جايين.</p>
+
+            <h2>Finance: الـ app اللي الـ cloud عمره ما بيشوفه</h2>
+            <p>كشوف حساب الكروت أكتر حاجة خاصة في البيت، فـ Finance ماشي بقواعد أشد من أي حاجة تانية. الـ database بتاعته <strong>متشفّرة</strong> وبتتفتح بـ passphrase عايشة في الذاكرة بس. بيبدأ مقفول بعد كل إعادة تشغيل، وبيقفل نفسه بعد نص ساعة من غير ما حد يستخدمه. ملفات الكشوف بتتقري في الذاكرة وعمرها ما بتتحفظ؛ اللي بيتحفظ بس السطور اللي بأكّدها، وأرقام الكروت بتتقص لآخر أربع أرقام.</p>
+
+            <p>وفوق الكشوف، بيلاقي الاشتراكات والمصاريف الغريبة، ويطابق إيصالات المحلات مع سطور الكارت، ويعمل عرض بسيط للـ cash flow. التنبيهات الجديدة ومواعيد الدفع بتوصل كرسالة في الـ chat بتاعي أنا، مش بتاع حد تاني.</p>
+
+            <p>القاعدة التانية جوه المحرك. Finance هو plug-in <strong>محلي بس</strong>: في أي رد بيعمله Claude، هو ببساطة مش موجود. والمحادثة اللي لمسته بتفضل على الـ model المحلي على طول.</p>
+
+            <div class="demo" data-demo="finance">
+                <div class="demo-bar"><strong>Finance</strong><span class="demo-tag">demo، بيانات متألّفة</span></div>
+                <div class="demo-body">
+                    <form class="lockbox fin-locked" data-unlock>
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        <p>مقفول. أي passphrase بتفتح الـ demo ده.</p>
+                        <label class="sr-only" for="fin-pass">الـ passphrase</label>
+                        <input id="fin-pass" type="password" autocomplete="off" placeholder="الـ passphrase">
+                        <button type="submit" class="demo-btn">افتح</button>
+                    </form>
+                    <div class="fin-open">
+                        <div class="fin-head"><strong tabindex="-1" data-after-unlock>ملخص أكتوبر</strong><span>بيقفل لوحده بعد 30 دقيقة من غير استخدام</span></div>
+                        <table class="fin-rows">
+                            <tr><td>البقالة <span class="muted">كارت آخره 0000</span></td><td>$612.40</td></tr>
+                            <tr><td>البنزين <span class="muted">كارت آخره 0000</span></td><td>$148.75</td></tr>
+                            <tr><td>الاشتراكات <span class="muted">لقى 3</span></td><td>$41.97</td></tr>
+                            <tr><td>الأكل برّه</td><td>$96.20</td></tr>
+                        </table>
+                        <div class="demo-actions">
+                            <button type="button" class="demo-btn ghost" data-ask="local">اسأل الـ model المحلي</button>
+                            <button type="button" class="demo-btn ghost" data-ask="cloud">اسأل Claude</button>
+                            <button type="button" class="demo-btn ghost" data-lock><i class="fas fa-lock" aria-hidden="true"></i> اقفل</button>
+                        </div>
+                        <div class="bubble ai ans-local" style="margin-top:0.8rem">البقالة كانت أكبر بند في أكتوبر، أعلى من سبتمبر بحوالي الخُمس.</div>
+                        <div class="bubble ai ans-cloud" style="margin-top:0.8rem">Finance بيفضل على الـ Mac ده. ابدأ chat محلي عشان تسأل عنه.</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>وفيه شوية أقفال كمان، لأن الغلطة هنا هتبقى غالية. خمس passphrases غلط بيوقّفوا الفتح ربع ساعة. لو تشفير الـ disk على الـ Mac مقفول، Finance بيرفض يحفظ أي حاجة. والـ token اللي الـ chat بيستخدمه يقدر يقرا الإجماليات ويضيف imports <em>مستنية التأكيد</em>، بس عمره ما يقدر يفتح، أو يأكّد، أو يعدّل. والـ logs مفيهاش أي مبالغ، ولا أسماء محلات، ولا أسماء ملفات.</p>
+
+            <h2>ترتيب المحرك</h2>
+            <p>كل ده كبر بسرعة، والـ code كان باين عليه. ملف الـ chat كان بقى ملف واحد طويل جداً بيعمل كل حاجة. الأسبوع ده اتقسم لـ modules صغيرة، خطوة خطوة: الـ streaming، ولفّة الأدوات، والـ grounding، وأدوار الكلام في Thinking Buddy. ونفس الحكاية حصلت للملف اللي بيشغّل الأدوات. كل خطوة اتخططت، واتبنت، واتراجعت، وعدّت على security check، وكل test كان لازم يدّي نفس النتيجة قبل وبعد.</p>
+
+            <p>دي مش feature حد يقدر يشوفها. بس هي السبب إن الـ feature اللي جاية تاخد يوم مش أسبوع.</p>
+
+            <div class="quote">
+                الجزء الأول كان شباك chat. الجزء التاني كان hub. دلوقتي بقى نظام صغير قايم بذاته، والرسمة هي طريقتي إني أفضل ماسكه في دماغي.
+            </div>
+
+            <h2>اللي جاي</h2>
+            <p>المراجعين والتقرير النهائي لـ crowd-check، وإن مراتي تستخدمه بحد صرف خاص بيها. Finance أكتر: كشوف PDF، ومواعيد دفع الكروت على الـ calendar. السجلات الصحية، الـ plug-in المحلي بس اللي بعده. ونفس الشغل المعتاد: إني ألاقي الأماكن اللي بيفشل فيها من غير صوت، وأخليها تعلّي صوتها.</p>
+
+            <p>لسه مفيش اشتراك للـ models المحلية، ولسه مفيش حاجة بتخرج من البيت إلا لو اخترت الـ cloud، وFinance مش بيخرج خالص.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>المحرك، والـ apps الجانبية بتاعته، والـ demos دي، والمقال ده، اتبنوا بـ <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="building-ai-server-part-2.html" class="article-nav-link prev">
+                <span class="nav-label">&rarr; المقال اللي فات</span>
+                <span class="nav-title">من شباك chat لـ hub للبيت</span>
+            </a>
+            <a href="building-ai-server.html" class="article-nav-link next">
+                <span class="nav-label">اقرا الجزء الأول &larr;</span>
+                <span class="nav-title">بناء محرك AI شخصي</span>
+            </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>&copy; 2026 هشام أبو العلا. معمول بحب واهتمام بالتفاصيل.</p>
+    </footer>
+
+    <script src="../../js/ai-demos.js?v=2" defer></script>
+    <script src="../../js/listen.js?v=2" defer></script>
+    <script src="../../js/back-menu.js?v=2" defer></script>
+    <script src="../../js/appearance.js?v=3" defer></script>
+    <script src="../../js/reader-bar.js?v=3" defer></script>
+    <script src="../../js/signal-field.js" defer></script>
+    <script src="../../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+<script src="../../tracks/assets/mascot.js?v=4" defer></script>
+<script src="../../tracks/assets/mascot-buddy.js?v=6" defer></script>
+</body>
+</html>

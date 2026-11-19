@@ -1,0 +1,51 @@
+{
+  "title": "How My AI Engine Works Now",
+  "language": "en",
+  "slides": [
+    {
+      "id": "s00",
+      "title": "Intro",
+      "transcript": "[warmly] How My AI Engine Works Now. <break time=\"0.4s\" /> Part three of my personal AI engine. By Hisham Abu ella. <break time=\"0.8s\" /> Part one was a chat window on my Mac Studio. Part two turned it into a hub for the house: receipts, the calendar, the smart home, and my coding sessions. Three weeks later it has grown again, and I can no longer explain it in one paragraph. So this time I drew it. <break time=\"0.4s\" /> This part is about how it works now. The whole system in one picture, the path one message takes, and small demos of the tools I added this month. On the page, the demos run in your browser with made-up data. The tools behind them are real."
+    },
+    {
+      "id": "s01",
+      "title": "The whole system",
+      "transcript": "The whole system. <break time=\"0.5s\" /> Everything runs on one Mac Studio at home, an M four Max with sixty-four gigabytes of memory. My phone, the chat app and the TV reach it through Tailscale, a private network that is never open to the public internet. <break time=\"0.4s\" /> In the middle is the AI engine, the hub. It holds the chat and its tools, one sign-in for everything, the notes vault, documents, my coding sessions, and two new parts: Thinking Buddy and Image Studio. <break time=\"0.4s\" /> Around it sit the side apps, each a separate program with its own database: the calendar, the smart home, shopping, and two new ones, Finance and crowd-check. <break time=\"0.4s\" /> Three ideas hold it together. The chat uses the side apps as tools. Anything that needs a local model waits at the memory gate, one heavy model at a time. And the cloud gets text only. Speech, voice, images, and the fallback chat model all run on the Mac."
+    },
+    {
+      "id": "s02",
+      "title": "One message",
+      "transcript": "What one message can touch. <break time=\"0.5s\" /> The model never touches an app directly. It asks for a tool. The engine decides whether that tool runs by itself, or needs my tap. And the app's reply comes back marked as data, not as instructions. <break time=\"0.4s\" /> Say I ask, what's on Friday? Reading the calendar is safe, so it runs at once, and the answer comes from the calendar itself. Then I say, move the dentist to Saturday at eleven. That changes something, so a card appears first, with exactly what will change, and nothing happens until I tap approve. <break time=\"0.4s\" /> Two more rules sit on top. A voice note can never approve a card. And after the model has read a web page or a document, even the safe tools ask first. <break time=\"0.4s\" /> Each person at home has their own conversations. My wife's chats are hers, mine are mine, and one sign-in opens the calendar, the smart home and shopping for both of us."
+    },
+    {
+      "id": "s03",
+      "title": "Thinking Buddy",
+      "transcript": "Thinking Buddy. <break time=\"0.5s\" /> [warmly] The newest part, and the one I use most, is a buddy I can talk to. I open a page on my phone, put it down, and think out loud. It answers in my own cloned voice. My voice never leaves the Mac. Only text goes to Claude. <break time=\"0.4s\" /> Here is one question, step by step. I stop talking, and a tiny speech detector in the browser notices. After one quiet second, the audio goes to the Mac. Whisper writes down what I said in about a quarter of a second. Claude gets my words as text, with rules to keep the answer brief. Each finished sentence is spoken in my cloned voice, and the phone plays them one by one. If I talk over it, it stops and listens. <break time=\"0.4s\" /> The hardest part was not speed. It was turn-taking. A buddy that jumps in while I am still thinking is worse than a slow one. So it waits one full second of silence, and if the answer isn't ready after two seconds, it says, one sec, in my voice, so I know it heard me. <break time=\"0.4s\" /> When I talk, Claude Haiku answers. When I type, Claude Sonnet. If Claude is down or over its monthly cap, a local Qwen model answers instead. And a chat that touched Finance stays local, always."
+    },
+    {
+      "id": "s04",
+      "title": "Image Studio",
+      "transcript": "Image Studio. <break time=\"0.5s\" /> The engine could already draw. Image Studio gives it a proper home: a page on my phone where I pick a style, the quality, the shape and how many, and watch the jobs render. One job at a time, each through the memory gate, and nothing resumes by itself after a restart. <break time=\"0.4s\" /> Behind it, every request goes through three steps. A model writes up to three style versions of the prompt. Each one is rendered. Then a vision check reads every image for garbled text, odd hands, artifacts, or a missing subject. <break time=\"0.4s\" /> A flagged image is kept, and a fix is offered. The fix always asks first, and the original is never thrown away. Each person has their own gallery, and the same studio answers in the chat too."
+    },
+    {
+      "id": "s05",
+      "title": "crowd-check",
+      "transcript": "crowd-check. <break time=\"0.5s\" /> [curious] This one is an experiment. Before I build something, I want to hear the objections early. Crowd check builds a panel of more than a thousand simulated people, of different ages, backgrounds and habits, and asks them what they think of an idea. <break time=\"0.4s\" /> Claude Opus writes the people and the final report, with a hard spending cap on every run and every month. The local models do the heavy part, the survey and the interviews. Every step writes its results to a file, so any number in a report can be traced back to the people who gave it. <break time=\"0.4s\" /> One warning I keep on the page itself. Simulated people are not customers. The results tell me which objections to test with real people, not whether anyone will buy. It runs on the Mac only for now. The survey works. The reviewers and the final report are next."
+    },
+    {
+      "id": "s06",
+      "title": "Finance",
+      "transcript": "Finance, the app the cloud never sees. <break time=\"0.5s\" /> Card statements are the most private thing in the house, so Finance follows stricter rules than anything else. Its database is encrypted, and unlocked by a passphrase that lives only in memory. It starts locked after every restart, and locks itself after half an hour of nobody using it. <break time=\"0.4s\" /> Statement files are read in memory and never saved. Only the rows I confirm are kept, with card numbers cut down to the last four digits. On top of that, it finds subscriptions and unusual charges, matches shop receipts to card lines, and builds a simple cash flow view. <break time=\"0.4s\" /> The second rule is in the engine. Finance is a local-only plug-in. On a Claude turn it simply doesn't exist, and a conversation that has touched it stays on the local model for good. <break time=\"0.4s\" /> A few more locks. Five wrong passphrases stop unlocking for fifteen minutes. If the Mac's disk encryption is off, Finance refuses to store anything. And the logs carry no amounts, no shops, and no file names."
+    },
+    {
+      "id": "s07",
+      "title": "Tidying",
+      "transcript": "Tidying the engine. <break time=\"0.5s\" /> All of this grew fast, and the code showed it. The chat code had become one very long file that did everything. This week it was split into small modules, one step at a time, and the same happened to the code that runs the tools. Each step was planned, built, reviewed, and security-checked, and every test had to give the same result before and after. <break time=\"0.4s\" /> It isn't a feature anyone can see. It is the reason the next feature takes a day, and not a week."
+    },
+    {
+      "id": "s08",
+      "title": "What's next",
+      "transcript": "[warmly] Part one was a chat window. Part two was a hub. Now it is a small system of its own, and the diagram is how I keep it in my head. <break time=\"0.4s\" /> What's next. The reviewers and the final report for crowd check. More Finance: PDF statements, and card due dates on the calendar. Health records, the next local-only plug-in. And the usual work: finding the places where it fails quietly, and making them loud. <break time=\"0.4s\" /> Still no subscription for the local models. Still nothing leaves the house unless I choose the cloud. And Finance never leaves at all. <break time=\"0.4s\" /> The engine, its side apps, these demos and this article were built with Claude Code."
+    }
+  ]
+}

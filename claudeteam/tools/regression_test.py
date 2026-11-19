@@ -248,6 +248,14 @@ def behaviour(browser, base):
     # Arabic narration exists for every article listed in audio/articles/ar/available.json
     check('Arabic Listen player shown when listed in available.json', pg.evaluate("(() => { const l = document.querySelector('.listen'); return !!l && !l.hidden && getComputedStyle(l).display !== 'none' })()"))
 
+    # Demo UIs on the AI engine Part 3 article (js/ai-demos.js): approval card, Finance stays local
+    pg.goto(base + 'Articles/building-ai-server-part-3.html'); pg.wait_for_timeout(800)
+    pg.click('[data-demo=approval] [data-play]'); pg.wait_for_timeout(3600)
+    pg.click('[data-demo=approval] [data-choice=approve]')
+    check('demo: approving the card shows the done answer', pg.evaluate("getComputedStyle(document.querySelector('[data-demo=approval] .after-approve')).display !== 'none'"))
+    pg.fill('#fin-pass', 'x'); pg.click('[data-unlock] button'); pg.click('[data-demo=finance] [data-ask=cloud]')
+    check('demo: Finance unlocks and refuses Claude', pg.evaluate("getComputedStyle(document.querySelector('[data-demo=finance] .ans-cloud')).display !== 'none'"))
+
     # Language switch on a track
     pg.goto(base + 'tracks/engineer.html'); pg.wait_for_load_state('load'); pg.wait_for_timeout(300)
     before = pg.evaluate('document.documentElement.dir') or 'ltr'

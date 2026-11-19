@@ -26,6 +26,7 @@ Facts on this site come from the CV and the articles. Arabic pages are translati
 
 Each article has an Egyptian Arabic version at `/Articles/ar/<same name>` and most have narration in Hisham's own cloned voice.
 
+- [How my AI engine works now](https://www.hishamabuella.com/Articles/building-ai-server-part-3.html): Part 3 of the AI engine: the whole system drawn as diagrams, with demos of a hands-free voice buddy, Image Studio, a simulated customer panel (crowd-check) and a local-only finance app (Nov 2026)
 - [From a chat window to a home hub](https://www.hishamabuella.com/Articles/building-ai-server-part-2.html): Part 2 of the AI engine: receipts, calendars, the smart home and coding sessions, with its tools moving into plug-ins (Nov 2026)
 - [A shared calendar on the TV](https://www.hishamabuella.com/Articles/tv-calendar.html): one calendar for two, on phones and on the TV, shown by a Raspberry Pi (Oct 2026)
 - [Texting my own AI, end to end encrypted](https://www.hishamabuella.com/Articles/texting-my-ai.html): a private Matrix server on a Mac, Element X on the phone, and a bot that talks like an Egyptian friend (Oct 2026)

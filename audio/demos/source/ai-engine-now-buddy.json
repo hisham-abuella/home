@@ -1,0 +1,10 @@
+{
+  "title": "Thinking Buddy demo (How My AI Engine Works Now)",
+  "language": "en",
+  "slides": [
+    {"id": "q", "title": "Question", "transcript": "Should the weekly shopping note come on Sunday or Monday?"},
+    {"id": "wait", "title": "Holding line", "transcript": "One sec."},
+    {"id": "a1", "title": "Answer 1", "transcript": "Sunday evening."},
+    {"id": "a2", "title": "Answer 2", "transcript": "You plan the week then, and the receipts from Saturday are in."}
+  ]
+}
