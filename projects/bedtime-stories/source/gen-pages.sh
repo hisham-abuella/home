@@ -1,6 +1,6 @@
 #!/bin/zsh
 DEST=/Users/hishamabuella/Work/personal_website/home/projects/bedtime-stories/images-v1
-CLI=/opt/homebrew/bin/draw-things-cli
+CLI=$HOME/.local/bin/draw-things-cli
 BW="flat vector children's book illustration, bold simple geometric shapes, pure black and white only, thick solid shapes, centered, plain off-white paper background, very high contrast, minimal, generous negative space"
 CO="flat vector children's book illustration, bold simple shapes with thick black outlines, centered, plain off-white paper background, cheerful, minimal, generous negative space"
 NEG="text, letters, words, numbers, watermark, signature, people, human hands, human faces, photorealistic, cluttered, busy, noisy, deformed, extra limbs, blurry"

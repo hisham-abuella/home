@@ -6,7 +6,7 @@ mkdir -p "$DEST"
 # script keeps working after any scratch directory is cleared.
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 REF=${REF:-$REPO/images/susu-photo.jpg}
-CLI=/opt/homebrew/bin/draw-things-cli
+CLI=$HOME/.local/bin/draw-things-cli
 SUSU="a brown and grey mackerel tabby cat with a white chest, four white paws, a pink nose and green eyes"
 STYLE="warm children's picture book illustration, soft gouache, gentle rounded shapes, cosy, generous negative space, muted warm palette"
 NEG="text, letters, words, watermark, signature, people, human faces, human hands, photorealistic, cluttered, deformed, extra limbs, extra tails, blurry"
