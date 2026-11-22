@@ -1,0 +1,36 @@
+{
+ "title": "Nostalgia Room: a 1999 Bedroom in the Browser",
+ "language": "en",
+ "slides": [
+  {
+   "id": "s00",
+   "title": "Intro",
+   "transcript": "[warmly] Nostalgia Room, a nineteen ninety nine bedroom in the browser. <break time=\"0.4s\" /> By Hisham Abu ella. <break time=\"0.8s\" /> Some rooms you can still smell. A T V you had to hit on the side. A cassette you rewound with a pencil. An internet connection that dropped the moment someone picked up the phone. <break time=\"0.4s\" /> I wanted to put that room in a browser, so anyone who grew up in Egypt then can walk back into it. It is called Owdet Zaman, the old room, and it is live at nostalgia dash masry dot com. I love creating U I's with Claude, and this one let me build a whole world instead of a screen."
+  },
+  {
+   "id": "s01",
+   "title": "What It Is",
+   "transcript": "What it is. <break time=\"0.5s\" /> A three D bedroom you walk around in first person, with moods: a warm night, a Ramadan night, a summer afternoon, a blackout. More than sixty memories: every object opens a card with its era, a few words, and things to do with it. And things that really work: a T V with channels, a radio dial, a family computer with dial up, card and board games, and a cat called Susu."
+  },
+  {
+   "id": "s02",
+   "title": "The Inspiration",
+   "transcript": "The inspiration. <break time=\"0.5s\" /> The idea is not mine. The Nineties Room by Bored Games is a nostalgic room you walk through, and it stayed with me. It is credited in the project. Everything inside my room is my own: Egyptian, in Egyptian Arabic, with its own pictures, sounds and games. <break time=\"0.4s\" /> The second source is memory. Before building anything, I asked Claude to collect what an Egyptian kid of that time would recognise. The weekly kids magazines. The school bag with a clasp. The cyber cafe and messenger. The free dial up numbers that began with zero seven seven seven. Ramadan riddles on T V. A football final everyone watched. And every agent on the project judges its work by one question: would someone who lived nineteen ninety to two thousand and ten smile and say, yaaah?"
+  },
+  {
+   "id": "s03",
+   "title": "Three Days, Eight Hours",
+   "transcript": "Three days, about eight hours. <break time=\"0.5s\" /> I built it over three days in November twenty twenty six, and shipped version one point two on the third day. In my own time, that was about eight hours. The project has one hundred and seventeen commits. The rest of the typing was Claude Code and a team of subagents, each with one area: the frontend, the games, phones, security, hosting, rights, and Islamic content. <break time=\"0.4s\" /> Day one was the room and its rules. Day two was phones and a safe launch. Day three was the toys and the radio: a three D toy car, a toy soldier game, an old wall clock, and a radio with fifteen presets."
+  },
+  {
+   "id": "s04",
+   "title": "Walking And Playing",
+   "transcript": "Walking around, and playing with everything. <break time=\"0.5s\" /> The room is plain H T M L and JavaScript with three J S. No framework, no build step. The lighting does most of the work: a weak yellow bulb, the T V glow, and dark corners, so it looks like a room you remember, not a showroom. <break time=\"0.4s\" /> I did not want a museum. The T V has a programme guide with clips. The radio dial tunes real stations. The family computer dials up, and the line drops when someone lifts the phone. On the floor table there are games with computer opponents that have Egyptian names: a property trading game of Arab countries called Bank El Haz, tarneeb, chess, tawla and more. And Susu the cat sleeps on the bed and chases the ball."
+  },
+  {
+   "id": "s05",
+   "title": "Rules And Lessons",
+   "transcript": "The rules I set, and what I learned. <break time=\"0.5s\" /> A nostalgia project can easily slide into copying, so the rules are written down, and every agent loads them first. Inspired by, never copied. Posters, logos and packaging are invented. Real songs, shows and matches open only from their official sources. Free licensed media only, always credited. Warm and family friendly. <break time=\"0.4s\" /> As I write this, there are no accounts, no cookies and no ads, and it only counts anonymous numbers. That may change as the room grows, and the privacy page always has the current details. Before every release a security review reads the code, and a gate blocks a push that breaks the rules. <break time=\"0.4s\" /> What I learned. Rules first, then speed. Details sell the feeling: an antenna you have to hold, a line that drops, a clock that chimes. And phones are the real audience, so the room is built light. <break time=\"0.4s\" /> [warmly] If you grew up in Egypt then, go in, and tell me what is missing."
+  }
+ ]
+}

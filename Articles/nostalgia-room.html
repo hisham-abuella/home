@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" data-appearance="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../brand/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+    <title>Nostalgia Room: a 1999 Bedroom in the Browser - Hisham Abuella</title>
+    <meta name="description" content="A walkable Egyptian bedroom from the 1990s, with a TV, a cassette player, dial-up and a cat. Built with Claude Code in about eight hours over three days.">
+    <meta property="og:title" content="Nostalgia Room: a 1999 Bedroom in the Browser - Hisham Abuella">
+    <meta property="og:image" content="https://www.hishamabuella.com/Articles/img/nostalgia-room-hero.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="A first-person 3D bedroom from the 90s and early 2000s that runs in the browser, built in three days.">
+    <meta property="og:type" content="article">
+    <link rel="canonical" href="https://www.hishamabuella.com/Articles/nostalgia-room.html">
+    <meta property="og:url" content="https://www.hishamabuella.com/Articles/nostalgia-room.html">
+    <link rel="alternate" hreflang="en" href="https://www.hishamabuella.com/Articles/nostalgia-room.html">
+    <link rel="alternate" hreflang="ar" href="https://www.hishamabuella.com/Articles/ar/nostalgia-room.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.hishamabuella.com/Articles/nostalgia-room.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/base.css?v=5">
+    <link rel="stylesheet" href="../css/themes/midnight.css">
+    <link rel="stylesheet" href="../css/themes/daylight.css">
+    <link rel="stylesheet" href="../css/themes/contrast.css">
+    <link rel="stylesheet" href="../css/skins/catalogue.css">
+    <link rel="stylesheet" href="../css/skins/constellation.css">
+    <link rel="stylesheet" href="../css/skins/terminal.css">
+    <link rel="stylesheet" href="../css/skins/journal.css">
+    <link rel="stylesheet" href="../css/skins/reader-bar.css">
+    <link rel="stylesheet" href="../css/article.css?v=3">
+    <style>
+        .shot { margin: 2rem 0 2.5rem; }
+        .shot img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .shot figcaption { margin-top: 0.75rem; text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* The path one message takes, phone to Mac and back */
+        .article-content .flow {
+            list-style: none;
+            margin: 2rem 0;
+            margin-inline-start: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .flow li {
+            display: grid;
+            grid-template-columns: 2.5rem 1fr;
+            gap: 1rem;
+            align-items: start;
+            background: var(--bg-elevated);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .flow .step {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .flow strong {
+            display: block;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        @media (max-width: 560px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .flow li { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.9rem 1rem; }
+        }
+        .art { margin: 2rem 0 2.5rem; }
+        .art img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--card-border); }
+        .art.hero { margin-top: 0; }
+    </style>
+    <script>
+        // Adopt the stored appearance before first paint, so no page flashes.
+        (function () {
+            // Preference: auto (follow the system), midnight, daylight or contrast.
+            var saved = null;
+            try { saved = localStorage.getItem('appearance'); } catch (error) { /* storage unavailable */ }
+            var pref = ['auto', 'midnight', 'daylight', 'contrast'].indexOf(saved) > -1 ? saved : 'auto';
+            var light = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            var name = pref === 'auto' ? (light ? 'daylight' : 'midnight') : pref;
+            document.documentElement.setAttribute('data-appearance', name);
+        })();
+        // Skin: an article matches the reader track the visitor came from
+        // (?via=recruiter|engineer|vibe|learner, else the track they last chose).
+        (function () {
+            var m = location.search.match(/[?&]via=(recruiter|engineer|vibe|learner|site)\b/), via = m && m[1];
+            try {
+                if (via === 'site') { localStorage.removeItem('reader-path'); via = null; }
+                else if (via) localStorage.setItem('reader-path', via);
+                else via = localStorage.getItem('reader-path');
+            } catch (error) { /* storage unavailable */ }
+            var skin = { recruiter: 'catalogue', engineer: 'constellation', vibe: 'terminal', learner: 'journal' }[via];
+            if (!skin) return;
+            document.documentElement.setAttribute('data-skin', skin);
+            var fonts = { catalogue: 'Archivo:wght@400;500;600;700;800',
+                          constellation: 'Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800',
+                          terminal: 'IBM+Plex+Mono:wght@400;500;600',
+                          journal: 'IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500' }[skin];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://fonts.googleapis.com/css2?family=' + fonts + '&display=swap';
+            document.head.appendChild(link);
+        })();
+    </script>
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Nostalgia Room: a 1999 Bedroom in the Browser", "description": "A walkable Egyptian bedroom from the 1990s, with a TV, a cassette player, dial-up and a cat. Built with Claude Code in about eight hours over three days.", "datePublished": "2026-11-21", "inLanguage": "en", "url": "https://www.hishamabuella.com/Articles/nostalgia-room.html", "mainEntityOfPage": "https://www.hishamabuella.com/Articles/nostalgia-room.html", "image": "https://www.hishamabuella.com/Articles/img/nostalgia-room-hero.jpg", "author": {"@type": "Person", "@id": "https://www.hishamabuella.com/#person", "name": "Hisham Abuella", "url": "https://www.hishamabuella.com/"}}
+    </script>
+</head>
+<body>
+    <div class="grain" aria-hidden="true"></div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="../index.html?choose" aria-label="Hisham Abuella, front page"><img src="../brand/apple-touch-icon.png" alt="" width="36" height="36"></a>
+            <details class="back-menu">
+                <summary class="back-btn">&larr; Back</summary>
+                <ul>
+                    <li><a href="../tracks/recruiter.html">Recruiter</a></li>
+                    <li><a href="../tracks/engineer.html">Engineer</a></li>
+                    <li><a href="../tracks/vibe.html">Vibe coder</a></li>
+                    <li><a href="../tracks/learner.html">Learner</a></li>
+                    <li><a href="../home.html">Full website</a></li>
+                </ul>
+            </details>
+            <div class="appearance">
+                <span id="appearance-label">Appearance</span>
+                <div class="appearance-set" role="radiogroup" aria-labelledby="appearance-label">
+                    <button type="button" role="radio" data-appearance="auto">Auto</button>
+                    <button type="button" role="radio" data-appearance="midnight">Dark</button>
+                    <button type="button" role="radio" data-appearance="daylight">Light</button>
+                    <button type="button" role="radio" data-appearance="contrast">Contrast</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="article-container">
+        <div class="article-header">
+            <h1 class="article-title enter delay-1">Nostalgia Room: a 1999 Bedroom in the Browser</h1>
+            <div class="article-meta enter delay-2">
+                <span><i class="fas fa-calendar-alt"></i> November 21, 2026</span>
+                <span><i class="fas fa-clock"></i> 6 min read</span>
+                <span><i class="fas fa-user"></i> Hisham Abuella</span>
+                <a class="lang-switch" href="ar/nostalgia-room.html" lang="ar" hreflang="ar">اقرا بالعربي</a>
+            </div>
+            <p class="article-subtitle enter delay-3">A 3D Egyptian bedroom from the 90s and early 2000s that you walk around in your browser: a TV with an antenna, a cassette player, dial-up internet, a cat. About eight hours of my work, over three days, with Claude Code.</p>
+        </div>
+
+        <div class="listen" data-src="../audio/articles/nostalgia-room.mp3" hidden>
+            <div class="listen-label"><strong><i class="fas fa-headphones"></i>Listen to this article</strong><span>Narrated in my own voice</span></div>
+            <audio controls preload="none"></audio>
+        </div>
+
+        <figure class="art hero">
+            <img src="../Articles/img/nostalgia-room-hero.jpg" alt="Screenshot of the game: a first-person view of a bedroom from the 90s, with a bed and a prayer mat on the left, a TV and a computer desk at the back, a dresser with a cassette player on the right, a round table and a cat on the floor" width="1200" height="600">
+        </figure>
+
+        <div class="article-content">
+            <p>Some rooms you can still smell. A TV you had to hit on the side, a cassette you rewound with a pencil, an internet connection that dropped the moment someone picked up the phone. I wanted to put that room in a browser, so anyone who grew up in Egypt then can walk back into it.</p>
+
+            <p>It is called <strong>أوضة زمان</strong> (&ldquo;the old room&rdquo;), or Nostalgia Masry, and it is live at <a href="https://nostalgia-masry.com" target="_blank" rel="noopener" style="color: var(--accent);">nostalgia-masry.com</a>. I love creating UIs with Claude, and this one let me build a whole world instead of a screen.</p>
+
+            <div class="feature-grid stagger">
+                <div class="feature-card">
+                    <div class="feature-icon">🛏️</div>
+                    <div>
+                        <strong>A room to walk in</strong>
+                        <span>First person, in 3D, with moods: a warm night, a Ramadan night, a summer afternoon, a blackout</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div>
+                        <strong>More than sixty memories</strong>
+                        <span>Every object opens a card with its era, a few words and things to do with it</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎲</div>
+                    <div>
+                        <strong>Things that work</strong>
+                        <span>A TV with channels, a radio dial, a family PC with dial-up, card and board games, and a cat called Susu</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>The Inspiration</h2>
+            <p>The idea is not mine. <a href="https://boaredgames.org/room" target="_blank" rel="noopener" style="color: var(--accent);">The 90s Room by Boared Games</a> is a nostalgic room you walk through, and it stayed with me. It is credited in the project, and everything inside my room is my own: Egyptian, in Egyptian Arabic, with its own pictures, sounds and games.</p>
+
+            <p>The second source is memory. Before building anything I asked Claude to collect what an Egyptian kid of that time would recognise: the weekly kids&rsquo; magazines, the school bag with a clasp, the cyber caf&eacute; and MSN, the free dial-up numbers that began with 0777, Ramadan fawazir, a football final everyone watched. Every agent on the project judges its work by one question: <em>would someone who lived 1990 to 2010 smile and say &ldquo;yaaah&rdquo;?</em></p>
+
+            <h2>Three Days, About Eight Hours</h2>
+            <p>I built it over three days in November 2026 and shipped version 1.2 on the third day. In my own time that was about <strong>eight hours</strong>. The project has <strong>117 commits</strong>, and the rest of the typing was Claude Code and a team of subagents, each with one area: the frontend, the games, phones, security, hosting, rights and Islamic content.</p>
+
+            <ol class="flow">
+                <li><span class="step">D1</span><div><strong>The room and its rules</strong>The 3D bedroom, the first memories and the rules the agents follow before they touch anything.</div></li>
+                <li><span class="step">D2</span><div><strong>Phones and a safe launch</strong>A phone pass, self-hosted fonts and three.js, a security gate before every push, and a first public release on Cloudflare.</div></li>
+                <li><span class="step">D3</span><div><strong>The toys and the radio</strong>A 3D toy car and a mini race, a toy-soldier game, the old wall clock, and a radio with fifteen presets.</div></li>
+            </ol>
+
+            <h2>Walking Around</h2>
+            <figure class="shot">
+                <img src="../Articles/img/nostalgia-room-intro.jpg" alt="The start screen over the room: a drawn TV with the name of the game, a red button to continue, and buttons for settings, profile, sharing and reporting a problem" width="1100" height="619" loading="lazy">
+                <figcaption>The start screen. You move with WASD or the touch controls and press E to open a memory.</figcaption>
+            </figure>
+
+            <p>The room is plain HTML and JavaScript with three.js, no framework and no build step. Every picture is made for the room, and the lighting does most of the work: a weak yellow bulb, the TV glow and dark corners, so it looks like a room you remember, not a showroom.</p>
+
+            <figure class="shot">
+                <img src="../Articles/img/nostalgia-room-memory.jpg" alt="A memory card: a snapshot of an old TV with an antenna showing static, a stamp that reads the 90s, a short caption and buttons to watch the channel or switch it off" width="680" height="810" loading="lazy">
+                <figcaption>Every object opens a card: a snapshot, a caption in Egyptian Arabic, and things to do.</figcaption>
+            </figure>
+
+            <h2>Play With Everything</h2>
+            <p>I did not want a museum. The TV has a programme guide with embedded clips, the radio dial tunes real stations, and the family PC dials up and drops the line when someone lifts the phone. On the floor table there are games with computer opponents that have Egyptian names: a property-trading game of Arab countries called Bank El Haz, tarneeb, chess, tawla and more. There are PS2 discs, and Susu the cat sleeps on the bed and chases the ball.</p>
+
+            <figure class="shot">
+                <img src="../Articles/img/nostalgia-room-game.jpg" alt="The Bank El Haz board game open full screen over a table with tea glasses, a board of Arab countries, dice, and three players with their money" width="1100" height="619" loading="lazy">
+                <figcaption>Bank El Haz on the floor table, with a tea glass in the corner.</figcaption>
+            </figure>
+
+            <h2>The Rules I Set</h2>
+            <p>A nostalgia project can easily slide into copying. So the rules are written down, and every agent loads them first:</p>
+            <ul>
+                <li><strong>Inspired by, never copied.</strong> Posters, logos and packaging in the room are invented. Real brands appear only as words in a memory.</li>
+                <li><strong>Real songs, shows and matches open from their official sources.</strong> They are embeds or links, never copies.</li>
+                <li><strong>Free-licensed media only,</strong> always credited.</li>
+                <li><strong>Warm and family-friendly,</strong> with no real people&rsquo;s faces in the generated pictures.</li>
+            </ul>
+
+            <h2>Safe and Private</h2>
+            <p>Privacy and safety matter to me, so I built it that way from the start. As I write this, it has no accounts, no cookies and no ads, and your settings and progress stay in your browser. It only counts anonymous numbers, like how many times a game was opened, and it respects Do Not Track. Before each release a security review reads the code, and a gate blocks a push that breaks the rules, so I could move fast without being careless. This describes today&rsquo;s version and may change as the room grows; the <a href="https://nostalgia-masry.com/privacy.html" target="_blank" rel="noopener" style="color: var(--accent);">privacy page</a> always has the current details.</p>
+
+            <h2>What I Learned</h2>
+            <p><strong>Rules first, then speed.</strong> Writing the rules and the agents&rsquo; roles on day one is what let three days of fast changes stay consistent.</p>
+            <p><strong>Details sell the feeling.</strong> An antenna that needs holding, a line that drops, a clock that chimes on the hour. Small, working things did more than detailed models.</p>
+            <p><strong>Phones are the real audience.</strong> Most people will open it on a mid-range phone over mobile data, so the room is built to be light.</p>
+
+            <div class="quote">
+                A room is not remembered by its furniture. It is remembered by what you did in it.
+            </div>
+
+            <h2>What&rsquo;s Next</h2>
+            <p>More objects and more memories, photos for the few cards still waiting for one, and, in the plan, other places beyond this room. If you grew up in Egypt then, go in and tell me what is missing.</p>
+
+            <h2>Go In, and Help It Grow</h2>
+            <figure class="shot">
+                <a href="https://nostalgia-masry.com" target="_blank" rel="noopener"><img src="../Articles/img/nostalgia-room-site.jpg" alt="The website's card: a brown TV with an antenna showing the bedroom inside, the name of the game in Arabic, a line inviting you into your 90s room, and the address nostalgia-masry.com" width="1200" height="630" loading="lazy"></a>
+                <figcaption>The room lives at nostalgia-masry.com.</figcaption>
+            </figure>
+            <p><a href="https://nostalgia-masry.com" target="_blank" rel="noopener" style="color: var(--accent);">Walk into the room at nostalgia-masry.com</a>. It runs in any browser, on a phone or a laptop. If you enjoy it and want to help me keep adding memories, you can support it on <a href="https://ko-fi.com/nostalgiamasry" target="_blank" rel="noopener" style="color: var(--accent);">Ko-fi</a>. The payment happens on Ko-fi, and I never see your card details. You can also take a piece of the room home from the <a href="https://www.etsy.com/shop/NostalgiaMasry" target="_blank" rel="noopener" style="color: var(--accent);">Nostalgia Masry shop on Etsy</a>.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--hairline); text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p><em>The room and this article were built with <strong><a href="https://claude.ai/code" target="_blank" style="color: var(--accent); text-decoration: none;">Claude Code</a></strong>.</em></p>
+            </div>
+        </div>
+
+        <div class="article-nav reveal-up">
+            <a href="building-ai-server-part-3.html" class="article-nav-link prev">
+                <span class="nav-label">&larr; Previous Article</span>
+                <span class="nav-title">How My AI Engine Works Now</span>
+            </a>
+            <a href="tv-calendar.html" class="article-nav-link next">
+                <span class="nav-label">Another Build &rarr;</span>
+                <span class="nav-title">A Shared Calendar on the TV</span>
+            </a>
+        </div>
+    </div>
+
+<footer class="article-footer">
+        <p>&copy; 2026 Hisham Abuella. Crafted with care and attention to detail.</p>
+    </footer>
+
+    <script src="../js/listen.js?v=2" defer></script>
+    <script src="../js/back-menu.js?v=2" defer></script>
+    <script src="../js/appearance.js?v=3" defer></script>
+    <script src="../js/reader-bar.js?v=3" defer></script>
+    <script src="../js/signal-field.js" defer></script>
+    <script src="../js/motion.js" defer></script>
+    <script data-goatcounter="https://hishamabuella.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+<script src="../tracks/assets/mascot.js?v=4" defer></script>
+<script src="../tracks/assets/mascot-buddy.js?v=6" defer></script>
+</body>
+</html>

@@ -26,6 +26,7 @@ Facts on this site come from the CV and the articles. Arabic pages are translati
 
 Each article has an Egyptian Arabic version at `/Articles/ar/<same name>` and most have narration in Hisham's own cloned voice.
 
+- [Nostalgia Room: a 1999 bedroom in the browser](https://www.hishamabuella.com/Articles/nostalgia-room.html): a walkable 3D Egyptian bedroom from the 90s and early 2000s in the browser (nostalgia-masry.com), with a TV, radio, dial-up PC, games and a cat; its inspiration, rules and three-day build with Claude Code (Nov 2026)
 - [How my AI engine works now](https://www.hishamabuella.com/Articles/building-ai-server-part-3.html): Part 3 of the AI engine: the whole system drawn as diagrams, with demos of a hands-free voice buddy, Image Studio, a simulated customer panel (crowd-check) and a local-only finance app (Nov 2026)
 - [From a chat window to a home hub](https://www.hishamabuella.com/Articles/building-ai-server-part-2.html): Part 2 of the AI engine: receipts, calendars, the smart home and coding sessions, with its tools moving into plug-ins (Nov 2026)
 - [A shared calendar on the TV](https://www.hishamabuella.com/Articles/tv-calendar.html): one calendar for two, on phones and on the TV, shown by a Raspberry Pi (Oct 2026)

@@ -188,6 +188,7 @@ ul.log .add { color: var(--add); }
       <tr><td><a href="https://hisham-abuella.github.io/present-in-html/" data-i18n="b1">present-in-html</a><div class="sub"><span data-i18n="b1d">A Claude Code plugin for slide decks in one HTML file that opens in any browser.</span> <a href="https://github.com/hisham-abuella/present-in-html" data-i18n="b1g">Source on GitHub</a></div></td><td class="n" data-i18n="b1v">personal, not Apple's</td><td class="wide sub">Claude Code, HTML, CSS, JS</td></tr>
       <tr><td><a href="https://hisham-abuella.github.io/Wireless-101/courses/genai101/" data-href-ar="https://hisham-abuella.github.io/Wireless-101/ar/courses/genai101/" data-i18n="b2">GenAI 101</a><div class="sub" data-i18n="b2d">A free course on generative AI, in English and Arabic.</div></td><td class="n" data-i18n="b2v">my free course, not Apple's</td><td class="wide sub">Claude, HTML</td></tr>
       <tr><td><a href="../Articles/building-ai-server-part-3.html?via=vibe" data-i18n="b3">Personal AI engine</a><div class="sub" data-i18n="b3d">A home hub on local models: chat, receipts, calendars and the smart home.</div></td><td class="n" data-i18n="b3v">in progress</td><td class="wide sub">FastAPI, Ollama, Draw Things</td></tr>
+      <tr><td><a href="../Articles/nostalgia-room.html?via=vibe" data-i18n="b11">Nostalgia Room</a><div class="sub" data-i18n="b11d">A walkable 1999 Egyptian bedroom in the browser, built in three days.</div></td><td class="n" data-i18n="b11v">live</td><td class="wide sub">three.js, vanilla JS, Cloudflare</td></tr>
       <tr><td><a href="../Articles/tv-calendar.html?via=vibe" data-i18n="b9">Shared calendar on the TV</a><div class="sub" data-i18n="b9d">One calendar for two, on our phones and on the TV through a Raspberry Pi.</div></td><td class="n" data-i18n="b9v">home</td><td class="wide sub">Raspberry Pi</td></tr>
       <tr><td><a href="../Articles/texting-my-ai.html?via=vibe" data-i18n="b10">Texting my own AI</a><div class="sub" data-i18n="b10d">End-to-end encrypted chat with my AI from anywhere, over Matrix.</div></td><td class="n" data-i18n="b10v">chat</td><td class="wide sub">Matrix</td></tr>
       <tr><td><a href="../Articles/local-voice-generation.html?via=vibe" data-i18n="b4">Local voice benchmark</a><div class="sub" data-i18n="b4d">Local text-to-speech measured against ElevenLabs Eleven v4.</div></td><td class="n">TTS</td><td class="wide sub">Mac Studio, Voicebox</td></tr>
@@ -207,6 +208,7 @@ ul.log .add { color: var(--add); }
     <h2 id="log" data-i18n="logH">Changelog</h2>
     <p class="sub" data-i18n="logS">Build logs, newest first, in English and Arabic.</p>
     <ul class="log">
+      <li><span><span class="add">+</span> <a href="../Articles/nostalgia-room.html?via=vibe" data-i18n="a14">Nostalgia Room: a 1999 bedroom in the browser</a></span><time>2026-11</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/building-ai-server-part-3.html?via=vibe" data-i18n="a13">How my AI engine works now</a></span><time>2026-11</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/building-ai-server-part-2.html?via=vibe" data-i18n="a12">From a chat window to a home hub</a></span><time>2026-11</time></li>
       <li><span><span class="add">+</span> <a href="../Articles/tv-calendar.html?via=vibe" data-i18n="a11">A shared calendar on the TV</a></span><time>2026-10</time></li>
@@ -274,6 +276,9 @@ ul.log .add { color: var(--add); }
  "b2d": "كورس ببلاش عن الـ generative AI، بالإنجليزي والعربي.",
  "b3": "محرك AI شخصي",
  "b3d": "hub للبيت على models محلية: chat، وإيصالات، وcalendars، والبيت الذكي.",
+ "b11": "أوضة زمان",
+ "b11d": "أوضة مصرية من 1999 بتمشي فيها من المتصفح، اتبنت في تلات أيام.",
+ "b11v": "شغالة",
  "b9": "calendar مشترك على التلفزيون",
  "b9d": "calendar واحد لاتنين، على الموبايلات وعلى التلفزيون عن طريق Raspberry Pi.",
  "b9v": "البيت",
@@ -302,6 +307,7 @@ ul.log .add { color: var(--add); }
  "s4x": "HTML وCSS وJavaScript عادي، من غير build step، على GitHub Pages",
  "logH": "سجل التغييرات",
  "logS": "سجلات البناء من الأحدث للأقدم، بالإنجليزي والعربي.",
+ "a14": "أوضة زمان: أوضة من 1999 في المتصفح",
  "a13": "محرك الـ AI بتاعي شغال إزاي دلوقتي",
  "a12": "من شباك chat لـ hub للبيت",
  "a11": "calendar مشترك على التلفزيون",
@@ -350,7 +356,8 @@ ul.log .add { color: var(--add); }
       ? 'الـ agent: Claude Code، ومعاه skills للشغل اللي بكرره\nمحلي: Mac Studio M4 Max، وOllama، وDraw Things، وVoicebox\nالتعليق الصوتي: Fish S2-Pro محليًا للمقالات، وElevenLabs Eleven v4 للكتب\nالموقع: HTML وCSS وJavaScript عادي، من غير build step، على GitHub Pages\n' + more('stack')
       : 'agent       Claude Code, plus skills for jobs I repeat\nlocal       Mac Studio M4 Max: Ollama, Draw Things, Voicebox\nnarration   Fish S2-Pro locally (articles), ElevenLabs Eleven v4 (books)\nsite        vanilla HTML/CSS/JS, no build step, GitHub Pages\n' + more('stack'); },
     log: function () {
-      var e = [['building-ai-server-part-3', 'How my AI engine works now', 'محرك الـ AI بتاعي شغال إزاي دلوقتي', '2026-11'],
+      var e = [['nostalgia-room', 'Nostalgia Room: a 1999 bedroom in the browser', 'أوضة زمان: أوضة من 1999 في المتصفح', '2026-11'],
+               ['building-ai-server-part-3', 'How my AI engine works now', 'محرك الـ AI بتاعي شغال إزاي دلوقتي', '2026-11'],
                ['building-ai-server-part-2', 'From a chat window to a home hub', 'من شباك chat لـ hub للبيت', '2026-11'],
                ['tv-calendar', 'A shared calendar on the TV', 'calendar مشترك على التلفزيون', '2026-10'],
                ['texting-my-ai', 'Texting my own AI', 'بكلّم الـ AI بتاعي', '2026-10'],
